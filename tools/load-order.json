@@ -22,6 +22,7 @@
         "src/api/ios/show.js",
         "src/api/ios/dhcp.js",
         "src/api/ios/management.js",
+        "src/api/ios/batch.js",
         "src/api/switching/vlan.js",
         "src/api/switching/trunk.js",
         "src/api/switching/etherchannel.js",
@@ -61,16 +62,25 @@
         "src/api/inspect/protocols.js",
         "src/api/workspace/files.js",
         "src/api/workspace/command-log.js",
+        "src/api/audit/inventory.js",
+        "src/api/audit/audit.js",
+        "src/api/checks/lab-check.js",
         "src/api/simulation/simulation.js",
         "src/api/events/events.js",
         "src/core/runner.js",
+        "src/core/bridge.js",
         "src/core/window.js",
         "src/core/main.js"
     ],
     "files": [
         "src/ui/index.html",
         "src/ui/style.css",
-        "src/ui/interface.js",
-        "src/ui/catalog.js"
+        "src/ui/catalog.js",
+        "src/ui/snippets.js",
+        "src/ui/highlight.js",
+        "src/ui/lint.js",
+        "src/ui/netcalc.js",
+        "src/ui/editor.js",
+        "src/ui/interface.js"
     ]
 }
