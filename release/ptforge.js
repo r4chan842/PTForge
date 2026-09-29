@@ -1666,6 +1666,54 @@ function enableIpv6Routing(deviceName) {
     return configureIosDevice(deviceName, ["ipv6 unicast-routing"]);
 }
 
+var skippedLogCommands = /^(show|sh|ping|traceroute|tracert|enable|en|disable|exit|end|copy|write|wr|do|reload|debug|undebug|clear|conf|configure)\b/i;
+
+function runOnDevices(deviceNames, command, mode) {
+    return toList(deviceNames).map(function (name) {
+        try {
+            var result = runCommand(name, command, mode);
+            return { device: name, status: result.status, output: result.output };
+        } catch (error) {
+            return { device: name, status: "error", output: error.message };
+        }
+    });
+}
+
+function runOnAll(command, mode) {
+    return runOnDevices(getDevices(iosDeviceTypes), command, mode);
+}
+
+function logCommandsByDevice(deviceName) {
+    var grouped = {};
+    var order = [];
+    getCommandLog(deviceName).forEach(function (entry) {
+        var command = entry.resolved.replace(/^\s+|\s+$/g, "");
+        if (!command || skippedLogCommands.test(command)) {
+            return;
+        }
+        if (!grouped[entry.device]) {
+            grouped[entry.device] = [];
+            order.push(entry.device);
+        }
+        grouped[entry.device].push(command);
+    });
+    return { grouped: grouped, order: order };
+}
+
+function commandsToScript(deviceName) {
+    var data = logCommandsByDevice(deviceName);
+    var text = data.order.map(function (name) {
+        var body = data.grouped[name].map(function (cmd) {
+            return "    " + JSON.stringify(cmd);
+        }).join(",\n");
+        return "configureIosDevice(" + JSON.stringify(name) + ", [\n" + body + "\n]);";
+    }).join("\n\n");
+    if (text) {
+        notifyEditor("script", text + "\n");
+    }
+    return text;
+}
+
 function buildVlans(vlans) {
     var commands = [];
     if (Array.isArray(vlans)) {
@@ -3660,6 +3708,379 @@ function clearCommandLog() {
     return true;
 }
 
+function deviceTypeName(code) {
+    for (var key in deviceTypes) {
+        if (deviceTypes[key] === code) {
+            return key;
+        }
+    }
+    return String(code);
+}
+
+function eachDevicePort(visit) {
+    for (var i = 0; i < network().getDeviceCount(); i++) {
+        var device = network().getDeviceAt(i);
+        for (var j = 0; j < device.getPortCount(); j++) {
+            visit(device, device.getPortAt(j));
+        }
+    }
+}
+
+function isAssigned(ip) {
+    return ip !== "" && ip !== "0.0.0.0" && isValidIp(ip);
+}
+
+function getIpInventory() {
+    var rows = [];
+    eachDevicePort(function (device, port) {
+        var ip = String(callIfExists(port, "getIpAddress", ""));
+        if (isAssigned(ip)) {
+            rows.push({
+                device: String(device.getName()),
+                port: String(port.getName()),
+                ip: ip,
+                mask: String(callIfExists(port, "getSubnetMask", "")),
+                up: callIfExists(port, "isPortUp", false) === true
+            });
+        }
+    });
+    return rows;
+}
+
+function getSubnets() {
+    var seen = {};
+    getIpInventory().forEach(function (row) {
+        var key = networkAddress(row.ip, row.mask) + "/" + maskToCidr(row.mask);
+        seen[key] = seen[key] || [];
+        seen[key].push(row.device + " " + row.port);
+    });
+    return Object.keys(seen).sort(function (a, b) {
+        return ipToInt(a.split("/")[0]) - ipToInt(b.split("/")[0]);
+    }).map(function (key) {
+        return { network: key, members: seen[key] };
+    });
+}
+
+function findDuplicateIps() {
+    var owners = {};
+    getIpInventory().forEach(function (row) {
+        owners[row.ip] = owners[row.ip] || [];
+        owners[row.ip].push(row.device + " " + row.port);
+    });
+    return Object.keys(owners).filter(function (ip) {
+        return owners[ip].length > 1;
+    }).map(function (ip) {
+        return { ip: ip, owners: owners[ip] };
+    });
+}
+
+function findDownLinks() {
+    var down = [];
+    for (var i = 0; i < network().getLinkCount(); i++) {
+        var link = network().getLinkAt(i);
+        if (typeof link.getPort1 !== "function") {
+            continue;
+        }
+        var a = link.getPort1();
+        var b = link.getPort2();
+        var aUp = callIfExists(a, "isPortUp", false) === true;
+        var bUp = callIfExists(b, "isPortUp", false) === true;
+        if (!aUp || !bUp) {
+            down.push({
+                from: { device: portOwnerName(a), port: String(a.getName()), up: aUp },
+                to: { device: portOwnerName(b), port: String(b.getName()), up: bUp }
+            });
+        }
+    }
+    return down;
+}
+
+function findSubnetMismatches() {
+    var found = [];
+    for (var i = 0; i < network().getLinkCount(); i++) {
+        var link = network().getLinkAt(i);
+        if (typeof link.getPort1 !== "function") {
+            continue;
+        }
+        var a = link.getPort1();
+        var b = link.getPort2();
+        var ipA = String(callIfExists(a, "getIpAddress", ""));
+        var ipB = String(callIfExists(b, "getIpAddress", ""));
+        if (!isAssigned(ipA) || !isAssigned(ipB)) {
+            continue;
+        }
+        var maskA = String(a.getSubnetMask());
+        if (!isInSubnet(ipB, ipA, maskA)) {
+            found.push({
+                from: { device: portOwnerName(a), port: String(a.getName()), ip: ipA + "/" + maskToCidr(maskA) },
+                to: { device: portOwnerName(b), port: String(b.getName()), ip: ipB + "/" + maskToCidr(String(b.getSubnetMask())) }
+            });
+        }
+    }
+    return found;
+}
+
+function findUnaddressedHosts() {
+    var list = [];
+    eachDevicePort(function (device, port) {
+        if (isIosDevice(device) || !callIfExists(port, "getLink", null)) {
+            return;
+        }
+        var ip = String(callIfExists(port, "getIpAddress", ""));
+        if (!isAssigned(ip) && callIfExists(port, "isDhcpClientOn", false) !== true) {
+            list.push({ device: String(device.getName()), port: String(port.getName()) });
+        }
+    });
+    return list;
+}
+
+function getTopologySummary() {
+    var byType = {};
+    var linkTypes = {};
+    for (var i = 0; i < network().getDeviceCount(); i++) {
+        var type = deviceTypeName(network().getDeviceAt(i).getType());
+        byType[type] = (byType[type] || 0) + 1;
+    }
+    getLinks().forEach(function (link) {
+        linkTypes[link.type] = (linkTypes[link.type] || 0) + 1;
+    });
+    return {
+        devices: network().getDeviceCount(),
+        links: network().getLinkCount(),
+        byType: byType,
+        linkTypes: linkTypes,
+        addresses: getIpInventory().length,
+        subnets: getSubnets().map(function (s) {
+            return s.network;
+        })
+    };
+}
+
+function finding(severity, rule, device, port, message) {
+    return { severity: severity, rule: rule, device: device, port: port || "", message: message };
+}
+
+function auditSwitch(deviceName) {
+    var device = findDevice(deviceName);
+    var findings = [];
+    for (var i = 0; i < device.getPortCount(); i++) {
+        var port = device.getPortAt(i);
+        if (typeof port.getAccessVlan !== "function") {
+            continue;
+        }
+        var name = String(port.getName());
+        var up = callIfExists(port, "isPortUp", false) === true;
+        var access = callIfExists(port, "isAccessPort", false) === true;
+        var linked = !!callIfExists(port, "getLink", null);
+        if (access && up && port.getAccessVlan() === 1) {
+            findings.push(finding("warning", "vlan1-access", deviceName, name, "Active access port is still in VLAN 1"));
+        }
+        if (access && linked) {
+            var security = callIfExists(port, "getPortSecurity", null);
+            if (security && callIfExists(security, "isEnabled", false) !== true) {
+                findings.push(finding("info", "no-port-security", deviceName, name, "Access port without port security"));
+            }
+        }
+        if (!linked && callIfExists(port, "getPower", true) === true && name.indexOf("Vlan") !== 0) {
+            findings.push(finding("info", "unused-enabled", deviceName, name, "Unused port is not shut down"));
+        }
+    }
+    return findings;
+}
+
+function auditNetwork() {
+    var findings = [];
+    findDuplicateIps().forEach(function (item) {
+        findings.push(finding("error", "duplicate-ip", item.owners[0].split(" ")[0], "", item.ip + " is used by " + item.owners.join(", ")));
+    });
+    findSubnetMismatches().forEach(function (item) {
+        findings.push(finding("error", "subnet-mismatch", item.from.device, item.from.port, item.from.ip + " and " + item.to.device + " " + item.to.port + " " + item.to.ip + " are not in the same subnet"));
+    });
+    findDownLinks().forEach(function (item) {
+        findings.push(finding("warning", "link-down", item.from.device, item.from.port, "Link to " + item.to.device + " " + item.to.port + " is down"));
+    });
+    findUnaddressedHosts().forEach(function (item) {
+        findings.push(finding("warning", "no-address", item.device, item.port, "Cabled host port has no IP address and no DHCP"));
+    });
+    getDevices(["switch", "multilayerswitch", "switch3650"]).forEach(function (name) {
+        findings = findings.concat(auditSwitch(name));
+    });
+    var report = {
+        errors: countSeverity(findings, "error"),
+        warnings: countSeverity(findings, "warning"),
+        infos: countSeverity(findings, "info"),
+        findings: findings
+    };
+    console.log(formatAudit(report));
+    notifyEditor("audit", JSON.stringify(report));
+    return report;
+}
+
+function countSeverity(findings, severity) {
+    return findings.filter(function (f) {
+        return f.severity === severity;
+    }).length;
+}
+
+function formatAudit(report) {
+    var lines = ["Audit: " + report.errors + " errors, " + report.warnings + " warnings, " + report.infos + " notes"];
+    report.findings.forEach(function (f) {
+        lines.push("  " + f.severity.toUpperCase() + "  " + f.device + (f.port ? " " + f.port : "") + "  " + f.message);
+    });
+    return lines.join("\n");
+}
+
+var labCheckState = null;
+
+function beginChecks(title) {
+    labCheckState = { title: String(title || "Lab check"), items: [], started: new Date().getTime() };
+    return true;
+}
+
+function currentChecks() {
+    if (!labCheckState) {
+        beginChecks("Lab check");
+    }
+    return labCheckState;
+}
+
+function evaluateValue(value) {
+    if (typeof value !== "function") {
+        return { value: value, error: "" };
+    }
+    try {
+        return { value: value(), error: "" };
+    } catch (error) {
+        return { value: undefined, error: error && error.message ? error.message : String(error) };
+    }
+}
+
+function recordCheck(name, passed, hint, points) {
+    currentChecks().items.push({
+        name: String(name),
+        passed: passed,
+        points: isDefined(points) ? Number(points) : 1,
+        hint: passed ? "" : String(hint || "")
+    });
+    return passed;
+}
+
+function check(name, condition, hint, points) {
+    var outcome = evaluateValue(condition);
+    return recordCheck(name, !outcome.error && !!outcome.value, outcome.error || hint, points);
+}
+
+function checkEqual(name, actual, expected, points) {
+    var outcome = evaluateValue(actual);
+    if (outcome.error) {
+        return recordCheck(name, false, outcome.error, points);
+    }
+    var same = JSON.stringify(outcome.value) === JSON.stringify(expected);
+    return recordCheck(name, same, "expected " + JSON.stringify(expected) + ", got " + JSON.stringify(outcome.value), points);
+}
+
+function checkDeviceExists(deviceName, points) {
+    return recordCheck("Device " + deviceName + " exists", deviceExists(deviceName), "add " + deviceName + " to the topology", points);
+}
+
+function checkLinked(deviceA, deviceB, points) {
+    var linked = getLinks().some(function (link) {
+        return link.from && ((link.from.device === deviceA && link.to.device === deviceB) || (link.from.device === deviceB && link.to.device === deviceA));
+    });
+    return recordCheck(deviceA + " is cabled to " + deviceB, linked, "connect " + deviceA + " and " + deviceB, points);
+}
+
+function checkIpAddress(deviceName, portName, ip, mask, points) {
+    var outcome = evaluateValue(function () {
+        return getPortInfo(deviceName, portName);
+    });
+    var name = deviceName + " " + portName + " has " + ip + (mask ? " " + mask : "");
+    if (outcome.error) {
+        return recordCheck(name, false, outcome.error, points);
+    }
+    var info = outcome.value;
+    var passed = info.ip === String(ip) && (!mask || info.mask === normalizeMask(mask));
+    return recordCheck(name, passed, "found " + info.ip + " " + info.mask, points);
+}
+
+function checkPortUp(deviceName, portName, points) {
+    var outcome = evaluateValue(function () {
+        return getPortInfo(deviceName, portName).up;
+    });
+    return recordCheck(deviceName + " " + portName + " is up", outcome.value === true, outcome.error || "the port is down or not cabled", points);
+}
+
+function checkHostname(deviceName, hostname, points) {
+    var outcome = evaluateValue(function () {
+        return getHostname(deviceName);
+    });
+    return recordCheck(deviceName + " hostname is " + hostname, outcome.value === String(hostname), outcome.error || "found " + outcome.value, points);
+}
+
+function checkVlan(deviceName, vlanId, points) {
+    var outcome = evaluateValue(function () {
+        return hasVlan(deviceName, vlanId);
+    });
+    return recordCheck("VLAN " + vlanId + " exists on " + deviceName, outcome.value === true, outcome.error || "create vlan " + vlanId, points);
+}
+
+function checkConfigContains(deviceName, text, points) {
+    var outcome = evaluateValue(function () {
+        return getRunningConfig(deviceName);
+    });
+    var found = !outcome.error && String(outcome.value).indexOf(String(text)) !== -1;
+    return recordCheck(deviceName + " config contains \"" + text + "\"", found, outcome.error || "line not found in running-config", points);
+}
+
+function summarizeChecks(state) {
+    var passed = 0;
+    var score = 0;
+    var maxScore = 0;
+    state.items.forEach(function (item) {
+        maxScore += item.points;
+        if (item.passed) {
+            passed++;
+            score += item.points;
+        }
+    });
+    return {
+        title: state.title,
+        total: state.items.length,
+        passed: passed,
+        failed: state.items.length - passed,
+        score: score,
+        maxScore: maxScore,
+        percent: maxScore ? Math.round(score * 100 / maxScore) : 0,
+        items: state.items.slice()
+    };
+}
+
+function formatCheckReport(report) {
+    var lines = [report.title + ": " + report.passed + "/" + report.total + " passed, score " + report.score + "/" + report.maxScore + " (" + report.percent + "%)"];
+    report.items.forEach(function (item) {
+        lines.push((item.passed ? "  PASS  " : "  FAIL  ") + item.name + (item.hint ? "  - " + item.hint : ""));
+    });
+    return lines.join("\n");
+}
+
+function endChecks() {
+    var report = summarizeChecks(currentChecks());
+    labCheckState = null;
+    console.log(formatCheckReport(report));
+    if (!notifyEditor("report", JSON.stringify(report))) {
+        showMessage(formatCheckReport(report));
+    }
+    return report;
+}
+
+function runChecks(title, list) {
+    beginChecks(title);
+    toArray(list).forEach(function (entry) {
+        check(entry.name, entry.test, entry.hint, entry.points);
+    });
+    return endChecks();
+}
+
 function setSimulationMode(on) {
     ipc.simulation().setSimulationMode(on !== false);
     return true;
@@ -3893,6 +4314,154 @@ function log(value) {
     console.log(text);
     notifyEditor("log", text);
     return value;
+}
+
+var editorScriptFilter = "Scripts (*.js *.txt);;All files (*)";
+var editorLastFolder = "";
+
+function decodeArgument(value) {
+    try {
+        return decodeURIComponent(String(value));
+    } catch (error) {
+        return String(value);
+    }
+}
+
+function editorSend(kind, data) {
+    return notifyEditor(kind, JSON.stringify(data));
+}
+
+function baseName(path) {
+    return String(path).split(/[\\/]/).pop();
+}
+
+function folderOf(path) {
+    var text = String(path);
+    var cut = Math.max(text.lastIndexOf("/"), text.lastIndexOf("\\"));
+    return cut > 0 ? text.substring(0, cut) : text;
+}
+
+function startFolder() {
+    if (editorLastFolder) {
+        return editorLastFolder;
+    }
+    return String(callIfExists(appWindow(), "getDefaultFileSaveLocation", ""));
+}
+
+function guardBridge(action, work) {
+    try {
+        return work();
+    } catch (error) {
+        editorSend("bridge-error", { action: action, message: error && error.message ? error.message : String(error) });
+        return false;
+    }
+}
+
+function sendFile(path) {
+    if (!fileManager().fileExists(path)) {
+        throw new Error("File not found: " + path);
+    }
+    editorLastFolder = folderOf(path);
+    editorSend("file-opened", { path: path, name: baseName(path), text: String(fileManager().getFileContents(path)) });
+    return true;
+}
+
+function editorOpenFile() {
+    return guardBridge("open", function () {
+        var path = String(fileManager().getOpenFileName("Open script", startFolder(), editorScriptFilter) || "");
+        return path ? sendFile(path) : false;
+    });
+}
+
+function editorReadFile(encodedPath) {
+    return guardBridge("open", function () {
+        return sendFile(decodeArgument(encodedPath));
+    });
+}
+
+function editorOpenFolder() {
+    return guardBridge("folder", function () {
+        var folder = String(fileManager().getSelectedDirectory("Open folder", startFolder()) || "");
+        return folder ? editorListFolder(encodeURIComponent(folder)) : false;
+    });
+}
+
+function editorListFolder(encodedFolder) {
+    return guardBridge("folder", function () {
+        var folder = decodeArgument(encodedFolder).replace(/[\\/]+$/, "");
+        var names = toArray(fileManager().getFilesInDirectory(folder)).map(String).filter(function (name) {
+            return /\.(js|txt|json|md|cfg)$/i.test(name);
+        }).sort();
+        editorLastFolder = folder;
+        editorSend("folder-opened", {
+            path: folder,
+            name: baseName(folder),
+            files: names.map(function (name) {
+                return { name: name, path: folder + "/" + name };
+            })
+        });
+        return true;
+    });
+}
+
+function writeEditorFile(id, path, text) {
+    if (fileManager().writePlainTextToFile(path, text) === false) {
+        throw new Error("Could not write " + path);
+    }
+    editorLastFolder = folderOf(path);
+    editorSend("file-saved", { id: id, path: path, name: baseName(path) });
+    return true;
+}
+
+function editorSaveFile(encodedId, encodedPath, encodedText) {
+    var path = decodeArgument(encodedPath);
+    if (!path) {
+        return editorSaveFileAs(encodedId, encodeURIComponent("script.js"), encodedText);
+    }
+    return guardBridge("save", function () {
+        return writeEditorFile(decodeArgument(encodedId), path, decodeArgument(encodedText));
+    });
+}
+
+function editorSaveFileAs(encodedId, encodedName, encodedText) {
+    return guardBridge("save", function () {
+        var suggested = startFolder() + "/" + decodeArgument(encodedName);
+        var path = String(fileManager().getSaveFileName("Save script", suggested, editorScriptFilter) || "");
+        return path ? writeEditorFile(decodeArgument(encodedId), path, decodeArgument(encodedText)) : false;
+    });
+}
+
+function editorCopy(encodedText) {
+    return guardBridge("clipboard", function () {
+        appWindow().setClipboardText(decodeArgument(encodedText));
+        return true;
+    });
+}
+
+function editorDevices() {
+    return guardBridge("devices", function () {
+        var list = [];
+        for (var i = 0; i < network().getDeviceCount(); i++) {
+            var device = network().getDeviceAt(i);
+            var ports = [];
+            for (var j = 0; j < device.getPortCount(); j++) {
+                var port = device.getPortAt(j);
+                var info = describePort(port);
+                if (info.connectedTo || isAssigned(info.ip)) {
+                    ports.push({ name: info.name, ip: isAssigned(info.ip) ? info.ip + "/" + maskToCidr(info.mask) : "", up: info.up, peer: info.connectedTo });
+                }
+            }
+            list.push({
+                name: String(device.getName()),
+                type: deviceTypeName(device.getType()),
+                model: String(callIfExists(device, "getModel", "")),
+                power: callIfExists(device, "getPower", true) !== false,
+                ports: ports
+            });
+        }
+        editorSend("devices", { devices: list, links: network().getLinkCount() });
+        return true;
+    });
 }
 
 function EditorWindow() {
