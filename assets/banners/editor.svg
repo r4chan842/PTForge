@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 220" width="1200" height="220">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#182033"/><stop offset="1" stop-color="#0b0f19"/></linearGradient>
+    <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff6a00"/><stop offset="1" stop-color="#ffd166"/></linearGradient>
+    <linearGradient id="text" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff8a1f"/><stop offset="1" stop-color="#ffc15e"/></linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#1f2940" stroke-width="1"/></pattern>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000" flood-opacity=".5"/></filter>
+  </defs>
+  <rect width="1200" height="220" rx="20" fill="url(#bg)"/>
+  <rect width="1200" height="220" rx="20" fill="url(#grid)" opacity=".5"/>
+  <rect x="56" y="62" width="6" height="116" rx="3" fill="#007acc"/>
+  <text x="84" y="108" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="44" font-weight="800" fill="#f0f3f8">A real code editor</text>
+  <text x="86" y="142" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="19" fill="#aab4c8">Tabs, IntelliSense, problems, find and replace,</text><text x="86" y="168" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="19" fill="#aab4c8">command palette and real files on disk</text>
+  <g filter="url(#shadow)"><rect x="700" y="24" width="480" height="172" rx="10" fill="#1e1e1e" stroke="#333"/>
+    <path d="M700 34a10 10 0 0 1 10-10h460a10 10 0 0 1 10 10v18H700z" fill="#3c3c3c"/>
+    <circle cx="716" cy="38" r="5" fill="#ff5f57"/><circle cx="732" cy="38" r="5" fill="#febc2e"/><circle cx="748" cy="38" r="5" fill="#28c840"/>
+    <text x="940.0" y="42" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#aaa">vlan-lab.js - PTForge</text>
+    <rect x="700" y="178" width="480" height="18" fill="#007acc"/><path d="M700 178h480v8a10 10 0 0 1-10 10H710a10 10 0 0 1-10-10z" fill="#007acc"/>
+    <text x="716" y="74" font-family="Consolas, Menlo, monospace" font-size="14.5" xml:space="preserve"><tspan fill="#6e7681"> 1  </tspan><tspan fill="#6a9955">// IntelliSense from 375 functions</tspan></text>
+    <text x="716" y="98" font-family="Consolas, Menlo, monospace" font-size="14.5" xml:space="preserve"><tspan fill="#6e7681"> 2  </tspan><tspan fill="#4fc1ff" font-weight="700">getSw</tspan></text><rect x="742" y="112" width="300" height="52" fill="#252526" stroke="#454545"/>
+    <rect x="743" y="113" width="298" height="25" fill="#04395e"/>
+    <text x="754" y="131" font-family="Consolas, Menlo, monospace" font-size="14"><tspan fill="#b180d7">ƒ </tspan><tspan fill="#71c3ff" font-weight="700">getSw</tspan><tspan fill="#fff">itchportInfo</tspan></text>
+    <text x="754" y="156" font-family="Consolas, Menlo, monospace" font-size="14"><tspan fill="#b180d7">ƒ </tspan><tspan fill="#2aaaff" font-weight="700">getSw</tspan><tspan fill="#bbb">itchportTable</tspan></text>
+    <text x="1060" y="186" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#fff">Ln 2, Col 6</text>
+    <text x="712" y="186" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#fff">0  0</text></g>
+</svg>

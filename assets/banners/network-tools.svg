@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 220" width="1200" height="220">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#182033"/><stop offset="1" stop-color="#0b0f19"/></linearGradient>
+    <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff6a00"/><stop offset="1" stop-color="#ffd166"/></linearGradient>
+    <linearGradient id="text" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff8a1f"/><stop offset="1" stop-color="#ffc15e"/></linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#1f2940" stroke-width="1"/></pattern>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000" flood-opacity=".5"/></filter>
+  </defs>
+  <rect width="1200" height="220" rx="20" fill="url(#bg)"/>
+  <rect width="1200" height="220" rx="20" fill="url(#grid)" opacity=".5"/>
+  <rect x="56" y="62" width="6" height="116" rx="3" fill="#ff8a1f"/>
+  <text x="84" y="108" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="44" font-weight="800" fill="#f0f3f8">Audit and network tools</text>
+  <text x="86" y="142" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="19" fill="#aab4c8">Find mistakes in one call, plan subnets</text><text x="86" y="168" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="19" fill="#aab4c8">and VLSM next to your code</text>
+  <g filter="url(#shadow)"><rect x="700" y="24" width="480" height="172" rx="10" fill="#1e1e1e" stroke="#333"/>
+    <text x="722" y="56" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#e7e7e7">auditNetwork()</text>
+    <text x="722" y="84" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13.5"><tspan fill="#f14c4c">● duplicate-ip</tspan><tspan fill="#ccc">  192.168.1.5 on PC1 and PC2</tspan></text>
+    <text x="722" y="106" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13.5"><tspan fill="#f14c4c">● subnet-mismatch</tspan><tspan fill="#ccc">  R1 G0/1 and R2 G0/0</tspan></text>
+    <text x="722" y="128" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13.5"><tspan fill="#cca700">● vlan1-access</tspan><tspan fill="#ccc">  S1 Fa0/5 is still in VLAN 1</tspan></text>
+    <line x1="722" y1="142" x2="1158" y2="142" stroke="#333"/>
+    <text x="722" y="166" font-family="Consolas, Menlo, monospace" font-size="13.5"><tspan fill="#8b8b8b">192.168.10.77/26 </tspan><tspan fill="#b5cea8">→ .64 - .127, 62 hosts</tspan></text>
+    <text x="722" y="186" font-family="Consolas, Menlo, monospace" font-size="13.5"><tspan fill="#8b8b8b">wildcard </tspan><tspan fill="#b5cea8">0.0.0.63</tspan><tspan fill="#8b8b8b">   VLSM </tspan><tspan fill="#b5cea8">/26 /27 /28 /30</tspan></text></g>
+</svg>
