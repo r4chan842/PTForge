@@ -7,13 +7,18 @@
     <title>PTForge</title>
     <link href="style.css" rel="stylesheet">
     <script src="catalog.js"></script>
+    <script src="snippets.js"></script>
+    <script src="highlight.js"></script>
+    <script src="lint.js"></script>
+    <script src="netcalc.js"></script>
+    <script src="editor.js"></script>
     <script src="interface.js"></script>
 </head>
 
 <body>
     <div class="app">
-        <header class="topbar">
-            <div class="brand">
+        <header class="titlebar">
+            <div class="brand" id="brand-logo">
                 <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
                     <defs>
                         <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0">
@@ -24,70 +29,102 @@
                     <path d="M16 2c1.5 4-2 5.5-2 9 0 1.7 1.3 3 3 3s3-1.4 3-3.2c2 1.8 3 4.2 3 6.2H9c0-5 7-7.5 7-15z" fill="url(#flame)" />
                     <path d="M4 19h24v3c0 1.1-.9 2-2 2h-4l2 4H8l2-4H6c-1.1 0-2-.9-2-2v-3z" fill="#c9d1e0" />
                 </svg>
-                <div>
-                    <div class="brand-name">PTForge</div>
-                    <div class="brand-sub">Packet Tracer automation</div>
-                </div>
             </div>
-
-            <div class="tabs" id="tabs"></div>
-
-            <div class="actions">
-                <button class="btn ghost" onclick="changeFontSize(-1)" title="Smaller text">A-</button>
-                <button class="btn ghost" onclick="changeFontSize(1)" title="Larger text">A+</button>
-                <button class="btn ghost" onclick="pasteFromClipboard()" title="Replace with clipboard">
-                    <svg viewBox="0 0 24 24"><path d="M9 3h6v3H9zM6 5h2v2h8V5h2a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" /></svg>Paste
-                </button>
-                <button class="btn ghost" onclick="copyToClipboard()" title="Copy script">
-                    <svg viewBox="0 0 24 24"><path d="M8 3h11a1 1 0 0 1 1 1v12h-2V5H8zM4 7h11a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z" /></svg>Copy
-                </button>
-                <button class="btn ghost danger" onclick="clearEditor()" title="Clear script">
-                    <svg viewBox="0 0 24 24"><path d="M9 3h6l1 2h4v2H4V5h4zM6 8h12l-1 13H7z" /></svg>Clear
-                </button>
-                <button class="btn run" onclick="executeCode()" title="Ctrl+Enter runs the script, Ctrl+Shift+Enter runs the selection">
-                    <svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" /></svg>Run
-                </button>
+            <nav class="menubar" id="menubar"></nav>
+            <div class="command-center" data-cmd="go.file">
+                <svg class="ico" viewBox="0 0 16 16"><path d="M15.25 13.8l-4.13-4.14a5.5 5.5 0 1 0-1.41 1.41l4.13 4.14 1.41-1.41zM2 6.5a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0z" /></svg>
+                <span>PTForge</span>
             </div>
+            <div class="title-grow"></div>
         </header>
 
-        <div class="main">
-            <aside class="sidebar">
-                <div class="side-tabs">
-                    <button class="side-tab active" data-panel="functions" onclick="showPanel('functions')">Functions</button>
-                    <button class="side-tab" data-panel="snippets" onclick="showPanel('snippets')">Snippets</button>
-                </div>
-                <div class="panel" id="panel-functions">
-                    <input id="search" class="search" type="text" placeholder="Search functions..." spellcheck="false">
-                    <div id="function-list" class="list"></div>
-                </div>
-                <div class="panel hidden" id="panel-snippets">
-                    <div id="snippet-list" class="list"></div>
-                </div>
-            </aside>
+        <div class="workbench">
+            <nav class="activitybar" id="activitybar"></nav>
+            <aside class="sidebar" id="sidebar"></aside>
+            <div class="sash sash-x" id="sash-side"></div>
 
-            <section class="workbench">
-                <div class="editor-wrap">
-                    <pre id="gutter" class="gutter">1</pre>
-                    <textarea id="editor" class="editor" spellcheck="false" wrap="off" placeholder="addDevice(&quot;R1&quot;, &quot;2911&quot;, 100, 100);"></textarea>
-                </div>
-
-                <div class="output">
-                    <div class="output-head">
-                        <span>Output</span>
-                        <button class="link" onclick="clearOutput()">Clear</button>
+            <main class="main">
+                <section class="editor-group">
+                    <div class="tabs-row">
+                        <div class="tabs" id="tabs"></div>
+                        <div class="editor-actions">
+                            <span class="ea" data-cmd="run.script" title="Run Script (F5)"><svg class="ico run-ico" viewBox="0 0 16 16"><path d="M4.74 2.1L14 8l-9.26 5.9A.5.5 0 0 1 4 13.5v-11a.5.5 0 0 1 .74-.4z" /></svg></span>
+                            <span class="ea" data-cmd="view.palette" title="More Actions"><svg class="ico" viewBox="0 0 16 16"><path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm5 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm5 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" /></svg></span>
+                        </div>
                     </div>
-                    <div id="output" class="output-body"></div>
-                </div>
-            </section>
+                    <div class="editor-title" id="editor-title">
+                        <div class="breadcrumbs" id="breadcrumbs"></div>
+                    </div>
+                    <div class="editors" id="editors">
+                        <div class="find hidden" id="find">
+                            <span class="find-toggle" id="find-toggle" title="Toggle Replace"><svg class="ico" viewBox="0 0 16 16"><path d="M10.07 8L5.6 3.53l.7-.7 4.82 4.82v.7L6.3 13.17l-.7-.7L10.07 8z" /></svg></span>
+                            <div class="find-rows">
+                                <div class="find-row">
+                                    <div class="find-field">
+                                        <input id="find-input" placeholder="Find" spellcheck="false">
+                                        <span class="opt" id="find-case" title="Match Case">Aa</span>
+                                        <span class="opt" id="find-word" title="Match Whole Word"><u>ab</u></span>
+                                        <span class="opt" id="find-regex" title="Use Regular Expression">.*</span>
+                                    </div>
+                                    <span class="find-count" id="find-count">No results</span>
+                                    <span class="fbtn" id="find-prev" title="Previous Match (Shift+Enter)"><svg class="ico" viewBox="0 0 16 16"><path d="M3.15 10.35l.7.7L8 6.92l4.15 4.13.7-.7L8.35 5.87h-.7l-4.5 4.48z" /></svg></span>
+                                    <span class="fbtn" id="find-next" title="Next Match (Enter)"><svg class="ico" viewBox="0 0 16 16"><path d="M12.85 5.65l-.7-.7L8 9.08 3.85 4.95l-.7.7 4.5 4.48h.7l4.5-4.48z" /></svg></span>
+                                    <span class="fbtn" id="find-close" title="Close (Escape)"><svg class="ico" viewBox="0 0 16 16"><path d="M8 8.7l3.65 3.65.7-.7L8.7 8l3.65-3.65-.7-.7L8 7.3 4.35 3.65l-.7.7L7.3 8l-3.65 3.65.7.7L8 8.7z" /></svg></span>
+                                </div>
+                                <div class="find-row replace-row">
+                                    <div class="find-field"><input id="replace-input" placeholder="Replace" spellcheck="false"></div>
+                                    <span class="fbtn" id="replace-one" title="Replace (Enter)"><svg class="ico" viewBox="0 0 16 16"><path d="M3.2 9.5H1v-1h2.2l.5.5v2.3l1.2-1.2.7.7-2.4 2.4H2.5L.1 10.8l.7-.7 1.2 1.2V9.5h1.2zM6 4h8v1H6V4zm0 3h8v1H6V7zm0 3h8v1H6v-1zm0 3h8v1H6v-1z" /></svg></span>
+                                    <span class="fbtn" id="replace-all" title="Replace All"><svg class="ico" viewBox="0 0 16 16"><path d="M11.6 2.7l.7-.7 1.3 1.3V1h1v2.3l1.3-1.3.7.7-2.5 2.5h-.4L11.6 2.7zM1 5h9v1H1V5zm0 3h13v1H1V8zm0 3h13v1H1v-1zm0 3h9v1H1v-1z" /></svg></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="welcome hidden" id="welcome"></div>
+                    </div>
+                </section>
+
+                <div class="sash sash-y" id="sash-panel"></div>
+
+                <section class="panel" id="panel">
+                    <div class="panel-head">
+                        <span class="panel-tab" data-panel="problems">Problems <span class="badge hidden" id="problems-badge">0</span></span>
+                        <span class="panel-tab" data-panel="output">Output</span>
+                        <span class="panel-tab" data-panel="checks">Lab Check</span>
+                        <span class="panel-grow"></span>
+                        <span class="pa" data-cmd="output.clear" title="Clear Output"><svg class="ico" viewBox="0 0 16 16"><path d="M10 12.6l.7.7 1.6-1.6 1.6 1.6.8-.7L13 11l1.7-1.6-.8-.8-1.6 1.7-1.6-1.7-.7.8 1.6 1.6-1.6 1.6zM1 4h14V3H1v1zm0 3h14V6H1v1zm8 2.5V9H1v1h8v-.5zM9 13v-1H1v1h8z" /></svg></span>
+                        <span class="pa" data-cmd="view.panel" title="Close Panel (Ctrl+J)"><svg class="ico" viewBox="0 0 16 16"><path d="M8 8.7l3.65 3.65.7-.7L8.7 8l3.65-3.65-.7-.7L8 7.3 4.35 3.65l-.7.7L7.3 8l-3.65 3.65.7.7L8 8.7z" /></svg></span>
+                    </div>
+                    <div class="panel-body" id="panel-problems"></div>
+                    <div class="panel-body hidden" id="panel-output"></div>
+                    <div class="panel-body hidden" id="panel-checks"></div>
+                </section>
+            </main>
         </div>
 
-        <footer class="statusbar">
-            <span id="status">Ready</span>
-            <span class="grow"></span>
-            <span id="position">Ln 1, Col 1</span>
-            <span id="length">0 lines</span>
-            <span>Ctrl+Enter run</span>
+        <footer class="statusbar" id="statusbar">
+            <span class="sb-item sb-remote" id="sb-mode"></span>
+            <span class="sb-item sb-click" id="sb-errors" data-cmd="view.problems"></span>
+            <span class="sb-item" id="sb-run"></span>
+            <span class="sb-item sb-message" id="sb-message"></span>
+            <span class="sb-grow"></span>
+            <span class="sb-item sb-click" id="sb-position" data-cmd="go.line">Ln 1, Col 1</span>
+            <span class="sb-item">Spaces: 4</span>
+            <span class="sb-item">UTF-8</span>
+            <span class="sb-item">LF</span>
+            <span class="sb-item sb-click" data-cmd="view.functions">{ } JavaScript</span>
+            <span class="sb-item sb-click" id="sb-zoom" data-cmd="view.zoomReset" title="Reset Zoom">14px</span>
+            <span class="sb-item sb-click" data-cmd="help.keys" title="Keyboard Shortcuts"><svg class="ico" viewBox="0 0 16 16"><path d="M13.38 12H2.62l.84-1.28A4.3 4.3 0 0 0 4 8.73V6.5a4 4 0 0 1 8 0v2.23c0 .7.2 1.39.54 1.99l.84 1.28zM6.5 13.5h3a1.5 1.5 0 0 1-3 0z" fill="none" stroke="currentColor" /></svg></span>
         </footer>
+
+        <div class="palette hidden" id="palette">
+            <div class="palette-box">
+                <input id="palette-input" spellcheck="false" autocomplete="off">
+                <div class="palette-list" id="palette-list"></div>
+            </div>
+        </div>
+        <div class="dialog hidden" id="dialog">
+            <div class="dialog-box" id="dialog-box"></div>
+        </div>
+        <div class="toasts" id="toasts"></div>
     </div>
     <script>
         initEditor();
