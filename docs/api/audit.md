@@ -1,0 +1,47 @@
+# Audit
+
+Find common mistakes in a topology in one call. These functions only read state, so they are safe to run at any time. `auditNetwork()` also shows its findings in the **Problems** style list of the editor.
+
+← [API index](README.md)
+
+## Network audit
+
+| Function | Returns | Description |
+|----------|---------|-------------|
+| `auditNetwork()` | object | Runs every rule below. Returns `{ errors, warnings, infos, findings }` |
+| `auditSwitch(name)` | object[] | Switch rules for one switch |
+
+Each finding is `{ severity, rule, device, port, message }`.
+
+| Rule | Severity | Meaning |
+|------|----------|---------|
+| `duplicate-ip` | error | The same IPv4 address on more than one port |
+| `subnet-mismatch` | error | Both ends of a cable have an address, but not in the same subnet |
+| `link-down` | warning | A cable whose port is down on one side |
+| `no-address` | warning | A cabled end device port without an address or DHCP |
+| `vlan1-access` | warning | An active access port left in VLAN 1 |
+| `no-port-security` | info | A cabled access port without port security |
+| `unused-enabled` | info | A switch port with no cable that is not shut down |
+
+## Inventory
+
+| Function | Returns | Description |
+|----------|---------|-------------|
+| `getIpInventory()` | object[] | Every assigned IPv4 address: `{ device, port, ip, mask, up }` |
+| `getSubnets()` | object[] | Subnets in use, sorted: `{ network: "10.0.0.0/24", members: ["R1 GigabitEthernet0/0"] }` |
+| `findDuplicateIps()` | object[] | `{ ip, owners }` |
+| `findDownLinks()` | object[] | `{ from: { device, port, up }, to: { device, port, up } }` |
+| `findSubnetMismatches()` | object[] | Links whose two addresses are in different subnets |
+| `findUnaddressedHosts()` | object[] | `{ device, port }` |
+| `getTopologySummary()` | object | `{ devices, links, byType, linkTypes, addresses, subnets }` |
+
+## Example
+
+```js
+var result = auditNetwork();
+if (result.errors) {
+    log(result.findings.filter(function (f) { return f.severity === "error"; }));
+}
+
+showResult(getSubnets());
+```
