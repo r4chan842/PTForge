@@ -6,7 +6,6 @@
 
 **Build, configure, verify and document entire Cisco Packet Tracer networks with JavaScript.**
 
-[![CI](https://github.com/r4chan842/PTForge/actions/workflows/ci.yml/badge.svg)](https://github.com/r4chan842/PTForge/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/r4chan842/PTForge?color=ff8a1f)](https://github.com/r4chan842/PTForge/releases/latest)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 ![Functions](https://img.shields.io/badge/functions-350%2B-blue)
