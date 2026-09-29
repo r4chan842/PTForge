@@ -2,6 +2,38 @@
 
 All notable changes to PTForge are listed here. The format follows [Keep a Changelog](https://keepachangelog.com) and the project uses [Semantic Versioning](https://semver.org).
 
+## [1.1.0] - 2026-09-29
+
+### Editor
+
+- New workbench in the style of VS Code: menu bar, command center, activity bar, side bar, tabs, breadcrumbs, panel and status bar
+- Workspace of scripts stored inside Packet Tracer, plus files and folders on disk through the native Packet Tracer file dialogs
+- Save, Save As, Save All, export as download, import from clipboard, rename and delete
+- Tabs with a dirty dot, middle click close, save prompt, undo history per file
+- Syntax highlighting with VS Code Dark+ colors, bracket pair colors, regex literals and a distinct color for PTForge functions
+- IntelliSense for all functions with documentation, and parameter hints
+- Problems panel with exact syntax error lines, unclosed and mismatched brackets, unknown function warnings and a quick fix
+- Command palette, go to file, go to line, next problem
+- Find and replace with case, whole word and regex options
+- Toggle comment, move and copy lines, delete line, smart Home, auto closing pairs, bracket matching
+- Devices view with live ports, link state and addresses
+- Network tools: subnet calculator, VLSM planner, mask and wildcard converter
+- Lab Check panel with score rings, and audit reports
+- Scripts from the three old slots move into the workspace automatically
+
+### Functions
+
+- Lab Check: `beginChecks`, `check`, `checkEqual`, `checkDeviceExists`, `checkLinked`, `checkIpAddress`, `checkPortUp`, `checkHostname`, `checkVlan`, `checkConfigContains`, `endChecks`, `runChecks`
+- Audit: `auditNetwork`, `auditSwitch`, `getIpInventory`, `getSubnets`, `findDuplicateIps`, `findDownLinks`, `findSubnetMismatches`, `findUnaddressedHosts`, `getTopologySummary`
+- Batch: `runOnDevices`, `runOnAll`, `commandsToScript`
+
+### Project
+
+- Highlighter, linter and calculator are separate files with unit tests
+- Browser tests of the editor (`tools/ui-smoke.js`) and a screenshot generator
+- New banners, real screenshots and a social preview image
+- `CITATION.cff`
+
 ## [1.0.0] - 2026-09-29
 
 First public release.
