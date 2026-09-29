@@ -1,0 +1,23 @@
+{
+    "name": "ptforge",
+    "version": "1.0.0",
+    "description": "JavaScript automation for Cisco Packet Tracer: build and configure whole networks from scripts",
+    "private": true,
+    "license": "MIT",
+    "homepage": "https://github.com/r4chan842/PTForge#readme",
+    "scripts": {
+        "test": "node --test tests/",
+        "bundle": "node tools/bundle.js",
+        "reference": "node tools/generate-reference.js",
+        "catalog": "node tools/generate-catalog.js",
+        "check": "node tools/generate-catalog.js && node tools/bundle.js && node --check release/ptforge.js && node --test tests/"
+    },
+    "engines": {
+        "node": ">=18"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/r4chan842/PTForge.git"
+    },
+    "keywords": ["packet-tracer", "cisco", "ccna", "network-automation", "javascript"]
+}
