@@ -2,21 +2,70 @@
 
 ← [Documentation](../README.md)
 
+The editor follows VS Code key bindings. Packet Tracer can keep a few keys for itself; every command is also in the menus and the command palette.
+
+## General
+
 | Keys | Action |
 |------|--------|
-| `Ctrl+Enter` | Run the script |
-| `Ctrl+Shift+Enter` | Run the selected lines only |
-| `Ctrl+S` | Save the script slot |
-| `Tab` | Indent, or indent every selected line |
-| `Shift+Tab` | Outdent the selected lines |
-| `Enter` | New line with the same indentation, one level deeper after `{`, `[` or `(` |
+| `Ctrl+Shift+P`, `F1` | Command palette |
+| `Ctrl+P` | Go to file |
+| `Ctrl+G` | Go to line |
+| `Ctrl+B` | Toggle side bar |
+| `Ctrl+J` | Toggle panel |
+| `Ctrl+Shift+E` | Explorer |
+| `Ctrl+Shift+F` | Function reference |
+| `Ctrl+Shift+D` | Devices |
+| `Ctrl+Shift+T` | Network tools |
+| `Ctrl+Shift+M` | Problems |
+| `Ctrl+Shift+U` | Output |
+| `Ctrl+=`, `Ctrl+-`, `Ctrl+0` | Zoom in, out, reset |
+| `Ctrl+K Ctrl+S` | Keyboard shortcuts |
 
-## Editor parts
+## Files
 
-| Part | Use |
-|------|-----|
-| Script 1, 2, 3 | Three independent scripts, saved automatically |
-| Functions | Search every function, click to insert it with its arguments |
-| Snippets | Ready blocks for common tasks |
-| Output | Results of `showResult` and `log`, errors and run times |
-| A- / A+ | Editor font size |
+| Keys | Action |
+|------|--------|
+| `Ctrl+N` | New file |
+| `Ctrl+O` | Open file |
+| `Ctrl+K Ctrl+O` | Open folder |
+| `Ctrl+S` | Save |
+| `Ctrl+Shift+S` | Save as |
+| `Ctrl+Alt+S` | Save all |
+| `Ctrl+W` | Close editor |
+| `Ctrl+Tab`, `Ctrl+PageDown` | Next editor |
+| `Ctrl+Shift+Tab`, `Ctrl+PageUp` | Previous editor |
+| `F2` | Rename workspace file |
+
+## Run
+
+| Keys | Action |
+|------|--------|
+| `F5`, `Ctrl+Enter` | Run the script |
+| `Ctrl+Shift+Enter` | Run the selection |
+
+## Editing
+
+| Keys | Action |
+|------|--------|
+| `Ctrl+Space` | Suggestions |
+| `Tab`, `Enter` | Accept a suggestion |
+| `Ctrl+/` | Toggle line comment |
+| `Tab`, `Shift+Tab` | Indent, outdent |
+| `Ctrl+]`, `Ctrl+[` | Indent, outdent lines |
+| `Alt+Up`, `Alt+Down` | Move line |
+| `Shift+Alt+Up`, `Shift+Alt+Down` | Copy line |
+| `Ctrl+Shift+K` | Delete line |
+| `Ctrl+L` | Select line |
+| `Home` | First character, then line start |
+| `Ctrl+Z`, `Ctrl+Y` | Undo, redo |
+
+## Find
+
+| Keys | Action |
+|------|--------|
+| `Ctrl+F` | Find |
+| `Ctrl+H` | Replace |
+| `Enter`, `Shift+Enter`, `F3`, `Shift+F3` | Next, previous match |
+| `Escape` | Close |
+| `F8` | Next problem |

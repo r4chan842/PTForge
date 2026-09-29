@@ -52,7 +52,25 @@ Packet Tracer loads script files top to bottom, so the order matters. Add a scri
 
 ## Step 4: add the interface
 
-Add the four files in `src/ui/` (`index.html`, `style.css`, `interface.js`, `catalog.js`) as the module's interface files, keeping the names. They have no external dependencies.
+Add the nine files in `src/ui/` as the module's interface files, keeping the names:
+
+| File | Purpose |
+|------|---------|
+| `index.html` | Page layout |
+| `style.css` | VS Code Dark+ theme |
+| `catalog.js` | Function list, generated from `docs/api` |
+| `snippets.js` | Snippet library |
+| `highlight.js` | Syntax highlighter |
+| `lint.js` | Problems: syntax and unknown functions |
+| `netcalc.js` | Subnet, VLSM and wildcard calculator |
+| `editor.js` | The code editor component |
+| `interface.js` | Workbench, files, commands, Packet Tracer bridge |
+
+They have no external dependencies.
+
+### Updating from 1.0
+
+Replace the script file and every interface file, and add the five new ones. Scripts stored in the three old slots are moved into the new workspace as `script-1.js`, `script-2.js` and `script-3.js` the first time the editor opens.
 
 ## Step 5: save and start
 

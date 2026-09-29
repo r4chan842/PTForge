@@ -8,7 +8,8 @@
 
 [![Release](https://img.shields.io/github/v/release/r4chan842/PTForge?color=ff8a1f)](https://github.com/r4chan842/PTForge/releases/latest)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-![Functions](https://img.shields.io/badge/functions-350%2B-blue)
+![Functions](https://img.shields.io/badge/functions-375%2B-blue)
+![Tests](https://img.shields.io/badge/tests-179%20node%20%2B%2021%20browser-success)
 ![Packet Tracer](https://img.shields.io/badge/Packet%20Tracer-8.x%2B-1ba0d7)
 ![Runtime](https://img.shields.io/badge/runtime-ES5-yellow)
 ![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)
@@ -38,15 +39,16 @@ PTForge replaces the clicking with a script. You describe the network once, pres
 - **Documented**: every function has a reference entry, and the editor lets you search them all
 
 <div align="center">
-<img src="assets/editor.png" alt="PTForge editor" width="90%">
-<br><sub>The PTForge editor: script tabs, function browser, snippets and an output panel</sub>
+<img src="assets/screenshots/editor.png" alt="PTForge editor" width="95%">
+<br><sub>The PTForge editor inside Packet Tracer: explorer, tabs, IntelliSense with documentation, Dark+ highlighting and output</sub>
 </div>
 
 ## Quick start
 
 1. Add [`release/ptforge.js`](release/ptforge.js) and the files in [`src/ui`](src/ui) to a new Script Module in Packet Tracer
 2. Open `Extensions` → `PTForge Editor`
-3. Paste a script from [`examples/`](examples/README.md) and press `Ctrl+Enter`
+3. Paste a script from [`examples/`](examples/README.md) or open one with `Ctrl+O`, then press `F5`
+4. Check the result with `auditNetwork()` or a [Lab Check](docs/api/checks.md)
 
 ## A taste
 
@@ -91,21 +93,71 @@ Twenty lines give you a router, a switch, four addressed PCs, a hardened router 
 | 🎨 **Canvas** | Notes, lines, circles, rectangles, arrows, dashed lines, zones, device and link labels, layers |
 | 🗺️ **Topology** | Star, ring, line, mesh and LAN generators, grid and circle layouts, VLSM and /30 planners |
 | 🧪 **Simulation** | Simulation mode, PDUs, protocol filters, stepping, ping, traceroute |
+| ✅ **Lab Check** | Graded checks with points, hints and a score report in the editor: devices, cables, addresses, ports, hostnames, VLANs, config lines, custom tests |
+| 🩺 **Audit** | One call finds duplicate IPs, subnet mismatches across cables, down links, hosts without addresses, VLAN 1 access ports, missing port security, unused ports left on. Plus IP inventory, subnet list and topology summary |
+| 📡 **Batch** | `runOnAll("show ip int brief")`, `runOnDevices`, and `commandsToScript()` which turns commands typed in the CLI into a reusable script |
 | 🪟 **Workspace** | Zoom, background, remote networks, open and save projects, workspace events |
 
 Every IOS helper also has a `build...` twin that returns the commands instead of sending them, so you can preview, combine and reuse configuration.
 
 ## The editor
 
+<div align="center"><img src="assets/banners/editor.svg" alt="A real code editor" width="100%"></div>
+
+Version 1.1 replaces the old three slot editor with a workbench that looks and behaves like VS Code, built from scratch in plain ES5 so it runs inside the Packet Tracer web view with no framework and no network access.
+
 | Part | Description |
 |------|-------------|
-| **Script tabs** | Three scripts, each saved automatically inside Packet Tracer |
-| **Functions** | Every public function with its arguments and a short description. Search by name, area or purpose and click to insert |
-| **Snippets** | Ready blocks: small LAN, hardening, VLANs and trunk, router on a stick, OSPF, DHCP, server services, ACL, PAT, inspection, documentation |
-| **Output** | Results of `showResult` and `log`, errors with line numbers, run time |
-| **Keyboard** | `Ctrl+Enter` run, `Ctrl+Shift+Enter` run selection, `Ctrl+S` save, `Tab` and `Shift+Tab` indent |
+| **Menu bar and command palette** | File, Edit, Selection, View, Go, Run and Help menus. `Ctrl+Shift+P` lists every command, `Ctrl+P` jumps to a file, `Ctrl+G` to a line |
+| **Explorer** | Open editors, a workspace of scripts saved inside Packet Tracer, and a real folder from your disk. New, rename, delete |
+| **Files** | Open, Save and Save As use the native Packet Tracer file dialogs. Import from the clipboard, export as a download |
+| **Tabs** | One tab per file with a dirty dot, middle click to close, a save prompt for unsaved disk files, undo history per tab |
+| **Highlighting** | VS Code Dark+ colors: comments `#6A9955`, strings `#CE9178`, numbers `#B5CEA8`, keywords `#569CD6` and `#C586C0`, functions `#DCDCAA`, variables `#9CDCFE`, PTForge functions in bold `#4FC1FF`, colored bracket pairs, regex literals |
+| **IntelliSense** | Suggestions from all 375 functions with signature and description, words from the file, keywords. Parameter hints while you type arguments |
+| **Problems** | Live syntax check with the exact line, unclosed brackets, strings and comments, unknown function names with a *Did you mean* quick fix. Squiggles, gutter markers and a Problems panel |
+| **Editing** | Auto closing brackets and quotes, smart Enter, `Ctrl+/` comment, `Alt+Up/Down` move line, `Shift+Alt+Down` copy line, `Ctrl+Shift+K` delete line, smart Home, bracket matching |
+| **Find and replace** | `Ctrl+F` and `Ctrl+H` with match case, whole word and regular expressions, match count, replace all in one undo step |
+| **Panel** | Output, Problems and Lab Check reports. Resizable, `Ctrl+J` to hide |
+| **Devices view** | Live list of devices and ports from Packet Tracer with link LEDs and addresses. Click to insert a name |
+| **Network tools** | Subnet calculator, VLSM planner and mask to wildcard converter next to your code |
+| **Status bar** | Problems count, run state, cursor position, zoom, connection to Packet Tracer |
 
-See [editor shortcuts](docs/cheatsheets/keyboard.md).
+Every shortcut is in the [keyboard cheat sheet](docs/cheatsheets/keyboard.md) and the [editor guide](docs/guides/editor.md).
+
+<table>
+<tr>
+<td><img src="assets/screenshots/lab-check.png" alt="Lab Check and Devices"><br><sub>Lab Check report and the live Devices view</sub></td>
+<td><img src="assets/screenshots/audit-tools.png" alt="Audit and tools"><br><sub>Network audit and the subnet tools</sub></td>
+</tr>
+<tr>
+<td><img src="assets/screenshots/problems.png" alt="Problems"><br><sub>Problems with a quick fix</sub></td>
+<td><img src="assets/screenshots/command-palette.png" alt="Command palette"><br><sub>Command palette and function reference</sub></td>
+</tr>
+</table>
+
+## Verify and audit
+
+<div align="center"><img src="assets/banners/lab-check.svg" alt="Lab Check" width="100%"></div>
+
+```js
+beginChecks("VLAN lab");
+checkVlan("S1", 10, 2);
+checkLinked("R1", "S1");
+checkIpAddress("PC1", "FastEthernet0", "192.168.10.11", 24);
+checkConfigContains("S1", "switchport mode trunk");
+endChecks();
+```
+
+<div align="center"><img src="assets/banners/network-tools.svg" alt="Audit and network tools" width="100%"></div>
+
+```js
+auditNetwork();
+showResult(getSubnets());
+runOnAll("show ip interface brief");
+commandsToScript("R1");
+```
+
+Read [Lab Check](docs/api/checks.md), [Audit](docs/api/audit.md) and [batch commands](docs/api/ios.md#batch-commands).
 
 ## Installation
 
@@ -115,7 +167,7 @@ PTForge is a Packet Tracer Script Module. Packet Tracer encrypts `.pts` packages
 2. In Packet Tracer open `Extensions` → `Scripting` → `Configure PT Script Modules`
 3. Create a module named `PTForge`
 4. Add one script file with the content of [`release/ptforge.js`](release/ptforge.js)
-5. Add `index.html`, `style.css`, `interface.js` and `catalog.js` from [`src/ui`](src/ui) as interface files
+5. Add the nine files from [`src/ui`](src/ui) as interface files: `index.html`, `style.css`, `catalog.js`, `snippets.js`, `highlight.js`, `lint.js`, `netcalc.js`, `editor.js`, `interface.js`
 6. Save the module, start it and open `Extensions` → `PTForge Editor`
 
 The [installation guide](docs/guides/installation.md) covers every step, updates and the multi file option.
@@ -146,6 +198,7 @@ Starting points for your own work are in [`templates/`](templates/README.md): bl
 | Section | Content |
 |---------|---------|
 | [Getting started](docs/guides/getting-started.md) | Your first network in ten minutes |
+| [Editor guide](docs/guides/editor.md) | Workspace, files, IntelliSense, problems, tools |
 | [Writing scripts](docs/guides/writing-scripts.md) | Structure, order of operations, builders, speed |
 | [API reference](docs/api/README.md) | Every function with arguments, return values and examples |
 | [Recipes](docs/recipes/README.md) | Campus switching, routing labs, edge router, servers, diagrams |
@@ -162,7 +215,7 @@ Starting points for your own work are in [`templates/`](templates/README.md): bl
 ```
 PTForge/
 ├── .github/            issue forms, pull request template, code owners
-├── assets/             logo, banner, screenshots
+├── assets/             logo, banners, social preview, real UI screenshots
 ├── docs/
 │   ├── api/            reference for every function, one page per area
 │   ├── architecture/   layers, runtime and testing
@@ -174,17 +227,17 @@ PTForge/
 ├── examples/           32 complete labs in 12 topics
 ├── release/            ptforge.js single file build
 ├── src/
-│   ├── api/            public functions, one folder per area
+│   ├── api/            public functions, one folder per area, including checks/ and audit/
 │   ├── core/           context, layers, runner, editor window, entry point
 │   ├── data/           model, module, cable and type tables
 │   ├── lib/            IPv4 math, colors, text helpers
-│   └── ui/             editor interface
+│   └── ui/             VS Code style editor: highlighter, linter, network calculator, workbench
 ├── templates/          starting points for new labs
 ├── tests/
 │   ├── helpers/        loader and Packet Tracer mock
 │   ├── integration/    full extension tests
 │   └── unit/           pure function and builder tests
-└── tools/              load order, bundler, catalog and reference generators, CI workflow
+└── tools/              load order, bundler, generators, browser UI tests, screenshots, CI workflow (ci/ci.yml)
 ```
 
 ## Development
@@ -204,6 +257,8 @@ npm run check
 | `npm run catalog` | Regenerate the editor function list from `docs/api` |
 | `npm run reference` | Regenerate the reference tables from `src/data` |
 | `npm run check` | Catalog, bundle, syntax check and tests |
+| `npm run ui-test` | 21 browser checks of the editor with Playwright (install `playwright` first) |
+| `npm run screenshots` | Regenerate the screenshots in `assets/screenshots` |
 
 The test suite runs the whole extension against a mock of the Packet Tracer IPC API. It covers every public function, every example, template and recipe, the release bundle, and project rules such as ES5 only code and complete documentation. Read [testing](docs/architecture/testing.md) for details.
 

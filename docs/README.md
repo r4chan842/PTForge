@@ -6,6 +6,7 @@
 |-------|-----|
 | [Installation](guides/installation.md) | Adding the module to Packet Tracer |
 | [Getting started](guides/getting-started.md) | Your first script in ten minutes |
+| [Editor guide](guides/editor.md) | Workspace, files, IntelliSense, problems, tools |
 | [Writing scripts](guides/writing-scripts.md) | Structure, order, builders, speed |
 | [Troubleshooting](guides/troubleshooting.md) | Common errors and fixes |
 | [Limitations](guides/limitations.md) | What is not possible and what to verify |

@@ -8,7 +8,7 @@ PTForge is a Packet Tracer Script Module. Packet Tracer loads its scripts into o
 ┌──────────────── Packet Tracer ────────────────┐
 │                                               │
 │  Editor window (src/ui)                       │
-│   index.html · style.css · interface.js       │
+│   editor · highlight · lint · netcalc · UI     │
 │        │  $se("runCode", encoded script)      │
 │        ▼                                      │
 │  Script engine                                │
@@ -50,3 +50,14 @@ Lower layers never call higher ones. The load order in `tools/load-order.json` f
 6. `showResult`, `log` and errors are sent back to the editor with `evaluateJavaScriptAsync`
 
 See [runtime](runtime.md) and [testing](testing.md).
+
+## Editor files
+
+| File | Role |
+|------|------|
+| `highlight.js` | Tokenizer shared by the highlighter and the linter |
+| `lint.js` | Syntax check with `Function`, bracket scan, unknown names |
+| `netcalc.js` | Subnet, VLSM and wildcard math for the tools view |
+| `editor.js` | Textarea over a highlighted layer, undo, suggest, find |
+| `interface.js` | Workbench, workspace store, file dialogs through `$se`, reports |
+| `catalog.js`, `snippets.js` | Data for IntelliSense and snippets |

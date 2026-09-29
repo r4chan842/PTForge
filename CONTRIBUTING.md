@@ -66,4 +66,4 @@ That regenerates `src/ui/catalog.js`, rebuilds `release/ptforge.js`, checks its 
 
 ## Continuous integration
 
-`tools/ci/ci.yml` is a GitHub Actions workflow that runs `npm run check` on Node 18, 20 and 22 and checks that generated files are committed. It lives in `.github/workflows/ci.yml`; `tools/ci/ci.yml` is the reference copy.
+`tools/ci/ci.yml` is a GitHub Actions workflow that runs `npm run check` on Node 18, 20 and 22 and checks that generated files are committed. To enable it, copy it to `.github/workflows/ci.yml` (the maintainer adds it from the GitHub web interface). Browser tests of the editor run with `npm run ui-test` after installing `playwright`.
