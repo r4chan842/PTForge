@@ -1,0 +1,113 @@
+# Devices
+
+Create, find, move and inspect devices on the logical workspace.
+
+← [API index](README.md)
+
+## Lifecycle
+
+| Function | Returns | Description |
+|----------|---------|-------------|
+| `addDevice(name, model, x, y)` | bool | Add a device and rename it. Routers and switches skip the boot sequence |
+| `addDevices(list)` | bool[] | Add many devices from `[[name, model, x, y], ...]` |
+| `removeDevice(name)` | bool | Delete one device or an array of names |
+| `renameDevice(oldName, newName)` | bool | Rename. Throws if the new name is taken |
+| `restartDevice(name)` | bool | Power cycle |
+
+```js
+addDevice("R1", "2911", 100, 100);
+
+addDevices([
+    ["S1", "2960-24TT", 100, 250],
+    ["PC1", "PC-PT", 50, 400],
+    ["PC2", "PC-PT", 150, 400]
+]);
+
+removeDevice(["PC1", "PC2"]);
+```
+
+> `addDevice` throws when the model is unknown or the name already exists, so a typo never goes unnoticed.
+
+## Position
+
+| Function | Returns | Description |
+|----------|---------|-------------|
+| `moveDevice(name, x, y, centered)` | bool | Move to a position. `centered: true` places the icon center at x, y |
+| `moveDeviceBy(name, dx, dy)` | bool | Move relative to the current position |
+| `getDevicePosition(name)` | object | `{ x, y, centerX, centerY }` |
+| `movePhysical(name, x, y)` | bool | Move inside the physical workspace |
+| `movePhysicalBy(name, dx, dy)` | bool | Relative move in the physical workspace |
+
+## Queries
+
+| Function | Returns | Description |
+|----------|---------|-------------|
+| `getDevices(filter, startsWith)` | string[] | Names filtered by type and name prefix |
+| `getDeviceCount()` | number | Number of devices |
+| `getDeviceModel(name)` | string | Model string, for example `2911` |
+| `getDeviceType(name)` | number | Numeric device type |
+| `getDeviceInfo(name)` | object | Model, type, power, serial, position and every port |
+
+`filter` accepts a type name, a type number or an array of both. See [device types](../reference/device-types.md).
+
+```js
+getDevices();
+getDevices("switch");
+getDevices(["router", "multilayerswitch"]);
+getDevices(null, "LAB-");
+
+var info = getDeviceInfo("R1");
+showResult(info.ports);
+```
+
+## Power and time
+
+| Function | Returns | Description |
+|----------|---------|-------------|
+| `setPower(name, on)` | bool | `true` or `false`, default on |
+| `getPower(name)` | bool | Current power state |
+| `setDeviceTime(name, year, month, day, hour, minute, second)` | bool | Set the device clock |
+
+## Modules
+
+| Function | Returns | Description |
+|----------|---------|-------------|
+| `addModule(name, slot, model)` | bool | Install a module. The device is powered off and on automatically |
+| `addModules(name, { slot: model })` | bool[] | Install several modules |
+| `removeModule(name, slot)` | bool | Remove a module |
+| `getSupportedModules(name)` | string[] | Modules the device accepts |
+
+```js
+addDevice("R1", "2911", 100, 100);
+addModules("R1", { "0/0": "HWIC-2T", "0/1": "HWIC-2T" });
+```
+
+Slot `0/1` on a 2911 creates `Serial0/1/0` and `Serial0/1/1`. The full module list is in [modules](../reference/modules.md).
+
+## Ports
+
+| Function | Returns | Description |
+|----------|---------|-------------|
+| `getPorts(name)` | string[] | Every port name |
+| `getFreePorts(name, startsWith)` | string[] | Ports without a cable, Vlan and Loopback excluded |
+| `getPortInfo(name, port)` | object | `{ name, ip, mask, mac, up, protocolUp, connectedTo, description, bandwidth, fullDuplex }` |
+| `setPortPower(name, port, on)` | bool | Administrative state through the API |
+| `setPortDescription(name, port, text)` | bool | Port description |
+| `setPortSpeed(name, port, bandwidth, fullDuplex)` | bool | Use `"auto"` for either value to enable negotiation |
+| `setPortMac(name, port, mac)` | bool | Override the MAC address |
+| `setPortClockRate(name, port, rate)` | bool | Serial clock rate through the API |
+
+```js
+var next = getFreePorts("S1", "FastEthernet")[0];
+addLink("S1", next, "PC9", "FastEthernet0", "straight");
+```
+
+## Custom data
+
+| Function | Returns | Description |
+|----------|---------|-------------|
+| `setCustomVar(name, key, value)` | bool | Store a value on the device. It is saved in the .pkt file |
+| `getCustomVar(name, key)` | string | Stored value, `null` when missing |
+| `getCustomVars(name)` | object | Every stored value |
+| `removeCustomVar(name, key)` | bool | Delete a value |
+| `setDeviceImage(name, logicalPath, physicalPath)` | bool | Custom icon for either workspace |

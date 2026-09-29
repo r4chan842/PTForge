@@ -1,0 +1,72 @@
+# Troubleshooting
+
+← [Documentation](../README.md)
+
+## The menu entry does not appear
+
+- Check that the module is started in `Configure PT Script Modules`
+- `main.js` must be the last script (already true in `release/ptforge.js`)
+- Open `Extensions` → `Scripting` → the script console to see load errors
+
+## `Unknown device model`
+
+Model names are case sensitive and must match [device models](../reference/device-models.md). `2960` is wrong, `2960-24TT` is right.
+
+## `Device name already exists`
+
+Names are unique. Remove the old device or pick another name. `clearTopology()` removes everything.
+
+## `addLink` returns false
+
+- The port name is not written in full. Use `GigabitEthernet0/0`, not `Gi0/0`
+- The port is already used. Check with `getNeighbors(device)`
+- The port does not exist yet because a module is missing. Check with `getPorts(device)`
+- The cable does not fit the port, for example `straight` into a serial port
+
+## IOS commands are rejected
+
+Every IOS function returns the rejected lines:
+
+```js
+showResult(configureIosDevice("S1", "spanning-tree mode rapid-pvst"));
+```
+
+Common causes:
+
+| Symptom | Cause |
+|---------|-------|
+| `switchport trunk encapsulation` rejected | Layer 2 switches only support dot1q. On 3650 some versions reject the command |
+| `ip routing` rejected | The device is a layer 2 switch |
+| `crypto key generate rsa` rejected | Hostname or domain missing. `configureSsh` sets both |
+| `ipv6 ...` rejected on a switch | 2960 needs `sdm prefer dual-ipv4-and-ipv6 default` and a reload |
+| Anything under `router bgp` rejected | Not every router IOS in Packet Tracer supports BGP. Use a 2911 or ISR4331 |
+
+## Show commands return empty text
+
+Some Packet Tracer versions do not return CLI output through the API. The command still runs. Open the CLI tab to see the output.
+
+## Hosts have no address after `setPcDhcp`
+
+The DHCP server needs a link and a few seconds. Switch ports also need about 30 seconds to reach forwarding state unless PortFast is on.
+
+## Server services do not change
+
+Service functions need a `Server-PT`. The DHCP functions use `FastEthernet0` unless you pass another port.
+
+## `list.forEach(setPcDhcp)` fails with `Port not found`
+
+`forEach` passes the index as the second argument, which becomes the port name. Wrap the call:
+
+```js
+["PC1", "PC2"].forEach(function (pc) {
+    setPcDhcp(pc);
+});
+```
+
+## Scripts with `let`, `=>` or template strings fail
+
+The Packet Tracer engine is ES5. See [writing scripts](writing-scripts.md).
+
+## Reporting a bug
+
+Open an issue with the Packet Tracer version, the smallest script that fails and the full error message.
