@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#182033"/>
+      <stop offset="1" stop-color="#0b0f19"/>
+    </linearGradient>
+    <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#ff6a00"/>
+      <stop offset="1" stop-color="#ffd166"/>
+    </linearGradient>
+    <linearGradient id="text" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ff8a1f"/>
+      <stop offset="1" stop-color="#ffc15e"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#1f2940" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="300" rx="24" fill="url(#bg)"/>
+  <rect width="1200" height="300" rx="24" fill="url(#grid)" opacity=".6"/>
+  <g stroke="#2e3a58" stroke-width="3" fill="none">
+    <path d="M820 90L960 60L1100 110M820 90L900 200L1060 220L1100 110M960 60L1060 220"/>
+  </g>
+  <g fill="#1b2336" stroke="#ff8a1f" stroke-width="3">
+    <circle cx="820" cy="90" r="16"/>
+    <circle cx="960" cy="60" r="16"/>
+    <circle cx="1100" cy="110" r="16"/>
+    <circle cx="900" cy="200" r="16"/>
+    <circle cx="1060" cy="220" r="16"/>
+  </g>
+  <g transform="translate(80 70) scale(1.25)">
+    <path d="M64 14c6 15-8 21-8 35 0 7 5 12 12 12s12-5.5 12-13c8 7 12 17 12 25H36c0-20 28-30 28-59z" fill="url(#flame)"/>
+    <path d="M18 76h92v10c0 4-3.5 7-7.5 7H88l7 15H33l7-15H25.5c-4 0-7.5-3-7.5-7z" fill="#c9d1e0"/>
+  </g>
+  <text x="270" y="150" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="84" font-weight="800" fill="url(#text)">PTForge</text>
+  <text x="274" y="200" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="26" fill="#aab4c8">Forge Cisco Packet Tracer networks with JavaScript</text>
+</svg>
