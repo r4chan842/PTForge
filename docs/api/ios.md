@@ -40,6 +40,25 @@ if (failed.length) {
 
 `status` is one of `ok`, `ambiguous`, `invalid`, `incomplete`, `notImplemented`.
 
+## Batch commands
+
+Run the same command on many devices at once and collect every answer. Handy for quick health checks across a whole lab.
+
+| Function | Returns | Description |
+|----------|---------|-------------|
+| `runOnDevices(names, command, mode)` | object[] | `[{ device, status, output }]` for every device, errors are reported per device instead of stopping |
+| `runOnAll(command, mode)` | object[] | Same, for every router and switch in the topology |
+| `commandsToScript(name)` | string | Turn the Packet Tracer command log into a `configureIosDevice` script. Show, ping, exit and similar commands are dropped. Leave out `name` for all devices. The script also opens in a new editor tab |
+
+```js
+runOnAll("show ip interface brief").forEach(function (r) {
+    log(r.device + "\n" + r.output);
+});
+
+setCommandLogging(true);
+commandsToScript("R1");
+```
+
 ## Show commands
 
 | Function | Returns | Description |
