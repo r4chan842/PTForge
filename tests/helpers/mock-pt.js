@@ -17,7 +17,9 @@ function createPort(name, owner) {
         getIpAddress: () => port.ip,
         getSubnetMask: () => port.mask,
         getMacAddress: () => "0001.0001.0001",
-        isPortUp: () => !!port.link,
+        isPortUp: () => !!port.link && port.power,
+        getPower: () => port.power,
+        isDhcpClientOn: () => !!port.dhcpClient,
         isProtocolUp: () => !!port.link,
         getRemotePortName: () => (port.link ? port.link.other(port).name : ""),
         getDescription: () => port.description || "",
@@ -422,6 +424,8 @@ function createWorld(allDeviceTypes) {
         fileSaveAsNoPrompt: (p, a) => { world.files.push(["saveAs", p, a]); },
         fileOpen: (p) => { world.files.push(["open", p]); return 0; },
         getDefaultFileSaveLocation: () => "C:/Users/lab/Documents",
+        setClipboardText: (v) => { world.clipboard = v; },
+        getClipboardText: () => world.clipboard,
         getSimulationPanel: () => ({
             play: () => { world.simulation.playing = true; },
             setFilter: (p, v) => { world.simulation.filter = [p, v]; },
@@ -436,6 +440,9 @@ function createWorld(allDeviceTypes) {
 
     world.log = { enabled: false, entries: [] };
     world.fs = {};
+    world.dialog = {};
+    world.dialogs = [];
+    world.clipboard = "";
     const ipc = {
         commandLog: () => ({
             setEnabled: (v) => { world.log.enabled = v; },
@@ -453,7 +460,11 @@ function createWorld(allDeviceTypes) {
             makeDirectory: (p) => { world.fs[p] = "<dir>"; return true; },
             getFileContents: (p) => world.fs[p],
             writePlainTextToFile: (p, t) => { world.fs[p] = t; return true; },
-            removeFile: (p) => { const had = p in world.fs; delete world.fs[p]; return had; }
+            removeFile: (p) => { const had = p in world.fs; delete world.fs[p]; return had; },
+            getOpenFileName: (caption, dir, filter) => { world.dialogs.push(["open", caption, dir, filter]); return world.dialog.open || ""; },
+            getSaveFileName: (caption, dir, filter) => { world.dialogs.push(["save", caption, dir, filter]); return world.dialog.save || ""; },
+            getSelectedDirectory: (caption, dir) => { world.dialogs.push(["folder", caption, dir]); return world.dialog.folder || ""; },
+            getFilesInDirectory: (dir) => Object.keys(world.fs).filter((k) => k.startsWith(dir + "/") && !k.slice(dir.length + 1).includes("/")).map((k) => k.slice(dir.length + 1))
         }),
         appWindow: () => app,
         network: () => net,

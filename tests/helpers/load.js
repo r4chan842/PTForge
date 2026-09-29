@@ -21,7 +21,13 @@ function loadExtension() {
         const ok = vm.runInContext("runCode(" + JSON.stringify(encodeURIComponent(code)) + ")", context);
         return { ok, messages: world.messages.slice() };
     };
-    return { world, ctx: context, run, runScript, root, order };
+    const sent = [];
+    const attachEditor = () => {
+        context.extension = { editor: { webviewId: "w1", webview: { evaluateJavaScriptAsync: (code) => { sent.push(code); } } } };
+        return sent;
+    };
+    const editorMessages = () => sent.map((code) => JSON.parse(code.slice(code.indexOf("(", code.indexOf("receiveOutput(")) + 1, code.lastIndexOf(")"))));
+    return { world, ctx: context, run, runScript, root, order, attachEditor, editorMessages };
 }
 
 function commandsOf(world, name) {
