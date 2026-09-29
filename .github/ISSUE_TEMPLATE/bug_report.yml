@@ -1,0 +1,42 @@
+name: Bug report
+description: Something does not work in Packet Tracer
+labels: [bug]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Packet Tracer version
+      placeholder: 8.2.2
+    validations:
+      required: true
+  - type: input
+    id: ptforge
+    attributes:
+      label: PTForge version
+      placeholder: 1.0.0
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options: [Windows, macOS, Linux]
+  - type: textarea
+    id: script
+    attributes:
+      label: Script
+      description: The smallest script that shows the problem
+      render: js
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened
+      description: Full error message, rejected commands or output
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected

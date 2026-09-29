@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/r4chan842/PTForge/tree/main/docs
+    about: Guides, API reference and recipes
+  - name: Security report
+    url: https://github.com/r4chan842/PTForge/security/advisories/new
+    about: Report security problems privately

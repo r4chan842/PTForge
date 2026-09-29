@@ -1,0 +1,20 @@
+name: Feature request
+description: A function or option you would like to have
+labels: [enhancement]
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: What do you want to automate?
+    validations:
+      required: true
+  - type: textarea
+    id: call
+    attributes:
+      label: How would you like to call it?
+      render: js
+  - type: textarea
+    id: api
+    attributes:
+      label: IOS commands or Packet Tracer API classes involved
+      description: Link the Cisco IPC API class page if you know it

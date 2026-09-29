@@ -1,0 +1,15 @@
+name: Question
+description: Ask how to do something with PTForge
+labels: [question]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+    validations:
+      required: true
+  - type: textarea
+    id: tried
+    attributes:
+      label: What you tried
+      render: js
