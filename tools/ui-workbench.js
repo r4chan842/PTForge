@@ -238,6 +238,22 @@ async function openLab(browser, seed) {
         assert.equal(await p.locator(".matrix td[class*=partial]").count() > 0, true);
     });
 
+    await step("terminal ping waits for packet tracer", async () => {
+        await p.keyboard.press("Control+Backquote");
+        await wait(p, 300);
+        await type(p, ".clear");
+        await type(p, ".ping");
+        await wait(p, 1200);
+        const text = await termText(p);
+        assert.match(text, /Pinging \d+ addresses from \d+ devices/);
+        assert.match(text, /\d+ ok, \d+ partial, \d+ failed, \d+ unknown/);
+        assert.match(text, /OK .*10\.0\.0\.20|FAIL|PART/);
+        await type(p, "pingAll()");
+        await wait(p, 1200);
+        const again = await termText(p);
+        assert.equal((again.match(/\d+ ok, \d+ partial/g) || []).length, 2);
+    });
+
     await step("snapshot and compare", async () => {
         await p.evaluate(() => callEngine("editorSnapshot", "take", "before"));
         await wait(p, 300);

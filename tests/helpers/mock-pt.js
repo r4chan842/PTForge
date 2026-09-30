@@ -282,14 +282,41 @@ function createDevice(world, name, model, type, x, y) {
             }
             return [0, ""];
         };
-        device.getCommandLine = () => ({ getPrompt: () => "R#", getMode: () => "enable" });
+        device.lineCommands = [];
+        const line = mockLine(world, device, "R#", (c) => device.lineCommands.push(c));
+        device.getCommandLine = () => line;
     }
     if ([8, 9, 18].includes(type)) {
         device.setDhcpFlag = (v) => { device.dhcp = v; };
         device.getDhcpFlag = () => device.dhcp;
-        device.getCommandPrompt = () => ({ enterCommand: (c) => device.hostCommands.push(c) });
+        const prompt = mockLine(world, device, "C:\\>", (c) => device.hostCommands.push(c));
+        device.getCommandPrompt = () => prompt;
     }
     return device;
+}
+
+function mockLine(world, device, promptText, record) {
+    const listeners = [];
+    const emit = (name, args) => listeners.filter((l) => l.name === name).forEach((l) => l.fn.call(l.ctx, { className: "TerminalLine", eventName: name }, args));
+    return {
+        listeners,
+        getPrompt: () => promptText,
+        getMode: () => "enable",
+        registerEvent: (name, ctx, fn) => { listeners.push({ name, ctx, fn }); },
+        unregisterEvent: (name, ctx, fn) => {
+            const i = listeners.findIndex((l) => l.name === name && l.fn === fn);
+            if (i >= 0) listeners.splice(i, 1);
+        },
+        enterCommand: (c) => {
+            record(c);
+            if (!world.lineQueue) return;
+            world.lineQueue.push(() => {
+                const out = world.respond ? world.respond(device.getName(), c, "line") : undefined;
+                if (out) emit("outputWritten", { newOutput: String(out), isDebug: false, cursorPositionFromEnd: 0 });
+                emit("commandEnded", { inputCommand: c, status: 0 });
+            });
+        }
+    };
 }
 
 function createWorld(allDeviceTypes) {
@@ -297,6 +324,11 @@ function createWorld(allDeviceTypes) {
         devices: {},
         order: [],
         links: [],
+        lineQueue: [],
+        flushLines() {
+            let guard = 0;
+            while (this.lineQueue.length && guard++ < 100000) this.lineQueue.shift()();
+        },
         canvas: {},
         nextId: 1,
         messages: [],

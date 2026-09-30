@@ -117,30 +117,83 @@ test("ping output parsing for IOS and hosts", () => {
     assert.deepEqual(json(ext.run, 'parsePingOutput("garbage")'), { sent: 0, received: 0, percent: null, rtt: null });
 });
 
-test("reachability pings every address from every router and switch", () => {
+test("reachability waits for Packet Tracer to finish each ping", () => {
     const ext = lab();
     ext.world.pingReply = (device, cmd) => /10\.0\.0\.10/.test(cmd) ? "Success rate is 100 percent (5/5), round-trip min/avg/max = 0/0/1 ms" : "Success rate is 0 percent (0/5)";
-    const report = json(ext.run, "pingAll()");
-    assert.deepEqual(report.sources, ["R1"]);
-    assert.deepEqual(report.targets, ["10.0.0.1", "10.0.0.10"]);
+    const pending = json(ext.run, "pingAll()");
+    assert.deepEqual(pending.sources, ["R1"]);
+    assert.deepEqual(pending.targets, ["10.0.0.1", "10.0.0.10"]);
+    assert.equal(pending.pending, 1);
+    assert.equal(pending.done, false);
+    assert.equal(pending.rows[0].state, "pending");
+    assert.ok(!ext.editorMessages().some((m) => m.kind === "reachability"));
+    assert.deepEqual(ext.world.devices.R1.lineCommands, ["ping 10.0.0.10"]);
+    ext.world.flushLines();
+    const message = ext.editorMessages().filter((m) => m.kind === "reachability").pop();
+    const report = typeof message.text === "string" ? JSON.parse(message.text) : message.data || message.text;
     assert.equal(report.total, 1);
     assert.equal(report.ok, 1);
+    assert.equal(report.done, true);
     assert.equal(report.rows[0].target, "10.0.0.10");
     assert.deepEqual(report.rows[0].rtt, { min: 0, avg: 0, max: 1 });
-    assert.ok(ext.editorMessages().some((m) => m.kind === "reachability"));
-    assert.deepEqual(ext.world.devices.R1.commands.slice(-1)[0], { cmd: "ping 10.0.0.10", mode: "enable" });
+    assert.equal(report.rows[0].command, undefined);
+    assert.equal(ext.world.devices.R1.getCommandLine().listeners.length, 0);
 });
 
-test("ping matrix handles names, hosts, partial replies and errors", () => {
+test("output that arrives in pieces is joined before parsing", () => {
     const ext = lab();
-    ext.world.pingReply = () => ".!!!!\nSuccess rate is 80 percent (4/5)";
-    const report = json(ext.run, 'pingMatrix(["R1", "PC1"], ["PC1", "R1", "Ghost", "10.0.0.1"], 2)');
-    const rows = report.rows.map((r) => [r.source, r.target, r.state]);
-    assert.deepEqual(rows, [["R1", "PC1", "partial"], ["R1", "Ghost", "error"], ["PC1", "R1", "sent"], ["PC1", "Ghost", "error"], ["PC1", "10.0.0.1", "sent"]]);
-    assert.equal(report.partial, 1);
-    assert.equal(report.unknown, 4);
-    assert.match(report.rows[1].output, /No IPv4 address found on Ghost/);
-    assert.deepEqual(ext.world.devices.R1.commands.slice(-1)[0], { cmd: "ping 10.0.0.10 repeat 2", mode: "enable" });
+    ext.world.respond = () => undefined;
+    let done = null;
+    ext.ctx.__done = (r) => { done = JSON.parse(r); };
+    ext.run('pingMatrix(["R1"], ["10.0.0.10"], 0, function (r) { __done(JSON.stringify(r)); })');
+    ext.world.lineQueue.length = 0;
+    const line = ext.world.devices.R1.getCommandLine();
+    const emit = (name, args) => line.listeners.filter((l) => l.name === name).forEach((l) => l.fn.call(l.ctx, {}, args));
+    emit("outputWritten", { newOutput: "Sending 5, 100-byte ICMP Echos\n" });
+    emit("outputWritten", { newOutput: "!!!!!\nSuccess rate is 100 percent " });
+    emit("commandEnded", { inputCommand: "terminal length 0", status: 0 });
+    assert.equal(done, null);
+    emit("outputWritten", { newOutput: "(5/5), round-trip min/avg/max = 1/2/3 ms\n" });
+    emit("commandEnded", { inputCommand: "ping 10.0.0.10", status: 0 });
+    assert.equal(done.ok, 1);
+    assert.deepEqual(done.rows[0].rtt, { min: 1, avg: 2, max: 3 });
+    assert.equal(line.listeners.length, 0);
+});
+
+test("ping matrix covers names, hosts, partial replies and errors", () => {
+    const ext = lab();
+    ext.world.pingReply = (device) => device === "PC1" ? "Packets: Sent = 2, Received = 2, Lost = 0 (0% loss),\nMinimum = 0ms, Maximum = 1ms, Average = 0ms" : ".!!!!\nSuccess rate is 80 percent (4/5)";
+    let done = null;
+    ext.ctx.__done = (r) => { done = JSON.parse(r); };
+    ext.run('pingMatrix(["R1", "PC1"], ["PC1", "R1", "Ghost", "10.0.0.1"], 2, function (r) { __done(JSON.stringify(r)); })');
+    assert.equal(done, null);
+    ext.world.flushLines();
+    const rows = done.rows.map((r) => [r.source, r.target, r.state]);
+    assert.deepEqual(rows, [["R1", "PC1", "partial"], ["R1", "Ghost", "error"], ["PC1", "R1", "ok"], ["PC1", "Ghost", "error"], ["PC1", "10.0.0.1", "ok"]]);
+    assert.equal(done.partial, 1);
+    assert.equal(done.ok, 2);
+    assert.equal(done.unknown, 2);
+    assert.match(done.rows[1].output, /No IPv4 address found on Ghost/);
+    assert.deepEqual(ext.world.devices.R1.lineCommands, ["ping 10.0.0.10 repeat 2"]);
     assert.deepEqual(ext.world.devices.PC1.hostCommands, ["ping -n 2 10.0.0.1", "ping -n 2 10.0.0.1"]);
-    assert.deepEqual(json(ext.run, 'pingAll("R1", ["10.0.0.10"])')["10.0.0.10"].status, "ok");
+});
+
+test("reachability falls back to hosts when no router or switch has an address", () => {
+    const ext = lab();
+    const r1 = ext.world.devices.R1.ports.find((p) => p.name === "GigabitEthernet0/0");
+    r1.ip = "0.0.0.0";
+    r1.mask = "0.0.0.0";
+    const report = json(ext.run, "reachability()");
+    assert.deepEqual(report.sources, ["PC1"]);
+    assert.equal(report.done, true);
+    assert.equal(json(ext.run, "stopPings()"), 0);
+});
+
+test("pingAll with a source pings only from that device", () => {
+    const ext = lab();
+    ext.world.pingReply = () => "Success rate is 100 percent (5/5)";
+    const pending = json(ext.run, 'pingAll("R1", ["10.0.0.10"])');
+    assert.deepEqual(pending.sources, ["R1"]);
+    ext.world.flushLines();
+    assert.ok(ext.editorMessages().some((m) => m.kind === "reachability"));
 });

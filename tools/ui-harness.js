@@ -15,6 +15,7 @@ function engineSource() {
         "var __made = module.exports.createWorld();",
         "var world = __made.world;",
         "var ipc = __made.ipc;",
+        "setInterval(function () { world.flushLines(); }, 30);",
         scripts,
         "extension = { editor: { webviewId: 'w1', webview: { evaluateJavaScriptAsync: function (code) { setTimeout(function () { parent.eval(code); }, 0); } } } };"
     ].join("\n");

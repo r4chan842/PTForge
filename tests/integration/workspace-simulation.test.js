@@ -86,7 +86,7 @@ test("ping and traceroute", () => {
     assert.equal(run('ping("R1", "10.0.0.2", 10).status'), "ok");
     run('traceroute("R1", "10.0.0.2")');
     assert.deepEqual(commandsOf(world, "R1"), ["ping 10.0.0.2 repeat 10", "traceroute 10.0.0.2"]);
-    assert.deepEqual(Object.keys(j(run, 'pingAll("R1", ["1.1.1.1", "2.2.2.2"])')), ["1.1.1.1", "2.2.2.2"]);
+    assert.deepEqual(j(run, 'pingAll("R1", ["1.1.1.1", "2.2.2.2"])').targets, ["1.1.1.1", "2.2.2.2"]);
 });
 
 test("events", () => {
