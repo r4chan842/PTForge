@@ -406,5 +406,6 @@
     "license": "PTForge 以 [MIT 许可证](LICENSE)发布。调试器使用了 [Acorn](https://github.com/acornjs/acorn)（MIT），参见 [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES.md)。",
     "thanks1": "Packet Tracer API 的使用遵循官方的 [Cisco Packet Tracer IPC API 文档](https://tutorials.ptnetacad.net/help/default/IpcAPI/classes.html)。工作台配色遵循 VS Code 的 Dark Modern 主题。",
     "thanks2": "Cisco 和 Packet Tracer 是 Cisco Systems, Inc. 的商标。本项目与 Cisco Systems, Inc. 无关联，也未获得 Cisco 的认可。",
-    "footer": "献给网络专业的学生、教师，以及所有不想把同一个实验手动搭建两次的人。"
+    "footer": "献给网络专业的学生、教师，以及所有不想把同一个实验手动搭建两次的人。",
+    "warning": "**早期开发中。** PTForge 仍有已知错误，部分功能只在 Packet Tracer 之外测试过。请核对结果，备份 `.pkt` 文件，并[报告你发现的任何问题](https://github.com/r4chan842/PTForge/issues)。"
 }

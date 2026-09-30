@@ -406,5 +406,6 @@
     "license": "PTForge распространяется по [лицензии MIT](LICENSE). Отладчик использует [Acorn](https://github.com/acornjs/acorn) (MIT), см. [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES.md).",
     "thanks1": "Работа с API Packet Tracer основана на [официальной документации Cisco Packet Tracer IPC API](https://tutorials.ptnetacad.net/help/default/IpcAPI/classes.html). Цвета среды взяты из темы Dark Modern VS Code.",
     "thanks2": "Cisco и Packet Tracer являются товарными знаками Cisco Systems, Inc. Проект не связан с Cisco Systems, Inc. и не одобрен ею.",
-    "footer": "Сделано для студентов и преподавателей сетей и для всех, кто не хочет собирать одну и ту же лабораторную вручную дважды."
+    "footer": "Сделано для студентов и преподавателей сетей и для всех, кто не хочет собирать одну и ту же лабораторную вручную дважды.",
+    "warning": "**Ранняя стадия разработки.** В PTForge ещё есть известные ошибки, а некоторые функции проверены только вне Packet Tracer. Проверяйте результаты, делайте резервные копии файлов `.pkt` и [сообщайте о любых проблемах](https://github.com/r4chan842/PTForge/issues)."
 }

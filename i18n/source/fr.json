@@ -406,5 +406,6 @@
     "license": "PTForge est publié sous [licence MIT](LICENSE). Le débogueur utilise [Acorn](https://github.com/acornjs/acorn) (MIT), voir [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES.md).",
     "thanks1": "L'utilisation de l'API Packet Tracer suit la [documentation officielle de l'API IPC de Cisco Packet Tracer](https://tutorials.ptnetacad.net/help/default/IpcAPI/classes.html). Les couleurs de l'atelier suivent le thème Dark Modern de VS Code.",
     "thanks2": "Cisco et Packet Tracer sont des marques de Cisco Systems, Inc. Ce projet n'est ni affilié à Cisco Systems, Inc. ni approuvé par Cisco.",
-    "footer": "Conçu pour les étudiants et enseignants en réseaux, et pour tous ceux qui ne veulent pas remonter le même lab à la main deux fois."
+    "footer": "Conçu pour les étudiants et enseignants en réseaux, et pour tous ceux qui ne veulent pas remonter le même lab à la main deux fois.",
+    "warning": "**En cours de développement.** PTForge contient encore des bugs connus et certaines fonctions n'ont été testées qu'en dehors de Packet Tracer. Vérifiez les résultats, sauvegardez vos fichiers `.pkt` et [signalez tout problème](https://github.com/r4chan842/PTForge/issues)."
 }

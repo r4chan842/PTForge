@@ -38,6 +38,9 @@
 
 ---
 
+> [!WARNING]
+> **Em desenvolvimento.** O PTForge ainda tem bugs conhecidos e alguns recursos só foram testados fora do Packet Tracer. Confira os resultados, faça backup dos seus arquivos `.pkt` e [relate qualquer problema](https://github.com/r4chan842/PTForge/issues).
+
 > Esta é uma tradução. A versão de referência é o [README em inglês](../README.md).
 
 ## Por que PTForge

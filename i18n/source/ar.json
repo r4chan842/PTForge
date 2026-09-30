@@ -406,5 +406,6 @@
     "license": "يُنشر PTForge بموجب [ترخيص MIT](LICENSE). يستخدم مصحح الأخطاء [Acorn](https://github.com/acornjs/acorn) (MIT)، راجع [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES.md).",
     "thanks1": "يتبع استخدام واجهة Packet Tracer البرمجية [التوثيق الرسمي لواجهة Cisco Packet Tracer IPC](https://tutorials.ptnetacad.net/help/default/IpcAPI/classes.html). ألوان بيئة العمل مأخوذة من سمة Dark Modern في VS Code.",
     "thanks2": "Cisco وPacket Tracer علامتان تجاريتان لشركة Cisco Systems, Inc. هذا المشروع غير تابع لشركة Cisco Systems, Inc. وغير معتمد منها.",
-    "footer": "صُنع لطلاب الشبكات ومعلميها ولكل من لا يريد بناء المختبر نفسه يدويًا مرتين."
+    "footer": "صُنع لطلاب الشبكات ومعلميها ولكل من لا يريد بناء المختبر نفسه يدويًا مرتين.",
+    "warning": "**قيد التطوير.** لا يزال PTForge يحتوي على أخطاء معروفة، وبعض الميزات لم تُختبر إلا خارج Packet Tracer. تحقق من النتائج واحتفظ بنسخة احتياطية من ملفات `.pkt`، ويرجى [الإبلاغ عن أي مشكلة](https://github.com/r4chan842/PTForge/issues)."
 }

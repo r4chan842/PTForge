@@ -406,5 +406,6 @@
     "license": "PTForge [MIT lisansı](LICENSE) ile yayımlanır. Hata ayıklayıcı [Acorn](https://github.com/acornjs/acorn) (MIT) kullanır, bkz. [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES.md).",
     "thanks1": "Packet Tracer API kullanımı resmi [Cisco Packet Tracer IPC API belgelerine](https://tutorials.ptnetacad.net/help/default/IpcAPI/classes.html) dayanır. Çalışma alanı renkleri VS Code Dark Modern temasını izler.",
     "thanks2": "Cisco ve Packet Tracer, Cisco Systems, Inc. şirketinin ticari markalarıdır. Bu proje Cisco Systems, Inc. ile bağlantılı değildir ve Cisco tarafından onaylanmamıştır.",
-    "footer": "Ağ öğrencileri, eğitmenler ve aynı labı elle iki kez kurmak istemeyen herkes için yapıldı."
+    "footer": "Ağ öğrencileri, eğitmenler ve aynı labı elle iki kez kurmak istemeyen herkes için yapıldı.",
+    "warning": "**Geliştirme aşamasında.** PTForge'da hâlâ bilinen hatalar var ve bazı özellikler yalnızca Packet Tracer dışında test edildi. Sonuçları kontrol edin, `.pkt` dosyalarınızı yedekleyin ve lütfen [bulduğunuz sorunları bildirin](https://github.com/r4chan842/PTForge/issues)."
 }

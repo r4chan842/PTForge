@@ -167,6 +167,7 @@ function build(code, name) {
         nav.map((t, i) => "[" + t + "](" + (i === 0 ? "#" + slug(H("quick")) : navLinks[i]) + ")").join(" ·\n"), "",
         bar, "",
         "</div>", "", "---", "",
+        "> [!WARNING]", "> " + L("warning"), "",
         "> " + L("note"), "",
         "## " + H("why"), "",
         L("why1"), "", L("why2"), "",

@@ -38,6 +38,9 @@
 
 ---
 
+> [!WARNING]
+> **開発初期段階です。** PTForge には既知のバグがあり、一部の機能は Packet Tracer の外でしかテストされていません。結果を確認し、`.pkt` ファイルのバックアップを取り、[問題を見つけたら報告してください](https://github.com/r4chan842/PTForge/issues)。
+
 > これは翻訳です。正式な内容は[英語版 README](../README.md) を参照してください。
 
 ## PTForge を使う理由
