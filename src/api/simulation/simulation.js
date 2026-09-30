@@ -88,9 +88,5 @@ function pingAll(sourceDevice, targets) {
     if (!isDefined(sourceDevice)) {
         return reachability();
     }
-    var report = {};
-    toList(targets).forEach(function (target) {
-        report[target] = ping(sourceDevice, target);
-    });
-    return report;
+    return reachability({ sources: toList(sourceDevice), targets: isDefined(targets) ? toList(targets) : undefined });
 }

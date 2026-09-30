@@ -402,9 +402,30 @@ Terminal.prototype.submit = function () {
         this.runDot(".exit", []);
         return;
     }
+    if (/\b(pingAll|reachability|pingMatrix)\s*\(/.test(trimmed)) {
+        this.awaitReach = true;
+    }
     this.remember(code);
     this.evaluate(globalizeDeclarations(code));
 };
+
+Terminal.prototype.showReach = function (report) {
+    var lines = report.rows.map(function (x) {
+        var tag = x.state === "ok" ? "  OK   " : x.state === "partial" ? "  PART " : x.state === "failed" ? "  FAIL " : "  ?    ";
+        return tag + (x.source + "            ").substring(0, 12) + "-> " + x.target + (x.percent !== null ? "  " + x.percent + "%" : "") + (x.rtt ? "  " + x.rtt.avg + " ms" : "");
+    });
+    this.write(lines.join("\n") || "No pings", "");
+    this.write(report.ok + " ok, " + report.partial + " partial, " + report.failed + " failed, " + report.unknown + " unknown", report.failed || report.unknown ? "t-yellow" : "t-green");
+    this.awaitReach = false;
+};
+
+function terminalReachability(report) {
+    terminalState.list.forEach(function (term) {
+        if (term.awaitReach) {
+            term.showReach(report);
+        }
+    });
+}
 
 Terminal.prototype.evaluate = function (code) {
     if (!terminalHost().connected()) {
@@ -584,10 +605,11 @@ Terminal.prototype.runDot = function (name, args) {
             this.runEngineText("var inv = getIpInventory(); return getDevices().map(function (n) { var ips = inv.filter(function (r) { return r.device === n; }).map(function (r) { return r.port + \" \" + r.ip; }); return (n + \"                \").substring(0, 16) + (getDeviceModel(n) + \"              \").substring(0, 14) + ips.join(\", \"); }).join(\"\\n\") || \"No devices\";");
             return;
         case ".ping":
+            this.awaitReach = true;
             if (args.length >= 2) {
-                this.runEngineText("var r = pingTest(" + q(args[0]) + ", " + q(args[1]) + (args[2] ? ", " + Number(args[2]) : "") + "); return r.source + \" -> \" + r.target + \" (\" + r.ip + \"): \" + r.state + (r.percent !== null ? \" \" + r.percent + \"%\" : \"\") + (r.rtt ? \", avg \" + r.rtt.avg + \" ms\" : \"\") + (r.output ? \"\\n\" + r.output : \"\");");
+                this.runEngineText("var r = reachability({ sources: [" + q(args[0]) + "], targets: [" + q(args[1]) + "]" + (args[2] ? ", count: " + Number(args[2]) : "") + " }); return r.done ? \"No ping to run\" : \"Pinging \" + r.pending + \" address from \" + " + q(args[0]) + " + \"...\";");
             } else {
-                this.runEngineText("var r = reachability(); return r.rows.map(function (x) { return (x.state === \"ok\" ? \"  OK   \" : x.state === \"partial\" ? \"  PART \" : x.state === \"failed\" ? \"  FAIL \" : \"  ?    \") + (x.source + \"            \").substring(0, 12) + \"-> \" + x.target + (x.rtt ? \"  \" + x.rtt.avg + \" ms\" : \"\"); }).join(\"\\n\") + \"\\n\" + r.ok + \" ok, \" + r.partial + \" partial, \" + r.failed + \" failed, \" + r.unknown + \" unknown\";");
+                this.runEngineText("var r = reachability(); return r.done ? \"Nothing to ping. Give routers, switches or hosts an IPv4 address first\" : \"Pinging \" + r.pending + \" addresses from \" + r.sources.length + \" devices. Results appear here and in the Reachability tab when Packet Tracer finishes...\";");
             }
             return;
         case ".trace":

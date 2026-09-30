@@ -91,3 +91,10 @@ debugRun
 readProperty
 editorSnapshot
 editorReachability
+pingLine
+eventText
+pingCommand
+finishPingRow
+refreshReport
+PingRunner
+reachabilitySources

@@ -368,6 +368,9 @@ function receiveReachability(report) {
     viewTabs[id].running = false;
     renderReachability(viewTabs[id]);
     setRunning(false);
+    if (typeof terminalReachability === "function") {
+        terminalReachability(report);
+    }
 }
 
 function reachCellClass(row) {
