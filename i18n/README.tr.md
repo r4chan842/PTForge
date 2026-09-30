@@ -58,16 +58,16 @@ PTForge tıklamaların yerine bir betik koyar. Ağı bir kez tanımlarsınız, *
 <br><sub>Packet Tracer içindeki PTForge çalışma alanı: gezgin, sekmeler, IntelliSense, Dark Modern vurgulama ve çıktı</sub>
 </div>
 
-## 1.2 sürümündeki yenilikler
+## 1.3 sürümündeki yenilikler
 
 |  |  |
 |---|---|
-| **JavaScript terminali** | `` Ctrl+` `` VS Code'daki *New Terminal* gibi bir terminal açar. Her satır doğrudan açık topolojide çalışır; geçmiş, Tab ile tamamlama ve `.calc`, `.ping`, `.cli R1` gibi noktalı komutlar vardır |
-| **Hata ayıklayıcı** | `F5` betiği her adımı kaydederek çalıştırır. Kesme noktalarında, koşullarda ve istisnalarda durur; üzerinden, içine, dışına ve **geriye** adım atar; Variables, Watch ve Call Stack'i gösterir ve Debug Console'da ifadeleri değerlendirir |
-| **Ağ hesaplayıcı** | IPv4 alt ağ, alt ağlara bölme, VLSM planlayıcı, rota özetleme, aralıktan CIDR'a, wildcard maskeleri, IPv6, EUI-64 ve taban dönüştürme tek bir düzenleyici sekmesinde |
-| **Erişilebilirlik matrisi** | `pingAll()` her yönlendirici ve anahtardan her adrese ping atar ve kayıp ile gidiş dönüş sürelerini gösteren renkli bir matris sunar |
-| **Anlık görüntüler ve diff** | `takeSnapshot()` cihazları, bağlantıları, adresleri, portları, güç durumunu ve running-config'i kaydeder. İki görüntüyü karşılaştırın ve yapılandırmayı satır satır görün |
-| **Dark Modern** | Renkler, boşluklar, sekmeler, paneller ve durum çubuğu VS Code'un Dark Modern temasını birebir izler; hata ayıklarken durum çubuğu maviye döner |
+| **Eklentiler** | Eklenti klasörüne `.pf` dosyaları koyarak terminal nokta komutları, genel fonksiyonlar, denetim kuralları ve Lab Check kontrolleri ekleyin. [`plugins`](../plugins) içinde üç hazır eklenti gelir |
+| **Eklenti Yöneticisi** | `Ctrl+Shift+X` her eklentiyi sürümü, izinleri ve eklediği şeylerle listeler. Etkinleştirme onay ister, dosyası değişen eklenti siz inceleyene kadar kapalı kalır |
+| **İzinler** | Eklentiler `topology`, `cli`, `files` veya `raw` istemedikçe yalnızca okur. İzin dışı çağrılar açık bir hatayla durur |
+| **Codicons** | Tüm simgeler artık resmi VS Code Codicons (CC BY 4.0), aynı ızgara ve boyutlarda |
+| **Eksiksiz host bilgisi** | `getPcIp()` ağ geçidi, DNS, MAC, IPv6, link-local ve bağlantı durumunu döndürür. `getPortInfo()` kablonun diğer ucundaki cihazı söyler. Terminal derin nesneleri ve uzun dizileri tam gösterir |
+| **Arka planda ping ve traceroute** | `ping()`, `traceroute()` ve `pingAll()` Packet Tracer'ın bitmesini bekler, sonuçlar artık sıfır çıkmaz. `traceroute()` her atlamayı döndürür |
 
 ## Hızlı başlangıç
 

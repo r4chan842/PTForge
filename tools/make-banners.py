@@ -57,6 +57,11 @@ banner("lab-check", "Lab Check and audit", ("Grade a lab with points and hints, 
     [(G, "\u2714 "), (D, "R1 is cabled to S1"), (C, "     1 pt")],
     [(R, "\u2716 "), (D, "PC2 has an address"), (C, "     found 0.0.0.0")],
     [(D, "Score "), (N, "5 / 6"), (D, "  83%")]])
+banner("plugins", "Plugins", ("Add dot-commands, functions, audit rules and checks", "from .pf files, with consent and permissions."), [
+    [(D, "---")],
+    [(D, "{ "), (V, '"id"'), (D, ": "), (S, '"port-map"'), (D, ", "), (V, '"permissions"'), (D, ": [] }")],
+    [(D, "---")],
+    [(F, "plugin"), (D, "."), (F, "command"), (D, "("), (S, '"ports"'), (D, ", "), (K, "function"), (D, " (args) { ... });")]])
 banner("network-tools", "Network tools", ("Reachability matrix, snapshots and config diff,", "plus an IPv4 and IPv6 subnet calculator."), [
     [(D, "R1 \u2192 10.0.0.20   "), (R, "0%")],
     [(D, "R2 \u2192 10.0.0.10   "), (F, "80%")],

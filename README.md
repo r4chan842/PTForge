@@ -58,16 +58,16 @@ PTForge replaces the clicking with a script. You describe the network once, pres
 <br><sub>The PTForge workbench inside Packet Tracer: explorer, tabs, IntelliSense, Dark Modern highlighting and output</sub>
 </div>
 
-## What's new in 1.2
+## What's new in 1.3
 
 | | |
 |---|---|
-|  **JavaScript terminal** | `Ctrl+`` opens a terminal like VS Code's *New Terminal*. Every line runs directly against the open topology, with history, Tab completion and dot commands such as `.calc`, `.ping` and `.cli R1` |
-|  **Debugger** | `F5` runs the script and records every step. Pause on breakpoints, conditional breakpoints and exceptions, step over, into, out and **back**, read variables, watch expressions and the call stack, and evaluate expressions in the Debug Console |
-|  **Network calculator** | IPv4 subnet, subnet splitter, VLSM planner, route summarization, range to CIDR, wildcard masks, IPv6, EUI-64 and number conversion in one editor tab |
-|  **Reachability matrix** | `pingAll()` pings every address from every router and switch and shows a color matrix with loss and round-trip times |
-|  **Snapshots and diff** | `takeSnapshot()` records devices, links, addresses, ports, power and running configs. Compare two snapshots and read a line-by-line config diff |
-|  **Dark Modern** | Colors, spacing, tabs, panels and status bar now follow the VS Code Dark Modern theme exactly, and the status bar turns blue while debugging |
+| **Plugins** | Drop `.pf` files into the plugin folder to add terminal dot-commands, global functions, audit rules and Lab Check checks. Three ready plugins ship in [`plugins`](plugins) |
+| **Plugin Manager** | `Ctrl+Shift+X` lists every plugin with version, permissions and what it adds. Enable asks for consent, and a plugin whose file changes stays off until you review it |
+| **Permissions** | Plugins are read only unless they ask for `topology`, `cli`, `files` or `raw`. Calls outside the granted permissions fail with a clear error |
+| **Codicons** | Every icon is now an official VS Code Codicon (CC BY 4.0), drawn on the same grid and sizes as VS Code |
+| **Complete host details** | `getPcIp()` returns gateway, DNS, MAC, IPv6, link-local and link state. `getPortInfo()` names the device on the other end. The terminal prints deep objects and long arrays in full |
+| **Background ping and traceroute** | `ping()`, `traceroute()` and `pingAll()` wait for Packet Tracer to finish, so results are never zero. `traceroute()` returns every hop |
 
 ## Quick start
 
@@ -173,11 +173,37 @@ The workbench looks and behaves like VS Code. It is built from scratch in plain 
 | **Completion** | `Tab` completes PTForge functions, your variables, keywords and dot commands |
 | **History** | `Up` and `Down` walk through earlier commands, saved between sessions |
 | **Multiple terminals** | `+` opens another terminal, the list switches between them, the bin closes one |
-| **Dot commands** | `.help`, `.clear`, `.devices`, `.ping`, `.trace`, `.show R1 show ip route`, `.cli R1` to type IOS commands on a device, `.exit` to leave it, `.audit`, `.snap`, `.diff`, `.calc 10.1.2.3/20`, `.run file.js`, `.history` |
+| **Dot commands** | `.help`, `.clear`, `.devices`, `.ping`, `.trace`, `.show R1 show ip route`, `.cli R1` to type IOS commands on a device, `.exit` to leave it, `.audit`, `.snap`, `.diff`, `.calc 10.1.2.3/20`, `.run file.js`, `.history`, `.plugins`, plus any command a plugin adds |
 
 <div align="center"><img src="assets/screenshots/terminal.png" alt="Terminal" width="95%"></div>
 
 Read the [terminal guide](docs/guides/terminal.md).
+
+## Plugins
+
+<div align="center"><img src="assets/banners/plugins.svg" alt="Plugins" width="100%"></div>
+
+A `.pf` file is a JSON manifest plus JavaScript. It can add terminal dot-commands, global functions, audit rules and Lab Check checks. Open the Plugin Manager with `Ctrl+Shift+X`, enable a plugin, review the permissions it asks for (`topology`, `cli`, `files`, `raw`) and its SHA-1, and allow it. A plugin whose file changes stays off until you look at it again.
+
+```
+---
+{ "id": "vlan-report", "name": "VLAN Report", "version": "1.0.0", "permissions": [] }
+---
+plugin.command("vlans", "VLANs on every switch", function () {
+    return getDevices(["switch"]).map(function (name) {
+        return name + ": " + getVlans(name).map(function (v) { return v.id; }).join(", ");
+    }).join("\n");
+});
+```
+
+Ready plugins are in [`plugins`](plugins): `host-audit.pf`, `port-map.pf` and `config-tools.pf`. <table>
+<tr>
+<td><img src="assets/screenshots/plugins.png" alt="Plugin Manager"><br><sub>Plugin Manager and plugin commands in the terminal</sub></td>
+<td><img src="assets/screenshots/plugin-consent.png" alt="Consent dialog"><br><sub>Consent with permissions and SHA-1</sub></td>
+</tr>
+</table>
+
+Read the [plugin guide](docs/guides/plugins.md).
 
 ## Debugger
 
@@ -358,7 +384,7 @@ Bug reports, ideas and pull requests are welcome. Start with [CONTRIBUTING](CONT
 
 ## License
 
-PTForge is released under the [MIT License](LICENSE). The debugger uses [Acorn](https://github.com/acornjs/acorn) (MIT), see [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES.md).
+PTForge is released under the [MIT License](LICENSE). The debugger uses [Acorn](https://github.com/acornjs/acorn) (MIT), see [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES.md). Interface icons are [Codicons](https://github.com/microsoft/vscode-codicons) by Microsoft, licensed under [CC BY 4.0](assets/codicons/LICENSE).
 
 ## Acknowledgements
 

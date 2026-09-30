@@ -58,16 +58,16 @@ PTForge 用脚本代替点击。只需描述一次网络，按下 **Run**，Pack
 <br><sub>Packet Tracer 中的 PTForge 工作台：资源管理器、标签页、IntelliSense、Dark Modern 高亮和输出</sub>
 </div>
 
-## 1.2 新功能
+## 1.3 新功能
 
 |  |  |
 |---|---|
-| **JavaScript 终端** | `` Ctrl+` `` 打开一个类似 VS Code *New Terminal* 的终端。每一行都直接作用于当前拓扑，支持历史记录、Tab 补全以及 `.calc`、`.ping`、`.cli R1` 等点命令 |
-| **调试器** | `F5` 运行脚本并记录每一步。可在断点、条件断点和异常处暂停；支持单步跳过、单步进入、单步跳出和**后退**；查看 Variables、Watch 和 Call Stack，并在 Debug Console 中求值 |
-| **网络计算器** | IPv4 子网、子网划分、VLSM 规划、路由汇总、范围转 CIDR、通配符掩码、IPv6、EUI-64 和进制转换，都在一个编辑器标签页里 |
-| **连通性矩阵** | `pingAll()` 从每台路由器和交换机 ping 每个地址，并以彩色矩阵显示丢包率和往返时间 |
-| **快照与差异** | `takeSnapshot()` 保存设备、链路、地址、端口、电源状态和 running-config。比较两个快照并逐行查看配置差异 |
-| **Dark Modern** | 颜色、间距、标签页、面板和状态栏完全遵循 VS Code 的 Dark Modern 主题，调试时状态栏变为蓝色 |
+| **插件** | 把 `.pf` 文件放进插件文件夹，即可添加终端点命令、全局函数、审计规则和 Lab Check 检查。[`plugins`](../plugins) 中自带三个插件 |
+| **插件管理器** | `Ctrl+Shift+X` 列出每个插件的版本、权限和贡献内容。启用时需要你的同意，文件被修改的插件在你重新审核前保持关闭 |
+| **权限** | 插件默认只读，除非申请 `topology`、`cli`、`files` 或 `raw`。越权调用会给出清晰的错误 |
+| **Codicons** | 所有图标现已换成 VS Code 官方 Codicons (CC BY 4.0)，网格和尺寸与 VS Code 一致 |
+| **完整的主机信息** | `getPcIp()` 返回网关、DNS、MAC、IPv6、链路本地地址和链路状态。`getPortInfo()` 给出对端设备。终端完整显示深层对象和长数组 |
+| **后台 ping 与 traceroute** | `ping()`、`traceroute()` 和 `pingAll()` 会等待 Packet Tracer 完成，结果不再为零。`traceroute()` 返回每一跳 |
 
 ## 快速开始
 

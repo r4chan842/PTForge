@@ -1,10 +1,17 @@
 {
     "tagline": "用 JavaScript 构建、配置、调试并验证完整的 Cisco Packet Tracer 网络。",
-    "nav": ["快速开始", "安装", "文档", "API", "示例", "CCNA 地图"],
+    "nav": [
+        "快速开始",
+        "安装",
+        "文档",
+        "API",
+        "示例",
+        "CCNA 地图"
+    ],
     "note": "本文为译文，以[英文 README](README.md) 为准。",
     "headings": {
         "why": "为什么选择 PTForge",
-        "new": "1.2 新功能",
+        "new": "1.3 新功能",
         "quick": "快速开始",
         "taste": "快速示例",
         "features": "功能",
@@ -34,12 +41,30 @@
     ],
     "editorCaption": "Packet Tracer 中的 PTForge 工作台：资源管理器、标签页、IntelliSense、Dark Modern 高亮和输出",
     "news": [
-        ["JavaScript 终端", "`` Ctrl+` `` 打开一个类似 VS Code *New Terminal* 的终端。每一行都直接作用于当前拓扑，支持历史记录、Tab 补全以及 `.calc`、`.ping`、`.cli R1` 等点命令"],
-        ["调试器", "`F5` 运行脚本并记录每一步。可在断点、条件断点和异常处暂停；支持单步跳过、单步进入、单步跳出和**后退**；查看 Variables、Watch 和 Call Stack，并在 Debug Console 中求值"],
-        ["网络计算器", "IPv4 子网、子网划分、VLSM 规划、路由汇总、范围转 CIDR、通配符掩码、IPv6、EUI-64 和进制转换，都在一个编辑器标签页里"],
-        ["连通性矩阵", "`pingAll()` 从每台路由器和交换机 ping 每个地址，并以彩色矩阵显示丢包率和往返时间"],
-        ["快照与差异", "`takeSnapshot()` 保存设备、链路、地址、端口、电源状态和 running-config。比较两个快照并逐行查看配置差异"],
-        ["Dark Modern", "颜色、间距、标签页、面板和状态栏完全遵循 VS Code 的 Dark Modern 主题，调试时状态栏变为蓝色"]
+        [
+            "插件",
+            "把 `.pf` 文件放进插件文件夹，即可添加终端点命令、全局函数、审计规则和 Lab Check 检查。[`plugins`](plugins) 中自带三个插件"
+        ],
+        [
+            "插件管理器",
+            "`Ctrl+Shift+X` 列出每个插件的版本、权限和贡献内容。启用时需要你的同意，文件被修改的插件在你重新审核前保持关闭"
+        ],
+        [
+            "权限",
+            "插件默认只读，除非申请 `topology`、`cli`、`files` 或 `raw`。越权调用会给出清晰的错误"
+        ],
+        [
+            "Codicons",
+            "所有图标现已换成 VS Code 官方 Codicons (CC BY 4.0)，网格和尺寸与 VS Code 一致"
+        ],
+        [
+            "完整的主机信息",
+            "`getPcIp()` 返回网关、DNS、MAC、IPv6、链路本地地址和链路状态。`getPortInfo()` 给出对端设备。终端完整显示深层对象和长数组"
+        ],
+        [
+            "后台 ping 与 traceroute",
+            "`ping()`、`traceroute()` 和 `pingAll()` 会等待 Packet Tracer 完成，结果不再为零。`traceroute()` 返回每一跳"
+        ]
     ],
     "quick": [
         "下载[最新版本](https://github.com/r4chan842/PTForge/releases/latest)并按照[安装指南](docs/guides/installation.md)操作",
@@ -49,71 +74,218 @@
         "用 `auditNetwork()`、`pingAll()` 或 [Lab Check](docs/api/checks.md) 验证结果"
     ],
     "tasteAfter": "二十行代码即可得到一台路由器、一台交换机、四台已分配地址的 PC、一台启用 SSH 的加固路由器、VLAN、受保护的接入端口、带标签的拓扑图、一个已保存的基线快照以及完整的连通性测试。",
-    "featureHead": ["领域", "你可以做什么"],
+    "featureHead": [
+        "领域",
+        "你可以做什么"
+    ],
     "features": {
-        "devices": ["设备", "添加、删除、重命名、移动、重启、安装模块、读取端口、保存自定义数据、在物理工作区中放置设备"],
-        "links": ["链路", "任意线缆类型、删除链路、自动连接、列出邻居、检查链路状态"],
-        "hosts": ["主机", "静态或 DHCP IPv4、带 SLAAC 的 IPv6、网关、DNS、防火墙、命令提示符"],
-        "ios": ["Cisco IOS", "基础配置、密码、横幅、用户、接口、子接口、环回口、单臂路由、DHCP 地址池与中继、NTP、syslog、SNMP、CDP、LLDP、show 命令"],
-        "switching": ["交换", "VLAN、接入与语音端口、Trunk、DTP、EtherChannel（LACP、PAgP、静态、三层）、Rapid PVST+、PortFast、BPDU Guard、VTP、端口安全、DHCP Snooping、DAI"],
-        "routing": ["路由", "静态与浮动路由、OSPF、OSPFv3、EIGRP、IPv6 EIGRP、RIP、RIPng、BGP、重分发"],
-        "security": ["安全", "标准、扩展、命名和 IPv6 ACL，NAT、PAT、NAT 地址池、端口转发、SSH、登录锁定、结合 RADIUS 与 TACACS+ 的 AAA"],
-        "redundancy": ["冗余", "在单台路由器上或以主备对形式配置 HSRP"],
-        "servers": ["服务器", "DHCP、DNS（A、CNAME、NS）、HTTP、HTTPS、网页、FTP 用户、邮件账户、TFTP、syslog、RADIUS"],
-        "wireless": ["无线", "SSID、WPA2、WPA、WEP、射频模式、隐藏 SSID、MAC 过滤"],
-        "inspection": ["检查", "交换机端口状态、端口安全计数、VLAN 数据库、STP 根桥与根端口、VTP、静态 MAC、OSPF 与 EIGRP 进程"],
-        "reachability": ["连通性", "`pingAll`、`pingMatrix` 和 `reachability`，含丢包、往返时间和矩阵视图"],
-        "snapshots": ["快照", "`takeSnapshot`、`getSnapshots`、`compareSnapshots`、`showSnapshotDiff`，保存和加载快照文件，以及配置差异视图"],
-        "files": ["文件", "读写文本文件、从磁盘运行脚本、导出配置和拓扑、命令日志"],
-        "canvas": ["画布", "便签、直线、圆、矩形、箭头、虚线、区域、设备与链路标签、图层"],
-        "topology": ["拓扑", "星型、环型、线型、网状和 LAN 生成器，网格与圆形布局，VLSM 与 /30 规划器"],
-        "simulation": ["模拟", "模拟模式、PDU、协议过滤、单步执行、ping、traceroute"],
-        "labcheck": ["Lab Check", "带分数、提示和报告的评分检查：设备、线缆、地址、端口、主机名、VLAN、配置行、自定义测试"],
-        "audit": ["审计", "重复 IP、同一线缆两端的子网冲突、断开的链路、无地址主机、位于 VLAN 1 的接入端口、缺失的端口安全、未使用的开启端口"],
-        "batch": ["批处理", "`runOnAll(\"show ip int brief\")`、`runOnDevices`，以及能把 CLI 中输入的命令转换为可复用脚本的 `commandsToScript()`"],
-        "workspace": ["工作区", "缩放、背景、远程网络、打开和保存项目、工作区事件"]
+        "devices": [
+            "设备",
+            "添加、删除、重命名、移动、重启、安装模块、读取端口、保存自定义数据、在物理工作区中放置设备"
+        ],
+        "links": [
+            "链路",
+            "任意线缆类型、删除链路、自动连接、列出邻居、检查链路状态"
+        ],
+        "hosts": [
+            "主机",
+            "静态或 DHCP IPv4、带 SLAAC 的 IPv6、网关、DNS、防火墙、命令提示符"
+        ],
+        "ios": [
+            "Cisco IOS",
+            "基础配置、密码、横幅、用户、接口、子接口、环回口、单臂路由、DHCP 地址池与中继、NTP、syslog、SNMP、CDP、LLDP、show 命令"
+        ],
+        "switching": [
+            "交换",
+            "VLAN、接入与语音端口、Trunk、DTP、EtherChannel（LACP、PAgP、静态、三层）、Rapid PVST+、PortFast、BPDU Guard、VTP、端口安全、DHCP Snooping、DAI"
+        ],
+        "routing": [
+            "路由",
+            "静态与浮动路由、OSPF、OSPFv3、EIGRP、IPv6 EIGRP、RIP、RIPng、BGP、重分发"
+        ],
+        "security": [
+            "安全",
+            "标准、扩展、命名和 IPv6 ACL，NAT、PAT、NAT 地址池、端口转发、SSH、登录锁定、结合 RADIUS 与 TACACS+ 的 AAA"
+        ],
+        "redundancy": [
+            "冗余",
+            "在单台路由器上或以主备对形式配置 HSRP"
+        ],
+        "servers": [
+            "服务器",
+            "DHCP、DNS（A、CNAME、NS）、HTTP、HTTPS、网页、FTP 用户、邮件账户、TFTP、syslog、RADIUS"
+        ],
+        "wireless": [
+            "无线",
+            "SSID、WPA2、WPA、WEP、射频模式、隐藏 SSID、MAC 过滤"
+        ],
+        "inspection": [
+            "检查",
+            "交换机端口状态、端口安全计数、VLAN 数据库、STP 根桥与根端口、VTP、静态 MAC、OSPF 与 EIGRP 进程"
+        ],
+        "reachability": [
+            "连通性",
+            "`pingAll`、`pingMatrix` 和 `reachability`，含丢包、往返时间和矩阵视图"
+        ],
+        "snapshots": [
+            "快照",
+            "`takeSnapshot`、`getSnapshots`、`compareSnapshots`、`showSnapshotDiff`，保存和加载快照文件，以及配置差异视图"
+        ],
+        "files": [
+            "文件",
+            "读写文本文件、从磁盘运行脚本、导出配置和拓扑、命令日志"
+        ],
+        "canvas": [
+            "画布",
+            "便签、直线、圆、矩形、箭头、虚线、区域、设备与链路标签、图层"
+        ],
+        "topology": [
+            "拓扑",
+            "星型、环型、线型、网状和 LAN 生成器，网格与圆形布局，VLSM 与 /30 规划器"
+        ],
+        "simulation": [
+            "模拟",
+            "模拟模式、PDU、协议过滤、单步执行、ping、traceroute"
+        ],
+        "labcheck": [
+            "Lab Check",
+            "带分数、提示和报告的评分检查：设备、线缆、地址、端口、主机名、VLAN、配置行、自定义测试"
+        ],
+        "audit": [
+            "审计",
+            "重复 IP、同一线缆两端的子网冲突、断开的链路、无地址主机、位于 VLAN 1 的接入端口、缺失的端口安全、未使用的开启端口"
+        ],
+        "batch": [
+            "批处理",
+            "`runOnAll(\"show ip int brief\")`、`runOnDevices`，以及能把 CLI 中输入的命令转换为可复用脚本的 `commandsToScript()`"
+        ],
+        "workspace": [
+            "工作区",
+            "缩放、背景、远程网络、打开和保存项目、工作区事件"
+        ]
     },
     "buildNote": "每个 IOS 辅助函数都有一个 `build...` 孪生函数，它返回命令而不是发送命令，方便你查看、组合和复用配置。",
     "editorIntro": "工作台的外观和操作都与 VS Code 一致。它完全用纯 ES5 从零编写，因此可以在 Packet Tracer 的 web view 中运行，无需任何框架或网络访问。",
-    "partHead": ["部分", "说明"],
+    "partHead": [
+        "部分",
+        "说明"
+    ],
     "editorRows": [
-        ["菜单栏与命令面板", "File、Edit、Selection、View、Go、Run、Network、Terminal 和 Help 菜单。`Ctrl+Shift+P` 列出所有命令，`Ctrl+P` 跳转到文件，`Ctrl+G` 跳转到行"],
-        ["资源管理器", "打开的编辑器、保存在 Packet Tracer 中的脚本工作区，以及磁盘上的真实文件夹。新建、重命名、删除"],
-        ["文件", "Open、Save 和 Save As 使用 Packet Tracer 的文件对话框。可从剪贴板导入，也可导出为下载"],
-        ["标签页", "每个文件一个标签页，带修改标记，中键关闭，磁盘文件关闭前提示保存，每个标签页有独立的撤销历史"],
-        ["高亮", "Dark Modern 配色：注释 `#6A9955`、字符串 `#CE9178`、数字 `#B5CEA8`、关键字 `#569CD6` 和 `#C586C0`、函数 `#DCDCAA`、变量 `#9CDCFE`、PTForge 函数加粗 `#4FC1FF`、彩色括号配对"],
-        ["IntelliSense", "来自全部 388 个函数的建议，带签名和说明，以及文件中的单词和关键字。输入时显示参数提示"],
-        ["问题", "实时语法检查并定位到具体行，未知函数名提供 *Did you mean* 快速修复。波浪线、边栏标记和 Problems 面板"],
-        ["编辑", "自动闭合配对、智能回车、`Ctrl+/` 注释、`Alt+Up/Down` 移动行、`Shift+Alt+Down` 复制行、`Ctrl+Shift+K` 删除行、括号匹配"],
-        ["查找与替换", "`Ctrl+F` 和 `Ctrl+H`，支持区分大小写、全字匹配和正则表达式，全部替换只需一次撤销"],
-        ["面板", "Problems、Output、Debug Console、Terminal 和 Lab Check。可调整大小，`Ctrl+J` 隐藏"],
-        ["Devices 视图", "实时设备和端口，带链路指示灯和地址，一键使用快照和网络工具"],
-        ["状态栏", "问题数量、运行与调试状态、光标位置、缩放、与 Packet Tracer 的连接"]
+        [
+            "菜单栏与命令面板",
+            "File、Edit、Selection、View、Go、Run、Network、Terminal 和 Help 菜单。`Ctrl+Shift+P` 列出所有命令，`Ctrl+P` 跳转到文件，`Ctrl+G` 跳转到行"
+        ],
+        [
+            "资源管理器",
+            "打开的编辑器、保存在 Packet Tracer 中的脚本工作区，以及磁盘上的真实文件夹。新建、重命名、删除"
+        ],
+        [
+            "文件",
+            "Open、Save 和 Save As 使用 Packet Tracer 的文件对话框。可从剪贴板导入，也可导出为下载"
+        ],
+        [
+            "标签页",
+            "每个文件一个标签页，带修改标记，中键关闭，磁盘文件关闭前提示保存，每个标签页有独立的撤销历史"
+        ],
+        [
+            "高亮",
+            "Dark Modern 配色：注释 `#6A9955`、字符串 `#CE9178`、数字 `#B5CEA8`、关键字 `#569CD6` 和 `#C586C0`、函数 `#DCDCAA`、变量 `#9CDCFE`、PTForge 函数加粗 `#4FC1FF`、彩色括号配对"
+        ],
+        [
+            "IntelliSense",
+            "来自全部 388 个函数的建议，带签名和说明，以及文件中的单词和关键字。输入时显示参数提示"
+        ],
+        [
+            "问题",
+            "实时语法检查并定位到具体行，未知函数名提供 *Did you mean* 快速修复。波浪线、边栏标记和 Problems 面板"
+        ],
+        [
+            "编辑",
+            "自动闭合配对、智能回车、`Ctrl+/` 注释、`Alt+Up/Down` 移动行、`Shift+Alt+Down` 复制行、`Ctrl+Shift+K` 删除行、括号匹配"
+        ],
+        [
+            "查找与替换",
+            "`Ctrl+F` 和 `Ctrl+H`，支持区分大小写、全字匹配和正则表达式，全部替换只需一次撤销"
+        ],
+        [
+            "面板",
+            "Problems、Output、Debug Console、Terminal 和 Lab Check。可调整大小，`Ctrl+J` 隐藏"
+        ],
+        [
+            "Devices 视图",
+            "实时设备和端口，带链路指示灯和地址，一键使用快照和网络工具"
+        ],
+        [
+            "状态栏",
+            "问题数量、运行与调试状态、光标位置、缩放、与 Packet Tracer 的连接"
+        ]
     ],
     "shotLab": "Lab Check 报告与实时 Devices 视图",
     "shotPalette": "命令面板与函数参考",
     "shotProblems": "带快速修复的 Problems",
     "shotFind": "查找与替换",
     "terminalIntro": "`` Ctrl+` `` 打开 JavaScript 终端。每一行都会立即在 Packet Tracer 中执行并保留变量，因此你无需先写脚本，就能一步步探索和修改拓扑。",
-    "featureHead2": ["功能", "说明"],
+    "featureHead2": [
+        "功能",
+        "说明"
+    ],
     "terminalRows": [
-        ["直接求值", "任意表达式或语句；结果以易读的树形显示，错误显示为红色"],
-        ["补全", "`Tab` 补全 PTForge 函数、你的变量、关键字和点命令"],
-        ["历史", "`Up` 和 `Down` 浏览之前的命令，历史在会话之间保留"],
-        ["多个终端", "`+` 新建终端，下拉列表切换终端，垃圾桶关闭终端"],
-        ["点命令", "`.help`、`.clear`、`.devices`、`.ping`、`.trace`、`.show R1 show ip route`、在设备上执行 IOS 命令的 `.cli R1`、退出用 `.exit`、`.audit`、`.snap`、`.diff`、`.calc 10.1.2.3/20`、`.run file.js`、`.history`"]
+        [
+            "直接求值",
+            "任意表达式或语句；结果以易读的树形显示，错误显示为红色"
+        ],
+        [
+            "补全",
+            "`Tab` 补全 PTForge 函数、你的变量、关键字和点命令"
+        ],
+        [
+            "历史",
+            "`Up` 和 `Down` 浏览之前的命令，历史在会话之间保留"
+        ],
+        [
+            "多个终端",
+            "`+` 新建终端，下拉列表切换终端，垃圾桶关闭终端"
+        ],
+        [
+            "点命令",
+            "`.help`、`.clear`、`.devices`、`.ping`、`.trace`、`.show R1 show ip route`、在设备上执行 IOS 命令的 `.cli R1`、退出用 `.exit`、`.audit`、`.snap`、`.diff`、`.calc 10.1.2.3/20`、`.run file.js`、`.history`"
+        ]
     ],
     "terminalRead": "阅读[终端指南](docs/guides/terminal.md)。",
     "debuggerIntro": "`F5` 启动调试会话。PTForge 对脚本进行插桩，在 Packet Tracer 中运行一次并记录每一步，然后停在第一个断点。由于整个运行过程都已记录，你还可以**后退**。",
     "debuggerRows": [
-        ["断点", "点击边栏或按 `F9`。条件断点、命中次数、日志点、全部禁用或删除"],
-        ["异常", "在未捕获的异常处暂停并高亮该行"],
-        ["单步", "继续 `F5`、单步跳过 `F10`、单步进入 `F11`、单步跳出 `Shift+F11`、后退、重启 `Ctrl+Shift+F5`、停止 `Shift+F5`"],
-        ["Variables", "Local、Closure 和 Script 作用域，以可展开的树显示"],
-        ["Watch", "任意表达式，在每个记录的步骤上求值"],
-        ["Call Stack", "每个栈帧及其文件和行号。点击栈帧查看其变量"],
-        ["Debug Console", "在暂停的栈帧中对表达式求值"],
-        ["悬停", "在编辑器中悬停变量即可查看其值"]
+        [
+            "断点",
+            "点击边栏或按 `F9`。条件断点、命中次数、日志点、全部禁用或删除"
+        ],
+        [
+            "异常",
+            "在未捕获的异常处暂停并高亮该行"
+        ],
+        [
+            "单步",
+            "继续 `F5`、单步跳过 `F10`、单步进入 `F11`、单步跳出 `Shift+F11`、后退、重启 `Ctrl+Shift+F5`、停止 `Shift+F5`"
+        ],
+        [
+            "Variables",
+            "Local、Closure 和 Script 作用域，以可展开的树显示"
+        ],
+        [
+            "Watch",
+            "任意表达式，在每个记录的步骤上求值"
+        ],
+        [
+            "Call Stack",
+            "每个栈帧及其文件和行号。点击栈帧查看其变量"
+        ],
+        [
+            "Debug Console",
+            "在暂停的栈帧中对表达式求值"
+        ],
+        [
+            "悬停",
+            "在编辑器中悬停变量即可查看其值"
+        ]
     ],
     "debuggerRead": "阅读[调试器指南](docs/guides/debugger.md)。",
     "shotReach": "<code>pingAll()</code> 连通性矩阵",
@@ -133,7 +305,10 @@
     ],
     "installMore": "[安装指南](docs/guides/installation.md)详细介绍了每个步骤和更新方法。",
     "examplesIntro": "[`examples/`](examples/README.md) 中有 34 个完整实验，每个都从空白工作区开始：",
-    "exampleHead": ["文件夹", "实验"],
+    "exampleHead": [
+        "文件夹",
+        "实验"
+    ],
     "exampleRows": [
         "第一个网络、模块与串行链路、安全基础配置",
         "VLAN 与 Trunk、EtherChannel、STP 根桥、三层交换机",
@@ -150,25 +325,73 @@
         "连通性测试、用快照跟踪变更"
     ],
     "templates": "[`templates/`](templates/README.md) 提供了起步模板：空白实验、园区网、分支 WAN 和小型办公室。",
-    "docHead": ["章节", "内容"],
+    "docHead": [
+        "章节",
+        "内容"
+    ],
     "docRows": [
-        ["入门", "十分钟搭建第一个网络"],
-        ["编辑器指南", "工作区、文件、IntelliSense、问题"],
-        ["终端", "交互式 JavaScript 与设备 CLI"],
-        ["调试器", "断点、单步、变量与监视"],
-        ["网络工具", "计算器、连通性与快照"],
-        ["编写脚本", "结构、顺序、build 函数、速度"],
-        ["API 参考", "每个函数的参数、返回值和示例"],
-        ["实践指南", "园区交换、路由实验、边缘路由器、服务器、拓扑图"],
-        ["CCNA 主题地图", "CCNA 200-301 主题及对应的函数和示例"],
-        ["速查表", "IOS 到 PTForge、子网划分、编辑器快捷键"],
-        ["架构", "分层、运行时、编辑器桥接、调试器、测试"],
-        ["故障排除", "常见错误与解决方法"],
-        ["限制", "Packet Tracer API 不支持的内容"],
-        ["常见问题", "简短解答"]
+        [
+            "入门",
+            "十分钟搭建第一个网络"
+        ],
+        [
+            "编辑器指南",
+            "工作区、文件、IntelliSense、问题"
+        ],
+        [
+            "终端",
+            "交互式 JavaScript 与设备 CLI"
+        ],
+        [
+            "调试器",
+            "断点、单步、变量与监视"
+        ],
+        [
+            "网络工具",
+            "计算器、连通性与快照"
+        ],
+        [
+            "编写脚本",
+            "结构、顺序、build 函数、速度"
+        ],
+        [
+            "API 参考",
+            "每个函数的参数、返回值和示例"
+        ],
+        [
+            "实践指南",
+            "园区交换、路由实验、边缘路由器、服务器、拓扑图"
+        ],
+        [
+            "CCNA 主题地图",
+            "CCNA 200-301 主题及对应的函数和示例"
+        ],
+        [
+            "速查表",
+            "IOS 到 PTForge、子网划分、编辑器快捷键"
+        ],
+        [
+            "架构",
+            "分层、运行时、编辑器桥接、调试器、测试"
+        ],
+        [
+            "故障排除",
+            "常见错误与解决方法"
+        ],
+        [
+            "限制",
+            "Packet Tracer API 不支持的内容"
+        ],
+        [
+            "常见问题",
+            "简短解答"
+        ]
     ],
     "devIntro": "需要 Node.js 18 或更高版本。没有运行时依赖。",
-    "devHead": ["命令", "用途"],
+    "devHead": [
+        "命令",
+        "用途"
+    ],
     "devRows": [
         "运行全部测试",
         "重新构建 `release/ptforge.js`",

@@ -1,10 +1,17 @@
 {
     "tagline": "Komplette Cisco Packet Tracer Netzwerke mit JavaScript aufbauen, konfigurieren, debuggen und prüfen.",
-    "nav": ["Schnellstart", "Installation", "Dokumentation", "API", "Beispiele", "CCNA-Übersicht"],
+    "nav": [
+        "Schnellstart",
+        "Installation",
+        "Dokumentation",
+        "API",
+        "Beispiele",
+        "CCNA-Übersicht"
+    ],
     "note": "Dies ist eine Übersetzung. Maßgeblich ist die [englische README](README.md).",
     "headings": {
         "why": "Warum PTForge",
-        "new": "Neu in 1.2",
+        "new": "Neu in 1.3",
         "quick": "Schnellstart",
         "taste": "Ein kurzes Beispiel",
         "features": "Funktionen",
@@ -34,12 +41,30 @@
     ],
     "editorCaption": "Die PTForge-Workbench in Packet Tracer: Explorer, Tabs, IntelliSense, Dark-Modern-Hervorhebung und Ausgabe",
     "news": [
-        ["JavaScript-Terminal", "`` Ctrl+` `` öffnet ein Terminal wie *New Terminal* in VS Code. Jede Zeile läuft direkt gegen die offene Topologie, mit Verlauf, Tab-Vervollständigung und Punktbefehlen wie `.calc`, `.ping` und `.cli R1`"],
-        ["Debugger", "`F5` führt das Skript aus und zeichnet jeden Schritt auf. Anhalten an Breakpoints, bedingten Breakpoints und Ausnahmen, Schritt über, hinein, heraus und **zurück**, Variablen, Watch und Call Stack lesen und Ausdrücke in der Debug Console auswerten"],
-        ["Netzwerkrechner", "IPv4-Subnetz, Subnetz-Aufteilung, VLSM-Planer, Routen-Zusammenfassung, Bereich zu CIDR, Wildcard-Masken, IPv6, EUI-64 und Zahlenumrechnung in einem Editor-Tab"],
-        ["Erreichbarkeitsmatrix", "`pingAll()` pingt jede Adresse von jedem Router und Switch und zeigt eine farbige Matrix mit Verlust und Umlaufzeiten"],
-        ["Snapshots und Diff", "`takeSnapshot()` speichert Geräte, Links, Adressen, Ports, Stromzustand und Running-Configs. Zwei Snapshots vergleichen und die Konfiguration zeilenweise gegenüberstellen"],
-        ["Dark Modern", "Farben, Abstände, Tabs, Panels und Statusleiste folgen exakt dem VS Code Theme Dark Modern, beim Debuggen wird die Statusleiste blau"]
+        [
+            "Plugins",
+            "`.pf`-Dateien im Plugin-Ordner fügen Terminal-Punktbefehle, globale Funktionen, Audit-Regeln und Lab-Check-Prüfungen hinzu. Drei fertige Plugins liegen in [`plugins`](plugins)"
+        ],
+        [
+            "Plugin-Manager",
+            "`Ctrl+Shift+X` zeigt jedes Plugin mit Version, Berechtigungen und Beiträgen. Aktivieren fragt nach Zustimmung, und ein geändertes Plugin bleibt aus, bis Sie es prüfen"
+        ],
+        [
+            "Berechtigungen",
+            "Plugins dürfen nur lesen, außer sie verlangen `topology`, `cli`, `files` oder `raw`. Aufrufe außerhalb der Berechtigungen scheitern mit klarer Meldung"
+        ],
+        [
+            "Codicons",
+            "Alle Symbole sind jetzt offizielle VS-Code-Codicons (CC BY 4.0) im gleichen Raster und in gleichen Größen"
+        ],
+        [
+            "Vollständige Host-Details",
+            "`getPcIp()` liefert Gateway, DNS, MAC, IPv6, Link-Local und Link-Status. `getPortInfo()` nennt das Gerät am anderen Ende. Das Terminal zeigt tiefe Objekte und lange Arrays vollständig"
+        ],
+        [
+            "Ping und Traceroute im Hintergrund",
+            "`ping()`, `traceroute()` und `pingAll()` warten auf Packet Tracer, Ergebnisse sind nie mehr null. `traceroute()` liefert jeden Hop"
+        ]
     ],
     "quick": [
         "Laden Sie das [neueste Release](https://github.com/r4chan842/PTForge/releases/latest) herunter und folgen Sie der [Installationsanleitung](docs/guides/installation.md)",
@@ -49,71 +74,218 @@
         "Prüfen Sie das Ergebnis mit `auditNetwork()`, `pingAll()` oder einem [Lab Check](docs/api/checks.md)"
     ],
     "tasteAfter": "Zwanzig Zeilen ergeben einen Router, einen Switch, vier adressierte PCs, einen gehärteten Router mit SSH, VLANs, gesicherte Access-Ports, ein beschriftetes Diagramm, eine gespeicherte Ausgangslage und einen vollständigen Erreichbarkeitstest.",
-    "featureHead": ["Bereich", "Was Sie tun können"],
+    "featureHead": [
+        "Bereich",
+        "Was Sie tun können"
+    ],
     "features": {
-        "devices": ["Geräte", "Hinzufügen, entfernen, umbenennen, verschieben, neu starten, Module einbauen, Ports lesen, eigene Daten speichern, Geräte im physischen Arbeitsbereich platzieren"],
-        "links": ["Links", "Jeder Kabeltyp, Links löschen, automatisch verbinden, Nachbarn auflisten, Link-Status prüfen"],
-        "hosts": ["Hosts", "Statisches oder DHCP-IPv4, IPv6 mit SLAAC, Gateway, DNS, Firewall, Eingabeaufforderung"],
-        "ios": ["Cisco IOS", "Grundeinrichtung, Passwörter, Banner, Benutzer, Interfaces, Subinterfaces, Loopbacks, Router on a Stick, DHCP-Pools und Relay, NTP, Syslog, SNMP, CDP, LLDP, Show-Befehle"],
-        "switching": ["Switching", "VLANs, Access- und Voice-Ports, Trunks, DTP, EtherChannel (LACP, PAgP, statisch, Layer 3), Rapid PVST+, PortFast, BPDU Guard, VTP, Port Security, DHCP Snooping, DAI"],
-        "routing": ["Routing", "Statische und Floating-Routen, OSPF, OSPFv3, EIGRP, EIGRP für IPv6, RIP, RIPng, BGP, Redistribution"],
-        "security": ["Sicherheit", "Standard-, erweiterte, benannte und IPv6-ACLs, NAT, PAT, NAT-Pools, Portweiterleitung, SSH, Login-Sperre, AAA mit RADIUS und TACACS+"],
-        "redundancy": ["Redundanz", "HSRP auf einem Router oder als Active- und Standby-Paar"],
-        "servers": ["Server", "DHCP, DNS (A, CNAME, NS), HTTP, HTTPS, Webseiten, FTP-Benutzer, E-Mail-Konten, TFTP, Syslog, RADIUS"],
-        "wireless": ["WLAN", "SSID, WPA2, WPA, WEP, Funkmodus, versteckte SSID, MAC-Filter"],
-        "inspection": ["Inspektion", "Switch-Port-Status, Port-Security-Zähler, VLAN-Datenbank, STP-Root und Root-Ports, VTP, statische MACs, OSPF- und EIGRP-Prozesse"],
-        "reachability": ["Erreichbarkeit", "`pingAll`, `pingMatrix` und `reachability` mit Verlust, Umlaufzeiten und Matrixansicht"],
-        "snapshots": ["Snapshots", "`takeSnapshot`, `getSnapshots`, `compareSnapshots`, `showSnapshotDiff`, Snapshot-Dateien speichern und laden sowie eine Konfigurations-Diff-Ansicht"],
-        "files": ["Dateien", "Textdateien lesen und schreiben, Skripte von der Festplatte ausführen, Konfigurationen und Topologie exportieren, Befehlsprotokoll"],
-        "canvas": ["Zeichenfläche", "Notizen, Linien, Kreise, Rechtecke, Pfeile, gestrichelte Linien, Zonen, Geräte- und Link-Beschriftungen, Ebenen"],
-        "topology": ["Topologie", "Generatoren für Stern, Ring, Linie, Vermaschung und LAN, Raster- und Kreisanordnung, VLSM- und /30-Planer"],
-        "simulation": ["Simulation", "Simulationsmodus, PDUs, Protokollfilter, schrittweise Ausführung, Ping, Traceroute"],
-        "labcheck": ["Lab Check", "Bewertete Prüfungen mit Punkten, Hinweisen und Bericht: Geräte, Kabel, Adressen, Ports, Hostnamen, VLANs, Konfigurationszeilen, eigene Tests"],
-        "audit": ["Audit", "Doppelte IPs, Subnetz-Konflikte über Kabel, ausgefallene Links, Hosts ohne Adresse, Access-Ports in VLAN 1, fehlende Port Security, ungenutzte aktive Ports"],
-        "batch": ["Stapel", "`runOnAll(\"show ip int brief\")`, `runOnDevices` und `commandsToScript()`, das in der CLI getippte Befehle in ein wiederverwendbares Skript umwandelt"],
-        "workspace": ["Arbeitsbereich", "Zoom, Hintergrund, Remote-Netzwerke, Projekte öffnen und speichern, Arbeitsbereich-Ereignisse"]
+        "devices": [
+            "Geräte",
+            "Hinzufügen, entfernen, umbenennen, verschieben, neu starten, Module einbauen, Ports lesen, eigene Daten speichern, Geräte im physischen Arbeitsbereich platzieren"
+        ],
+        "links": [
+            "Links",
+            "Jeder Kabeltyp, Links löschen, automatisch verbinden, Nachbarn auflisten, Link-Status prüfen"
+        ],
+        "hosts": [
+            "Hosts",
+            "Statisches oder DHCP-IPv4, IPv6 mit SLAAC, Gateway, DNS, Firewall, Eingabeaufforderung"
+        ],
+        "ios": [
+            "Cisco IOS",
+            "Grundeinrichtung, Passwörter, Banner, Benutzer, Interfaces, Subinterfaces, Loopbacks, Router on a Stick, DHCP-Pools und Relay, NTP, Syslog, SNMP, CDP, LLDP, Show-Befehle"
+        ],
+        "switching": [
+            "Switching",
+            "VLANs, Access- und Voice-Ports, Trunks, DTP, EtherChannel (LACP, PAgP, statisch, Layer 3), Rapid PVST+, PortFast, BPDU Guard, VTP, Port Security, DHCP Snooping, DAI"
+        ],
+        "routing": [
+            "Routing",
+            "Statische und Floating-Routen, OSPF, OSPFv3, EIGRP, EIGRP für IPv6, RIP, RIPng, BGP, Redistribution"
+        ],
+        "security": [
+            "Sicherheit",
+            "Standard-, erweiterte, benannte und IPv6-ACLs, NAT, PAT, NAT-Pools, Portweiterleitung, SSH, Login-Sperre, AAA mit RADIUS und TACACS+"
+        ],
+        "redundancy": [
+            "Redundanz",
+            "HSRP auf einem Router oder als Active- und Standby-Paar"
+        ],
+        "servers": [
+            "Server",
+            "DHCP, DNS (A, CNAME, NS), HTTP, HTTPS, Webseiten, FTP-Benutzer, E-Mail-Konten, TFTP, Syslog, RADIUS"
+        ],
+        "wireless": [
+            "WLAN",
+            "SSID, WPA2, WPA, WEP, Funkmodus, versteckte SSID, MAC-Filter"
+        ],
+        "inspection": [
+            "Inspektion",
+            "Switch-Port-Status, Port-Security-Zähler, VLAN-Datenbank, STP-Root und Root-Ports, VTP, statische MACs, OSPF- und EIGRP-Prozesse"
+        ],
+        "reachability": [
+            "Erreichbarkeit",
+            "`pingAll`, `pingMatrix` und `reachability` mit Verlust, Umlaufzeiten und Matrixansicht"
+        ],
+        "snapshots": [
+            "Snapshots",
+            "`takeSnapshot`, `getSnapshots`, `compareSnapshots`, `showSnapshotDiff`, Snapshot-Dateien speichern und laden sowie eine Konfigurations-Diff-Ansicht"
+        ],
+        "files": [
+            "Dateien",
+            "Textdateien lesen und schreiben, Skripte von der Festplatte ausführen, Konfigurationen und Topologie exportieren, Befehlsprotokoll"
+        ],
+        "canvas": [
+            "Zeichenfläche",
+            "Notizen, Linien, Kreise, Rechtecke, Pfeile, gestrichelte Linien, Zonen, Geräte- und Link-Beschriftungen, Ebenen"
+        ],
+        "topology": [
+            "Topologie",
+            "Generatoren für Stern, Ring, Linie, Vermaschung und LAN, Raster- und Kreisanordnung, VLSM- und /30-Planer"
+        ],
+        "simulation": [
+            "Simulation",
+            "Simulationsmodus, PDUs, Protokollfilter, schrittweise Ausführung, Ping, Traceroute"
+        ],
+        "labcheck": [
+            "Lab Check",
+            "Bewertete Prüfungen mit Punkten, Hinweisen und Bericht: Geräte, Kabel, Adressen, Ports, Hostnamen, VLANs, Konfigurationszeilen, eigene Tests"
+        ],
+        "audit": [
+            "Audit",
+            "Doppelte IPs, Subnetz-Konflikte über Kabel, ausgefallene Links, Hosts ohne Adresse, Access-Ports in VLAN 1, fehlende Port Security, ungenutzte aktive Ports"
+        ],
+        "batch": [
+            "Stapel",
+            "`runOnAll(\"show ip int brief\")`, `runOnDevices` und `commandsToScript()`, das in der CLI getippte Befehle in ein wiederverwendbares Skript umwandelt"
+        ],
+        "workspace": [
+            "Arbeitsbereich",
+            "Zoom, Hintergrund, Remote-Netzwerke, Projekte öffnen und speichern, Arbeitsbereich-Ereignisse"
+        ]
     },
     "buildNote": "Jede IOS-Hilfsfunktion hat einen `build...`-Zwilling, der die Befehle zurückgibt statt sie zu senden, sodass Sie Konfiguration ansehen, kombinieren und wiederverwenden können.",
     "editorIntro": "Die Workbench sieht aus und verhält sich wie VS Code. Sie ist von Grund auf in reinem ES5 geschrieben und läuft deshalb in der Packet Tracer Web-View ohne Framework und ohne Netzwerkzugriff.",
-    "partHead": ["Teil", "Beschreibung"],
+    "partHead": [
+        "Teil",
+        "Beschreibung"
+    ],
     "editorRows": [
-        ["Menüleiste und Befehlspalette", "Menüs File, Edit, Selection, View, Go, Run, Network, Terminal und Help. `Ctrl+Shift+P` listet alle Befehle, `Ctrl+P` springt zu einer Datei, `Ctrl+G` zu einer Zeile"],
-        ["Explorer", "Offene Editoren, ein Arbeitsbereich mit in Packet Tracer gespeicherten Skripten und ein echter Ordner von der Festplatte. Neu, umbenennen, löschen"],
-        ["Dateien", "Open, Save und Save As nutzen die Dateidialoge von Packet Tracer. Import aus der Zwischenablage, Export als Download"],
-        ["Tabs", "Ein Tab pro Datei mit Änderungspunkt, Schließen per Mittelklick, Speichern-Abfrage für Dateien auf der Festplatte, eigener Undo-Verlauf je Tab"],
-        ["Hervorhebung", "Dark-Modern-Farben: Kommentare `#6A9955`, Strings `#CE9178`, Zahlen `#B5CEA8`, Schlüsselwörter `#569CD6` und `#C586C0`, Funktionen `#DCDCAA`, Variablen `#9CDCFE`, PTForge-Funktionen fett `#4FC1FF`, farbige Klammerpaare"],
-        ["IntelliSense", "Vorschläge aus allen 388 Funktionen mit Signatur und Beschreibung, Wörter aus der Datei, Schlüsselwörter. Parameterhinweise beim Tippen"],
-        ["Problems", "Live-Syntaxprüfung mit genauer Zeile, unbekannte Funktionsnamen mit Schnellkorrektur *Did you mean*. Wellenlinien, Randmarkierungen und Problems-Panel"],
-        ["Bearbeiten", "Automatisch schließende Paare, intelligentes Enter, `Ctrl+/` Kommentar, `Alt+Up/Down` Zeile verschieben, `Shift+Alt+Down` Zeile kopieren, `Ctrl+Shift+K` Zeile löschen, Klammerabgleich"],
-        ["Suchen und Ersetzen", "`Ctrl+F` und `Ctrl+H` mit Groß-/Kleinschreibung, ganzem Wort und regulären Ausdrücken, Alles ersetzen in einem Undo-Schritt"],
-        ["Panel", "Problems, Output, Debug Console, Terminal und Lab Check. Größe änderbar, `Ctrl+J` blendet es aus"],
-        ["Devices-Ansicht", "Live-Geräte und Ports mit Link-LEDs und Adressen, Snapshots und Netzwerk-Werkzeuge mit einem Klick"],
-        ["Statusleiste", "Anzahl Probleme, Ausführungs- und Debug-Status, Cursorposition, Zoom, Verbindung zu Packet Tracer"]
+        [
+            "Menüleiste und Befehlspalette",
+            "Menüs File, Edit, Selection, View, Go, Run, Network, Terminal und Help. `Ctrl+Shift+P` listet alle Befehle, `Ctrl+P` springt zu einer Datei, `Ctrl+G` zu einer Zeile"
+        ],
+        [
+            "Explorer",
+            "Offene Editoren, ein Arbeitsbereich mit in Packet Tracer gespeicherten Skripten und ein echter Ordner von der Festplatte. Neu, umbenennen, löschen"
+        ],
+        [
+            "Dateien",
+            "Open, Save und Save As nutzen die Dateidialoge von Packet Tracer. Import aus der Zwischenablage, Export als Download"
+        ],
+        [
+            "Tabs",
+            "Ein Tab pro Datei mit Änderungspunkt, Schließen per Mittelklick, Speichern-Abfrage für Dateien auf der Festplatte, eigener Undo-Verlauf je Tab"
+        ],
+        [
+            "Hervorhebung",
+            "Dark-Modern-Farben: Kommentare `#6A9955`, Strings `#CE9178`, Zahlen `#B5CEA8`, Schlüsselwörter `#569CD6` und `#C586C0`, Funktionen `#DCDCAA`, Variablen `#9CDCFE`, PTForge-Funktionen fett `#4FC1FF`, farbige Klammerpaare"
+        ],
+        [
+            "IntelliSense",
+            "Vorschläge aus allen 388 Funktionen mit Signatur und Beschreibung, Wörter aus der Datei, Schlüsselwörter. Parameterhinweise beim Tippen"
+        ],
+        [
+            "Problems",
+            "Live-Syntaxprüfung mit genauer Zeile, unbekannte Funktionsnamen mit Schnellkorrektur *Did you mean*. Wellenlinien, Randmarkierungen und Problems-Panel"
+        ],
+        [
+            "Bearbeiten",
+            "Automatisch schließende Paare, intelligentes Enter, `Ctrl+/` Kommentar, `Alt+Up/Down` Zeile verschieben, `Shift+Alt+Down` Zeile kopieren, `Ctrl+Shift+K` Zeile löschen, Klammerabgleich"
+        ],
+        [
+            "Suchen und Ersetzen",
+            "`Ctrl+F` und `Ctrl+H` mit Groß-/Kleinschreibung, ganzem Wort und regulären Ausdrücken, Alles ersetzen in einem Undo-Schritt"
+        ],
+        [
+            "Panel",
+            "Problems, Output, Debug Console, Terminal und Lab Check. Größe änderbar, `Ctrl+J` blendet es aus"
+        ],
+        [
+            "Devices-Ansicht",
+            "Live-Geräte und Ports mit Link-LEDs und Adressen, Snapshots und Netzwerk-Werkzeuge mit einem Klick"
+        ],
+        [
+            "Statusleiste",
+            "Anzahl Probleme, Ausführungs- und Debug-Status, Cursorposition, Zoom, Verbindung zu Packet Tracer"
+        ]
     ],
     "shotLab": "Lab-Check-Bericht und Live-Ansicht Devices",
     "shotPalette": "Befehlspalette und Funktionsreferenz",
     "shotProblems": "Problems mit Schnellkorrektur",
     "shotFind": "Suchen und Ersetzen",
     "terminalIntro": "`` Ctrl+` `` öffnet ein JavaScript-Terminal. Jede Zeile läuft sofort in Packet Tracer und behält ihre Variablen, so können Sie eine Topologie Schritt für Schritt erkunden und ändern, ohne zuerst ein Skript zu schreiben.",
-    "featureHead2": ["Funktion", "Beschreibung"],
+    "featureHead2": [
+        "Funktion",
+        "Beschreibung"
+    ],
     "terminalRows": [
-        ["Direkte Auswertung", "Beliebige Ausdrücke und Anweisungen, Ergebnisse als lesbare Bäume, Fehler in Rot"],
-        ["Vervollständigung", "`Tab` ergänzt PTForge-Funktionen, eigene Variablen, Schlüsselwörter und Punktbefehle"],
-        ["Verlauf", "`Up` und `Down` blättern durch frühere Befehle, die zwischen Sitzungen gespeichert werden"],
-        ["Mehrere Terminals", "`+` öffnet ein weiteres Terminal, die Liste wechselt zwischen ihnen, der Papierkorb schließt eines"],
-        ["Punktbefehle", "`.help`, `.clear`, `.devices`, `.ping`, `.trace`, `.show R1 show ip route`, `.cli R1` für IOS-Befehle auf einem Gerät, `.exit` zum Verlassen, `.audit`, `.snap`, `.diff`, `.calc 10.1.2.3/20`, `.run file.js`, `.history`"]
+        [
+            "Direkte Auswertung",
+            "Beliebige Ausdrücke und Anweisungen, Ergebnisse als lesbare Bäume, Fehler in Rot"
+        ],
+        [
+            "Vervollständigung",
+            "`Tab` ergänzt PTForge-Funktionen, eigene Variablen, Schlüsselwörter und Punktbefehle"
+        ],
+        [
+            "Verlauf",
+            "`Up` und `Down` blättern durch frühere Befehle, die zwischen Sitzungen gespeichert werden"
+        ],
+        [
+            "Mehrere Terminals",
+            "`+` öffnet ein weiteres Terminal, die Liste wechselt zwischen ihnen, der Papierkorb schließt eines"
+        ],
+        [
+            "Punktbefehle",
+            "`.help`, `.clear`, `.devices`, `.ping`, `.trace`, `.show R1 show ip route`, `.cli R1` für IOS-Befehle auf einem Gerät, `.exit` zum Verlassen, `.audit`, `.snap`, `.diff`, `.calc 10.1.2.3/20`, `.run file.js`, `.history`"
+        ]
     ],
     "terminalRead": "Lesen Sie die [Terminal-Anleitung](docs/guides/terminal.md).",
     "debuggerIntro": "`F5` startet eine Debug-Sitzung. PTForge instrumentiert das Skript, führt es einmal in Packet Tracer aus, zeichnet jeden Schritt auf und hält dann am ersten Breakpoint an. Da der gesamte Lauf aufgezeichnet ist, können Sie auch **rückwärts** gehen.",
     "debuggerRows": [
-        ["Breakpoints", "Klick auf den Rand oder `F9`. Bedingte Breakpoints, Trefferzahlen, Logpoints, alle deaktivieren oder entfernen"],
-        ["Ausnahmen", "Anhalten bei nicht abgefangenen Ausnahmen mit hervorgehobener Zeile"],
-        ["Schritte", "Fortsetzen `F5`, Schritt über `F10`, hinein `F11`, heraus `Shift+F11`, zurück, Neustart `Ctrl+Shift+F5`, Stopp `Shift+F5`"],
-        ["Variablen", "Local-, Closure- und Script-Bereiche als aufklappbare Bäume"],
-        ["Watch", "Beliebige Ausdrücke, ausgewertet bei jedem aufgezeichneten Schritt"],
-        ["Call Stack", "Jeder Frame mit Datei und Zeile. Klick auf einen Frame zeigt seine Variablen"],
-        ["Debug Console", "Ausdrücke im angehaltenen Frame auswerten"],
-        ["Hover", "Mauszeiger auf eine Variable im Editor zeigt ihren Wert"]
+        [
+            "Breakpoints",
+            "Klick auf den Rand oder `F9`. Bedingte Breakpoints, Trefferzahlen, Logpoints, alle deaktivieren oder entfernen"
+        ],
+        [
+            "Ausnahmen",
+            "Anhalten bei nicht abgefangenen Ausnahmen mit hervorgehobener Zeile"
+        ],
+        [
+            "Schritte",
+            "Fortsetzen `F5`, Schritt über `F10`, hinein `F11`, heraus `Shift+F11`, zurück, Neustart `Ctrl+Shift+F5`, Stopp `Shift+F5`"
+        ],
+        [
+            "Variablen",
+            "Local-, Closure- und Script-Bereiche als aufklappbare Bäume"
+        ],
+        [
+            "Watch",
+            "Beliebige Ausdrücke, ausgewertet bei jedem aufgezeichneten Schritt"
+        ],
+        [
+            "Call Stack",
+            "Jeder Frame mit Datei und Zeile. Klick auf einen Frame zeigt seine Variablen"
+        ],
+        [
+            "Debug Console",
+            "Ausdrücke im angehaltenen Frame auswerten"
+        ],
+        [
+            "Hover",
+            "Mauszeiger auf eine Variable im Editor zeigt ihren Wert"
+        ]
     ],
     "debuggerRead": "Lesen Sie die [Debugger-Anleitung](docs/guides/debugger.md).",
     "shotReach": "Erreichbarkeitsmatrix aus <code>pingAll()</code>",
@@ -133,7 +305,10 @@
     ],
     "installMore": "Die [Installationsanleitung](docs/guides/installation.md) beschreibt jeden Schritt und Updates.",
     "examplesIntro": "34 vollständige Labs in [`examples/`](examples/README.md), jedes beginnt mit einem leeren Arbeitsbereich:",
-    "exampleHead": ["Ordner", "Labs"],
+    "exampleHead": [
+        "Ordner",
+        "Labs"
+    ],
     "exampleRows": [
         "Erstes Netzwerk, Module und serielle Links, sichere Grundkonfiguration",
         "VLANs und Trunks, EtherChannel, STP-Root, Layer-3-Switch",
@@ -150,25 +325,73 @@
         "Erreichbarkeitstest, Änderungsverfolgung mit Snapshots"
     ],
     "templates": "Ausgangspunkte für eigene Arbeiten liegen in [`templates/`](templates/README.md): leeres Lab, Campus, Filial-WAN und kleines Büro.",
-    "docHead": ["Abschnitt", "Inhalt"],
+    "docHead": [
+        "Abschnitt",
+        "Inhalt"
+    ],
     "docRows": [
-        ["Erste Schritte", "Ihr erstes Netzwerk in zehn Minuten"],
-        ["Editor-Anleitung", "Arbeitsbereich, Dateien, IntelliSense, Probleme"],
-        ["Terminal", "Interaktives JavaScript und Geräte-CLI"],
-        ["Debugger", "Breakpoints, Schritte, Variablen und Watch"],
-        ["Netzwerk-Werkzeuge", "Rechner, Erreichbarkeit und Snapshots"],
-        ["Skripte schreiben", "Aufbau, Reihenfolge, Builder, Geschwindigkeit"],
-        ["API-Referenz", "Jede Funktion mit Argumenten, Rückgabewerten und Beispielen"],
-        ["Rezepte", "Campus-Switching, Routing-Labs, Edge-Router, Server, Diagramme"],
-        ["CCNA-Themenübersicht", "Themen von CCNA 200-301 mit passenden Funktionen und Beispielen"],
-        ["Spickzettel", "IOS zu PTForge, Subnetting, Editor-Tasten"],
-        ["Architektur", "Schichten, Laufzeit, Editor-Brücke, Debugger, Tests"],
-        ["Fehlerbehebung", "Häufige Fehler und Lösungen"],
-        ["Einschränkungen", "Was die Packet Tracer API nicht erlaubt"],
-        ["FAQ", "Kurze Antworten"]
+        [
+            "Erste Schritte",
+            "Ihr erstes Netzwerk in zehn Minuten"
+        ],
+        [
+            "Editor-Anleitung",
+            "Arbeitsbereich, Dateien, IntelliSense, Probleme"
+        ],
+        [
+            "Terminal",
+            "Interaktives JavaScript und Geräte-CLI"
+        ],
+        [
+            "Debugger",
+            "Breakpoints, Schritte, Variablen und Watch"
+        ],
+        [
+            "Netzwerk-Werkzeuge",
+            "Rechner, Erreichbarkeit und Snapshots"
+        ],
+        [
+            "Skripte schreiben",
+            "Aufbau, Reihenfolge, Builder, Geschwindigkeit"
+        ],
+        [
+            "API-Referenz",
+            "Jede Funktion mit Argumenten, Rückgabewerten und Beispielen"
+        ],
+        [
+            "Rezepte",
+            "Campus-Switching, Routing-Labs, Edge-Router, Server, Diagramme"
+        ],
+        [
+            "CCNA-Themenübersicht",
+            "Themen von CCNA 200-301 mit passenden Funktionen und Beispielen"
+        ],
+        [
+            "Spickzettel",
+            "IOS zu PTForge, Subnetting, Editor-Tasten"
+        ],
+        [
+            "Architektur",
+            "Schichten, Laufzeit, Editor-Brücke, Debugger, Tests"
+        ],
+        [
+            "Fehlerbehebung",
+            "Häufige Fehler und Lösungen"
+        ],
+        [
+            "Einschränkungen",
+            "Was die Packet Tracer API nicht erlaubt"
+        ],
+        [
+            "FAQ",
+            "Kurze Antworten"
+        ]
     ],
     "devIntro": "Benötigt Node.js 18 oder neuer. Es gibt keine Laufzeitabhängigkeiten.",
-    "devHead": ["Befehl", "Zweck"],
+    "devHead": [
+        "Befehl",
+        "Zweck"
+    ],
     "devRows": [
         "Alle Tests ausführen",
         "`release/ptforge.js` neu bauen",

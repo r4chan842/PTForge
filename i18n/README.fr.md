@@ -58,16 +58,16 @@ PTForge remplace les clics par un script. Vous décrivez le réseau une fois, ap
 <br><sub>L'atelier PTForge dans Packet Tracer : explorateur, onglets, IntelliSense, coloration Dark Modern et sortie</sub>
 </div>
 
-## Nouveautés de la 1.2
+## Nouveautés de la 1.3
 
 |  |  |
 |---|---|
-| **Terminal JavaScript** | `` Ctrl+` `` ouvre un terminal comme *New Terminal* de VS Code. Chaque ligne s'exécute directement sur la topologie ouverte, avec historique, complétion par Tab et commandes pointées comme `.calc`, `.ping` et `.cli R1` |
-| **Débogueur** | `F5` exécute le script en enregistrant chaque étape. Arrêt sur points d'arrêt, conditions et exceptions ; pas à pas principal, détaillé, sortant et **arrière** ; lecture de Variables, Watch et Call Stack, évaluation d'expressions dans la Debug Console |
-| **Calculatrice réseau** | Sous-réseau IPv4, découpage, planificateur VLSM, agrégation de routes, plage vers CIDR, masques génériques, IPv6, EUI-64 et conversion de bases dans un onglet de l'éditeur |
-| **Matrice d'accessibilité** | `pingAll()` pingue chaque adresse depuis chaque routeur et commutateur et affiche une matrice colorée avec pertes et temps aller-retour |
-| **Snapshots et diff** | `takeSnapshot()` enregistre équipements, liens, adresses, ports, état d'alimentation et running-config. Comparez deux snapshots et voyez la configuration ligne par ligne |
-| **Dark Modern** | Couleurs, espacements, onglets, panneaux et barre d'état suivent exactement le thème Dark Modern de VS Code ; la barre d'état devient bleue pendant le débogage |
+| **Plugins** | Déposez des fichiers `.pf` dans le dossier des plugins pour ajouter des commandes point, des fonctions globales, des règles d'audit et des vérifications Lab Check. Trois plugins sont fournis dans [`plugins`](../plugins) |
+| **Gestionnaire de plugins** | `Ctrl+Shift+X` liste chaque plugin avec sa version, ses permissions et ses apports. L'activation demande votre accord, et un plugin modifié reste désactivé jusqu'à votre revue |
+| **Permissions** | Les plugins sont en lecture seule sauf s'ils demandent `topology`, `cli`, `files` ou `raw`. Tout appel hors permissions échoue avec un message clair |
+| **Codicons** | Toutes les icônes sont désormais les Codicons officielles de VS Code (CC BY 4.0), sur la même grille et aux mêmes tailles |
+| **Détails complets des hôtes** | `getPcIp()` renvoie passerelle, DNS, MAC, IPv6, link-local et état du lien. `getPortInfo()` nomme l'équipement à l'autre bout. Le terminal affiche en entier les objets profonds et les longs tableaux |
+| **Ping et traceroute en arrière-plan** | `ping()`, `traceroute()` et `pingAll()` attendent la fin de Packet Tracer, les résultats ne sont plus jamais à zéro. `traceroute()` renvoie chaque saut |
 
 ## Démarrage rapide
 

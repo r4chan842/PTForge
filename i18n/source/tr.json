@@ -1,10 +1,17 @@
 {
     "tagline": "Eksiksiz Cisco Packet Tracer ağlarını JavaScript ile kurun, yapılandırın, hata ayıklayın ve doğrulayın.",
-    "nav": ["Hızlı başlangıç", "Kurulum", "Belgeler", "API", "Örnekler", "CCNA haritası"],
+    "nav": [
+        "Hızlı başlangıç",
+        "Kurulum",
+        "Belgeler",
+        "API",
+        "Örnekler",
+        "CCNA haritası"
+    ],
     "note": "Bu bir çeviridir. Esas sürüm [İngilizce README](README.md) dosyasıdır.",
     "headings": {
         "why": "Neden PTForge",
-        "new": "1.2 sürümündeki yenilikler",
+        "new": "1.3 sürümündeki yenilikler",
         "quick": "Hızlı başlangıç",
         "taste": "Kısa bir örnek",
         "features": "Özellikler",
@@ -34,12 +41,30 @@
     ],
     "editorCaption": "Packet Tracer içindeki PTForge çalışma alanı: gezgin, sekmeler, IntelliSense, Dark Modern vurgulama ve çıktı",
     "news": [
-        ["JavaScript terminali", "`` Ctrl+` `` VS Code'daki *New Terminal* gibi bir terminal açar. Her satır doğrudan açık topolojide çalışır; geçmiş, Tab ile tamamlama ve `.calc`, `.ping`, `.cli R1` gibi noktalı komutlar vardır"],
-        ["Hata ayıklayıcı", "`F5` betiği her adımı kaydederek çalıştırır. Kesme noktalarında, koşullarda ve istisnalarda durur; üzerinden, içine, dışına ve **geriye** adım atar; Variables, Watch ve Call Stack'i gösterir ve Debug Console'da ifadeleri değerlendirir"],
-        ["Ağ hesaplayıcı", "IPv4 alt ağ, alt ağlara bölme, VLSM planlayıcı, rota özetleme, aralıktan CIDR'a, wildcard maskeleri, IPv6, EUI-64 ve taban dönüştürme tek bir düzenleyici sekmesinde"],
-        ["Erişilebilirlik matrisi", "`pingAll()` her yönlendirici ve anahtardan her adrese ping atar ve kayıp ile gidiş dönüş sürelerini gösteren renkli bir matris sunar"],
-        ["Anlık görüntüler ve diff", "`takeSnapshot()` cihazları, bağlantıları, adresleri, portları, güç durumunu ve running-config'i kaydeder. İki görüntüyü karşılaştırın ve yapılandırmayı satır satır görün"],
-        ["Dark Modern", "Renkler, boşluklar, sekmeler, paneller ve durum çubuğu VS Code'un Dark Modern temasını birebir izler; hata ayıklarken durum çubuğu maviye döner"]
+        [
+            "Eklentiler",
+            "Eklenti klasörüne `.pf` dosyaları koyarak terminal nokta komutları, genel fonksiyonlar, denetim kuralları ve Lab Check kontrolleri ekleyin. [`plugins`](plugins) içinde üç hazır eklenti gelir"
+        ],
+        [
+            "Eklenti Yöneticisi",
+            "`Ctrl+Shift+X` her eklentiyi sürümü, izinleri ve eklediği şeylerle listeler. Etkinleştirme onay ister, dosyası değişen eklenti siz inceleyene kadar kapalı kalır"
+        ],
+        [
+            "İzinler",
+            "Eklentiler `topology`, `cli`, `files` veya `raw` istemedikçe yalnızca okur. İzin dışı çağrılar açık bir hatayla durur"
+        ],
+        [
+            "Codicons",
+            "Tüm simgeler artık resmi VS Code Codicons (CC BY 4.0), aynı ızgara ve boyutlarda"
+        ],
+        [
+            "Eksiksiz host bilgisi",
+            "`getPcIp()` ağ geçidi, DNS, MAC, IPv6, link-local ve bağlantı durumunu döndürür. `getPortInfo()` kablonun diğer ucundaki cihazı söyler. Terminal derin nesneleri ve uzun dizileri tam gösterir"
+        ],
+        [
+            "Arka planda ping ve traceroute",
+            "`ping()`, `traceroute()` ve `pingAll()` Packet Tracer'ın bitmesini bekler, sonuçlar artık sıfır çıkmaz. `traceroute()` her atlamayı döndürür"
+        ]
     ],
     "quick": [
         "[Son sürümü](https://github.com/r4chan842/PTForge/releases/latest) indirin ve [kurulum kılavuzunu](docs/guides/installation.md) izleyin",
@@ -49,71 +74,218 @@
         "Sonucu `auditNetwork()`, `pingAll()` veya bir [Lab Check](docs/api/checks.md) ile doğrulayın"
     ],
     "tasteAfter": "Yirmi satır; bir yönlendirici, bir anahtar, adreslenmiş dört PC, SSH ile güçlendirilmiş bir yönlendirici, VLAN'lar, korumalı erişim portları, etiketli bir diyagram, kaydedilmiş bir başlangıç görüntüsü ve eksiksiz bir erişilebilirlik testi üretir.",
-    "featureHead": ["Alan", "Neler yapabilirsiniz"],
+    "featureHead": [
+        "Alan",
+        "Neler yapabilirsiniz"
+    ],
     "features": {
-        "devices": ["Cihazlar", "Ekleme, silme, yeniden adlandırma, taşıma, yeniden başlatma, modül takma, portları okuma, özel veri saklama, cihazları fiziksel çalışma alanına yerleştirme"],
-        "links": ["Bağlantılar", "Her kablo türü, bağlantı silme, otomatik bağlama, komşuları listeleme, bağlantı durumunu denetleme"],
-        "hosts": ["İstemciler", "Statik veya DHCP IPv4, SLAAC ile IPv6, ağ geçidi, DNS, güvenlik duvarı, komut istemi"],
-        "ios": ["Cisco IOS", "Temel kurulum, parolalar, banner'lar, kullanıcılar, arayüzler, alt arayüzler, loopback'ler, router-on-a-stick, DHCP havuzları ve relay, NTP, syslog, SNMP, CDP, LLDP, show komutları"],
-        "switching": ["Anahtarlama", "VLAN'lar, erişim ve ses portları, trunk'lar, DTP, EtherChannel (LACP, PAgP, statik, katman 3), Rapid PVST+, PortFast, BPDU Guard, VTP, port security, DHCP snooping, DAI"],
-        "routing": ["Yönlendirme", "Statik ve yüzen rotalar, OSPF, OSPFv3, EIGRP, IPv6 için EIGRP, RIP, RIPng, BGP, yeniden dağıtım"],
-        "security": ["Güvenlik", "Standart, genişletilmiş, adlandırılmış ve IPv6 ACL'ler, NAT, PAT, NAT havuzları, port yönlendirme, SSH, oturum kilitleme, RADIUS ve TACACS+ ile AAA"],
-        "redundancy": ["Yedeklilik", "Tek yönlendiricide veya aktif ve bekleme çifti olarak HSRP"],
-        "servers": ["Sunucular", "DHCP, DNS (A, CNAME, NS), HTTP, HTTPS, web sayfaları, FTP kullanıcıları, e-posta hesapları, TFTP, syslog, RADIUS"],
-        "wireless": ["Kablosuz", "SSID, WPA2, WPA, WEP, radyo modu, gizli SSID, MAC filtresi"],
-        "inspection": ["İnceleme", "Anahtar port durumu, port security sayaçları, VLAN veritabanı, STP kökü ve kök portlar, VTP, statik MAC'ler, OSPF ve EIGRP süreçleri"],
-        "reachability": ["Erişilebilirlik", "Kayıp, gidiş dönüş süreleri ve matris görünümüyle `pingAll`, `pingMatrix` ve `reachability`"],
-        "snapshots": ["Anlık görüntüler", "`takeSnapshot`, `getSnapshots`, `compareSnapshots`, `showSnapshotDiff`, görüntü dosyalarını kaydetme ve yükleme, yapılandırma diff görünümü"],
-        "files": ["Dosyalar", "Metin dosyası okuma ve yazma, diskten betik çalıştırma, yapılandırma ve topoloji dışa aktarma, komut günlüğü"],
-        "canvas": ["Tuval", "Notlar, çizgiler, daireler, dikdörtgenler, oklar, kesikli çizgiler, bölgeler, cihaz ve bağlantı etiketleri, katmanlar"],
-        "topology": ["Topoloji", "Yıldız, halka, doğrusal, ağ örgü ve LAN üreticileri, ızgara ve daire yerleşimi, VLSM ve /30 planlayıcıları"],
-        "simulation": ["Simülasyon", "Simülasyon modu, PDU'lar, protokol filtreleri, adım adım çalıştırma, ping, traceroute"],
-        "labcheck": ["Lab Check", "Puan, ipucu ve raporla notlandırılan kontroller: cihazlar, kablolar, adresler, portlar, ana bilgisayar adları, VLAN'lar, yapılandırma satırları, özel testler"],
-        "audit": ["Denetim", "Yinelenen IP'ler, kablo boyunca alt ağ çakışmaları, kopuk bağlantılar, adressiz istemciler, VLAN 1'deki erişim portları, eksik port security, kullanılmayan açık portlar"],
-        "batch": ["Toplu", "`runOnAll(\"show ip int brief\")`, `runOnDevices` ve CLI'de yazılan komutları yeniden kullanılabilir bir betiğe dönüştüren `commandsToScript()`"],
-        "workspace": ["Çalışma alanı", "Yakınlaştırma, arka plan, uzak ağlar, proje açma ve kaydetme, çalışma alanı olayları"]
+        "devices": [
+            "Cihazlar",
+            "Ekleme, silme, yeniden adlandırma, taşıma, yeniden başlatma, modül takma, portları okuma, özel veri saklama, cihazları fiziksel çalışma alanına yerleştirme"
+        ],
+        "links": [
+            "Bağlantılar",
+            "Her kablo türü, bağlantı silme, otomatik bağlama, komşuları listeleme, bağlantı durumunu denetleme"
+        ],
+        "hosts": [
+            "İstemciler",
+            "Statik veya DHCP IPv4, SLAAC ile IPv6, ağ geçidi, DNS, güvenlik duvarı, komut istemi"
+        ],
+        "ios": [
+            "Cisco IOS",
+            "Temel kurulum, parolalar, banner'lar, kullanıcılar, arayüzler, alt arayüzler, loopback'ler, router-on-a-stick, DHCP havuzları ve relay, NTP, syslog, SNMP, CDP, LLDP, show komutları"
+        ],
+        "switching": [
+            "Anahtarlama",
+            "VLAN'lar, erişim ve ses portları, trunk'lar, DTP, EtherChannel (LACP, PAgP, statik, katman 3), Rapid PVST+, PortFast, BPDU Guard, VTP, port security, DHCP snooping, DAI"
+        ],
+        "routing": [
+            "Yönlendirme",
+            "Statik ve yüzen rotalar, OSPF, OSPFv3, EIGRP, IPv6 için EIGRP, RIP, RIPng, BGP, yeniden dağıtım"
+        ],
+        "security": [
+            "Güvenlik",
+            "Standart, genişletilmiş, adlandırılmış ve IPv6 ACL'ler, NAT, PAT, NAT havuzları, port yönlendirme, SSH, oturum kilitleme, RADIUS ve TACACS+ ile AAA"
+        ],
+        "redundancy": [
+            "Yedeklilik",
+            "Tek yönlendiricide veya aktif ve bekleme çifti olarak HSRP"
+        ],
+        "servers": [
+            "Sunucular",
+            "DHCP, DNS (A, CNAME, NS), HTTP, HTTPS, web sayfaları, FTP kullanıcıları, e-posta hesapları, TFTP, syslog, RADIUS"
+        ],
+        "wireless": [
+            "Kablosuz",
+            "SSID, WPA2, WPA, WEP, radyo modu, gizli SSID, MAC filtresi"
+        ],
+        "inspection": [
+            "İnceleme",
+            "Anahtar port durumu, port security sayaçları, VLAN veritabanı, STP kökü ve kök portlar, VTP, statik MAC'ler, OSPF ve EIGRP süreçleri"
+        ],
+        "reachability": [
+            "Erişilebilirlik",
+            "Kayıp, gidiş dönüş süreleri ve matris görünümüyle `pingAll`, `pingMatrix` ve `reachability`"
+        ],
+        "snapshots": [
+            "Anlık görüntüler",
+            "`takeSnapshot`, `getSnapshots`, `compareSnapshots`, `showSnapshotDiff`, görüntü dosyalarını kaydetme ve yükleme, yapılandırma diff görünümü"
+        ],
+        "files": [
+            "Dosyalar",
+            "Metin dosyası okuma ve yazma, diskten betik çalıştırma, yapılandırma ve topoloji dışa aktarma, komut günlüğü"
+        ],
+        "canvas": [
+            "Tuval",
+            "Notlar, çizgiler, daireler, dikdörtgenler, oklar, kesikli çizgiler, bölgeler, cihaz ve bağlantı etiketleri, katmanlar"
+        ],
+        "topology": [
+            "Topoloji",
+            "Yıldız, halka, doğrusal, ağ örgü ve LAN üreticileri, ızgara ve daire yerleşimi, VLSM ve /30 planlayıcıları"
+        ],
+        "simulation": [
+            "Simülasyon",
+            "Simülasyon modu, PDU'lar, protokol filtreleri, adım adım çalıştırma, ping, traceroute"
+        ],
+        "labcheck": [
+            "Lab Check",
+            "Puan, ipucu ve raporla notlandırılan kontroller: cihazlar, kablolar, adresler, portlar, ana bilgisayar adları, VLAN'lar, yapılandırma satırları, özel testler"
+        ],
+        "audit": [
+            "Denetim",
+            "Yinelenen IP'ler, kablo boyunca alt ağ çakışmaları, kopuk bağlantılar, adressiz istemciler, VLAN 1'deki erişim portları, eksik port security, kullanılmayan açık portlar"
+        ],
+        "batch": [
+            "Toplu",
+            "`runOnAll(\"show ip int brief\")`, `runOnDevices` ve CLI'de yazılan komutları yeniden kullanılabilir bir betiğe dönüştüren `commandsToScript()`"
+        ],
+        "workspace": [
+            "Çalışma alanı",
+            "Yakınlaştırma, arka plan, uzak ağlar, proje açma ve kaydetme, çalışma alanı olayları"
+        ]
     },
     "buildNote": "Her IOS yardımcı fonksiyonunun, komutları göndermek yerine döndüren bir `build...` ikizi vardır; böylece yapılandırmayı görebilir, birleştirebilir ve yeniden kullanabilirsiniz.",
     "editorIntro": "Çalışma alanı VS Code gibi görünür ve davranır. Sıfırdan saf ES5 ile yazılmıştır; bu yüzden Packet Tracer web view içinde çerçeve ve ağ erişimi olmadan çalışır.",
-    "partHead": ["Bölüm", "Açıklama"],
+    "partHead": [
+        "Bölüm",
+        "Açıklama"
+    ],
     "editorRows": [
-        ["Menü çubuğu ve komut paleti", "File, Edit, Selection, View, Go, Run, Network, Terminal ve Help menüleri. `Ctrl+Shift+P` tüm komutları listeler, `Ctrl+P` dosyaya, `Ctrl+G` satıra gider"],
-        ["Gezgin", "Açık düzenleyiciler, Packet Tracer'da kayıtlı betiklerden oluşan bir çalışma alanı ve diskteki gerçek bir klasör. Yeni, yeniden adlandır, sil"],
-        ["Dosyalar", "Open, Save ve Save As Packet Tracer dosya iletişim kutularını kullanır. Panodan içe aktarma, indirme olarak dışa aktarma"],
-        ["Sekmeler", "Dosya başına bir sekme, değişiklik noktası, orta tıkla kapatma, diskteki dosyalar için kaydetme uyarısı, her sekmenin kendi geri alma geçmişi"],
-        ["Vurgulama", "Dark Modern renkleri: yorumlar `#6A9955`, dizeler `#CE9178`, sayılar `#B5CEA8`, anahtar sözcükler `#569CD6` ve `#C586C0`, fonksiyonlar `#DCDCAA`, değişkenler `#9CDCFE`, kalın PTForge fonksiyonları `#4FC1FF`, renkli parantez çiftleri"],
-        ["IntelliSense", "İmza ve açıklamasıyla 388 fonksiyonun tamamından öneriler, dosyadaki sözcükler, anahtar sözcükler. Yazarken parametre ipuçları"],
-        ["Sorunlar", "Tam satırıyla canlı söz dizimi denetimi, bilinmeyen fonksiyon adları için *Did you mean* hızlı düzeltmesi. Dalgalı alt çizgiler, kenar işaretleri ve Problems paneli"],
-        ["Düzenleme", "Çiftleri otomatik kapatma, akıllı Enter, `Ctrl+/` yorum, `Alt+Up/Down` satır taşıma, `Shift+Alt+Down` satır kopyalama, `Ctrl+Shift+K` satır silme, parantez eşleştirme"],
-        ["Bul ve değiştir", "Büyük/küçük harf, tam sözcük ve düzenli ifadelerle `Ctrl+F` ve `Ctrl+H`, tek geri almada Tümünü değiştir"],
-        ["Panel", "Problems, Output, Debug Console, Terminal ve Lab Check. Boyutlandırılabilir, `Ctrl+J` gizler"],
-        ["Devices görünümü", "Bağlantı LED'leri ve adreslerle canlı cihazlar ve portlar, tek tıkla anlık görüntüler ve ağ araçları"],
-        ["Durum çubuğu", "Sorun sayısı, çalıştırma ve hata ayıklama durumu, imleç konumu, yakınlaştırma, Packet Tracer bağlantısı"]
+        [
+            "Menü çubuğu ve komut paleti",
+            "File, Edit, Selection, View, Go, Run, Network, Terminal ve Help menüleri. `Ctrl+Shift+P` tüm komutları listeler, `Ctrl+P` dosyaya, `Ctrl+G` satıra gider"
+        ],
+        [
+            "Gezgin",
+            "Açık düzenleyiciler, Packet Tracer'da kayıtlı betiklerden oluşan bir çalışma alanı ve diskteki gerçek bir klasör. Yeni, yeniden adlandır, sil"
+        ],
+        [
+            "Dosyalar",
+            "Open, Save ve Save As Packet Tracer dosya iletişim kutularını kullanır. Panodan içe aktarma, indirme olarak dışa aktarma"
+        ],
+        [
+            "Sekmeler",
+            "Dosya başına bir sekme, değişiklik noktası, orta tıkla kapatma, diskteki dosyalar için kaydetme uyarısı, her sekmenin kendi geri alma geçmişi"
+        ],
+        [
+            "Vurgulama",
+            "Dark Modern renkleri: yorumlar `#6A9955`, dizeler `#CE9178`, sayılar `#B5CEA8`, anahtar sözcükler `#569CD6` ve `#C586C0`, fonksiyonlar `#DCDCAA`, değişkenler `#9CDCFE`, kalın PTForge fonksiyonları `#4FC1FF`, renkli parantez çiftleri"
+        ],
+        [
+            "IntelliSense",
+            "İmza ve açıklamasıyla 388 fonksiyonun tamamından öneriler, dosyadaki sözcükler, anahtar sözcükler. Yazarken parametre ipuçları"
+        ],
+        [
+            "Sorunlar",
+            "Tam satırıyla canlı söz dizimi denetimi, bilinmeyen fonksiyon adları için *Did you mean* hızlı düzeltmesi. Dalgalı alt çizgiler, kenar işaretleri ve Problems paneli"
+        ],
+        [
+            "Düzenleme",
+            "Çiftleri otomatik kapatma, akıllı Enter, `Ctrl+/` yorum, `Alt+Up/Down` satır taşıma, `Shift+Alt+Down` satır kopyalama, `Ctrl+Shift+K` satır silme, parantez eşleştirme"
+        ],
+        [
+            "Bul ve değiştir",
+            "Büyük/küçük harf, tam sözcük ve düzenli ifadelerle `Ctrl+F` ve `Ctrl+H`, tek geri almada Tümünü değiştir"
+        ],
+        [
+            "Panel",
+            "Problems, Output, Debug Console, Terminal ve Lab Check. Boyutlandırılabilir, `Ctrl+J` gizler"
+        ],
+        [
+            "Devices görünümü",
+            "Bağlantı LED'leri ve adreslerle canlı cihazlar ve portlar, tek tıkla anlık görüntüler ve ağ araçları"
+        ],
+        [
+            "Durum çubuğu",
+            "Sorun sayısı, çalıştırma ve hata ayıklama durumu, imleç konumu, yakınlaştırma, Packet Tracer bağlantısı"
+        ]
     ],
     "shotLab": "Lab Check raporu ve canlı Devices görünümü",
     "shotPalette": "Komut paleti ve fonksiyon başvurusu",
     "shotProblems": "Hızlı düzeltmeli Problems",
     "shotFind": "Bul ve değiştir",
     "terminalIntro": "`` Ctrl+` `` bir JavaScript terminali açar. Her satır Packet Tracer'da hemen çalışır ve değişkenlerini korur; böylece önce betik yazmadan bir topolojiyi adım adım keşfedip değiştirebilirsiniz.",
-    "featureHead2": ["Özellik", "Açıklama"],
+    "featureHead2": [
+        "Özellik",
+        "Açıklama"
+    ],
     "terminalRows": [
-        ["Doğrudan değerlendirme", "Her ifade veya deyim; sonuçlar okunaklı ağaçlar olarak, hatalar kırmızı"],
-        ["Tamamlama", "`Tab` PTForge fonksiyonlarını, değişkenlerinizi, anahtar sözcükleri ve noktalı komutları tamamlar"],
-        ["Geçmiş", "`Up` ve `Down` oturumlar arasında saklanan önceki komutlarda gezinir"],
-        ["Birden çok terminal", "`+` yeni bir terminal açar, liste aralarında geçiş yapar, çöp kutusu birini kapatır"],
-        ["Noktalı komutlar", "`.help`, `.clear`, `.devices`, `.ping`, `.trace`, `.show R1 show ip route`, bir cihazda IOS komutları için `.cli R1`, çıkmak için `.exit`, `.audit`, `.snap`, `.diff`, `.calc 10.1.2.3/20`, `.run file.js`, `.history`"]
+        [
+            "Doğrudan değerlendirme",
+            "Her ifade veya deyim; sonuçlar okunaklı ağaçlar olarak, hatalar kırmızı"
+        ],
+        [
+            "Tamamlama",
+            "`Tab` PTForge fonksiyonlarını, değişkenlerinizi, anahtar sözcükleri ve noktalı komutları tamamlar"
+        ],
+        [
+            "Geçmiş",
+            "`Up` ve `Down` oturumlar arasında saklanan önceki komutlarda gezinir"
+        ],
+        [
+            "Birden çok terminal",
+            "`+` yeni bir terminal açar, liste aralarında geçiş yapar, çöp kutusu birini kapatır"
+        ],
+        [
+            "Noktalı komutlar",
+            "`.help`, `.clear`, `.devices`, `.ping`, `.trace`, `.show R1 show ip route`, bir cihazda IOS komutları için `.cli R1`, çıkmak için `.exit`, `.audit`, `.snap`, `.diff`, `.calc 10.1.2.3/20`, `.run file.js`, `.history`"
+        ]
     ],
     "terminalRead": "[Terminal kılavuzunu](docs/guides/terminal.md) okuyun.",
     "debuggerIntro": "`F5` bir hata ayıklama oturumu başlatır. PTForge betiği enstrümante eder, Packet Tracer'da her adımı kaydederek bir kez çalıştırır ve ilk kesme noktasında durur. Tüm çalışma kaydedildiği için **geriye** de gidebilirsiniz.",
     "debuggerRows": [
-        ["Kesme noktaları", "Kenara tıklayın veya `F9`. Koşullar, isabet sayısı, logpoint'ler, tümünü devre dışı bırakma veya kaldırma"],
-        ["İstisnalar", "Yakalanmamış istisnalarda satırı vurgulayarak durur"],
-        ["Adımlar", "Devam `F5`, üzerinden `F10`, içine `F11`, dışına `Shift+F11`, geri, yeniden başlat `Ctrl+Shift+F5`, durdur `Shift+F5`"],
-        ["Variables", "Local, Closure ve Script kapsamları açılır ağaçlar olarak"],
-        ["Watch", "Kaydedilen her adımda değerlendirilen herhangi bir ifade"],
-        ["Call Stack", "Dosya ve satırıyla her çerçeve. Değişkenlerini görmek için bir çerçeveye tıklayın"],
-        ["Debug Console", "Duraklatılmış çerçevede ifadeleri değerlendirin"],
-        ["Üzerine gelme", "Düzenleyicide bir değişkenin üzerine gelince değeri görünür"]
+        [
+            "Kesme noktaları",
+            "Kenara tıklayın veya `F9`. Koşullar, isabet sayısı, logpoint'ler, tümünü devre dışı bırakma veya kaldırma"
+        ],
+        [
+            "İstisnalar",
+            "Yakalanmamış istisnalarda satırı vurgulayarak durur"
+        ],
+        [
+            "Adımlar",
+            "Devam `F5`, üzerinden `F10`, içine `F11`, dışına `Shift+F11`, geri, yeniden başlat `Ctrl+Shift+F5`, durdur `Shift+F5`"
+        ],
+        [
+            "Variables",
+            "Local, Closure ve Script kapsamları açılır ağaçlar olarak"
+        ],
+        [
+            "Watch",
+            "Kaydedilen her adımda değerlendirilen herhangi bir ifade"
+        ],
+        [
+            "Call Stack",
+            "Dosya ve satırıyla her çerçeve. Değişkenlerini görmek için bir çerçeveye tıklayın"
+        ],
+        [
+            "Debug Console",
+            "Duraklatılmış çerçevede ifadeleri değerlendirin"
+        ],
+        [
+            "Üzerine gelme",
+            "Düzenleyicide bir değişkenin üzerine gelince değeri görünür"
+        ]
     ],
     "debuggerRead": "[Hata ayıklayıcı kılavuzunu](docs/guides/debugger.md) okuyun.",
     "shotReach": "<code>pingAll()</code> erişilebilirlik matrisi",
@@ -133,7 +305,10 @@
     ],
     "installMore": "[Kurulum kılavuzu](docs/guides/installation.md) her adımı ve güncellemeyi anlatır.",
     "examplesIntro": "[`examples/`](examples/README.md) içinde 34 eksiksiz lab var, her biri boş bir çalışma alanıyla başlar:",
-    "exampleHead": ["Klasör", "Lablar"],
+    "exampleHead": [
+        "Klasör",
+        "Lablar"
+    ],
     "exampleRows": [
         "İlk ağ, modüller ve seri bağlantılar, güvenli temel yapılandırma",
         "VLAN ve trunk'lar, EtherChannel, STP kökü, katman 3 anahtar",
@@ -150,25 +325,73 @@
         "Erişilebilirlik testi, anlık görüntülerle değişiklik takibi"
     ],
     "templates": "Kendi çalışmalarınız için başlangıç noktaları [`templates/`](templates/README.md) içindedir: boş lab, kampüs, şube WAN'ı ve küçük ofis.",
-    "docHead": ["Bölüm", "İçerik"],
+    "docHead": [
+        "Bölüm",
+        "İçerik"
+    ],
     "docRows": [
-        ["Başlarken", "On dakikada ilk ağınız"],
-        ["Düzenleyici kılavuzu", "Çalışma alanı, dosyalar, IntelliSense, sorunlar"],
-        ["Terminal", "Etkileşimli JavaScript ve cihaz CLI'si"],
-        ["Hata ayıklayıcı", "Kesme noktaları, adımlar, değişkenler ve watch"],
-        ["Ağ araçları", "Hesaplayıcı, erişilebilirlik ve anlık görüntüler"],
-        ["Betik yazma", "Yapı, sıralama, builder'lar, hız"],
-        ["API başvurusu", "Argümanları, dönüş değerleri ve örnekleriyle her fonksiyon"],
-        ["Tarifler", "Kampüs anahtarlama, yönlendirme labları, kenar yönlendirici, sunucular, diyagramlar"],
-        ["CCNA konu haritası", "CCNA 200-301 konuları ve ilgili fonksiyonlar ve örnekler"],
-        ["Kopya kâğıtları", "IOS'tan PTForge'a, alt ağlar, düzenleyici tuşları"],
-        ["Mimari", "Katmanlar, çalışma zamanı, düzenleyici köprüsü, hata ayıklayıcı, testler"],
-        ["Sorun giderme", "Sık hatalar ve çözümleri"],
-        ["Sınırlamalar", "Packet Tracer API'sinin izin vermedikleri"],
-        ["SSS", "Kısa yanıtlar"]
+        [
+            "Başlarken",
+            "On dakikada ilk ağınız"
+        ],
+        [
+            "Düzenleyici kılavuzu",
+            "Çalışma alanı, dosyalar, IntelliSense, sorunlar"
+        ],
+        [
+            "Terminal",
+            "Etkileşimli JavaScript ve cihaz CLI'si"
+        ],
+        [
+            "Hata ayıklayıcı",
+            "Kesme noktaları, adımlar, değişkenler ve watch"
+        ],
+        [
+            "Ağ araçları",
+            "Hesaplayıcı, erişilebilirlik ve anlık görüntüler"
+        ],
+        [
+            "Betik yazma",
+            "Yapı, sıralama, builder'lar, hız"
+        ],
+        [
+            "API başvurusu",
+            "Argümanları, dönüş değerleri ve örnekleriyle her fonksiyon"
+        ],
+        [
+            "Tarifler",
+            "Kampüs anahtarlama, yönlendirme labları, kenar yönlendirici, sunucular, diyagramlar"
+        ],
+        [
+            "CCNA konu haritası",
+            "CCNA 200-301 konuları ve ilgili fonksiyonlar ve örnekler"
+        ],
+        [
+            "Kopya kâğıtları",
+            "IOS'tan PTForge'a, alt ağlar, düzenleyici tuşları"
+        ],
+        [
+            "Mimari",
+            "Katmanlar, çalışma zamanı, düzenleyici köprüsü, hata ayıklayıcı, testler"
+        ],
+        [
+            "Sorun giderme",
+            "Sık hatalar ve çözümleri"
+        ],
+        [
+            "Sınırlamalar",
+            "Packet Tracer API'sinin izin vermedikleri"
+        ],
+        [
+            "SSS",
+            "Kısa yanıtlar"
+        ]
     ],
     "devIntro": "Node.js 18 veya daha yenisi gerekir. Çalışma zamanı bağımlılığı yoktur.",
-    "devHead": ["Komut", "Amaç"],
+    "devHead": [
+        "Komut",
+        "Amaç"
+    ],
     "devRows": [
         "Tüm testleri çalıştır",
         "`release/ptforge.js` dosyasını yeniden oluştur",
