@@ -276,6 +276,10 @@ function createDevice(world, name, model, type, x, y) {
         device.enterCommand = (cmd, mode) => {
             device.commands.push({ cmd, mode });
             if (world.rejectCommands.some((re) => re.test(cmd))) return [2, ""];
+            if (world.respond) {
+                const out = world.respond(device.getName(), cmd, mode);
+                if (out !== undefined) return [0, out];
+            }
             return [0, ""];
         };
         device.getCommandLine = () => ({ getPrompt: () => "R#", getMode: () => "enable" });

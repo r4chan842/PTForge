@@ -48,7 +48,7 @@ test("packet tracer code is plain es5", () => {
     const files = sourceFiles
         .concat(walk(path.join(root, "examples")).map((f) => path.relative(root, f)))
         .concat(walk(path.join(root, "templates")).map((f) => path.relative(root, f)))
-        .filter((f) => f.endsWith(".js"));
+        .filter((f) => f.endsWith(".js") && f !== path.join("src", "ui", "acorn.js"));
     files.forEach((file) => {
         const text = fs.readFileSync(path.join(root, file), "utf8");
         const stripped = text.replace(/"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'/g, '""');

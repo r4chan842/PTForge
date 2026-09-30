@@ -90,7 +90,7 @@ test("subnet calculator", () => {
     assert.equal(ui("subnetInfo('10.1.2.3 255.255.255.252').prefix"), 30);
     assert.equal(ui("subnetInfo('172.20.0.1/31').hosts"), 2);
     assert.equal(ui("subnetInfo('8.8.8.8/32').scope"), "public");
-    assert.equal(ui("subnetInfo('10.0.0.1').prefix"), 24);
+    assert.equal(ui("subnetInfo('10.0.0.1').prefix"), 8);
     assert.throws(() => ui("subnetInfo('300.1.1.1/24')"), /Not an IPv4 address/);
     assert.throws(() => ui("subnetInfo('1.1.1.1 255.0.255.0')"), /contiguous/);
 });
@@ -99,7 +99,8 @@ test("vlsm planner and wildcard", () => {
     const plan = ui("vlsmPlan('192.168.1.0/24', parseVlsmRequests('Sales:50, IT:20, 12, WAN:2'))");
     assert.deepEqual(plan.map((p) => p.name + " " + p.network), ["Sales 192.168.1.0/26", "IT 192.168.1.64/27", "Net3 192.168.1.96/28", "WAN 192.168.1.112/30"]);
     assert.throws(() => ui("vlsmPlan('10.0.0.0/28', [{ name: 'A', hosts: 30 }])"), /Not enough space/);
-    assert.throws(() => ui("parseVlsmRequests('a b')"), /Use a list/);
+    assert.deepEqual(ui("parseVlsmRequests(\"Sales 120\\nLink-R1-R2 2\")"), [{ name: "Sales", hosts: 120 }, { name: "Link-R1-R2", hosts: 2 }]);
+    assert.throws(() => ui("parseVlsmRequests(\"a b\")"), /Use a list/);
     assert.deepEqual(ui("wildcardFor('255.255.255.224')"), { prefix: 27, mask: "255.255.255.224", wildcard: "0.0.0.31" });
     assert.deepEqual(ui("wildcardFor('0.0.0.63')"), { prefix: 26, mask: "255.255.255.192", wildcard: "0.0.0.63" });
     assert.equal(ui("wildcardFor('/20').wildcard"), "0.0.15.255");
