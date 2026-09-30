@@ -105,27 +105,27 @@ Twenty lines give you a router, a switch, four addressed PCs, a hardened router 
 
 | Area | What you can do |
 |------|-----------------|
-| 🖥️ **Devices** | Add, remove, rename, move, power cycle, install modules, read ports, store custom data, place devices in the physical workspace |
-| 🔌 **Links** | Every cable type, delete links, auto connect, list neighbors, check link state |
-| 💻 **Hosts** | Static or DHCP IPv4, IPv6 with SLAAC, gateway, DNS, firewall, command prompt |
-| ⚙️ **Cisco IOS** | Basic setup, passwords, banners, users, interfaces, subinterfaces, loopbacks, router on a stick, DHCP pools and relay, NTP, syslog, SNMP, CDP, LLDP, show commands |
-| 🔀 **Switching** | VLANs, access and voice ports, trunks, DTP, EtherChannel (LACP, PAgP, static, layer 3), Rapid PVST+, PortFast, BPDU guard, VTP, port security, DHCP snooping, DAI |
-| 🧭 **Routing** | Static and floating routes, OSPF, OSPFv3, EIGRP, EIGRP for IPv6, RIP, RIPng, BGP, redistribution |
-| 🛡️ **Security** | Standard, extended, named and IPv6 ACLs, NAT, PAT, NAT pools, port forwarding, SSH, login blocking, AAA with RADIUS and TACACS+ |
-| ♻️ **Redundancy** | HSRP on one router or as an active and standby pair |
-| 🗄️ **Servers** | DHCP, DNS (A, CNAME, NS), HTTP, HTTPS, web pages, FTP users, email accounts, TFTP, syslog, RADIUS |
-| 📶 **Wireless** | SSID, WPA2, WPA, WEP, radio mode, hidden SSID, MAC filtering |
-| 🔍 **Inspection** | Switch port state, port security counters, VLAN database, STP root and root ports, VTP, static MACs, OSPF and EIGRP processes |
-| 📡 **Reachability** | `pingAll`, `pingMatrix` and `reachability` with loss, round-trip times and a matrix view |
-| 📸 **Snapshots** | `takeSnapshot`, `getSnapshots`, `compareSnapshots`, `showSnapshotDiff`, save and load snapshot files, and a config diff view |
-| 📁 **Files** | Read and write text files, run scripts from disk, export configs and topology, command log |
-| 🎨 **Canvas** | Notes, lines, circles, rectangles, arrows, dashed lines, zones, device and link labels, layers |
-| 🗺️ **Topology** | Star, ring, line, mesh and LAN generators, grid and circle layouts, VLSM and /30 planners |
-| 🧪 **Simulation** | Simulation mode, PDUs, protocol filters, stepping, ping, traceroute |
-| ✅ **Lab Check** | Graded checks with points, hints and a score report: devices, cables, addresses, ports, hostnames, VLANs, config lines, custom tests |
-| 🩺 **Audit** | Duplicate IPs, subnet mismatches across cables, down links, hosts without addresses, VLAN 1 access ports, missing port security, unused ports left on |
-| 📟 **Batch** | `runOnAll("show ip int brief")`, `runOnDevices`, and `commandsToScript()` which turns commands typed in the CLI into a reusable script |
-| 🪟 **Workspace** | Zoom, background, remote networks, open and save projects, workspace events |
+|  **Devices** | Add, remove, rename, move, power cycle, install modules, read ports, store custom data, place devices in the physical workspace |
+|  **Links** | Every cable type, delete links, auto connect, list neighbors, check link state |
+|  **Hosts** | Static or DHCP IPv4, IPv6 with SLAAC, gateway, DNS, firewall, command prompt |
+|  **Cisco IOS** | Basic setup, passwords, banners, users, interfaces, subinterfaces, loopbacks, router on a stick, DHCP pools and relay, NTP, syslog, SNMP, CDP, LLDP, show commands |
+|  **Switching** | VLANs, access and voice ports, trunks, DTP, EtherChannel (LACP, PAgP, static, layer 3), Rapid PVST+, PortFast, BPDU guard, VTP, port security, DHCP snooping, DAI |
+|  **Routing** | Static and floating routes, OSPF, OSPFv3, EIGRP, EIGRP for IPv6, RIP, RIPng, BGP, redistribution |
+|  **Security** | Standard, extended, named and IPv6 ACLs, NAT, PAT, NAT pools, port forwarding, SSH, login blocking, AAA with RADIUS and TACACS+ |
+|  **Redundancy** | HSRP on one router or as an active and standby pair |
+|  **Servers** | DHCP, DNS (A, CNAME, NS), HTTP, HTTPS, web pages, FTP users, email accounts, TFTP, syslog, RADIUS |
+|  **Wireless** | SSID, WPA2, WPA, WEP, radio mode, hidden SSID, MAC filtering |
+|  **Inspection** | Switch port state, port security counters, VLAN database, STP root and root ports, VTP, static MACs, OSPF and EIGRP processes |
+|  **Reachability** | `pingAll`, `pingMatrix` and `reachability` with loss, round-trip times and a matrix view |
+|  **Snapshots** | `takeSnapshot`, `getSnapshots`, `compareSnapshots`, `showSnapshotDiff`, save and load snapshot files, and a config diff view |
+|  **Files** | Read and write text files, run scripts from disk, export configs and topology, command log |
+|  **Canvas** | Notes, lines, circles, rectangles, arrows, dashed lines, zones, device and link labels, layers |
+|  **Topology** | Star, ring, line, mesh and LAN generators, grid and circle layouts, VLSM and /30 planners |
+|  **Simulation** | Simulation mode, PDUs, protocol filters, stepping, ping, traceroute |
+|  **Lab Check** | Graded checks with points, hints and a score report: devices, cables, addresses, ports, hostnames, VLANs, config lines, custom tests |
+|  **Audit** | Duplicate IPs, subnet mismatches across cables, down links, hosts without addresses, VLAN 1 access ports, missing port security, unused ports left on |
+|  **Batch** | `runOnAll("show ip int brief")`, `runOnDevices`, and `commandsToScript()` which turns commands typed in the CLI into a reusable script |
+|  **Workspace** | Zoom, background, remote networks, open and save projects, workspace events |
 
 Every IOS helper also has a `build...` twin that returns the commands instead of sending them, so you can preview, combine and reuse configuration.
 
