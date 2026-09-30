@@ -32,3 +32,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
+
+## Codicons
+
+The interface icons are Codicons 0.0.36 from https://github.com/microsoft/vscode-codicons
+
+Copyright (c) Microsoft Corporation. Licensed under the Creative Commons Attribution 4.0 International license (CC BY 4.0). The full license text is in [assets/codicons/LICENSE](assets/codicons/LICENSE). The SVG paths are embedded unchanged; PTForge only chooses which icon appears where.
