@@ -192,11 +192,15 @@ PingRunner.prototype.onEnded = function (src, args) {
     if (!row) {
         return;
     }
-    var input = eventText(args, "inputCommand");
-    if (input && input.indexOf("ping") !== 0) {
+    var input = eventText(args, "inputCommand").trim();
+    if (input && input !== row.command) {
         return;
     }
-    finishPingRow(row, this.buffer);
+    if (row.finish) {
+        row.finish(row, this.buffer);
+    } else {
+        finishPingRow(row, this.buffer);
+    }
     this.next();
 };
 
@@ -318,4 +322,36 @@ function reachability(options) {
     report.sources = sources;
     report.targets = targets;
     return report;
+}
+
+function runLineCommand(deviceName, command, onDone, finish) {
+    var device = findDevice(deviceName);
+    var line = pingLine(device);
+    var row = { source: String(deviceName), command: String(command), state: "pending", output: "" };
+    var later = !onDone && shellSessionId ? shellLater() : null;
+    if (!line || typeof line.registerEvent !== "function") {
+        throw new Error(deviceName + " has no command line");
+    }
+    row.finish = function (target, text) {
+        target.output = text;
+        target.state = "done";
+        if (finish) {
+            finish(target, text);
+        }
+    };
+    var runner = new PingRunner(deviceName, device, line, [row], function () {
+        activePingRunners = activePingRunners.filter(function (item) {
+            return item !== runner;
+        });
+        delete row.finish;
+        delete row.command;
+        if (onDone) {
+            onDone(row);
+        } else if (later) {
+            later("log", row.output.replace(/^\s+|\s+$/g, "") || "No output from " + deviceName);
+        }
+    });
+    activePingRunners.push(runner);
+    runner.start();
+    return row;
 }

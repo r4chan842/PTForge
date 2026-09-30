@@ -42,7 +42,7 @@ labelAllDevices();
 Wait a few seconds for the link lights to turn green, then:
 
 ```js
-showResult(ping("PC1", "192.168.1.1"));
+ping("PC1", "192.168.1.1", 4, function (row) { showResult(row); });
 log(getVlans("S1"));
 ```
 

@@ -83,10 +83,31 @@ test("ping and traceroute", () => {
     run('addDevice("PC1", "PC-PT", 0, 0); addDevice("R1", "2911", 0, 0)');
     run('ping("PC1", "10.0.0.1"); ping("PC1", "10.0.0.1", 2); traceroute("PC1", "8.8.8.8")');
     assert.deepEqual(world.devices.PC1.hostCommands, ["ping 10.0.0.1", "ping -n 2 10.0.0.1", "tracert 8.8.8.8"]);
-    assert.equal(run('ping("R1", "10.0.0.2", 10).status'), "ok");
+    assert.equal(run('ping("R1", "10.0.0.2", 10).state'), "pending");
     run('traceroute("R1", "10.0.0.2")');
-    assert.deepEqual(commandsOf(world, "R1"), ["ping 10.0.0.2 repeat 10", "traceroute 10.0.0.2"]);
+    world.flushLines();
+    assert.deepEqual(world.devices.R1.lineCommands, ["ping 10.0.0.2 repeat 10", "traceroute 10.0.0.2"]);
     assert.deepEqual(j(run, 'pingAll("R1", ["1.1.1.1", "2.2.2.2"])').targets, ["1.1.1.1", "2.2.2.2"]);
+});
+
+test("ping and traceroute report through onDone", () => {
+    const { run, world, ctx } = loadExtension();
+    run('addDevice("R1", "2911", 0, 0)');
+    world.respond = (device, cmd, mode) => mode !== "line" ? undefined : /^traceroute/.test(cmd)
+        ? "Tracing the route to 10.0.0.9\n  1   10.0.0.2   1 msec 0 msec 1 msec\n  2   *    *    *\n  3   10.0.0.9   2 msec 3 msec 2 msec"
+        : "!!!!!\nSuccess rate is 100 percent (5/5), round-trip min/avg/max = 1/2/3 ms";
+    const got = [];
+    ctx.__done = (r) => got.push(JSON.parse(r));
+    run('ping("R1", "10.0.0.9", 0, function (r) { __done(JSON.stringify(r)); }); traceroute("R1", "10.0.0.9", function (r) { __done(JSON.stringify(r)); })');
+    assert.equal(got.length, 0);
+    world.flushLines();
+    assert.equal(got.length, 2);
+    assert.equal(got[0].state, "ok");
+    assert.equal(got[0].percent, 100);
+    assert.equal(got[0].target, "10.0.0.9");
+    assert.deepEqual(got[1].hops.map((h) => [h.hop, h.ip, h.timeout]), [[1, "10.0.0.2", false], [2, null, true], [3, "10.0.0.9", false]]);
+    assert.deepEqual(got[1].hops[2].times, [2, 3, 2]);
+    assert.equal(world.devices.R1.getCommandLine().listeners.length, 0);
 });
 
 test("events", () => {

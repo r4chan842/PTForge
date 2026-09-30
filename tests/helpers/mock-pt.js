@@ -38,6 +38,8 @@ function createPort(name, owner) {
         setv6ServerIp: (v) => { port.dns6 = v; },
         removeAllIpv6Addresses: () => { port.ipv6 = []; },
         getUnicastIpv6Address: () => (port.ipv6[0] ? port.ipv6[0].ip : ""),
+        getUnicastIpv6Prefix: () => (port.ipv6[0] ? port.ipv6[0].prefix : 0),
+        getIpv6LinkLocal: () => port.linkLocal || "",
         setInboundFirewallService: (v) => { port.firewall = v; },
         setPower: (v) => { port.power = v; },
         setDescription: (v) => { port.description = v; },
@@ -208,6 +210,10 @@ function createDevice(world, name, model, type, x, y) {
         setCustomPhysicalImage: (p) => { device.physicalImage = p; },
         setTime: (...a) => { device.time = a; },
         getProcess: (n) => {
+            const first = device.ports.find((p) => p.gateway || p.dns || p.gateway6 || p.dns6) || device.ports[0] || {};
+            if (n === "HostIp" && typeof device.getDhcpFlag === "function") return { getDefaultGateway: () => first.gateway || "0.0.0.0" };
+            if (n === "HostIpv6" && typeof device.getDhcpFlag === "function") return { getDefaultGateway: () => first.gateway6 || "::" };
+            if (n === "DnsClient" && typeof device.getDhcpFlag === "function") return { getServerIp: () => first.dns || "0.0.0.0", getServerIpv6: () => first.dns6 || "::" };
             if ([7, 9, 11].includes(type)) return device.store.processes[n] || null;
             return device.iosProcesses ? device.iosProcesses[n] || null : null;
         }

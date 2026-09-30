@@ -98,3 +98,11 @@ finishPingRow
 refreshReport
 PingRunner
 reachabilitySources
+cleanAddress
+hostProcessValue
+shellPackArray
+portNeighbors
+describePortOf
+shellLater
+runLineCommand
+parseTraceOutput

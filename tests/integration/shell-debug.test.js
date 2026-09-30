@@ -66,7 +66,8 @@ test("shell evaluates expressions and keeps variables between lines", () => {
     assert.equal(shell(ext, "function twice(x) { return x * 2; }").ok, true);
     assert.equal(shell(ext, "twice(answer)").text, "80");
     assert.equal(shell(ext, "'it\\'s'").text, "'it\\'s'");
-    assert.equal(shell(ext, "({ a: 1, list: [1, 2, 3], nested: { deep: { deeper: { x: 1 } } } })").text, "{ a: 1, list: [ 1, 2, 3 ], nested: { deep: { deeper: [Object] } } }");
+    assert.equal(shell(ext, "({ a: 1, list: [1, 2, 3], nested: { deep: { deeper: { x: 1 } } } })").text, "{ a: 1, list: [ 1, 2, 3 ], nested: { deep: { deeper: { x: 1 } } } }");
+    assert.match(shell(ext, "({ a: { b: { c: { d: { e: { f: { g: { h: { i: { j: 1 } } } } } } } } } })").text, /\[Object\]/);
     assert.equal(shell(ext, "[]").text, "[]");
     assert.equal(shell(ext, "null").type, "null");
     assert.equal(shell(ext, "addDevice").text, "[Function: addDevice]");
@@ -94,7 +95,7 @@ test("shell long objects break over several lines", () => {
     ext.attachEditor();
     const text = shell(ext, "({ first: 'aaaaaaaaaaaaaaaa', second: 'bbbbbbbbbbbbbbbbbb', third: 'cccccccccccccccccc', fourth: 1 })").text;
     assert.equal(text, "{\n  first: 'aaaaaaaaaaaaaaaa',\n  second: 'bbbbbbbbbbbbbbbbbb',\n  third: 'cccccccccccccccccc',\n  fourth: 1\n}");
-    assert.match(shell(ext, "var big = []; for (var i = 0; i < 150; i++) big.push(i); big").text, /\.\.\. 50 more items/);
+    assert.match(shell(ext, "var big = []; for (var i = 0; i < 150; i++) big.push(i); big").text, /^\[\n  0,   1,   2,.*\n.*149\n\]$/s);
     assert.equal(shell(ext, "var loop = {}; loop.self = loop; loop").text, "{ self: [Circular] }");
 });
 
@@ -245,4 +246,19 @@ test("getters are not called while recording and conditions do not add steps", (
     assert.equal(end.scopes[0].vars.find((v) => v[0] === "o")[1].c[0][1].t, "getter");
     assert.equal(trace.trace.filter((e) => e.depth > 0).length, 0);
     assert.equal(trace.trace.find((e) => e.reason === "breakpoint").scopes[0].vars.find((v) => v[0] === "calls")[1].d, "1");
+});
+
+test("background ping and traceroute print into the terminal that started them", () => {
+    const ext = loadExtension();
+    ext.attachEditor();
+    ext.run('addDevice("R1", "2911", 0, 0)');
+    ext.world.respond = (device, cmd, mode) => mode === "line" && /^traceroute/.test(cmd) ? "  1   10.0.0.2   1 msec" : undefined;
+    const started = shell(ext, 'traceroute("R1", "10.0.0.2")');
+    assert.ok(started);
+    assert.ok(!ext.editorMessages().some((m) => m.kind === "shell-log"));
+    ext.world.flushLines();
+    const logs = ext.editorMessages().filter((m) => m.kind === "shell-log").map((m) => JSON.parse(m.text));
+    assert.equal(logs.length, 1);
+    assert.equal(logs[0].id, "t1");
+    assert.match(logs[0].text, /10\.0\.0\.2\s+1 msec/);
 });

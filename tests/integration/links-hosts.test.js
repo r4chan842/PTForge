@@ -54,7 +54,16 @@ test("ipv4 host configuration", () => {
     run('configurePcIp("PC1", false)');
     assert.equal(world.devices.PC1.dhcp, false);
 
-    assert.deepEqual(j(run, 'getPcIp("PC2")'), { dhcp: false, ip: "10.0.0.6", mask: "255.255.255.252", ipv6: "" });
+    assert.deepEqual(j(run, 'getPcIp("PC2")'), {
+        port: "FastEthernet0", dhcp: false, ip: "10.0.0.6", mask: "255.255.255.252", gateway: "10.0.0.1", dns: null,
+        mac: "0001.0001.0001", ipv6: null, ipv6Prefix: null, linkLocal: null, ipv6Gateway: null, ipv6Dns: null, up: false
+    });
+    run('configurePcIpv6("PC2", { address: "2001:db8::10/64", gateway: "2001:db8::1" })');
+    const v6 = j(run, 'getPcIp("PC2")');
+    assert.equal(v6.ipv6, "2001:db8::10");
+    assert.equal(v6.ipv6Prefix, 64);
+    assert.equal(v6.ipv6Gateway, "2001:db8::1");
+    assert.equal(j(run, 'getPcIp("PC1")').dns, "8.8.8.8");
     assert.throws(() => run('configurePcIp("PC1", false, "10.0.0.1", "255.255.255.0", null, null, "Gig7")'), /Port not found/);
     assert.throws(() => run('configurePcIp("PC1", false, "10.0.0.999", 24)'), /Invalid IPv4/);
 

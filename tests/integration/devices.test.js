@@ -72,6 +72,7 @@ test("ports and device info", () => {
     const info = j(run, 'getPortInfo("S1", "FastEthernet0/1")');
     assert.equal(info.up, true);
     assert.equal(info.connectedTo, "FastEthernet0");
+    assert.equal(info.connectedDevice, "PC1");
     assert.throws(() => run('getPortInfo("S1", "Gig9/9")'), /Port not found/);
 
     const device = j(run, 'getDeviceInfo("PC1")');

@@ -46,7 +46,7 @@ removeDevice(["PC1", "PC2"]);
 | `getDeviceCount()` | number | Number of devices |
 | `getDeviceModel(name)` | string | Model string, for example `2911` |
 | `getDeviceType(name)` | number | Numeric device type |
-| `getDeviceInfo(name)` | object | Model, type, power, serial, position and every port |
+| `getDeviceInfo(name)` | object | Model, type, power, serial, position and every port in the same shape as `getPortInfo` |
 
 `filter` accepts a type name, a type number or an array of both. See [device types](../reference/device-types.md).
 
@@ -90,7 +90,7 @@ Slot `0/1` on a 2911 creates `Serial0/1/0` and `Serial0/1/1`. The full module li
 |----------|---------|-------------|
 | `getPorts(name)` | string[] | Every port name |
 | `getFreePorts(name, startsWith)` | string[] | Ports without a cable, Vlan and Loopback excluded |
-| `getPortInfo(name, port)` | object | `{ name, ip, mask, mac, up, protocolUp, connectedTo, description, bandwidth, fullDuplex }` |
+| `getPortInfo(name, port)` | object | `{ name, ip, mask, mac, up, protocolUp, connectedTo, connectedDevice, linkType, description, bandwidth, fullDuplex, ipv6 }`. `connectedTo` is the remote port name, `connectedDevice` the remote device |
 | `setPortPower(name, port, on)` | bool | Administrative state through the API |
 | `setPortDescription(name, port, text)` | bool | Port description |
 | `setPortSpeed(name, port, bandwidth, fullDuplex)` | bool | Use `"auto"` for either value to enable negotiation |

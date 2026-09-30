@@ -112,8 +112,9 @@ function restartDevice(deviceName) {
 function getDeviceInfo(deviceName) {
     var device = findDevice(deviceName);
     var ports = [];
+    var neighbors = portNeighbors(deviceName);
     for (var i = 0; i < device.getPortCount(); i++) {
-        ports.push(describePort(device.getPortAt(i)));
+        ports.push(describePortOf(deviceName, device.getPortAt(i), neighbors));
     }
     return {
         name: String(device.getName()),

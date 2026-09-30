@@ -11,7 +11,7 @@ IP configuration for PC, Laptop, Server, Printer and other hosts. The default po
 | `configurePcIp(name, dhcp, ip, mask, gateway, dns, port)` | Full IPv4 settings |
 | `setPcStatic(name, address, gateway, dns, port)` | Static address, `address` may include a prefix like `10.0.0.5/24` |
 | `setPcDhcp(name, port)` | Switch to DHCP |
-| `getPcIp(name, port)` | `{ dhcp, ip, mask, ipv6 }` |
+| `getPcIp(name, port)` | `{ port, dhcp, ip, mask, gateway, dns, mac, ipv6, ipv6Prefix, linkLocal, ipv6Gateway, ipv6Dns, up }`. Addresses that are not set are `null` instead of `0.0.0.0` or `::`. Gateway and DNS come from the `HostIp`, `HostIpv6` and `DnsClient` processes |
 | `setHostFirewall(name, enabled, port)` | Inbound firewall |
 | `runHostCommand(name, command)` | Type a command in the host Command Prompt |
 

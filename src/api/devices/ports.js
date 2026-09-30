@@ -9,8 +9,29 @@ function describePort(port) {
         connectedTo: String(callIfExists(port, "getRemotePortName", "")),
         description: String(callIfExists(port, "getDescription", "")),
         bandwidth: callIfExists(port, "getBandwidth", 0),
-        fullDuplex: callIfExists(port, "isFullDuplex", false) === true
+        fullDuplex: callIfExists(port, "isFullDuplex", false) === true,
+        ipv6: String(callIfExists(port, "getUnicastIpv6Address", "")).replace(/^::$/, "")
     };
+}
+
+function portNeighbors(deviceName) {
+    var map = {};
+    try {
+        getNeighbors(deviceName).forEach(function (n) {
+            map[n.port] = n;
+        });
+    } catch (error) {
+        return map;
+    }
+    return map;
+}
+
+function describePortOf(deviceName, port, neighbors) {
+    var info = describePort(port);
+    var near = (neighbors || portNeighbors(deviceName))[info.name];
+    info.connectedDevice = near ? near.device : "";
+    info.linkType = near ? near.type : "";
+    return info;
 }
 
 function getPorts(deviceName) {
@@ -23,7 +44,7 @@ function getPorts(deviceName) {
 }
 
 function getPortInfo(deviceName, portName) {
-    return describePort(findPort(deviceName, portName));
+    return describePortOf(deviceName, findPort(deviceName, portName));
 }
 
 function getFreePorts(deviceName, startsWith) {

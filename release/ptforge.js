@@ -898,8 +898,9 @@ function restartDevice(deviceName) {
 function getDeviceInfo(deviceName) {
     var device = findDevice(deviceName);
     var ports = [];
+    var neighbors = portNeighbors(deviceName);
     for (var i = 0; i < device.getPortCount(); i++) {
-        ports.push(describePort(device.getPortAt(i)));
+        ports.push(describePortOf(deviceName, device.getPortAt(i), neighbors));
     }
     return {
         name: String(device.getName()),
@@ -987,8 +988,29 @@ function describePort(port) {
         connectedTo: String(callIfExists(port, "getRemotePortName", "")),
         description: String(callIfExists(port, "getDescription", "")),
         bandwidth: callIfExists(port, "getBandwidth", 0),
-        fullDuplex: callIfExists(port, "isFullDuplex", false) === true
+        fullDuplex: callIfExists(port, "isFullDuplex", false) === true,
+        ipv6: String(callIfExists(port, "getUnicastIpv6Address", "")).replace(/^::$/, "")
     };
+}
+
+function portNeighbors(deviceName) {
+    var map = {};
+    try {
+        getNeighbors(deviceName).forEach(function (n) {
+            map[n.port] = n;
+        });
+    } catch (error) {
+        return map;
+    }
+    return map;
+}
+
+function describePortOf(deviceName, port, neighbors) {
+    var info = describePort(port);
+    var near = (neighbors || portNeighbors(deviceName))[info.name];
+    info.connectedDevice = near ? near.device : "";
+    info.linkType = near ? near.type : "";
+    return info;
 }
 
 function getPorts(deviceName) {
@@ -1001,7 +1023,7 @@ function getPorts(deviceName) {
 }
 
 function getPortInfo(deviceName, portName) {
-    return describePort(findPort(deviceName, portName));
+    return describePortOf(deviceName, findPort(deviceName, portName));
 }
 
 function getFreePorts(deviceName, startsWith) {
@@ -1203,14 +1225,44 @@ function setPcStatic(deviceName, address, gateway, dns, portName) {
     return configurePcIp(deviceName, false, address, undefined, gateway, dns, portName);
 }
 
+function cleanAddress(value) {
+    if (!isDefined(value) || value === null) {
+        return null;
+    }
+    var text = String(value).trim();
+    if (!text || text === "0.0.0.0" || text === "::" || text === "null" || text === "undefined") {
+        return null;
+    }
+    return text;
+}
+
+function hostProcessValue(deviceName, names, method) {
+    try {
+        return cleanAddress(processByNames(deviceName, names)[method]());
+    } catch (error) {
+        return null;
+    }
+}
+
 function getPcIp(deviceName, portName) {
     var device = findDevice(deviceName);
     var port = hostPort(deviceName, portName);
+    var ipv6 = cleanAddress(callIfExists(port, "getUnicastIpv6Address", null));
+    var prefix = callIfExists(port, "getUnicastIpv6Prefix", null);
     return {
+        port: String(port.getName()),
         dhcp: callIfExists(device, "getDhcpFlag", false) === true,
-        ip: String(port.getIpAddress()),
-        mask: String(port.getSubnetMask()),
-        ipv6: String(callIfExists(port, "getUnicastIpv6Address", ""))
+        ip: cleanAddress(port.getIpAddress()),
+        mask: cleanAddress(port.getSubnetMask()),
+        gateway: hostProcessValue(deviceName, ["HostIp"], "getDefaultGateway"),
+        dns: hostProcessValue(deviceName, ["DnsClient"], "getServerIp"),
+        mac: cleanAddress(callIfExists(port, "getMacAddress", null)),
+        ipv6: ipv6,
+        ipv6Prefix: ipv6 && prefix !== null && !isNaN(Number(prefix)) ? Number(prefix) : null,
+        linkLocal: cleanAddress(callIfExists(port, "getIpv6LinkLocal", null)),
+        ipv6Gateway: hostProcessValue(deviceName, ["HostIpv6"], "getDefaultGateway"),
+        ipv6Dns: hostProcessValue(deviceName, ["DnsClient"], "getServerIpv6"),
+        up: callIfExists(port, "isPortUp", null)
     };
 }
 
@@ -4148,23 +4200,37 @@ function deletePdu(index) {
     return true;
 }
 
-function ping(deviceName, target, count) {
+function ping(deviceName, target, count, onDone) {
     var device = findDevice(deviceName);
-    if (typeof device.enterCommand === "function") {
-        var command = "ping " + target + (count ? " repeat " + count : "");
-        return runCommand(deviceName, command, "enable");
-    }
-    runHostCommand(deviceName, "ping " + (count ? "-n " + count + " " : "") + target);
-    return { status: "sent", output: "" };
+    return runLineCommand(deviceName, pingCommand(device, target, count), onDone, function (row, text) {
+        finishPingRow(row, text);
+        row.target = String(target);
+    });
 }
 
-function traceroute(deviceName, target) {
+function traceroute(deviceName, target, onDone) {
     var device = findDevice(deviceName);
-    if (typeof device.enterCommand === "function") {
-        return runCommand(deviceName, "traceroute " + target, "enable");
-    }
-    runHostCommand(deviceName, "tracert " + target);
-    return { status: "sent", output: "" };
+    var command = (typeof device.enterCommand === "function" ? "traceroute " : "tracert ") + target;
+    return runLineCommand(deviceName, command, onDone, function (row, text) {
+        row.target = String(target);
+        row.hops = parseTraceOutput(text);
+    });
+}
+
+function parseTraceOutput(text) {
+    var hops = [];
+    String(text || "").split(/\r?\n/).forEach(function (line) {
+        var match = /^\s*(\d+)\s+(.*)$/.exec(line);
+        if (!match) {
+            return;
+        }
+        var ip = /(\d{1,3}(?:\.\d{1,3}){3})/.exec(match[2]);
+        var times = (match[2].match(/(\d+)\s*ms(ec)?/g) || []).map(function (t) {
+            return Number(/\d+/.exec(t)[0]);
+        });
+        hops.push({ hop: Number(match[1]), ip: ip ? ip[1] : null, times: times, timeout: !ip });
+    });
+    return hops;
 }
 
 function pingAll(sourceDevice, targets) {
@@ -4368,11 +4434,15 @@ PingRunner.prototype.onEnded = function (src, args) {
     if (!row) {
         return;
     }
-    var input = eventText(args, "inputCommand");
-    if (input && input.indexOf("ping") !== 0) {
+    var input = eventText(args, "inputCommand").trim();
+    if (input && input !== row.command) {
         return;
     }
-    finishPingRow(row, this.buffer);
+    if (row.finish) {
+        row.finish(row, this.buffer);
+    } else {
+        finishPingRow(row, this.buffer);
+    }
     this.next();
 };
 
@@ -4494,6 +4564,38 @@ function reachability(options) {
     report.sources = sources;
     report.targets = targets;
     return report;
+}
+
+function runLineCommand(deviceName, command, onDone, finish) {
+    var device = findDevice(deviceName);
+    var line = pingLine(device);
+    var row = { source: String(deviceName), command: String(command), state: "pending", output: "" };
+    var later = !onDone && shellSessionId ? shellLater() : null;
+    if (!line || typeof line.registerEvent !== "function") {
+        throw new Error(deviceName + " has no command line");
+    }
+    row.finish = function (target, text) {
+        target.output = text;
+        target.state = "done";
+        if (finish) {
+            finish(target, text);
+        }
+    };
+    var runner = new PingRunner(deviceName, device, line, [row], function () {
+        activePingRunners = activePingRunners.filter(function (item) {
+            return item !== runner;
+        });
+        delete row.finish;
+        delete row.command;
+        if (onDone) {
+            onDone(row);
+        } else if (later) {
+            later("log", row.output.replace(/^\s+|\s+$/g, "") || "No output from " + deviceName);
+        }
+    });
+    activePingRunners.push(runner);
+    runner.start();
+    return row;
 }
 
 var snapshotStore = {};
@@ -5079,8 +5181,8 @@ function editorReachability() {
 }
 
 var shellSessionId = "";
-var shellInspectDepth = 2;
-var shellMaxItems = 100;
+var shellInspectDepth = 8;
+var shellMaxItems = 1000;
 
 function shellQuote(text) {
     var body = String(text).replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/\r/g, "\\r").replace(/\t/g, "\\t");
@@ -5184,7 +5286,7 @@ function inspectValue(value, depth, seen, indent) {
         if (value.length > shown) {
             parts.push("... " + (value.length - shown) + " more items");
         }
-        return shellJoin("[", parts, "]", pad);
+        return shellPackArray(parts, pad) || shellJoin("[", parts, "]", pad);
     }
     var keys = shellObjectKeys(value);
     keys.slice(0, shellMaxItems).forEach(function (key) {
@@ -5208,6 +5310,29 @@ function inspectValue(value, depth, seen, indent) {
         }
     }
     return shellJoin("{", parts, "}", pad);
+}
+
+function shellPackArray(parts, indent) {
+    if (parts.length <= 6 || ("[ " + parts.join(", ") + " ]").length <= 76) {
+        return "";
+    }
+    var widest = 0;
+    for (var i = 0; i < parts.length; i++) {
+        if (parts[i].length > 16 || parts[i].indexOf("\n") !== -1 || /^[\[{]/.test(parts[i])) {
+            return "";
+        }
+        widest = Math.max(widest, parts[i].length);
+    }
+    var pad = new Array(indent + 2).join("  ");
+    var perRow = Math.max(1, Math.floor((76 - pad.length) / (widest + 2)));
+    var rows = [];
+    for (var j = 0; j < parts.length; j += perRow) {
+        rows.push(pad + parts.slice(j, j + perRow).map(function (part, k, row) {
+            var cell = part + (j + k < parts.length - 1 ? "," : "");
+            return k === row.length - 1 ? cell : (cell + new Array(widest + 3).join(" ")).substring(0, widest + 2);
+        }).join(""));
+    }
+    return "[\n" + rows.join("\n") + "\n" + new Array(indent + 1).join("  ") + "]";
 }
 
 function shellErrorText(error) {
@@ -5239,6 +5364,16 @@ function shellEval(encodedId, encodedCode) {
     } finally {
         shellSessionId = "";
     }
+}
+
+function shellLater() {
+    var id = shellSessionId;
+    return function (kind, text) {
+        if (id) {
+            return editorSend("shell-log", { id: id, kind: kind || "log", text: String(text) });
+        }
+        return notifyEditor(kind === "error" ? "error" : "log", String(text));
+    };
 }
 
 function shellOutput(kind, text) {

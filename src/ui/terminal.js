@@ -617,7 +617,7 @@ Terminal.prototype.runDot = function (name, args) {
                 this.write("Usage: .trace R1 10.0.0.2", "t-yellow");
                 return;
             }
-            this.runEngineText("var r = traceroute(" + q(args[0]) + ", " + q(args[1]) + "); return r.output || (\"Status: \" + r.status);");
+            this.runEngineText("traceroute(" + q(args[0]) + ", " + q(args[1]) + "); return \"Tracing the route to \" + " + q(args[1]) + " + \". The result appears here when Packet Tracer finishes...\";");
             return;
         case ".show":
             if (args.length < 2) {

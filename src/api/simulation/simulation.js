@@ -65,23 +65,37 @@ function deletePdu(index) {
     return true;
 }
 
-function ping(deviceName, target, count) {
+function ping(deviceName, target, count, onDone) {
     var device = findDevice(deviceName);
-    if (typeof device.enterCommand === "function") {
-        var command = "ping " + target + (count ? " repeat " + count : "");
-        return runCommand(deviceName, command, "enable");
-    }
-    runHostCommand(deviceName, "ping " + (count ? "-n " + count + " " : "") + target);
-    return { status: "sent", output: "" };
+    return runLineCommand(deviceName, pingCommand(device, target, count), onDone, function (row, text) {
+        finishPingRow(row, text);
+        row.target = String(target);
+    });
 }
 
-function traceroute(deviceName, target) {
+function traceroute(deviceName, target, onDone) {
     var device = findDevice(deviceName);
-    if (typeof device.enterCommand === "function") {
-        return runCommand(deviceName, "traceroute " + target, "enable");
-    }
-    runHostCommand(deviceName, "tracert " + target);
-    return { status: "sent", output: "" };
+    var command = (typeof device.enterCommand === "function" ? "traceroute " : "tracert ") + target;
+    return runLineCommand(deviceName, command, onDone, function (row, text) {
+        row.target = String(target);
+        row.hops = parseTraceOutput(text);
+    });
+}
+
+function parseTraceOutput(text) {
+    var hops = [];
+    String(text || "").split(/\r?\n/).forEach(function (line) {
+        var match = /^\s*(\d+)\s+(.*)$/.exec(line);
+        if (!match) {
+            return;
+        }
+        var ip = /(\d{1,3}(?:\.\d{1,3}){3})/.exec(match[2]);
+        var times = (match[2].match(/(\d+)\s*ms(ec)?/g) || []).map(function (t) {
+            return Number(/\d+/.exec(t)[0]);
+        });
+        hops.push({ hop: Number(match[1]), ip: ip ? ip[1] : null, times: times, timeout: !ip });
+    });
+    return hops;
 }
 
 function pingAll(sourceDevice, targets) {

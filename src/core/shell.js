@@ -1,6 +1,6 @@
 var shellSessionId = "";
-var shellInspectDepth = 2;
-var shellMaxItems = 100;
+var shellInspectDepth = 8;
+var shellMaxItems = 1000;
 
 function shellQuote(text) {
     var body = String(text).replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/\r/g, "\\r").replace(/\t/g, "\\t");
@@ -104,7 +104,7 @@ function inspectValue(value, depth, seen, indent) {
         if (value.length > shown) {
             parts.push("... " + (value.length - shown) + " more items");
         }
-        return shellJoin("[", parts, "]", pad);
+        return shellPackArray(parts, pad) || shellJoin("[", parts, "]", pad);
     }
     var keys = shellObjectKeys(value);
     keys.slice(0, shellMaxItems).forEach(function (key) {
@@ -128,6 +128,29 @@ function inspectValue(value, depth, seen, indent) {
         }
     }
     return shellJoin("{", parts, "}", pad);
+}
+
+function shellPackArray(parts, indent) {
+    if (parts.length <= 6 || ("[ " + parts.join(", ") + " ]").length <= 76) {
+        return "";
+    }
+    var widest = 0;
+    for (var i = 0; i < parts.length; i++) {
+        if (parts[i].length > 16 || parts[i].indexOf("\n") !== -1 || /^[\[{]/.test(parts[i])) {
+            return "";
+        }
+        widest = Math.max(widest, parts[i].length);
+    }
+    var pad = new Array(indent + 2).join("  ");
+    var perRow = Math.max(1, Math.floor((76 - pad.length) / (widest + 2)));
+    var rows = [];
+    for (var j = 0; j < parts.length; j += perRow) {
+        rows.push(pad + parts.slice(j, j + perRow).map(function (part, k, row) {
+            var cell = part + (j + k < parts.length - 1 ? "," : "");
+            return k === row.length - 1 ? cell : (cell + new Array(widest + 3).join(" ")).substring(0, widest + 2);
+        }).join(""));
+    }
+    return "[\n" + rows.join("\n") + "\n" + new Array(indent + 1).join("  ") + "]";
 }
 
 function shellErrorText(error) {
@@ -159,6 +182,16 @@ function shellEval(encodedId, encodedCode) {
     } finally {
         shellSessionId = "";
     }
+}
+
+function shellLater() {
+    var id = shellSessionId;
+    return function (kind, text) {
+        if (id) {
+            return editorSend("shell-log", { id: id, kind: kind || "log", text: String(text) });
+        }
+        return notifyEditor(kind === "error" ? "error" : "log", String(text));
+    };
 }
 
 function shellOutput(kind, text) {

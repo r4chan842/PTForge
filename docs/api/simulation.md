@@ -29,8 +29,8 @@
 
 | Function | Description |
 |----------|-------------|
-| `ping(device, target, count)` | Ping from a router, switch or host |
-| `traceroute(device, target)` | `traceroute` on IOS, `tracert` on hosts |
+| `ping(device, target, count, onDone)` | Ping from a router, switch or host in the background. `onDone(row)` gets `{ source, target, state, sent, received, percent, output }`. In the terminal the output is printed when it finishes |
+| `traceroute(device, target, onDone)` | `traceroute` on IOS, `tracert` on hosts. Runs in the background; `onDone(row)` gets `{ source, target, state, output, hops }`. In the terminal the output is printed when it finishes |
 | `pingAll(device, targets)` | `reachability()` for the whole network, or only from `device` to `targets` |
 
 ## Reachability
