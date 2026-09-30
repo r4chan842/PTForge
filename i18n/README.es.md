@@ -344,7 +344,7 @@ npm run check
 | `npm run catalog` | Generar la lista de funciones del editor a partir de `docs/api` |
 | `npm run reference` | Generar las tablas de referencia a partir de `src/data` |
 | `npm run check` | Lista de funciones, bundle, comprobación de sintaxis y pruebas |
-| `npm run ui-test` | 40 comprobaciones en navegador del entorno, el terminal y el depurador con Playwright |
+| `npm run ui-test` | 41 comprobaciones en navegador del entorno, el terminal y el depurador con Playwright |
 | `npm run screenshots` | Regenerar las capturas de `assets/screenshots` |
 
 La batería de pruebas ejecuta toda la extensión contra una réplica de la API IPC de Packet Tracer. Cubre cada función pública, cada ejemplo, plantilla y receta, el bundle, los motores del terminal y del depurador y las reglas del proyecto. Detalles en [Pruebas](../docs/architecture/testing.md).

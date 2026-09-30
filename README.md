@@ -347,7 +347,7 @@ npm run check
 | `npm run catalog` | Regenerate the editor function list from `docs/api` |
 | `npm run reference` | Regenerate the reference tables from `src/data` |
 | `npm run check` | Catalog, bundle, syntax check and tests |
-| `npm run ui-test` | 40 browser checks of the workbench, terminal and debugger with Playwright |
+| `npm run ui-test` | 41 browser checks of the workbench, terminal and debugger with Playwright |
 | `npm run screenshots` | Regenerate the screenshots in `assets/screenshots` |
 
 The test suite runs the whole extension against a mock of the Packet Tracer IPC API. It covers every public function, every example, template and recipe, the release bundle, the terminal and debugger engine, and project rules such as ES5 only code and complete documentation. Read [testing](docs/architecture/testing.md) for details.

@@ -344,7 +344,7 @@ npm run check
 | `npm run catalog` | Die Funktionsliste des Editors aus `docs/api` erzeugen |
 | `npm run reference` | Die Referenztabellen aus `src/data` erzeugen |
 | `npm run check` | Funktionsliste, Bundle, Syntaxprüfung und Tests |
-| `npm run ui-test` | 40 Browser-Prüfungen von Workbench, Terminal und Debugger mit Playwright |
+| `npm run ui-test` | 41 Browser-Prüfungen von Workbench, Terminal und Debugger mit Playwright |
 | `npm run screenshots` | Die Screenshots in `assets/screenshots` neu erzeugen |
 
 Die Testsuite führt die ganze Erweiterung gegen eine Nachbildung der Packet Tracer IPC API aus. Sie deckt jede öffentliche Funktion, jedes Beispiel, jede Vorlage und jedes Rezept, das Bundle, die Terminal- und Debugger-Engine sowie Projektregeln ab. Details unter [Tests](../docs/architecture/testing.md).

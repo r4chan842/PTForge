@@ -175,7 +175,7 @@
         "Gerar a lista de funções do editor a partir de `docs/api`",
         "Gerar as tabelas de referência a partir de `src/data`",
         "Lista de funções, bundle, verificação de sintaxe e testes",
-        "40 verificações no navegador do ambiente, terminal e depurador com Playwright",
+        "41 verificações no navegador do ambiente, terminal e depurador com Playwright",
         "Regenerar as capturas em `assets/screenshots`"
     ],
     "devNote": "A suíte de testes executa toda a extensão contra uma réplica da API IPC do Packet Tracer. Ela cobre cada função pública, cada exemplo, modelo e receita, o bundle, os motores do terminal e do depurador e as regras do projeto. Detalhes em [Testes](docs/architecture/testing.md).",

@@ -22,7 +22,9 @@ The same math is available in the terminal with `.calc`, and in scripts with the
 
 ## Reachability matrix
 
-`Network` → `Reachability Matrix (Ping All)`, or `pingAll()` in a script, pings every address from every router and switch.
+`Network` → `Reachability Matrix (Ping All)`, or `pingAll()` in a script, pings every address from every router and switch. Hosts are used as sources when no router or switch has an address.
+
+Each ping runs in Packet Tracer's own time, so the matrix fills in a few seconds after you start it. The results appear in the Reachability tab, in the terminal that started the test, and in the Output panel. `stopPings()` cancels a running test.
 
 - Green: all replies. Yellow: some loss. Red: no reply. Grey: not tested
 - Each cell shows the success rate and the average round-trip time
@@ -30,9 +32,10 @@ The same math is available in the terminal with `.calc`, and in scripts with the
 - `Run Again` repeats the test, `Copy as CSV` copies the whole matrix
 
 ```js
-var report = pingAll();
-log(report.ok + " of " + report.total + " answered");
-pingMatrix(["PC1", "PC2"], ["10.0.0.1", "SRV"], 2);
+pingAll();
+pingMatrix(["PC1", "PC2"], ["10.0.0.1", "SRV"], 2, function (report) {
+    log(report.ok + " of " + report.total + " answered");
+});
 ```
 
 See [reachability](../api/simulation.md#reachability) for every option.

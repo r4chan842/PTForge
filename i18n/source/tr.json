@@ -175,7 +175,7 @@
         "Düzenleyicinin fonksiyon listesini `docs/api` içinden üret",
         "Başvuru tablolarını `src/data` içinden üret",
         "Fonksiyon listesi, paket, söz dizimi denetimi ve testler",
-        "Playwright ile çalışma alanı, terminal ve hata ayıklayıcı için 40 tarayıcı denetimi",
+        "Playwright ile çalışma alanı, terminal ve hata ayıklayıcı için 41 tarayıcı denetimi",
         "`assets/screenshots` içindeki ekran görüntülerini yeniden üret"
     ],
     "devNote": "Test takımı tüm eklentiyi Packet Tracer IPC API'sinin bir kopyasına karşı çalıştırır. Her genel fonksiyonu, her örneği, şablonu ve tarifi, paketi, terminal ve hata ayıklayıcı motorlarını ve proje kurallarını kapsar. Ayrıntılar [Test](docs/architecture/testing.md) sayfasında.",

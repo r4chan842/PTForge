@@ -344,7 +344,7 @@ npm run check
 | `npm run catalog` | Générer la liste des fonctions de l'éditeur depuis `docs/api` |
 | `npm run reference` | Générer les tables de référence depuis `src/data` |
 | `npm run check` | Liste des fonctions, bundle, contrôle syntaxique et tests |
-| `npm run ui-test` | 40 contrôles navigateur de l'atelier, du terminal et du débogueur avec Playwright |
+| `npm run ui-test` | 41 contrôles navigateur de l'atelier, du terminal et du débogueur avec Playwright |
 | `npm run screenshots` | Régénérer les captures de `assets/screenshots` |
 
 La suite de tests exécute toute l'extension contre une réplique de l'API IPC de Packet Tracer. Elle couvre chaque fonction publique, chaque exemple, modèle et recette, le bundle, les moteurs du terminal et du débogueur et les règles du projet. Détails dans [Tests](../docs/architecture/testing.md).

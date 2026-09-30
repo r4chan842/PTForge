@@ -8,10 +8,13 @@ addLink("R1", "GigabitEthernet0/1", "S2", "GigabitEthernet0/1", "straight");
 setInterfaceIp("R1", "GigabitEthernet0/0", "192.168.10.1/24");
 setInterfaceIp("R1", "GigabitEthernet0/1", "192.168.20.1/24");
 
-var report = pingAll();
-log(report.ok + " of " + report.total + " pings answered");
-report.rows.filter(function (row) {
-    return row.state !== "ok";
-}).forEach(function (row) {
-    log(row.source + " -> " + row.target + ": " + row.state);
+reachability({
+    onDone: function (report) {
+        log(report.ok + " of " + report.total + " pings answered");
+        report.rows.filter(function (row) {
+            return row.state !== "ok";
+        }).forEach(function (row) {
+            log(row.source + " -> " + row.target + ": " + row.state);
+        });
+    }
 });

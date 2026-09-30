@@ -175,7 +175,7 @@
         "Die Funktionsliste des Editors aus `docs/api` erzeugen",
         "Die Referenztabellen aus `src/data` erzeugen",
         "Funktionsliste, Bundle, Syntaxprüfung und Tests",
-        "40 Browser-Prüfungen von Workbench, Terminal und Debugger mit Playwright",
+        "41 Browser-Prüfungen von Workbench, Terminal und Debugger mit Playwright",
         "Die Screenshots in `assets/screenshots` neu erzeugen"
     ],
     "devNote": "Die Testsuite führt die ganze Erweiterung gegen eine Nachbildung der Packet Tracer IPC API aus. Sie deckt jede öffentliche Funktion, jedes Beispiel, jede Vorlage und jedes Rezept, das Bundle, die Terminal- und Debugger-Engine sowie Projektregeln ab. Details unter [Tests](docs/architecture/testing.md).",

@@ -31,7 +31,7 @@
 |----------|-------------|
 | `ping(device, target, count)` | Ping from a router, switch or host |
 | `traceroute(device, target)` | `traceroute` on IOS, `tracert` on hosts |
-| `pingAll(device, targets)` | Ping a list of targets. With no arguments it runs `reachability()` for the whole network |
+| `pingAll(device, targets)` | `reachability()` for the whole network, or only from `device` to `targets` |
 
 ## Reachability
 
@@ -39,20 +39,29 @@ A ping matrix from every router and switch to every address in the topology, wit
 
 | Function | Description |
 |----------|-------------|
-| `reachability(options)` | Ping every address from every router and switch that has one. Options: `sources`, `targets`, `count`. Returns `{ rows, total, ok, partial, failed, unknown, sources, targets }` and opens the Reachability view |
-| `pingMatrix(sources, targets, count)` | Ping each target from each source. Targets can be addresses or device names. Returns the same report without opening the view |
-| `pingTest(source, target, count)` | One ping with a parsed result: `{ source, target, ip, state, percent, sent, received, rtt, output }` |
+| `reachability(options)` | Ping every address from every router and switch that has one. When none has an address, hosts are used as sources. Options: `sources`, `targets`, `count`, `onDone(report)`. Opens the Reachability view when every ping has finished |
+| `pingMatrix(sources, targets, count, onDone)` | Ping each target from each source. Targets can be addresses or device names. `onDone(report)` runs when every ping has finished |
+| `stopPings()` | Cancel a running reachability test. Returns the number of devices that were still pinging |
+| `pingTest(source, target, count)` | One immediate ping with a parsed result: `{ source, target, ip, state, percent, sent, received, rtt, output }` |
 | `parsePingOutput(text)` | Read IOS or host ping output: `{ sent, received, percent, rtt }` |
 
-`state` is `ok` (every reply came back), `partial` (some replies, usually the first ping while ARP resolves), `failed`, `unknown` (output could not be read) or `sent` (the source is a host).
+A ping takes simulated time. Packet Tracer only moves time forward after the script returns, so a ping read inside the same call always looks like `0 percent`. `reachability` and `pingMatrix` send each ping through the device's command line and listen for the `outputWritten` and `commandEnded` events of `TerminalLine`. The returned report starts with every row `pending` (`{ rows, total, pending, done: false, ok, partial, failed, unknown, sources, targets }`) and the same object is filled in as replies arrive. The final report is sent to the Reachability view, to the terminal that started it, and to `onDone`.
 
-Pings from routers and switches return their output right away, so they are measured. A PC or server runs the ping in its own Command Prompt and the result appears there, so hosts are used as targets, not sources.
+`state` is `pending`, `ok` (every reply came back), `partial` (some replies, usually the first ping while ARP resolves), `failed`, `unknown` (output could not be read) or `error` (bad target). Each device runs its pings one after another, and all devices run in parallel.
 
 ```js
-var report = pingAll();
-log(report.ok + " of " + report.total + " pings succeeded");
-report.rows.filter(function (r) { return r.state !== "ok"; }).forEach(function (r) {
-    log(r.source + " -> " + r.target + " " + r.state);
+pingAll();
+```
+
+```js
+reachability({
+    sources: ["R1", "R2"],
+    count: 2,
+    onDone: function (report) {
+        report.rows.filter(function (r) { return r.state !== "ok"; }).forEach(function (r) {
+            log(r.source + " -> " + r.target + " " + r.state);
+        });
+    }
 });
 ```
 

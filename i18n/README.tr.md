@@ -344,7 +344,7 @@ npm run check
 | `npm run catalog` | Düzenleyicinin fonksiyon listesini `docs/api` içinden üret |
 | `npm run reference` | Başvuru tablolarını `src/data` içinden üret |
 | `npm run check` | Fonksiyon listesi, paket, söz dizimi denetimi ve testler |
-| `npm run ui-test` | Playwright ile çalışma alanı, terminal ve hata ayıklayıcı için 40 tarayıcı denetimi |
+| `npm run ui-test` | Playwright ile çalışma alanı, terminal ve hata ayıklayıcı için 41 tarayıcı denetimi |
 | `npm run screenshots` | `assets/screenshots` içindeki ekran görüntülerini yeniden üret |
 
 Test takımı tüm eklentiyi Packet Tracer IPC API'sinin bir kopyasına karşı çalıştırır. Her genel fonksiyonu, her örneği, şablonu ve tarifi, paketi, terminal ve hata ayıklayıcı motorlarını ve proje kurallarını kapsar. Ayrıntılar [Test](../docs/architecture/testing.md) sayfasında.

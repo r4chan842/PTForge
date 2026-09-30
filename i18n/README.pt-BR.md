@@ -344,7 +344,7 @@ npm run check
 | `npm run catalog` | Gerar a lista de funções do editor a partir de `docs/api` |
 | `npm run reference` | Gerar as tabelas de referência a partir de `src/data` |
 | `npm run check` | Lista de funções, bundle, verificação de sintaxe e testes |
-| `npm run ui-test` | 40 verificações no navegador do ambiente, terminal e depurador com Playwright |
+| `npm run ui-test` | 41 verificações no navegador do ambiente, terminal e depurador com Playwright |
 | `npm run screenshots` | Regenerar as capturas em `assets/screenshots` |
 
 A suíte de testes executa toda a extensão contra uma réplica da API IPC do Packet Tracer. Ela cobre cada função pública, cada exemplo, modelo e receita, o bundle, os motores do terminal e do depurador e as regras do projeto. Detalhes em [Testes](../docs/architecture/testing.md).

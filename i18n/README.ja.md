@@ -344,7 +344,7 @@ npm run check
 | `npm run catalog` | `docs/api` からエディターの関数一覧を生成 |
 | `npm run reference` | `src/data` からリファレンス表を生成 |
 | `npm run check` | 関数一覧、バンドル、構文チェック、テスト |
-| `npm run ui-test` | Playwright によるワークベンチ、ターミナル、デバッガーの 40 項目のブラウザーチェック |
+| `npm run ui-test` | Playwright によるワークベンチ、ターミナル、デバッガーの 41 項目のブラウザーチェック |
 | `npm run screenshots` | `assets/screenshots` のスクリーンショットを再生成 |
 
 テストスイートは、Packet Tracer IPC API のレプリカに対して拡張機能全体を実行します。すべての公開関数、すべてのサンプル、テンプレート、レシピ、バンドル、ターミナルとデバッガーのエンジン、プロジェクトのルールを網羅しています。詳細は[テスト](../docs/architecture/testing.md)を参照してください。

@@ -344,7 +344,7 @@ npm run check
 | `npm run catalog` | 从 `docs/api` 生成编辑器的函数列表 |
 | `npm run reference` | 从 `src/data` 生成参考表格 |
 | `npm run check` | 函数列表、打包、语法检查和测试 |
-| `npm run ui-test` | 使用 Playwright 对工作台、终端和调试器进行 40 项浏览器检查 |
+| `npm run ui-test` | 使用 Playwright 对工作台、终端和调试器进行 41 项浏览器检查 |
 | `npm run screenshots` | 重新生成 `assets/screenshots` 中的截图 |
 
 测试套件在 Packet Tracer IPC API 的模拟实现上运行整个扩展，覆盖每个公开函数、每个示例、模板和实践指南、打包文件、终端与调试器引擎以及项目规则。详见[测试](../docs/architecture/testing.md)。

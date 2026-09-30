@@ -346,7 +346,7 @@ npm run check
 | `npm run catalog` | ساخت دوباره فهرست توابع ویرایشگر از `docs/api` |
 | `npm run reference` | ساخت دوباره جدول‌های مرجع از `src/data` |
 | `npm run check` | فهرست توابع، bundle، بررسی نحو و آزمون‌ها |
-| `npm run ui-test` | 40 آزمون مرورگر برای میز کار، ترمینال و دیباگر با Playwright |
+| `npm run ui-test` | 41 آزمون مرورگر برای میز کار، ترمینال و دیباگر با Playwright |
 | `npm run screenshots` | ساخت دوباره تصویرهای `assets/screenshots` |
 
 مجموعه آزمون کل افزونه را روی یک شبیه‌ساز از Packet Tracer IPC API اجرا می‌کند و همه توابع عمومی، نمونه‌ها، قالب‌ها، دستورالعمل‌ها، bundle، موتور ترمینال و دیباگر و قوانین پروژه را پوشش می‌دهد. جزئیات در [آزمون‌ها](../docs/architecture/testing.md).

@@ -175,7 +175,7 @@
         "Générer la liste des fonctions de l'éditeur depuis `docs/api`",
         "Générer les tables de référence depuis `src/data`",
         "Liste des fonctions, bundle, contrôle syntaxique et tests",
-        "40 contrôles navigateur de l'atelier, du terminal et du débogueur avec Playwright",
+        "41 contrôles navigateur de l'atelier, du terminal et du débogueur avec Playwright",
         "Régénérer les captures de `assets/screenshots`"
     ],
     "devNote": "La suite de tests exécute toute l'extension contre une réplique de l'API IPC de Packet Tracer. Elle couvre chaque fonction publique, chaque exemple, modèle et recette, le bundle, les moteurs du terminal et du débogueur et les règles du projet. Détails dans [Tests](docs/architecture/testing.md).",

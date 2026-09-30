@@ -175,7 +175,7 @@
         "Generar la lista de funciones del editor a partir de `docs/api`",
         "Generar las tablas de referencia a partir de `src/data`",
         "Lista de funciones, bundle, comprobación de sintaxis y pruebas",
-        "40 comprobaciones en navegador del entorno, el terminal y el depurador con Playwright",
+        "41 comprobaciones en navegador del entorno, el terminal y el depurador con Playwright",
         "Regenerar las capturas de `assets/screenshots`"
     ],
     "devNote": "La batería de pruebas ejecuta toda la extensión contra una réplica de la API IPC de Packet Tracer. Cubre cada función pública, cada ejemplo, plantilla y receta, el bundle, los motores del terminal y del depurador y las reglas del proyecto. Detalles en [Pruebas](docs/architecture/testing.md).",
