@@ -52,21 +52,30 @@ Packet Tracer loads script files top to bottom, so the order matters. Add a scri
 
 ## Step 4: add the interface
 
-Add the nine files in `src/ui/` as the module's interface files, keeping the names:
+Add the fourteen files in `src/ui/` as the module's interface files, keeping the names:
 
 | File | Purpose |
 |------|---------|
 | `index.html` | Page layout |
-| `style.css` | VS Code Dark+ theme |
+| `style.css` | VS Code Dark Modern theme |
 | `catalog.js` | Function list, generated from `docs/api` |
 | `snippets.js` | Snippet library |
 | `highlight.js` | Syntax highlighter |
 | `lint.js` | Problems: syntax and unknown functions |
-| `netcalc.js` | Subnet, VLSM and wildcard calculator |
-| `editor.js` | The code editor component |
+| `netcalc.js` | IPv4 and IPv6 network calculator |
+| `editor.js` | The code editor component, breakpoints and execution line |
+| `acorn.js` | JavaScript parser used by the debugger (MIT) |
+| `instrument.js` | Prepares a script for step recording |
+| `terminal.js` | The JavaScript terminal |
+| `debugview.js` | Run and Debug view, Debug Console, breakpoints |
+| `views.js` | Calculator, reachability and snapshot diff tabs |
 | `interface.js` | Workbench, files, commands, Packet Tracer bridge |
 
-They have no external dependencies.
+They load nothing from the network. The list order matches the `<script>` tags in `index.html`.
+
+### Updating from 1.1
+
+Replace the script file and every interface file, and add the five new ones: `acorn.js`, `instrument.js`, `terminal.js`, `debugview.js` and `views.js`. Your workspace, open tabs and settings are kept.
 
 ### Updating from 1.0
 

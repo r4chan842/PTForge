@@ -16,5 +16,6 @@ Complete scripts you can paste into the PTForge editor. Each one starts from an 
 | `10-ccna-labs` | router on a stick, full enterprise lab |
 | `11-inspection` | verify switching, port security audit |
 | `12-automation` | config backup, command audit, script library |
+| `13-operations` | reachability test, change tracking with snapshots |
 
 More starting points are in [`templates/`](../templates/README.md).

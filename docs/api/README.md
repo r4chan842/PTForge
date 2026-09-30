@@ -19,7 +19,8 @@ PTForge has more than 375 functions. They are all global, so you call them direc
 | Inspection | [inspect.md](inspect.md) | Switch ports, port security, VLAN database, STP, VTP, OSPF, EIGRP |
 | Lab Check | [checks.md](checks.md) | Graded checks with a score report |
 | Audit | [audit.md](audit.md) | Network audit, IP inventory, duplicate IPs, down links, subnet mismatches |
-| Simulation | [simulation.md](simulation.md) | Simulation mode, PDUs, ping |
+| Simulation | [simulation.md](simulation.md) | Simulation mode, PDUs, ping, reachability matrix |
+| Snapshots | [snapshots.md](snapshots.md) | Save the network state and compare changes |
 | Events | [events.md](events.md) | React to workspace changes |
 | Utilities | [utilities.md](utilities.md) | IPv4 math, output helpers |
 

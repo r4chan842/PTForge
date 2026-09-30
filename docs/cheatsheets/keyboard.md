@@ -41,8 +41,32 @@ The editor follows VS Code key bindings. Packet Tracer can keep a few keys for i
 
 | Keys | Action |
 |------|--------|
-| `F5`, `Ctrl+Enter` | Run the script |
+| `Ctrl+F5`, `Ctrl+Enter` | Run the script without debugging |
 | `Ctrl+Shift+Enter` | Run the selection |
+
+## Debug
+
+| Key | Action |
+|-----|--------|
+| `F5` | Start debugging, or continue |
+| `Shift+F5` | Stop |
+| `Ctrl+Shift+F5` | Restart |
+| `F9` | Toggle breakpoint |
+| `F10` | Step over |
+| `F11` | Step into |
+| `Shift+F11` | Step out |
+| `Shift+F10` | Step back |
+
+## Terminal
+
+| Key | Action |
+|-----|--------|
+| `` Ctrl+` `` | Show or hide the terminal |
+| `` Ctrl+Shift+` `` | New terminal |
+| `Up`, `Down` | Command history |
+| `Tab` | Complete |
+| `Ctrl+L` | Clear |
+| `Ctrl+D` | Close an empty terminal |
 
 ## Editing
 

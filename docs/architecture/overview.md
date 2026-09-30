@@ -8,7 +8,7 @@ PTForge is a Packet Tracer Script Module. Packet Tracer loads its scripts into o
 ┌──────────────── Packet Tracer ────────────────┐
 │                                               │
 │  Editor window (src/ui)                       │
-│   editor · highlight · lint · netcalc · UI     │
+│   editor · terminal · debugger · views · UI   │
 │        │  $se("runCode", encoded script)      │
 │        ▼                                      │
 │  Script engine                                │
@@ -57,7 +57,28 @@ See [runtime](runtime.md) and [testing](testing.md).
 |------|------|
 | `highlight.js` | Tokenizer shared by the highlighter and the linter |
 | `lint.js` | Syntax check with `Function`, bracket scan, unknown names |
-| `netcalc.js` | Subnet, VLSM and wildcard math for the tools view |
+| `netcalc.js` | IPv4 and IPv6 math for the calculator and the terminal |
+| `acorn.js` | Acorn parser, used to instrument scripts for the debugger |
+| `instrument.js` | Adds step hooks to every statement, maps steps to lines and scopes, walks a recorded trace |
+| `terminal.js` | Terminal tabs, history, completion, dot commands, device CLI mode |
+| `debugview.js` | Breakpoints, debug sessions, Variables, Watch, Call Stack, Debug Console, hover |
+| `views.js` | Editor tabs for the calculator, the reachability matrix and snapshot diffs |
 | `editor.js` | Textarea over a highlighted layer, undo, suggest, find |
 | `interface.js` | Workbench, workspace store, file dialogs through `$se`, reports |
 | `catalog.js`, `snippets.js` | Data for IntelliSense and snippets |
+
+## Debugger
+
+The debugger records instead of pausing the engine. Packet Tracer runs scripts synchronously, so a script cannot be stopped halfway and resumed later.
+
+1. `instrument.js` parses the script with Acorn and places a hook before every statement. Each hook knows its line and which variables are in scope
+2. The editor sends the instrumented script, the breakpoints and the watch expressions with `$se("debugRun", ...)`
+3. `core/debugger.js` runs it once. At every hook it stores the step, the call depth, a preview of each variable and the value of each watch, up to the recorded step limit
+4. The trace comes back to the editor, which pauses on the first breakpoint. Stepping over, into, out and back only moves through the recorded trace
+
+Device changes happen for real during step 3. Stepping back shows earlier values but does not undo changes in Packet Tracer.
+
+## Terminal
+
+Each terminal line goes to `core/shell.js` with `$se("shellEval", id, code)`. Declarations are moved to the global scope so later lines can use them, the value is turned into a readable preview, and the result comes back with `evaluateJavaScriptAsync`.
+

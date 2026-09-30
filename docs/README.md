@@ -6,7 +6,10 @@
 |-------|-----|
 | [Installation](guides/installation.md) | Adding the module to Packet Tracer |
 | [Getting started](guides/getting-started.md) | Your first script in ten minutes |
-| [Editor guide](guides/editor.md) | Workspace, files, IntelliSense, problems, tools |
+| [Editor guide](guides/editor.md) | Workspace, files, IntelliSense, problems |
+| [Terminal](guides/terminal.md) | Interactive JavaScript and device CLI |
+| [Debugger](guides/debugger.md) | Breakpoints, stepping, variables, watch and Debug Console |
+| [Network tools](guides/network-tools.md) | Calculator, reachability matrix and snapshots |
 | [Writing scripts](guides/writing-scripts.md) | Structure, order, builders, speed |
 | [Troubleshooting](guides/troubleshooting.md) | Common errors and fixes |
 | [Limitations](guides/limitations.md) | What is not possible and what to verify |

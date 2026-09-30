@@ -12,11 +12,11 @@ The PTForge editor is a small VS Code written for the Packet Tracer web view. It
 |------|-------|-----|
 | Menu bar | top | Every command, grouped like VS Code |
 | Command center | top middle | Click to go to a file |
-| Activity bar | far left | Explorer, Function reference, Snippets, Devices, Network tools, Lab Check |
+| Activity bar | far left | Explorer, Function reference, Run and Debug, Snippets, Devices, Network tools, Lab Check |
 | Side bar | left | The selected view. Drag its edge to resize |
 | Editor | middle | Tabs, breadcrumbs, the code, find widget |
-| Panel | bottom | Problems, Output, Lab Check. Drag its edge to resize |
-| Status bar | bottom | Connection, problems, run state, cursor, zoom |
+| Panel | bottom | Problems, Output, Debug Console, Terminal, Lab Check. Drag its edge to resize |
+| Status bar | bottom | Connection, problems, run and debug state, cursor, zoom. Blue while debugging |
 
 ## Workspace and files
 
@@ -55,7 +55,7 @@ Unknown functions are warnings: functions and variables declared in the script, 
 
 ## Running
 
-`F5` or the green triangle runs the whole file, `Ctrl+Shift+Enter` runs the selection. The status bar turns orange while Packet Tracer works and shows the run time when it finishes. `log` and `showResult` write to Output. Lab Check and audit reports open in the Lab Check panel.
+`Ctrl+F5`, `Ctrl+Enter` or the triangle in the editor title runs the whole file, `Ctrl+Shift+Enter` runs the selection. `F5` starts the [debugger](debugger.md). The Packet Tracer item in the status bar turns orange while Packet Tracer works and shows the run time when it finishes. `log` and `showResult` write to Output. Lab Check and audit reports open in the Lab Check panel.
 
 ## Devices view
 
@@ -63,14 +63,12 @@ Lists every device in the open Packet Tracer file with its model, and the ports 
 
 ## Network tools
 
-| Tool | Input | Output |
-|------|-------|--------|
-| Subnet calculator | `192.168.10.77/26` or `10.0.0.1 255.255.255.252` | Network, mask, wildcard, broadcast, host range, usable hosts, class, binary mask |
-| VLSM planner | Base network and `Sales:50, IT:20, 12` | Subnets from largest to smallest. Insert the plan as comments |
-| Mask and wildcard | `255.255.255.224`, `0.0.0.63` or `/20` | Prefix, mask and wildcard |
+The Network tools view has a quick subnet calculator, VLSM planner and wildcard converter next to your code. The full calculator with nine tools, the reachability matrix and snapshot compare open as editor tabs. See [network tools](network-tools.md).
 
-Click any value to copy it.
+## Terminal and debugger
+
+`` Ctrl+` `` opens the [terminal](terminal.md). `F5` starts the [debugger](debugger.md).
 
 ## Settings kept between sessions
 
-Open files, the active tab, side bar and panel sizes and visibility, the selected view, the opened folder and the zoom level.
+Open files, the active tab, side bar and panel sizes and visibility, the selected view, the opened folder, the zoom level, breakpoints, watch expressions, debugger options and terminal history.
