@@ -145,3 +145,30 @@ function editorDevices() {
         return true;
     });
 }
+
+function editorSnapshot(encodedAction, encodedFirst, encodedSecond) {
+    var action = decodeArgument(encodedAction);
+    var first = decodeArgument(encodedFirst || "");
+    var second = decodeArgument(encodedSecond || "");
+    return guardBridge("snapshot", function () {
+        if (action === "take") {
+            return takeSnapshot(first || undefined);
+        }
+        if (action === "delete") {
+            return deleteSnapshot(first);
+        }
+        if (action === "diff") {
+            showSnapshotDiff(first, second || undefined);
+            return true;
+        }
+        editorSend("snapshots", getSnapshots());
+        return true;
+    });
+}
+
+function editorReachability() {
+    return guardBridge("reachability", function () {
+        reachability();
+        return true;
+    });
+}

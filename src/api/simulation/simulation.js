@@ -85,6 +85,9 @@ function traceroute(deviceName, target) {
 }
 
 function pingAll(sourceDevice, targets) {
+    if (!isDefined(sourceDevice)) {
+        return reachability();
+    }
     var report = {};
     toList(targets).forEach(function (target) {
         report[target] = ping(sourceDevice, target);

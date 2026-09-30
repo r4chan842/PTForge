@@ -77,6 +77,9 @@ function showMessage(text) {
 function showResult(value) {
     var text = formatValue(value);
     console.log(text);
+    if (shellOutput("result", text)) {
+        return value;
+    }
     if (!notifyEditor("result", text)) {
         showMessage(text);
     }
@@ -86,6 +89,8 @@ function showResult(value) {
 function log(value) {
     var text = formatValue(value);
     console.log(text);
-    notifyEditor("log", text);
+    if (!shellOutput("log", text)) {
+        notifyEditor("log", text);
+    }
     return value;
 }
