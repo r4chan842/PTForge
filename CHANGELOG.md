@@ -2,6 +2,53 @@
 
 All notable changes to PTForge are listed here. The format follows [Keep a Changelog](https://keepachangelog.com) and the project uses [Semantic Versioning](https://semver.org).
 
+## [1.2.0] - 2026-09-30
+
+### Terminal
+
+- JavaScript terminal in the panel, opened with `` Ctrl+` ``, that runs each line inside Packet Tracer and keeps variables between lines
+- Several terminals at once, plus device CLI terminals that talk to IOS directly
+- History saved with the workspace, Tab completion, readable result trees and red errors
+- Dot commands: `.help`, `.clear`, `.devices`, `.ping`, `.trace`, `.show`, `.cli`, `.audit`, `.snap`, `.diff`, `.calc`, `.run`, `.history`, `.exit`
+- Run the selection or the active file in the terminal
+
+### Debugger
+
+- Run and Debug view with `F5`, built on step recording because the Packet Tracer engine cannot pause
+- Breakpoints in the gutter, conditional breakpoints, hit counts, logpoints and pause on uncaught exceptions
+- Continue, step over, step into, step out, step back, reverse continue, restart and stop, with a floating debug toolbar
+- Variables with Local, Closure and Script scopes, Watch, Call Stack and Breakpoints sections
+- Debug Console that evaluates expressions against the paused frame, and value hovers in the editor
+- Breakpoints, watches and debugger options saved with the workspace
+
+### Network tools
+
+- Network calculator tab: IPv4 subnet, subnet splitter, VLSM planner, route summarization, range to CIDR, wildcard mask, IPv6, EUI-64 and number conversion
+- Reachability matrix tab for `pingAll()` with loss, round-trip times, a problems table and CSV export
+- Snapshots of devices, links, addresses, ports, power and running configs, with a compare tab and a line diff of every config
+- New functions: `pingMatrix`, `reachability`, `takeSnapshot`, `getSnapshots`, `deleteSnapshot`, `compareSnapshots`, `showSnapshotDiff`, `saveSnapshot`, `loadSnapshot`, `captureState`, `diffLines` and more, 388 functions in total
+
+### Workbench
+
+- Colors, spacing, tabs, panels, menus and status bar follow the VS Code Dark Modern theme
+- Readable terminal colors from the VS Code terminal palette
+- New PTForge logo and icon
+- `F5` now starts debugging, `Ctrl+F5` runs without debugging
+- New Network and Terminal menus
+
+### Fixed
+
+- `Shift+F5` did not stop a debug session while the Debug Console input had focus
+- The VLSM planner rejected the one subnet per line format shown in its own hint
+
+### Project
+
+- 40 browser checks with Playwright, including a new workbench suite for the terminal, debugger, calculator, reachability and snapshots
+- New guides for the terminal, the debugger and the network tools
+- README in ten more languages in `i18n/`
+- New banners, screenshots and social preview
+- `THIRD_PARTY_NOTICES.md` for Acorn
+
 ## [1.1.0] - 2026-09-29
 
 ### Editor
@@ -77,4 +124,6 @@ First public release.
 - Test suite with a Packet Tracer mock: unit, integration, examples, recipes, bundle and hygiene checks
 - Documentation: guides, API reference, recipes, architecture, CCNA topic map, cheat sheets, reference tables
 
+[1.2.0]: https://github.com/r4chan842/PTForge/releases/tag/v1.2.0
+[1.1.0]: https://github.com/r4chan842/PTForge/releases/tag/v1.1.0
 [1.0.0]: https://github.com/r4chan842/PTForge/releases/tag/v1.0.0
