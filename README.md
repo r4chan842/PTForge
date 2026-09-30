@@ -1,15 +1,18 @@
 <div align="center">
 
-<img src="assets/banner.svg" alt="PTForge" width="100%">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/brand/logo-dark.svg">
+  <img src="assets/brand/logo.svg" alt="PTForge" width="300">
+</picture>
 
-<br>
+<br><br>
 
-**Build, configure, verify and document entire Cisco Packet Tracer networks with JavaScript.**
+**Build, configure, debug and verify entire Cisco Packet Tracer networks with JavaScript.**
 
-[![Release](https://img.shields.io/github/v/release/r4chan842/PTForge?color=ff8a1f)](https://github.com/r4chan842/PTForge/releases/latest)
+[![Release](https://img.shields.io/github/v/release/r4chan842/PTForge?color=1A5DB7)](https://github.com/r4chan842/PTForge/releases/latest)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-![Functions](https://img.shields.io/badge/functions-375%2B-blue)
-![Tests](https://img.shields.io/badge/tests-179%20node%20%2B%2021%20browser-success)
+![Functions](https://img.shields.io/badge/functions-388-1A5DB7)
+![Tests](https://img.shields.io/badge/tests-201%20node%20%2B%2040%20browser-success)
 ![Packet Tracer](https://img.shields.io/badge/Packet%20Tracer-8.x%2B-1ba0d7)
 ![Runtime](https://img.shields.io/badge/runtime-ES5-yellow)
 ![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)
@@ -19,8 +22,19 @@
 [Documentation](docs/README.md) ·
 [API](docs/api/README.md) ·
 [Examples](examples/README.md) ·
-[CCNA map](docs/ccna/README.md) ·
-[فارسی](README.fa.md)
+[CCNA map](docs/ccna/README.md)
+
+**English** ·
+[فارسی](i18n/README.fa.md) ·
+[Deutsch](i18n/README.de.md) ·
+[Español](i18n/README.es.md) ·
+[Français](i18n/README.fr.md) ·
+[Português](i18n/README.pt-BR.md) ·
+[Русский](i18n/README.ru.md) ·
+[Türkçe](i18n/README.tr.md) ·
+[العربية](i18n/README.ar.md) ·
+[中文](i18n/README.zh-CN.md) ·
+[日本語](i18n/README.ja.md)
 
 </div>
 
@@ -30,25 +44,38 @@
 
 Building a lab in Packet Tracer means dragging devices, picking cables, opening every CLI and typing the same commands again and again. One typo in a VLAN list or a wildcard mask can cost an hour.
 
-PTForge replaces the clicking with a script. You describe the network once, press **Run**, and Packet Tracer builds it: devices, modules, cables, IOS configuration, server services, wireless, labels and zones. Then PTForge reads the live state back so the same script can verify its own work.
+PTForge replaces the clicking with a script. You describe the network once, press **Run**, and Packet Tracer builds it: devices, modules, cables, IOS configuration, server services, wireless, labels and zones. Then PTForge reads the live state back, so the same script can verify its own work.
 
 - **Repeatable**: rebuild a lab from scratch in seconds, as often as you want
 - **Shareable**: a lab is a text file you can send, review and keep in Git
-- **Correct**: addresses, masks and wildcards are calculated, typos throw clear errors
+- **Correct**: addresses, masks and wildcards are calculated, and typos throw clear errors
 - **Verifiable**: inspection functions read VLANs, trunks, STP, port security and routing processes directly from Packet Tracer
-- **Documented**: every function has a reference entry, and the editor lets you search them all
+- **Debuggable**: set breakpoints, step through a script and read every variable, like in VS Code
+- **Interactive**: a JavaScript terminal changes the open topology one line at a time
 
 <div align="center">
 <img src="assets/screenshots/editor.png" alt="PTForge editor" width="95%">
-<br><sub>The PTForge editor inside Packet Tracer: explorer, tabs, IntelliSense with documentation, Dark+ highlighting and output</sub>
+<br><sub>The PTForge workbench inside Packet Tracer: explorer, tabs, IntelliSense, Dark Modern highlighting and output</sub>
 </div>
+
+## What's new in 1.2
+
+| | |
+|---|---|
+| 🖥️ **JavaScript terminal** | `Ctrl+`` opens a terminal like VS Code's *New Terminal*. Every line runs directly against the open topology, with history, Tab completion and dot commands such as `.calc`, `.ping` and `.cli R1` |
+| 🐞 **Debugger** | `F5` runs the script and records every step. Pause on breakpoints, conditional breakpoints and exceptions, step over, into, out and **back**, read variables, watch expressions and the call stack, and evaluate expressions in the Debug Console |
+| 🧮 **Network calculator** | IPv4 subnet, subnet splitter, VLSM planner, route summarization, range to CIDR, wildcard masks, IPv6, EUI-64 and number conversion in one editor tab |
+| 📡 **Reachability matrix** | `pingAll()` pings every address from every router and switch and shows a color matrix with loss and round-trip times |
+| 📸 **Snapshots and diff** | `takeSnapshot()` records devices, links, addresses, ports, power and running configs. Compare two snapshots and read a line-by-line config diff |
+| 🎨 **Dark Modern** | Colors, spacing, tabs, panels and status bar now follow the VS Code Dark Modern theme exactly, and the status bar turns blue while debugging |
 
 ## Quick start
 
-1. Add [`release/ptforge.js`](release/ptforge.js) and the files in [`src/ui`](src/ui) to a new Script Module in Packet Tracer
+1. Download the [latest release](https://github.com/r4chan842/PTForge/releases/latest) and follow the [installation guide](docs/guides/installation.md)
 2. Open `Extensions` → `PTForge Editor`
-3. Paste a script from [`examples/`](examples/README.md) or open one with `Ctrl+O`, then press `F5`
-4. Check the result with `auditNetwork()` or a [Lab Check](docs/api/checks.md)
+3. Open a script from [`examples/`](examples/README.md) with `Ctrl+O` and press `Ctrl+F5` to run it, or `F5` to debug it
+4. Press `` Ctrl+` `` and try `getDevices()` in the terminal
+5. Check the result with `auditNetwork()`, `pingAll()` or a [Lab Check](docs/api/checks.md)
 
 ## A taste
 
@@ -68,11 +95,11 @@ configurePortSecurity("S1", ["FastEthernet0/1", "FastEthernet0/2"], { maximum: 2
 drawZoneAround(["S1", "PC1", "PC2", "PC3", "PC4"], "VLAN 10 - Users", "green");
 labelAllDevices();
 
-log(getVlans("S1"));
-log(getPortSecurityStatus("S1", "FastEthernet0/1"));
+takeSnapshot("baseline");
+pingAll();
 ```
 
-Twenty lines give you a router, a switch, four addressed PCs, a hardened router with SSH, VLANs, secured access ports, a labelled diagram and a verification report.
+Twenty lines give you a router, a switch, four addressed PCs, a hardened router with SSH, VLANs, secured access ports, a labelled diagram, a saved baseline and a full reachability test.
 
 ## Features
 
@@ -89,13 +116,15 @@ Twenty lines give you a router, a switch, four addressed PCs, a hardened router 
 | 🗄️ **Servers** | DHCP, DNS (A, CNAME, NS), HTTP, HTTPS, web pages, FTP users, email accounts, TFTP, syslog, RADIUS |
 | 📶 **Wireless** | SSID, WPA2, WPA, WEP, radio mode, hidden SSID, MAC filtering |
 | 🔍 **Inspection** | Switch port state, port security counters, VLAN database, STP root and root ports, VTP, static MACs, OSPF and EIGRP processes |
+| 📡 **Reachability** | `pingAll`, `pingMatrix` and `reachability` with loss, round-trip times and a matrix view |
+| 📸 **Snapshots** | `takeSnapshot`, `getSnapshots`, `compareSnapshots`, `showSnapshotDiff`, save and load snapshot files, and a config diff view |
 | 📁 **Files** | Read and write text files, run scripts from disk, export configs and topology, command log |
 | 🎨 **Canvas** | Notes, lines, circles, rectangles, arrows, dashed lines, zones, device and link labels, layers |
 | 🗺️ **Topology** | Star, ring, line, mesh and LAN generators, grid and circle layouts, VLSM and /30 planners |
 | 🧪 **Simulation** | Simulation mode, PDUs, protocol filters, stepping, ping, traceroute |
-| ✅ **Lab Check** | Graded checks with points, hints and a score report in the editor: devices, cables, addresses, ports, hostnames, VLANs, config lines, custom tests |
-| 🩺 **Audit** | One call finds duplicate IPs, subnet mismatches across cables, down links, hosts without addresses, VLAN 1 access ports, missing port security, unused ports left on. Plus IP inventory, subnet list and topology summary |
-| 📡 **Batch** | `runOnAll("show ip int brief")`, `runOnDevices`, and `commandsToScript()` which turns commands typed in the CLI into a reusable script |
+| ✅ **Lab Check** | Graded checks with points, hints and a score report: devices, cables, addresses, ports, hostnames, VLANs, config lines, custom tests |
+| 🩺 **Audit** | Duplicate IPs, subnet mismatches across cables, down links, hosts without addresses, VLAN 1 access ports, missing port security, unused ports left on |
+| 📟 **Batch** | `runOnAll("show ip int brief")`, `runOnDevices`, and `commandsToScript()` which turns commands typed in the CLI into a reusable script |
 | 🪟 **Workspace** | Zoom, background, remote networks, open and save projects, workspace events |
 
 Every IOS helper also has a `build...` twin that returns the commands instead of sending them, so you can preview, combine and reuse configuration.
@@ -104,36 +133,96 @@ Every IOS helper also has a `build...` twin that returns the commands instead of
 
 <div align="center"><img src="assets/banners/editor.svg" alt="A real code editor" width="100%"></div>
 
-Version 1.1 replaces the old three slot editor with a workbench that looks and behaves like VS Code, built from scratch in plain ES5 so it runs inside the Packet Tracer web view with no framework and no network access.
+The workbench looks and behaves like VS Code. It is built from scratch in plain ES5 so it runs inside the Packet Tracer web view with no framework and no network access.
 
 | Part | Description |
 |------|-------------|
-| **Menu bar and command palette** | File, Edit, Selection, View, Go, Run and Help menus. `Ctrl+Shift+P` lists every command, `Ctrl+P` jumps to a file, `Ctrl+G` to a line |
+| **Menu bar and command palette** | File, Edit, Selection, View, Go, Run, Network, Terminal and Help menus. `Ctrl+Shift+P` lists every command, `Ctrl+P` jumps to a file, `Ctrl+G` to a line |
 | **Explorer** | Open editors, a workspace of scripts saved inside Packet Tracer, and a real folder from your disk. New, rename, delete |
 | **Files** | Open, Save and Save As use the native Packet Tracer file dialogs. Import from the clipboard, export as a download |
 | **Tabs** | One tab per file with a dirty dot, middle click to close, a save prompt for unsaved disk files, undo history per tab |
-| **Highlighting** | VS Code Dark+ colors: comments `#6A9955`, strings `#CE9178`, numbers `#B5CEA8`, keywords `#569CD6` and `#C586C0`, functions `#DCDCAA`, variables `#9CDCFE`, PTForge functions in bold `#4FC1FF`, colored bracket pairs, regex literals |
-| **IntelliSense** | Suggestions from all 375 functions with signature and description, words from the file, keywords. Parameter hints while you type arguments |
-| **Problems** | Live syntax check with the exact line, unclosed brackets, strings and comments, unknown function names with a *Did you mean* quick fix. Squiggles, gutter markers and a Problems panel |
-| **Editing** | Auto closing brackets and quotes, smart Enter, `Ctrl+/` comment, `Alt+Up/Down` move line, `Shift+Alt+Down` copy line, `Ctrl+Shift+K` delete line, smart Home, bracket matching |
-| **Find and replace** | `Ctrl+F` and `Ctrl+H` with match case, whole word and regular expressions, match count, replace all in one undo step |
-| **Panel** | Output, Problems and Lab Check reports. Resizable, `Ctrl+J` to hide |
-| **Devices view** | Live list of devices and ports from Packet Tracer with link LEDs and addresses. Click to insert a name |
-| **Network tools** | Subnet calculator, VLSM planner and mask to wildcard converter next to your code |
-| **Status bar** | Problems count, run state, cursor position, zoom, connection to Packet Tracer |
-
-Every shortcut is in the [keyboard cheat sheet](docs/cheatsheets/keyboard.md) and the [editor guide](docs/guides/editor.md).
+| **Highlighting** | VS Code Dark Modern colors: comments `#6A9955`, strings `#CE9178`, numbers `#B5CEA8`, keywords `#569CD6` and `#C586C0`, functions `#DCDCAA`, variables `#9CDCFE`, PTForge functions in bold `#4FC1FF`, colored bracket pairs, regex literals |
+| **IntelliSense** | Suggestions from all 388 functions with signature and description, words from the file, keywords. Parameter hints while you type arguments |
+| **Problems** | Live syntax check with the exact line, unknown function names with a *Did you mean* quick fix. Squiggles, gutter markers and a Problems panel |
+| **Editing** | Auto closing pairs, smart Enter, `Ctrl+/` comment, `Alt+Up/Down` move line, `Shift+Alt+Down` copy line, `Ctrl+Shift+K` delete line, bracket matching |
+| **Find and replace** | `Ctrl+F` and `Ctrl+H` with match case, whole word and regular expressions, replace all in one undo step |
+| **Panel** | Problems, Output, Debug Console, Terminal and Lab Check. Resizable, `Ctrl+J` to hide |
+| **Devices view** | Live devices and ports with link LEDs and addresses, snapshots, and one-click network tools |
+| **Status bar** | Problems count, run and debug state, cursor position, zoom, connection to Packet Tracer |
 
 <table>
 <tr>
 <td><img src="assets/screenshots/lab-check.png" alt="Lab Check and Devices"><br><sub>Lab Check report and the live Devices view</sub></td>
-<td><img src="assets/screenshots/audit-tools.png" alt="Audit and tools"><br><sub>Network audit and the subnet tools</sub></td>
+<td><img src="assets/screenshots/command-palette.png" alt="Command palette"><br><sub>Command palette and function reference</sub></td>
 </tr>
 <tr>
 <td><img src="assets/screenshots/problems.png" alt="Problems"><br><sub>Problems with a quick fix</sub></td>
-<td><img src="assets/screenshots/command-palette.png" alt="Command palette"><br><sub>Command palette and function reference</sub></td>
+<td><img src="assets/screenshots/find-replace.png" alt="Find and replace"><br><sub>Find and replace</sub></td>
 </tr>
 </table>
+
+## Terminal
+
+<div align="center"><img src="assets/banners/terminal.svg" alt="JavaScript terminal" width="100%"></div>
+
+`` Ctrl+` `` opens a JavaScript terminal. Each line runs inside Packet Tracer at once and keeps its variables, so you can explore and change a topology step by step without writing a script first.
+
+| Feature | Description |
+|---------|-------------|
+| **Direct evaluation** | Any expression or statement, with results printed as readable trees and errors in red |
+| **Completion** | `Tab` completes PTForge functions, your variables, keywords and dot commands |
+| **History** | `Up` and `Down` walk through earlier commands, saved between sessions |
+| **Multiple terminals** | `+` opens another terminal, the list switches between them, the bin closes one |
+| **Dot commands** | `.help`, `.clear`, `.devices`, `.ping`, `.trace`, `.show R1 show ip route`, `.cli R1` to type IOS commands on a device, `.exit` to leave it, `.audit`, `.snap`, `.diff`, `.calc 10.1.2.3/20`, `.run file.js`, `.history` |
+
+<div align="center"><img src="assets/screenshots/terminal.png" alt="Terminal" width="95%"></div>
+
+Read the [terminal guide](docs/guides/terminal.md).
+
+## Debugger
+
+<div align="center"><img src="assets/banners/debugger.svg" alt="JavaScript debugger" width="100%"></div>
+
+`F5` starts a debug session. PTForge instruments the script, runs it inside Packet Tracer once and records every step, then pauses the workbench on the first breakpoint. Because the whole run is recorded, you can also step **backwards**.
+
+| Feature | Description |
+|---------|-------------|
+| **Breakpoints** | Click the gutter or press `F9`. Conditional breakpoints, hit counts, log points, disable or remove all |
+| **Exceptions** | Pause on uncaught exceptions with the exact line highlighted |
+| **Stepping** | Continue `F5`, Step Over `F10`, Step Into `F11`, Step Out `Shift+F11`, Step Back, Restart `Ctrl+Shift+F5`, Stop `Shift+F5` |
+| **Variables** | Local, closure and script scopes as expandable trees |
+| **Watch** | Any expression, evaluated at every recorded step |
+| **Call stack** | Every frame with file and line. Click a frame to inspect it |
+| **Debug Console** | Evaluate expressions against the paused frame |
+| **Hover** | Point at a variable in the editor to see its value |
+
+<div align="center"><img src="assets/screenshots/debugger.png" alt="Debugger" width="95%"></div>
+
+Read the [debugger guide](docs/guides/debugger.md).
+
+## Network tools
+
+<div align="center"><img src="assets/banners/network-tools.svg" alt="Network tools" width="100%"></div>
+
+```js
+pingAll();
+takeSnapshot("before");
+configureOspf("R1", { routerId: "1.1.1.1", networks: ["10.0.0.0/30"] });
+compareSnapshots("before");
+```
+
+<table>
+<tr>
+<td><img src="assets/screenshots/reachability.png" alt="Reachability matrix"><br><sub>Reachability matrix from <code>pingAll()</code></sub></td>
+<td><img src="assets/screenshots/snapshot-diff.png" alt="Snapshot diff"><br><sub>Snapshot compare with a config diff</sub></td>
+</tr>
+<tr>
+<td><img src="assets/screenshots/calculator.png" alt="Network calculator"><br><sub>IPv4 subnet calculator</sub></td>
+<td><img src="assets/screenshots/vlsm.png" alt="VLSM planner"><br><sub>VLSM planner</sub></td>
+</tr>
+</table>
+
+Read [network tools](docs/guides/network-tools.md), [reachability](docs/api/simulation.md#reachability) and [snapshots](docs/api/snapshots.md).
 
 ## Verify and audit
 
@@ -146,15 +235,9 @@ checkLinked("R1", "S1");
 checkIpAddress("PC1", "FastEthernet0", "192.168.10.11", 24);
 checkConfigContains("S1", "switchport mode trunk");
 endChecks();
-```
 
-<div align="center"><img src="assets/banners/network-tools.svg" alt="Audit and network tools" width="100%"></div>
-
-```js
 auditNetwork();
-showResult(getSubnets());
 runOnAll("show ip interface brief");
-commandsToScript("R1");
 ```
 
 Read [Lab Check](docs/api/checks.md), [Audit](docs/api/audit.md) and [batch commands](docs/api/ios.md#batch-commands).
@@ -167,14 +250,14 @@ PTForge is a Packet Tracer Script Module. Packet Tracer encrypts `.pts` packages
 2. In Packet Tracer open `Extensions` → `Scripting` → `Configure PT Script Modules`
 3. Create a module named `PTForge`
 4. Add one script file with the content of [`release/ptforge.js`](release/ptforge.js)
-5. Add the nine files from [`src/ui`](src/ui) as interface files: `index.html`, `style.css`, `catalog.js`, `snippets.js`, `highlight.js`, `lint.js`, `netcalc.js`, `editor.js`, `interface.js`
+5. Add the fourteen files from [`src/ui`](src/ui) as interface files: `index.html`, `style.css`, `catalog.js`, `snippets.js`, `highlight.js`, `lint.js`, `netcalc.js`, `editor.js`, `acorn.js`, `instrument.js`, `terminal.js`, `debugview.js`, `views.js`, `interface.js`
 6. Save the module, start it and open `Extensions` → `PTForge Editor`
 
-The [installation guide](docs/guides/installation.md) covers every step, updates and the multi file option.
+The [installation guide](docs/guides/installation.md) covers every step and updates.
 
 ## Examples
 
-32 complete labs in [`examples/`](examples/README.md), each starting from an empty workspace:
+34 complete labs in [`examples/`](examples/README.md), each starting from an empty workspace:
 
 | Folder | Labs |
 |--------|------|
@@ -190,6 +273,7 @@ The [installation guide](docs/guides/installation.md) covers every step, updates
 | `10-ccna-labs` | Router on a stick, full enterprise lab |
 | `11-inspection` | Switching verification, port security audit |
 | `12-automation` | Config backup, command audit, script library |
+| `13-operations` | Reachability test, change tracking with snapshots |
 
 Starting points for your own work are in [`templates/`](templates/README.md): blank lab, campus, branch WAN and small office.
 
@@ -198,14 +282,16 @@ Starting points for your own work are in [`templates/`](templates/README.md): bl
 | Section | Content |
 |---------|---------|
 | [Getting started](docs/guides/getting-started.md) | Your first network in ten minutes |
-| [Editor guide](docs/guides/editor.md) | Workspace, files, IntelliSense, problems, tools |
+| [Editor guide](docs/guides/editor.md) | Workspace, files, IntelliSense, problems |
+| [Terminal](docs/guides/terminal.md) | Interactive JavaScript and device CLI |
+| [Debugger](docs/guides/debugger.md) | Breakpoints, stepping, variables and watch |
+| [Network tools](docs/guides/network-tools.md) | Calculator, reachability and snapshots |
 | [Writing scripts](docs/guides/writing-scripts.md) | Structure, order of operations, builders, speed |
 | [API reference](docs/api/README.md) | Every function with arguments, return values and examples |
 | [Recipes](docs/recipes/README.md) | Campus switching, routing labs, edge router, servers, diagrams |
 | [CCNA topic map](docs/ccna/README.md) | CCNA 200-301 topics with the matching functions and examples |
 | [Cheat sheets](docs/cheatsheets/ios-to-ptforge.md) | IOS to PTForge, subnetting, editor keys |
-| [Architecture](docs/architecture/overview.md) | Layers, runtime, editor bridge, tests |
-| [Reference tables](docs/README.md#reference-tables) | Device models, modules, cable types, port names |
+| [Architecture](docs/architecture/overview.md) | Layers, runtime, editor bridge, debugger, tests |
 | [Troubleshooting](docs/guides/troubleshooting.md) | Common errors and fixes |
 | [Limitations](docs/guides/limitations.md) | What the Packet Tracer API does not allow |
 | [FAQ](docs/guides/faq.md) | Short answers |
@@ -215,34 +301,38 @@ Starting points for your own work are in [`templates/`](templates/README.md): bl
 ```
 PTForge/
 ├── .github/            issue forms, pull request template, code owners
-├── assets/             logo, banners, social preview, real UI screenshots
+├── assets/
+│   ├── brand/          logo and icon, light and dark
+│   ├── banners/        README section banners
+│   └── screenshots/    real UI screenshots
 ├── docs/
 │   ├── api/            reference for every function, one page per area
-│   ├── architecture/   layers, runtime and testing
+│   ├── architecture/   layers, runtime, debugger and testing
 │   ├── ccna/           CCNA topic map and lab checklist
 │   ├── cheatsheets/    IOS mapping, subnetting, editor keys
-│   ├── guides/         installation, getting started, troubleshooting, FAQ
+│   ├── guides/         installation, editor, terminal, debugger, tools, FAQ
 │   ├── recipes/        ready snippets by task
 │   └── reference/      generated tables of models, modules, cables, ports
-├── examples/           32 complete labs in 12 topics
+├── examples/           34 complete labs in 13 topics
+├── i18n/               this README in ten more languages
 ├── release/            ptforge.js single file build
 ├── src/
-│   ├── api/            public functions, one folder per area, including checks/ and audit/
-│   ├── core/           context, layers, runner, editor window, entry point
+│   ├── api/            public functions, one folder per area
+│   ├── core/           context, runner, shell, debugger recorder, editor bridge
 │   ├── data/           model, module, cable and type tables
 │   ├── lib/            IPv4 math, colors, text helpers
-│   └── ui/             VS Code style editor: highlighter, linter, network calculator, workbench
+│   └── ui/             workbench: editor, terminal, debugger, views, calculator
 ├── templates/          starting points for new labs
 ├── tests/
 │   ├── helpers/        loader and Packet Tracer mock
 │   ├── integration/    full extension tests
 │   └── unit/           pure function and builder tests
-└── tools/              load order, bundler, generators, browser UI tests, screenshots, CI workflow (ci/ci.yml)
+└── tools/              bundler, generators, browser tests, screenshots, banners
 ```
 
 ## Development
 
-Requires Node.js 18 or newer. There are no dependencies to install.
+Requires Node.js 18 or newer. There are no runtime dependencies.
 
 ```
 git clone https://github.com/r4chan842/PTForge.git
@@ -257,10 +347,10 @@ npm run check
 | `npm run catalog` | Regenerate the editor function list from `docs/api` |
 | `npm run reference` | Regenerate the reference tables from `src/data` |
 | `npm run check` | Catalog, bundle, syntax check and tests |
-| `npm run ui-test` | 21 browser checks of the editor with Playwright (install `playwright` first) |
+| `npm run ui-test` | 40 browser checks of the workbench, terminal and debugger with Playwright |
 | `npm run screenshots` | Regenerate the screenshots in `assets/screenshots` |
 
-The test suite runs the whole extension against a mock of the Packet Tracer IPC API. It covers every public function, every example, template and recipe, the release bundle, and project rules such as ES5 only code and complete documentation. Read [testing](docs/architecture/testing.md) for details.
+The test suite runs the whole extension against a mock of the Packet Tracer IPC API. It covers every public function, every example, template and recipe, the release bundle, the terminal and debugger engine, and project rules such as ES5 only code and complete documentation. Read [testing](docs/architecture/testing.md) for details.
 
 ## Contributing
 
@@ -268,11 +358,11 @@ Bug reports, ideas and pull requests are welcome. Start with [CONTRIBUTING](CONT
 
 ## License
 
-PTForge is released under the [MIT License](LICENSE).
+PTForge is released under the [MIT License](LICENSE). The debugger uses [Acorn](https://github.com/acornjs/acorn) (MIT), see [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES.md).
 
 ## Acknowledgements
 
-Packet Tracer API usage follows the official [Cisco Packet Tracer IPC API documentation](https://tutorials.ptnetacad.net/help/default/IpcAPI/classes.html).
+Packet Tracer API usage follows the official [Cisco Packet Tracer IPC API documentation](https://tutorials.ptnetacad.net/help/default/IpcAPI/classes.html). The workbench colors follow the VS Code Dark Modern theme.
 
 Cisco and Packet Tracer are trademarks of Cisco Systems, Inc. This project is not affiliated with or endorsed by Cisco Systems, Inc.
 
