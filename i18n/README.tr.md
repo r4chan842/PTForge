@@ -62,12 +62,12 @@ PTForge tıklamaların yerine bir betik koyar. Ağı bir kez tanımlarsınız, *
 
 |  |  |
 |---|---|
-| 🖥️ **JavaScript terminali** | `` Ctrl+` `` VS Code'daki *New Terminal* gibi bir terminal açar. Her satır doğrudan açık topolojide çalışır; geçmiş, Tab ile tamamlama ve `.calc`, `.ping`, `.cli R1` gibi noktalı komutlar vardır |
-| 🐞 **Hata ayıklayıcı** | `F5` betiği her adımı kaydederek çalıştırır. Kesme noktalarında, koşullarda ve istisnalarda durur; üzerinden, içine, dışına ve **geriye** adım atar; Variables, Watch ve Call Stack'i gösterir ve Debug Console'da ifadeleri değerlendirir |
-| 🧮 **Ağ hesaplayıcı** | IPv4 alt ağ, alt ağlara bölme, VLSM planlayıcı, rota özetleme, aralıktan CIDR'a, wildcard maskeleri, IPv6, EUI-64 ve taban dönüştürme tek bir düzenleyici sekmesinde |
-| 📡 **Erişilebilirlik matrisi** | `pingAll()` her yönlendirici ve anahtardan her adrese ping atar ve kayıp ile gidiş dönüş sürelerini gösteren renkli bir matris sunar |
-| 📸 **Anlık görüntüler ve diff** | `takeSnapshot()` cihazları, bağlantıları, adresleri, portları, güç durumunu ve running-config'i kaydeder. İki görüntüyü karşılaştırın ve yapılandırmayı satır satır görün |
-| 🎨 **Dark Modern** | Renkler, boşluklar, sekmeler, paneller ve durum çubuğu VS Code'un Dark Modern temasını birebir izler; hata ayıklarken durum çubuğu maviye döner |
+| **JavaScript terminali** | `` Ctrl+` `` VS Code'daki *New Terminal* gibi bir terminal açar. Her satır doğrudan açık topolojide çalışır; geçmiş, Tab ile tamamlama ve `.calc`, `.ping`, `.cli R1` gibi noktalı komutlar vardır |
+| **Hata ayıklayıcı** | `F5` betiği her adımı kaydederek çalıştırır. Kesme noktalarında, koşullarda ve istisnalarda durur; üzerinden, içine, dışına ve **geriye** adım atar; Variables, Watch ve Call Stack'i gösterir ve Debug Console'da ifadeleri değerlendirir |
+| **Ağ hesaplayıcı** | IPv4 alt ağ, alt ağlara bölme, VLSM planlayıcı, rota özetleme, aralıktan CIDR'a, wildcard maskeleri, IPv6, EUI-64 ve taban dönüştürme tek bir düzenleyici sekmesinde |
+| **Erişilebilirlik matrisi** | `pingAll()` her yönlendirici ve anahtardan her adrese ping atar ve kayıp ile gidiş dönüş sürelerini gösteren renkli bir matris sunar |
+| **Anlık görüntüler ve diff** | `takeSnapshot()` cihazları, bağlantıları, adresleri, portları, güç durumunu ve running-config'i kaydeder. İki görüntüyü karşılaştırın ve yapılandırmayı satır satır görün |
+| **Dark Modern** | Renkler, boşluklar, sekmeler, paneller ve durum çubuğu VS Code'un Dark Modern temasını birebir izler; hata ayıklarken durum çubuğu maviye döner |
 
 ## Hızlı başlangıç
 
@@ -105,27 +105,27 @@ Yirmi satır; bir yönlendirici, bir anahtar, adreslenmiş dört PC, SSH ile gü
 
 | Alan | Neler yapabilirsiniz |
 |---|---|
-| 🖥️ **Cihazlar** | Ekleme, silme, yeniden adlandırma, taşıma, yeniden başlatma, modül takma, portları okuma, özel veri saklama, cihazları fiziksel çalışma alanına yerleştirme |
-| 🔌 **Bağlantılar** | Her kablo türü, bağlantı silme, otomatik bağlama, komşuları listeleme, bağlantı durumunu denetleme |
-| 💻 **İstemciler** | Statik veya DHCP IPv4, SLAAC ile IPv6, ağ geçidi, DNS, güvenlik duvarı, komut istemi |
-| ⚙️ **Cisco IOS** | Temel kurulum, parolalar, banner'lar, kullanıcılar, arayüzler, alt arayüzler, loopback'ler, router-on-a-stick, DHCP havuzları ve relay, NTP, syslog, SNMP, CDP, LLDP, show komutları |
-| 🔀 **Anahtarlama** | VLAN'lar, erişim ve ses portları, trunk'lar, DTP, EtherChannel (LACP, PAgP, statik, katman 3), Rapid PVST+, PortFast, BPDU Guard, VTP, port security, DHCP snooping, DAI |
-| 🧭 **Yönlendirme** | Statik ve yüzen rotalar, OSPF, OSPFv3, EIGRP, IPv6 için EIGRP, RIP, RIPng, BGP, yeniden dağıtım |
-| 🛡️ **Güvenlik** | Standart, genişletilmiş, adlandırılmış ve IPv6 ACL'ler, NAT, PAT, NAT havuzları, port yönlendirme, SSH, oturum kilitleme, RADIUS ve TACACS+ ile AAA |
-| ♻️ **Yedeklilik** | Tek yönlendiricide veya aktif ve bekleme çifti olarak HSRP |
-| 🗄️ **Sunucular** | DHCP, DNS (A, CNAME, NS), HTTP, HTTPS, web sayfaları, FTP kullanıcıları, e-posta hesapları, TFTP, syslog, RADIUS |
-| 📶 **Kablosuz** | SSID, WPA2, WPA, WEP, radyo modu, gizli SSID, MAC filtresi |
-| 🔍 **İnceleme** | Anahtar port durumu, port security sayaçları, VLAN veritabanı, STP kökü ve kök portlar, VTP, statik MAC'ler, OSPF ve EIGRP süreçleri |
-| 📡 **Erişilebilirlik** | Kayıp, gidiş dönüş süreleri ve matris görünümüyle `pingAll`, `pingMatrix` ve `reachability` |
-| 📸 **Anlık görüntüler** | `takeSnapshot`, `getSnapshots`, `compareSnapshots`, `showSnapshotDiff`, görüntü dosyalarını kaydetme ve yükleme, yapılandırma diff görünümü |
-| 📁 **Dosyalar** | Metin dosyası okuma ve yazma, diskten betik çalıştırma, yapılandırma ve topoloji dışa aktarma, komut günlüğü |
-| 🎨 **Tuval** | Notlar, çizgiler, daireler, dikdörtgenler, oklar, kesikli çizgiler, bölgeler, cihaz ve bağlantı etiketleri, katmanlar |
-| 🗺️ **Topoloji** | Yıldız, halka, doğrusal, ağ örgü ve LAN üreticileri, ızgara ve daire yerleşimi, VLSM ve /30 planlayıcıları |
-| 🧪 **Simülasyon** | Simülasyon modu, PDU'lar, protokol filtreleri, adım adım çalıştırma, ping, traceroute |
-| ✅ **Lab Check** | Puan, ipucu ve raporla notlandırılan kontroller: cihazlar, kablolar, adresler, portlar, ana bilgisayar adları, VLAN'lar, yapılandırma satırları, özel testler |
-| 🩺 **Denetim** | Yinelenen IP'ler, kablo boyunca alt ağ çakışmaları, kopuk bağlantılar, adressiz istemciler, VLAN 1'deki erişim portları, eksik port security, kullanılmayan açık portlar |
-| 📟 **Toplu** | `runOnAll("show ip int brief")`, `runOnDevices` ve CLI'de yazılan komutları yeniden kullanılabilir bir betiğe dönüştüren `commandsToScript()` |
-| 🪟 **Çalışma alanı** | Yakınlaştırma, arka plan, uzak ağlar, proje açma ve kaydetme, çalışma alanı olayları |
+| **Cihazlar** | Ekleme, silme, yeniden adlandırma, taşıma, yeniden başlatma, modül takma, portları okuma, özel veri saklama, cihazları fiziksel çalışma alanına yerleştirme |
+| **Bağlantılar** | Her kablo türü, bağlantı silme, otomatik bağlama, komşuları listeleme, bağlantı durumunu denetleme |
+| **İstemciler** | Statik veya DHCP IPv4, SLAAC ile IPv6, ağ geçidi, DNS, güvenlik duvarı, komut istemi |
+| **Cisco IOS** | Temel kurulum, parolalar, banner'lar, kullanıcılar, arayüzler, alt arayüzler, loopback'ler, router-on-a-stick, DHCP havuzları ve relay, NTP, syslog, SNMP, CDP, LLDP, show komutları |
+| **Anahtarlama** | VLAN'lar, erişim ve ses portları, trunk'lar, DTP, EtherChannel (LACP, PAgP, statik, katman 3), Rapid PVST+, PortFast, BPDU Guard, VTP, port security, DHCP snooping, DAI |
+| **Yönlendirme** | Statik ve yüzen rotalar, OSPF, OSPFv3, EIGRP, IPv6 için EIGRP, RIP, RIPng, BGP, yeniden dağıtım |
+| **Güvenlik** | Standart, genişletilmiş, adlandırılmış ve IPv6 ACL'ler, NAT, PAT, NAT havuzları, port yönlendirme, SSH, oturum kilitleme, RADIUS ve TACACS+ ile AAA |
+| **Yedeklilik** | Tek yönlendiricide veya aktif ve bekleme çifti olarak HSRP |
+| **Sunucular** | DHCP, DNS (A, CNAME, NS), HTTP, HTTPS, web sayfaları, FTP kullanıcıları, e-posta hesapları, TFTP, syslog, RADIUS |
+| **Kablosuz** | SSID, WPA2, WPA, WEP, radyo modu, gizli SSID, MAC filtresi |
+| **İnceleme** | Anahtar port durumu, port security sayaçları, VLAN veritabanı, STP kökü ve kök portlar, VTP, statik MAC'ler, OSPF ve EIGRP süreçleri |
+| **Erişilebilirlik** | Kayıp, gidiş dönüş süreleri ve matris görünümüyle `pingAll`, `pingMatrix` ve `reachability` |
+| **Anlık görüntüler** | `takeSnapshot`, `getSnapshots`, `compareSnapshots`, `showSnapshotDiff`, görüntü dosyalarını kaydetme ve yükleme, yapılandırma diff görünümü |
+| **Dosyalar** | Metin dosyası okuma ve yazma, diskten betik çalıştırma, yapılandırma ve topoloji dışa aktarma, komut günlüğü |
+| **Tuval** | Notlar, çizgiler, daireler, dikdörtgenler, oklar, kesikli çizgiler, bölgeler, cihaz ve bağlantı etiketleri, katmanlar |
+| **Topoloji** | Yıldız, halka, doğrusal, ağ örgü ve LAN üreticileri, ızgara ve daire yerleşimi, VLSM ve /30 planlayıcıları |
+| **Simülasyon** | Simülasyon modu, PDU'lar, protokol filtreleri, adım adım çalıştırma, ping, traceroute |
+| **Lab Check** | Puan, ipucu ve raporla notlandırılan kontroller: cihazlar, kablolar, adresler, portlar, ana bilgisayar adları, VLAN'lar, yapılandırma satırları, özel testler |
+| **Denetim** | Yinelenen IP'ler, kablo boyunca alt ağ çakışmaları, kopuk bağlantılar, adressiz istemciler, VLAN 1'deki erişim portları, eksik port security, kullanılmayan açık portlar |
+| **Toplu** | `runOnAll("show ip int brief")`, `runOnDevices` ve CLI'de yazılan komutları yeniden kullanılabilir bir betiğe dönüştüren `commandsToScript()` |
+| **Çalışma alanı** | Yakınlaştırma, arka plan, uzak ağlar, proje açma ve kaydetme, çalışma alanı olayları |
 
 Her IOS yardımcı fonksiyonunun, komutları göndermek yerine döndüren bir `build...` ikizi vardır; böylece yapılandırmayı görebilir, birleştirebilir ve yeniden kullanabilirsiniz.
 

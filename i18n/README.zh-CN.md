@@ -62,12 +62,12 @@ PTForge 用脚本代替点击。只需描述一次网络，按下 **Run**，Pack
 
 |  |  |
 |---|---|
-| 🖥️ **JavaScript 终端** | `` Ctrl+` `` 打开一个类似 VS Code *New Terminal* 的终端。每一行都直接作用于当前拓扑，支持历史记录、Tab 补全以及 `.calc`、`.ping`、`.cli R1` 等点命令 |
-| 🐞 **调试器** | `F5` 运行脚本并记录每一步。可在断点、条件断点和异常处暂停；支持单步跳过、单步进入、单步跳出和**后退**；查看 Variables、Watch 和 Call Stack，并在 Debug Console 中求值 |
-| 🧮 **网络计算器** | IPv4 子网、子网划分、VLSM 规划、路由汇总、范围转 CIDR、通配符掩码、IPv6、EUI-64 和进制转换，都在一个编辑器标签页里 |
-| 📡 **连通性矩阵** | `pingAll()` 从每台路由器和交换机 ping 每个地址，并以彩色矩阵显示丢包率和往返时间 |
-| 📸 **快照与差异** | `takeSnapshot()` 保存设备、链路、地址、端口、电源状态和 running-config。比较两个快照并逐行查看配置差异 |
-| 🎨 **Dark Modern** | 颜色、间距、标签页、面板和状态栏完全遵循 VS Code 的 Dark Modern 主题，调试时状态栏变为蓝色 |
+| **JavaScript 终端** | `` Ctrl+` `` 打开一个类似 VS Code *New Terminal* 的终端。每一行都直接作用于当前拓扑，支持历史记录、Tab 补全以及 `.calc`、`.ping`、`.cli R1` 等点命令 |
+| **调试器** | `F5` 运行脚本并记录每一步。可在断点、条件断点和异常处暂停；支持单步跳过、单步进入、单步跳出和**后退**；查看 Variables、Watch 和 Call Stack，并在 Debug Console 中求值 |
+| **网络计算器** | IPv4 子网、子网划分、VLSM 规划、路由汇总、范围转 CIDR、通配符掩码、IPv6、EUI-64 和进制转换，都在一个编辑器标签页里 |
+| **连通性矩阵** | `pingAll()` 从每台路由器和交换机 ping 每个地址，并以彩色矩阵显示丢包率和往返时间 |
+| **快照与差异** | `takeSnapshot()` 保存设备、链路、地址、端口、电源状态和 running-config。比较两个快照并逐行查看配置差异 |
+| **Dark Modern** | 颜色、间距、标签页、面板和状态栏完全遵循 VS Code 的 Dark Modern 主题，调试时状态栏变为蓝色 |
 
 ## 快速开始
 
@@ -105,27 +105,27 @@ pingAll();
 
 | 领域 | 你可以做什么 |
 |---|---|
-| 🖥️ **设备** | 添加、删除、重命名、移动、重启、安装模块、读取端口、保存自定义数据、在物理工作区中放置设备 |
-| 🔌 **链路** | 任意线缆类型、删除链路、自动连接、列出邻居、检查链路状态 |
-| 💻 **主机** | 静态或 DHCP IPv4、带 SLAAC 的 IPv6、网关、DNS、防火墙、命令提示符 |
-| ⚙️ **Cisco IOS** | 基础配置、密码、横幅、用户、接口、子接口、环回口、单臂路由、DHCP 地址池与中继、NTP、syslog、SNMP、CDP、LLDP、show 命令 |
-| 🔀 **交换** | VLAN、接入与语音端口、Trunk、DTP、EtherChannel（LACP、PAgP、静态、三层）、Rapid PVST+、PortFast、BPDU Guard、VTP、端口安全、DHCP Snooping、DAI |
-| 🧭 **路由** | 静态与浮动路由、OSPF、OSPFv3、EIGRP、IPv6 EIGRP、RIP、RIPng、BGP、重分发 |
-| 🛡️ **安全** | 标准、扩展、命名和 IPv6 ACL，NAT、PAT、NAT 地址池、端口转发、SSH、登录锁定、结合 RADIUS 与 TACACS+ 的 AAA |
-| ♻️ **冗余** | 在单台路由器上或以主备对形式配置 HSRP |
-| 🗄️ **服务器** | DHCP、DNS（A、CNAME、NS）、HTTP、HTTPS、网页、FTP 用户、邮件账户、TFTP、syslog、RADIUS |
-| 📶 **无线** | SSID、WPA2、WPA、WEP、射频模式、隐藏 SSID、MAC 过滤 |
-| 🔍 **检查** | 交换机端口状态、端口安全计数、VLAN 数据库、STP 根桥与根端口、VTP、静态 MAC、OSPF 与 EIGRP 进程 |
-| 📡 **连通性** | `pingAll`、`pingMatrix` 和 `reachability`，含丢包、往返时间和矩阵视图 |
-| 📸 **快照** | `takeSnapshot`、`getSnapshots`、`compareSnapshots`、`showSnapshotDiff`，保存和加载快照文件，以及配置差异视图 |
-| 📁 **文件** | 读写文本文件、从磁盘运行脚本、导出配置和拓扑、命令日志 |
-| 🎨 **画布** | 便签、直线、圆、矩形、箭头、虚线、区域、设备与链路标签、图层 |
-| 🗺️ **拓扑** | 星型、环型、线型、网状和 LAN 生成器，网格与圆形布局，VLSM 与 /30 规划器 |
-| 🧪 **模拟** | 模拟模式、PDU、协议过滤、单步执行、ping、traceroute |
-| ✅ **Lab Check** | 带分数、提示和报告的评分检查：设备、线缆、地址、端口、主机名、VLAN、配置行、自定义测试 |
-| 🩺 **审计** | 重复 IP、同一线缆两端的子网冲突、断开的链路、无地址主机、位于 VLAN 1 的接入端口、缺失的端口安全、未使用的开启端口 |
-| 📟 **批处理** | `runOnAll("show ip int brief")`、`runOnDevices`，以及能把 CLI 中输入的命令转换为可复用脚本的 `commandsToScript()` |
-| 🪟 **工作区** | 缩放、背景、远程网络、打开和保存项目、工作区事件 |
+| **设备** | 添加、删除、重命名、移动、重启、安装模块、读取端口、保存自定义数据、在物理工作区中放置设备 |
+| **链路** | 任意线缆类型、删除链路、自动连接、列出邻居、检查链路状态 |
+| **主机** | 静态或 DHCP IPv4、带 SLAAC 的 IPv6、网关、DNS、防火墙、命令提示符 |
+| **Cisco IOS** | 基础配置、密码、横幅、用户、接口、子接口、环回口、单臂路由、DHCP 地址池与中继、NTP、syslog、SNMP、CDP、LLDP、show 命令 |
+| **交换** | VLAN、接入与语音端口、Trunk、DTP、EtherChannel（LACP、PAgP、静态、三层）、Rapid PVST+、PortFast、BPDU Guard、VTP、端口安全、DHCP Snooping、DAI |
+| **路由** | 静态与浮动路由、OSPF、OSPFv3、EIGRP、IPv6 EIGRP、RIP、RIPng、BGP、重分发 |
+| **安全** | 标准、扩展、命名和 IPv6 ACL，NAT、PAT、NAT 地址池、端口转发、SSH、登录锁定、结合 RADIUS 与 TACACS+ 的 AAA |
+| **冗余** | 在单台路由器上或以主备对形式配置 HSRP |
+| **服务器** | DHCP、DNS（A、CNAME、NS）、HTTP、HTTPS、网页、FTP 用户、邮件账户、TFTP、syslog、RADIUS |
+| **无线** | SSID、WPA2、WPA、WEP、射频模式、隐藏 SSID、MAC 过滤 |
+| **检查** | 交换机端口状态、端口安全计数、VLAN 数据库、STP 根桥与根端口、VTP、静态 MAC、OSPF 与 EIGRP 进程 |
+| **连通性** | `pingAll`、`pingMatrix` 和 `reachability`，含丢包、往返时间和矩阵视图 |
+| **快照** | `takeSnapshot`、`getSnapshots`、`compareSnapshots`、`showSnapshotDiff`，保存和加载快照文件，以及配置差异视图 |
+| **文件** | 读写文本文件、从磁盘运行脚本、导出配置和拓扑、命令日志 |
+| **画布** | 便签、直线、圆、矩形、箭头、虚线、区域、设备与链路标签、图层 |
+| **拓扑** | 星型、环型、线型、网状和 LAN 生成器，网格与圆形布局，VLSM 与 /30 规划器 |
+| **模拟** | 模拟模式、PDU、协议过滤、单步执行、ping、traceroute |
+| **Lab Check** | 带分数、提示和报告的评分检查：设备、线缆、地址、端口、主机名、VLAN、配置行、自定义测试 |
+| **审计** | 重复 IP、同一线缆两端的子网冲突、断开的链路、无地址主机、位于 VLAN 1 的接入端口、缺失的端口安全、未使用的开启端口 |
+| **批处理** | `runOnAll("show ip int brief")`、`runOnDevices`，以及能把 CLI 中输入的命令转换为可复用脚本的 `commandsToScript()` |
+| **工作区** | 缩放、背景、远程网络、打开和保存项目、工作区事件 |
 
 每个 IOS 辅助函数都有一个 `build...` 孪生函数，它返回命令而不是发送命令，方便你查看、组合和复用配置。
 

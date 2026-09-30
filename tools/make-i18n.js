@@ -24,8 +24,6 @@ const languages = [
 const rtl = { fa: true, ar: true };
 
 const featureKeys = ["devices", "links", "hosts", "ios", "switching", "routing", "security", "redundancy", "servers", "wireless", "inspection", "reachability", "snapshots", "files", "canvas", "topology", "simulation", "labcheck", "audit", "batch", "workspace"];
-const featureIcons = ["🖥️", "🔌", "💻", "⚙️", "🔀", "🧭", "🛡️", "♻️", "🗄️", "📶", "🔍", "📡", "📸", "📁", "🎨", "🗺️", "🧪", "✅", "🩺", "📟", "🪟"];
-const newIcons = ["🖥️", "🐞", "🧮", "📡", "📸", "🎨"];
 const exampleFolders = ["01-basics", "02-switching", "03-routing", "04-security", "05-services", "06-wireless", "07-canvas", "08-topology", "09-simulation", "10-ccna-labs", "11-inspection", "12-automation", "13-operations"];
 const docLinks = ["docs/guides/getting-started.md", "docs/guides/editor.md", "docs/guides/terminal.md", "docs/guides/debugger.md", "docs/guides/network-tools.md", "docs/guides/writing-scripts.md", "docs/api/README.md", "docs/recipes/README.md", "docs/ccna/README.md", "docs/cheatsheets/ios-to-ptforge.md", "docs/architecture/overview.md", "docs/guides/troubleshooting.md", "docs/guides/limitations.md", "docs/guides/faq.md"];
 const devCommands = ["npm test", "npm run bundle", "npm run catalog", "npm run reference", "npm run check", "npm run ui-test", "npm run screenshots"];
@@ -175,7 +173,7 @@ function build(code, name) {
         A("bullets", 6).map((b) => "- " + b).join("\n"), "",
         "<div align=\"center\">", img("assets/screenshots/editor.png", "PTForge", "95%"), "<br><sub>" + L("editorCaption") + "</sub>", "</div>", "",
         "## " + H("new"), "",
-        table(["", ""], need(s, "news", 6).map((r, i) => [newIcons[i] + " **" + r[0] + "**", localize(r[1])])), "",
+        table(["", ""], need(s, "news", 6).map((r) => ["**" + r[0] + "**", localize(r[1])])), "",
         "## " + H("quick"), "",
         A("quick", 5).map((q, i) => (i + 1) + ". " + q).join("\n"), "",
         "## " + H("taste"), "",
@@ -184,7 +182,7 @@ function build(code, name) {
         "## " + H("features"), "",
         table(A("featureHead", 2), featureKeys.map((k, i) => {
             const row = need(s.features, k, 2);
-            return [featureIcons[i] + " **" + row[0] + "**", localize(row[1])];
+            return ["**" + row[0] + "**", localize(row[1])];
         })), "",
         L("buildNote"), "",
         "## " + H("editor"), "",

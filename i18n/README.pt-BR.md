@@ -62,12 +62,12 @@ O PTForge troca os cliques por um script. Você descreve a rede uma vez, pressio
 
 |  |  |
 |---|---|
-| 🖥️ **Terminal JavaScript** | `` Ctrl+` `` abre um terminal como o *New Terminal* do VS Code. Cada linha roda direto na topologia aberta, com histórico, autocompletar com Tab e comandos com ponto como `.calc`, `.ping` e `.cli R1` |
-| 🐞 **Depurador** | `F5` executa o script registrando cada passo. Para em breakpoints, condições e exceções; passo por cima, para dentro, para fora e **para trás**; lê Variables, Watch e Call Stack e avalia expressões na Debug Console |
-| 🧮 **Calculadora de rede** | Sub-rede IPv4, divisão de sub-redes, planejador VLSM, sumarização de rotas, intervalo para CIDR, máscaras curinga, IPv6, EUI-64 e conversão de bases numa aba do editor |
-| 📡 **Matriz de alcance** | `pingAll()` faz ping em todos os endereços a partir de cada roteador e switch e mostra uma matriz colorida com perda e tempos de ida e volta |
-| 📸 **Snapshots e diff** | `takeSnapshot()` guarda dispositivos, links, endereços, portas, estado de energia e running-config. Compare dois snapshots e veja a configuração linha a linha |
-| 🎨 **Dark Modern** | Cores, espaçamento, abas, painéis e barra de status seguem exatamente o tema Dark Modern do VS Code; a barra de status fica azul durante a depuração |
+| **Terminal JavaScript** | `` Ctrl+` `` abre um terminal como o *New Terminal* do VS Code. Cada linha roda direto na topologia aberta, com histórico, autocompletar com Tab e comandos com ponto como `.calc`, `.ping` e `.cli R1` |
+| **Depurador** | `F5` executa o script registrando cada passo. Para em breakpoints, condições e exceções; passo por cima, para dentro, para fora e **para trás**; lê Variables, Watch e Call Stack e avalia expressões na Debug Console |
+| **Calculadora de rede** | Sub-rede IPv4, divisão de sub-redes, planejador VLSM, sumarização de rotas, intervalo para CIDR, máscaras curinga, IPv6, EUI-64 e conversão de bases numa aba do editor |
+| **Matriz de alcance** | `pingAll()` faz ping em todos os endereços a partir de cada roteador e switch e mostra uma matriz colorida com perda e tempos de ida e volta |
+| **Snapshots e diff** | `takeSnapshot()` guarda dispositivos, links, endereços, portas, estado de energia e running-config. Compare dois snapshots e veja a configuração linha a linha |
+| **Dark Modern** | Cores, espaçamento, abas, painéis e barra de status seguem exatamente o tema Dark Modern do VS Code; a barra de status fica azul durante a depuração |
 
 ## Início rápido
 
@@ -105,27 +105,27 @@ Vinte linhas geram um roteador, um switch, quatro PCs endereçados, um roteador 
 
 | Área | O que você pode fazer |
 |---|---|
-| 🖥️ **Dispositivos** | Adicionar, remover, renomear, mover, reiniciar, instalar módulos, ler portas, guardar dados próprios, posicionar dispositivos no espaço físico |
-| 🔌 **Links** | Qualquer tipo de cabo, apagar links, conexão automática, listar vizinhos, verificar o estado do link |
-| 💻 **Hosts** | IPv4 estático ou DHCP, IPv6 com SLAAC, gateway, DNS, firewall, prompt de comando |
-| ⚙️ **Cisco IOS** | Configuração básica, senhas, banners, usuários, interfaces, subinterfaces, loopbacks, router-on-a-stick, pools e relay DHCP, NTP, syslog, SNMP, CDP, LLDP, comandos show |
-| 🔀 **Switching** | VLANs, portas de acesso e voz, trunks, DTP, EtherChannel (LACP, PAgP, estático, camada 3), Rapid PVST+, PortFast, BPDU Guard, VTP, port security, DHCP snooping, DAI |
-| 🧭 **Roteamento** | Rotas estáticas e flutuantes, OSPF, OSPFv3, EIGRP, EIGRP para IPv6, RIP, RIPng, BGP, redistribuição |
-| 🛡️ **Segurança** | ACLs padrão, estendidas, nomeadas e IPv6, NAT, PAT, pools NAT, redirecionamento de portas, SSH, bloqueio de login, AAA com RADIUS e TACACS+ |
-| ♻️ **Redundância** | HSRP num roteador ou como par ativo e standby |
-| 🗄️ **Servidores** | DHCP, DNS (A, CNAME, NS), HTTP, HTTPS, páginas web, usuários FTP, contas de e-mail, TFTP, syslog, RADIUS |
-| 📶 **Sem fio** | SSID, WPA2, WPA, WEP, modo de rádio, SSID oculto, filtro MAC |
-| 🔍 **Inspeção** | Estado das portas do switch, contadores de port security, banco de VLANs, raiz STP e portas raiz, VTP, MACs estáticos, processos OSPF e EIGRP |
-| 📡 **Alcance** | `pingAll`, `pingMatrix` e `reachability` com perda, tempos de ida e volta e visão em matriz |
-| 📸 **Snapshots** | `takeSnapshot`, `getSnapshots`, `compareSnapshots`, `showSnapshotDiff`, salvar e carregar arquivos de snapshot e uma visão de diff de configuração |
-| 📁 **Arquivos** | Ler e gravar arquivos de texto, executar scripts do disco, exportar configurações e topologia, registro de comandos |
-| 🎨 **Tela** | Notas, linhas, círculos, retângulos, setas, linhas tracejadas, zonas, rótulos de dispositivos e links, camadas |
-| 🗺️ **Topologia** | Geradores de estrela, anel, linha, malha e LAN, layout em grade e círculo, planejadores VLSM e /30 |
-| 🧪 **Simulação** | Modo simulação, PDUs, filtros de protocolo, execução passo a passo, ping, traceroute |
-| ✅ **Lab Check** | Verificações pontuadas com pontos, dicas e relatório: dispositivos, cabos, endereços, portas, nomes de host, VLANs, linhas de configuração, testes próprios |
-| 🩺 **Auditoria** | IPs duplicados, conflitos de sub-rede entre cabos, links inativos, hosts sem endereço, portas de acesso na VLAN 1, falta de port security, portas ativas sem uso |
-| 📟 **Lote** | `runOnAll("show ip int brief")`, `runOnDevices` e `commandsToScript()`, que transforma comandos digitados na CLI num script reutilizável |
-| 🪟 **Área de trabalho** | Zoom, plano de fundo, redes remotas, abrir e salvar projetos, eventos da área de trabalho |
+| **Dispositivos** | Adicionar, remover, renomear, mover, reiniciar, instalar módulos, ler portas, guardar dados próprios, posicionar dispositivos no espaço físico |
+| **Links** | Qualquer tipo de cabo, apagar links, conexão automática, listar vizinhos, verificar o estado do link |
+| **Hosts** | IPv4 estático ou DHCP, IPv6 com SLAAC, gateway, DNS, firewall, prompt de comando |
+| **Cisco IOS** | Configuração básica, senhas, banners, usuários, interfaces, subinterfaces, loopbacks, router-on-a-stick, pools e relay DHCP, NTP, syslog, SNMP, CDP, LLDP, comandos show |
+| **Switching** | VLANs, portas de acesso e voz, trunks, DTP, EtherChannel (LACP, PAgP, estático, camada 3), Rapid PVST+, PortFast, BPDU Guard, VTP, port security, DHCP snooping, DAI |
+| **Roteamento** | Rotas estáticas e flutuantes, OSPF, OSPFv3, EIGRP, EIGRP para IPv6, RIP, RIPng, BGP, redistribuição |
+| **Segurança** | ACLs padrão, estendidas, nomeadas e IPv6, NAT, PAT, pools NAT, redirecionamento de portas, SSH, bloqueio de login, AAA com RADIUS e TACACS+ |
+| **Redundância** | HSRP num roteador ou como par ativo e standby |
+| **Servidores** | DHCP, DNS (A, CNAME, NS), HTTP, HTTPS, páginas web, usuários FTP, contas de e-mail, TFTP, syslog, RADIUS |
+| **Sem fio** | SSID, WPA2, WPA, WEP, modo de rádio, SSID oculto, filtro MAC |
+| **Inspeção** | Estado das portas do switch, contadores de port security, banco de VLANs, raiz STP e portas raiz, VTP, MACs estáticos, processos OSPF e EIGRP |
+| **Alcance** | `pingAll`, `pingMatrix` e `reachability` com perda, tempos de ida e volta e visão em matriz |
+| **Snapshots** | `takeSnapshot`, `getSnapshots`, `compareSnapshots`, `showSnapshotDiff`, salvar e carregar arquivos de snapshot e uma visão de diff de configuração |
+| **Arquivos** | Ler e gravar arquivos de texto, executar scripts do disco, exportar configurações e topologia, registro de comandos |
+| **Tela** | Notas, linhas, círculos, retângulos, setas, linhas tracejadas, zonas, rótulos de dispositivos e links, camadas |
+| **Topologia** | Geradores de estrela, anel, linha, malha e LAN, layout em grade e círculo, planejadores VLSM e /30 |
+| **Simulação** | Modo simulação, PDUs, filtros de protocolo, execução passo a passo, ping, traceroute |
+| **Lab Check** | Verificações pontuadas com pontos, dicas e relatório: dispositivos, cabos, endereços, portas, nomes de host, VLANs, linhas de configuração, testes próprios |
+| **Auditoria** | IPs duplicados, conflitos de sub-rede entre cabos, links inativos, hosts sem endereço, portas de acesso na VLAN 1, falta de port security, portas ativas sem uso |
+| **Lote** | `runOnAll("show ip int brief")`, `runOnDevices` e `commandsToScript()`, que transforma comandos digitados na CLI num script reutilizável |
+| **Área de trabalho** | Zoom, plano de fundo, redes remotas, abrir e salvar projetos, eventos da área de trabalho |
 
 Cada função auxiliar de IOS tem um gêmeo `build...` que retorna os comandos em vez de enviá-los, para você ver, combinar e reutilizar a configuração.
 
