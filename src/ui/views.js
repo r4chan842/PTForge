@@ -543,3 +543,166 @@ function onSnapshotClick(event) {
     }
     return true;
 }
+
+var pluginPermissionInfo = {
+    topology: ["Change the topology", "Add, remove, move and cable devices, draw on the canvas, set host addresses and server services"],
+    cli: ["Send IOS commands", "Run configuration commands on routers and switches and control simulation mode"],
+    files: ["Read and write files", "Open, save and delete files on this computer and open or save Packet Tracer projects"],
+    raw: ["Full Packet Tracer access", "Use ipc, network() and appWindow() directly. This bypasses every other permission"]
+};
+
+function pluginInitial(p) {
+    return viewEscape(((p.name || p.id || "?").replace(/[^A-Za-z0-9]/g, "") || "?").charAt(0).toUpperCase());
+}
+
+function pluginHue(p) {
+    var text = p.id || p.file || "";
+    var hash = 0;
+    for (var i = 0; i < text.length; i++) {
+        hash = (hash * 31 + text.charCodeAt(i)) % 360;
+    }
+    return hash;
+}
+
+function renderPlugins() {
+    var box = byId("plugin-list");
+    if (!box) {
+        return;
+    }
+    var data = app.plugins;
+    byId("plugin-folder").textContent = data ? data.folder : "";
+    byId("plugin-folder").title = data ? data.folder : "";
+    if (!inPacketTracer) {
+        box.innerHTML = "<div class=\"tree-hint\">Plugins load inside Packet Tracer. Put <code>.pf</code> files in the plugin folder, then enable them here.</div>";
+        return;
+    }
+    if (!data) {
+        box.innerHTML = "<div class=\"tree-hint\">Loading plugins...</div>";
+        return;
+    }
+    var filter = (byId("plugin-search").value || "").toLowerCase();
+    var list = data.plugins.filter(function (p) {
+        return !filter || (p.name + " " + p.id + " " + p.description + " " + p.author).toLowerCase().indexOf(filter) !== -1;
+    });
+    var on = list.filter(function (p) { return p.enabled; });
+    var off = list.filter(function (p) { return !p.enabled; });
+    byId("plugin-count").textContent = data.plugins.length ? on.length + " of " + data.plugins.length + " enabled" : "";
+    if (!data.plugins.length) {
+        box.innerHTML = "<div class=\"tree-hint\">No plugins yet. <a data-cmd=\"plugins.new\">Create a plugin</a> or copy <code>.pf</code> files into the folder below.</div>";
+        return;
+    }
+    var section = function (title, items) {
+        return items.length ? "<div class=\"plug-group\">" + title + "<span class=\"badge\">" + items.length + "</span></div>" + items.map(pluginCard).join("") : "";
+    };
+    box.innerHTML = section("Enabled", on) + section("Installed", off) || "<div class=\"tree-hint\">No plugin matches.</div>";
+}
+
+function pluginCard(p) {
+    var key = viewEscape(p.id || "");
+    var state = p.error ? "<span class=\"plug-state err\">" + icon("error") + viewEscape(p.error) + "</span>" :
+        p.consent === "changed" ? "<span class=\"plug-state warn\">" + icon("warning") + "Changed since you allowed it. Review and enable again.</span>" : "";
+    var perms = p.permissions.length ? p.permissions.map(function (name) {
+        return "<span class=\"plug-perm" + (name === "raw" ? " raw" : "") + "\" title=\"" + viewEscape((pluginPermissionInfo[name] || [name, ""])[1]) + "\">" + viewEscape(name) + "</span>";
+    }).join("") : "<span class=\"plug-perm none\">read only</span>";
+    var contributes = [];
+    if (p.commands.length) {
+        contributes.push(p.commands.map(function (c) { return "." + viewEscape(c); }).join(" "));
+    }
+    if (p.functions.length) {
+        contributes.push(p.functions.map(function (f) { return viewEscape(f) + "()"; }).join(" "));
+    }
+    if (p.rules.length || p.checks.length) {
+        contributes.push(p.rules.length + " rules, " + p.checks.length + " checks");
+    }
+    var toggle = p.enabled ? "<button class=\"btn mini\" data-plugin=\"disable\" data-id=\"" + key + "\">Disable</button>" :
+        p.error && !p.id ? "" : "<button class=\"btn mini primary\" data-plugin=\"enable\" data-id=\"" + key + "\">Enable</button>";
+    return "<div class=\"plug" + (p.enabled ? "" : " off") + "\" data-id=\"" + key + "\">" +
+        "<div class=\"plug-icon\" style=\"background:hsl(" + pluginHue(p) + ",45%,32%)\">" + pluginInitial(p) + "</div>" +
+        "<div class=\"plug-main\">" +
+        "<div class=\"plug-head\"><span class=\"plug-name\">" + viewEscape(p.name || p.file.split(/[\\/]/).pop()) + "</span>" + (p.version ? "<span class=\"plug-ver\">v" + viewEscape(p.version) + "</span>" : "") + "<span class=\"plug-perms\">" + perms + "</span></div>" +
+        "<div class=\"plug-desc\">" + viewEscape(p.description || p.file.split(/[\\/]/).pop()) + "</div>" +
+        (contributes.length ? "<div class=\"plug-contrib\">" + contributes.join(" &middot; ") + "</div>" : "") +
+        state +
+        "<div class=\"plug-foot\"><span class=\"plug-author\">" + viewEscape(p.author || "") + "</span>" +
+        "<span class=\"plug-actions\">" + (p.id ? "<span class=\"sec-act\" data-plugin=\"open\" data-id=\"" + key + "\" title=\"Edit Plugin\">" + icon("edit") + "</span>" : "") + toggle + "</span></div>" +
+        "</div></div>";
+}
+
+function refreshPlugins() {
+    if (!callEngine("editorPlugins", "list")) {
+        renderPlugins();
+    }
+}
+
+function findPlugin(id) {
+    return ((app.plugins && app.plugins.plugins) || []).filter(function (p) { return p.id === id; })[0] || null;
+}
+
+function askPluginConsent(p) {
+    var perms = p.permissions.length ? p.permissions.map(function (name) {
+        var info = pluginPermissionInfo[name] || [name, ""];
+        return "<li class=\"" + (name === "raw" ? "danger" : "") + "\"><b>" + viewEscape(info[0]) + "</b><span>" + viewEscape(info[1]) + "</span></li>";
+    }).join("") : "<li><b>Read only</b><span>Read devices, ports, links and addresses, ping and run show commands</span></li>";
+    showDialog({
+        title: (p.consent === "changed" ? "Review " : "Enable ") + (p.name || p.id) + "?",
+        html: "<div class=\"consent\">" +
+            (p.consent === "changed" ? "<p class=\"warn\">This plugin changed after you allowed it. Check the new code before you enable it again.</p>" : "") +
+            "<p>" + viewEscape(p.description || "No description") + (p.author ? " <span class=\"muted\">by " + viewEscape(p.author) + "</span>" : "") + "</p>" +
+            "<p class=\"consent-label\">It asks to</p><ul class=\"consent-perms\">" + perms + "</ul>" +
+            "<p class=\"muted\">Plugins are JavaScript that runs inside Packet Tracer. Permissions stop honest mistakes, they are not a sandbox. Only enable plugins whose code you have read or whose author you trust.</p>" +
+            "<p class=\"consent-file\"><span>" + viewEscape(p.file) + "</span><span>SHA-1 " + viewEscape(p.checksum) + "</span></p></div>",
+        buttons: ["Allow and Enable", "View Code", "Cancel"]
+    }, function (choice) {
+        if (choice === 0) {
+            callEngine("editorPlugins", "enable", p.id, "grant");
+        } else if (choice === 1) {
+            callEngine("editorPlugins", "open", p.id);
+        }
+    });
+}
+
+function runPluginAction(action, id) {
+    var p = findPlugin(id);
+    if (action === "enable" && p) {
+        if (p.consent === "granted") {
+            callEngine("editorPlugins", "enable", id);
+        } else {
+            askPluginConsent(p);
+        }
+    } else if (action === "disable" || action === "open") {
+        callEngine("editorPlugins", action, id);
+    }
+}
+
+function newPluginUi() {
+    showDialog({ title: "New plugin id (lowercase letters, digits, dashes)", input: "my-plugin", buttons: ["Create", "Cancel"] }, function (choice, value) {
+        var id = String(value || "").trim();
+        if (choice !== 0 || !id) {
+            return;
+        }
+        if (!/^[a-z0-9][a-z0-9-]{0,40}$/.test(id)) {
+            notify("error", "Use lowercase letters, digits and dashes, for example vlan-tools");
+            return;
+        }
+        if (!callEngine("editorPlugins", "create", id, id.replace(/-/g, " ").replace(/\b\w/g, function (c) { return c.toUpperCase(); }))) {
+            notify("warning", "Plugins can be created only inside Packet Tracer");
+        }
+    });
+}
+
+function receivePlugins(data) {
+    app.plugins = data;
+    terminalState.pluginCommands = data.commands || [];
+    renderPlugins();
+    if (data.message) {
+        notify("info", data.message);
+    }
+}
+
+function onPluginClick(event) {
+    var node = event.target.closest("[data-plugin]");
+    if (node) {
+        event.stopPropagation();
+        runPluginAction(node.getAttribute("data-plugin"), node.getAttribute("data-id"));
+    }
+}

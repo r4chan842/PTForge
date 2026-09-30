@@ -1,5 +1,15 @@
 "use strict";
 
+const fs = require("fs");
+const path = require("path");
+
+function labPluginFiles() {
+    const dir = path.join(__dirname, "..", "plugins");
+    const files = {};
+    fs.readdirSync(dir).filter((f) => f.endsWith(".pf")).forEach((f) => { files[f] = fs.readFileSync(path.join(dir, f), "utf8"); });
+    return files;
+}
+
 const labSetup = `
 var labConfigs = {
     R1: "hostname R1\\ninterface GigabitEthernet0/0\\n ip address 10.0.0.1 255.255.255.0\\n no shutdown\\ninterface GigabitEthernet0/1\\n ip address 10.0.12.1 255.255.255.252\\nrouter ospf 1\\n network 10.0.0.0 0.0.0.255 area 0\\nend",
@@ -46,6 +56,11 @@ labIp("R1", "GigabitEthernet0/1", "10.0.12.1", "255.255.255.252");
 labIp("R2", "GigabitEthernet0/1", "10.0.12.2", "255.255.255.252");
 labIp("PC1", "FastEthernet0", "10.0.0.10", "255.255.255.0");
 labIp("PC2", "FastEthernet0", "10.0.0.20", "255.255.255.0");
+world.fs = world.fs || {};
+var labPlugins = ${JSON.stringify(labPluginFiles())};
+Object.keys(labPlugins).forEach(function (name) {
+    world.fs["C:/Users/lab/Documents/PTForge/plugins/" + name] = labPlugins[name];
+});
 `;
 
 module.exports = { labSetup };

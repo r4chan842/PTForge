@@ -1,6 +1,6 @@
 {
     "name": "ptforge",
-    "version": "1.2.1",
+    "version": "1.3.0",
     "description": "JavaScript automation for Cisco Packet Tracer: build and configure whole networks from scripts",
     "private": true,
     "license": "MIT",
@@ -10,7 +10,8 @@
         "bundle": "node tools/bundle.js",
         "reference": "node tools/generate-reference.js",
         "catalog": "node tools/generate-catalog.js",
-        "check": "node tools/generate-catalog.js && node tools/bundle.js && node --check release/ptforge.js && node --test tests/",
+        "permissions": "node tools/generate-permissions.js",
+        "check": "node tools/generate-catalog.js && node tools/generate-permissions.js && node tools/bundle.js && node --check release/ptforge.js && node --test tests/",
         "ui-test": "node tools/ui-smoke.js && node tools/ui-workbench.js",
         "screenshots": "node tools/ui-screenshots.js"
     },

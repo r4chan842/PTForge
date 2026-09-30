@@ -28,6 +28,11 @@ var extension = null;
 function main() {
     extension = new Extension();
     extension.init();
+    try {
+        loadEnabledPlugins();
+    } catch (error) {
+        console.log("Plugins were not loaded: " + (error && error.message ? error.message : error));
+    }
 }
 
 function cleanUp() {

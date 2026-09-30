@@ -61,6 +61,7 @@ ptforge:js> setInterfaceIp("R1", "GigabitEthernet0/1", "10.0.12.1/30")
 | `.calc 10.1.2.3/20` | IPv4 or IPv6 calculator |
 | `.run lab.js` | Run a workspace file in this terminal. Its variables stay available |
 | `.history` | Commands typed in this session |
+| `.plugins` | Installed plugins and their state. Plugin dot-commands such as `.hosts` work like built-in ones, see [Plugins](plugins.md) |
 | `.exit` | Leave CLI mode, or close the terminal |
 
 ## Editor integration

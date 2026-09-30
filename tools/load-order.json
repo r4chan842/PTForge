@@ -4,6 +4,7 @@
         "src/data/links.js",
         "src/data/modules.js",
         "src/data/types.js",
+        "src/data/permissions.js",
         "src/lib/text.js",
         "src/lib/colors.js",
         "src/lib/ipv4.js",
@@ -73,6 +74,7 @@
         "src/core/bridge.js",
         "src/core/shell.js",
         "src/core/debugger.js",
+        "src/core/plugins.js",
         "src/core/window.js",
         "src/core/main.js"
     ],

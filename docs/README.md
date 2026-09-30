@@ -10,6 +10,7 @@
 | [Terminal](guides/terminal.md) | Interactive JavaScript and device CLI |
 | [Debugger](guides/debugger.md) | Breakpoints, stepping, variables, watch and Debug Console |
 | [Network tools](guides/network-tools.md) | Calculator, reachability matrix and snapshots |
+| [Plugins](guides/plugins.md) | Write, install and enable `.pf` plugins |
 | [Writing scripts](guides/writing-scripts.md) | Structure, order, builders, speed |
 | [Troubleshooting](guides/troubleshooting.md) | Common errors and fixes |
 | [Limitations](guides/limitations.md) | What is not possible and what to verify |

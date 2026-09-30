@@ -266,6 +266,36 @@ async function openLab(browser, seed) {
         assert.match(await p.locator(".diff-file-head").first().innerText(), /R2/);
     });
 
+    await step("plugin manager asks for consent and adds terminal commands", async () => {
+        await p.keyboard.press("Control+Shift+X");
+        await wait(p, 500);
+        assert.equal(await p.locator(".plug").count(), 3);
+        await p.click('.plug[data-id="port-map"] [data-plugin="enable"]');
+        await wait(p, 300);
+        assert.match(await p.locator("#dialog-box").innerText(), /Enable Port Map\?[\s\S]*Read only[\s\S]*SHA-1/);
+        await p.click('#dialog-box [data-choice="2"]');
+        await wait(p, 300);
+        assert.equal(await p.locator('.plug[data-id="port-map"] [data-plugin="disable"]').count(), 0);
+        await p.click('.plug[data-id="port-map"] [data-plugin="enable"]');
+        await wait(p, 200);
+        await p.click('#dialog-box [data-choice="0"]');
+        await wait(p, 500);
+        assert.equal(await p.locator('.plug[data-id="port-map"] [data-plugin="disable"]').count(), 1);
+        await p.keyboard.press("Control+Backquote");
+        await wait(p, 300);
+        await type(p, ".clear");
+        await type(p, ".ports S1");
+        await wait(p, 300);
+        assert.match(await termText(p), /FastEthernet0\/1\s+->\s+PC1 FastEthernet0/);
+        await type(p, ".plugins");
+        await wait(p, 300);
+        assert.match(await termText(p), /on {3}port-map 1\.0\.0/);
+        await p.click('.plug[data-id="port-map"] [data-plugin="disable"]');
+        await wait(p, 400);
+        await type(p, ".ports S1");
+        assert.match(await termText(p), /Unknown shell command \.ports/);
+    });
+
     assert.deepEqual(p.errors, []);
     await browser.close();
     console.log(steps.length + " workbench checks passed");

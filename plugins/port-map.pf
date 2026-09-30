@@ -1,0 +1,50 @@
+---
+{
+  "id": "port-map",
+  "name": "Port Map",
+  "version": "1.0.0",
+  "description": "Shows which device and port sits on the other end of every cable",
+  "author": "PTForge",
+  "permissions": []
+}
+---
+function portMap(name) {
+    return getDeviceInfo(name).ports.filter(function (p) {
+        return p.connectedDevice;
+    }).map(function (p) {
+        return {
+            port: p.name,
+            up: p.up,
+            ip: p.ip && p.ip !== "0.0.0.0" ? p.ip + "/" + maskToCidr(p.mask) : "",
+            device: p.connectedDevice,
+            remotePort: p.connectedTo
+        };
+    });
+}
+
+plugin.fn("portMap", portMap);
+
+plugin.command("ports", "Cabled ports of a device and what they connect to", function (args) {
+    if (!args[0]) {
+        return "Usage: .ports R1";
+    }
+    var rows = portMap(args[0]);
+    if (!rows.length) {
+        return args[0] + " has no cables";
+    }
+    return rows.map(function (r) {
+        return (r.up ? "up    " : "down  ") + r.port + (r.ip ? " " + r.ip : "") + "  ->  " + r.device + " " + r.remotePort;
+    }).join("\n");
+});
+
+plugin.rule("one-sided-links", function () {
+    var findings = [];
+    getDevices().forEach(function (name) {
+        portMap(name).forEach(function (r) {
+            if (!r.up) {
+                findings.push({ severity: "info", device: name, port: r.port, message: "Cabled to " + r.device + " " + r.remotePort + " but the port is down" });
+            }
+        });
+    });
+    return findings;
+});

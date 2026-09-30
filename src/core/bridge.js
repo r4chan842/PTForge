@@ -172,3 +172,44 @@ function editorReachability() {
         return true;
     });
 }
+
+function sendPlugins(message) {
+    editorSend("plugins", { folder: getPluginFolder(), plugins: listPlugins(), commands: getPluginCommands(), message: message || "" });
+    return true;
+}
+
+function editorPlugins(encodedAction, encodedId, encodedExtra) {
+    var action = decodeArgument(encodedAction);
+    var id = decodeArgument(encodedId || "");
+    var extra = decodeArgument(encodedExtra || "");
+    return guardBridge("plugins", function () {
+        if (action === "enable") {
+            enablePlugin(id, extra === "grant");
+            return sendPlugins("Enabled " + id);
+        }
+        if (action === "disable") {
+            disablePlugin(id);
+            return sendPlugins("Disabled " + id);
+        }
+        if (action === "reload") {
+            return sendPlugins("Reloaded " + reloadPlugins().length + " plugins");
+        }
+        if (action === "create") {
+            var path = createPlugin(id, extra);
+            sendFile(path);
+            return sendPlugins("Created " + baseName(path));
+        }
+        if (action === "open") {
+            return sendFile(findPluginRecord(id).file);
+        }
+        if (action === "folder") {
+            var chosen = String(fileManager().getSelectedDirectory("Plugin folder", getPluginFolder()) || "");
+            if (chosen) {
+                setPluginFolder(chosen);
+                reloadPlugins();
+            }
+            return sendPlugins();
+        }
+        return sendPlugins();
+    });
+}

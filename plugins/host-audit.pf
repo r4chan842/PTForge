@@ -1,0 +1,64 @@
+---
+{
+  "id": "host-audit",
+  "name": "Host Audit",
+  "version": "1.0.0",
+  "description": "Checks PC and server addressing: gateway, DNS and the subnet of the gateway",
+  "author": "PTForge",
+  "permissions": []
+}
+---
+var hostTypes = ["pc", "laptop", "server"];
+
+function hostRows() {
+    return getDevices(hostTypes).map(function (name) {
+        var ip = getPcIp(name);
+        return { name: name, dhcp: ip.dhcp, ip: ip.ip, mask: ip.mask, gateway: ip.gateway, dns: ip.dns };
+    });
+}
+
+function problemsOf(row) {
+    var found = [];
+    if (!row.ip) {
+        return row.dhcp ? ["DHCP gave no address"] : [];
+    }
+    if (!row.gateway) {
+        found.push("no default gateway");
+    } else if (!isInSubnet(row.gateway, row.ip + "/" + maskToCidr(row.mask))) {
+        found.push("gateway " + row.gateway + " is outside " + networkAddress(row.ip, row.mask) + "/" + maskToCidr(row.mask));
+    }
+    if (!row.dns) {
+        found.push("no DNS server");
+    }
+    return found;
+}
+
+plugin.fn("hostTable", hostRows);
+
+plugin.command("hosts", "Hosts with address, gateway and DNS", function () {
+    var rows = hostRows();
+    if (!rows.length) {
+        return "No PCs, laptops or servers";
+    }
+    return rows.map(function (r) {
+        var address = r.ip ? r.ip + "/" + maskToCidr(r.mask) : "-";
+        var issues = problemsOf(r);
+        return [r.name, r.dhcp ? "dhcp" : "static", address, r.gateway || "-", r.dns || "-", issues.length ? "! " + issues.join(", ") : "ok"].join("  ");
+    }).join("\n");
+});
+
+plugin.rule("host-addressing", function () {
+    var findings = [];
+    hostRows().forEach(function (row) {
+        problemsOf(row).forEach(function (text) {
+            findings.push({ severity: /outside|DHCP/.test(text) ? "error" : "warning", device: row.name, message: text });
+        });
+    });
+    return findings;
+});
+
+plugin.check("every addressed host has a gateway in its subnet", function () {
+    return hostRows().every(function (row) {
+        return !row.ip || problemsOf(row).filter(function (t) { return /gateway/.test(t); }).length === 0;
+    });
+}, "Set the gateway with setPcStatic(name, ip, gateway)", 10);

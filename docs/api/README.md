@@ -22,6 +22,7 @@ PTForge has more than 375 functions. They are all global, so you call them direc
 | Simulation | [simulation.md](simulation.md) | Simulation mode, PDUs, ping, reachability matrix |
 | Snapshots | [snapshots.md](snapshots.md) | Save the network state and compare changes |
 | Events | [events.md](events.md) | React to workspace changes |
+| Plugins | [plugins.md](plugins.md) | Load `.pf` plugins, consent, commands, rules and checks |
 | Utilities | [utilities.md](utilities.md) | IPv4 math, output helpers |
 
 ## Conventions

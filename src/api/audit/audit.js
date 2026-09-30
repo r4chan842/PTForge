@@ -47,6 +47,9 @@ function auditNetwork() {
     getDevices(["switch", "multilayerswitch", "switch3650"]).forEach(function (name) {
         findings = findings.concat(auditSwitch(name));
     });
+    if (typeof pluginFindings === "function") {
+        findings = findings.concat(pluginFindings());
+    }
     var report = {
         errors: countSeverity(findings, "error"),
         warnings: countSeverity(findings, "warning"),

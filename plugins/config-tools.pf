@@ -1,0 +1,29 @@
+---
+{
+  "id": "config-tools",
+  "name": "Config Tools",
+  "version": "1.0.0",
+  "description": "Save every running config and set the login banner on all routers and switches",
+  "author": "PTForge",
+  "permissions": ["cli"]
+}
+---
+var iosTypes = ["router", "switch", "multilayerswitch", "switch3650"];
+
+plugin.command("saveall", "copy running-config startup-config on every router and switch", function (args, out) {
+    var saved = saveAllConfigs();
+    out("Saved " + saved.length + " devices");
+    return saved.join(", ");
+});
+
+plugin.command("motd", "Set the MOTD banner everywhere, for example .motd \"Authorized access only\"", function (args) {
+    var text = args.join(" ");
+    if (!text) {
+        return "Usage: .motd \"Authorized access only\"";
+    }
+    var names = getDevices(iosTypes);
+    names.forEach(function (name) {
+        setBanner(name, text);
+    });
+    return "Banner set on " + names.length + " devices";
+});

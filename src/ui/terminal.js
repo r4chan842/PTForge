@@ -1,4 +1,4 @@
-var terminalState = { list: [], active: null, nextId: 1, history: [], host: null };
+var terminalState = { list: [], active: null, nextId: 1, history: [], host: null, pluginCommands: [] };
 
 var shellCommands = [
     { name: ".help", args: "", info: "Show this list" },
@@ -14,6 +14,7 @@ var shellCommands = [
     { name: ".calc", args: "address", info: "Subnet or IPv6 calculator, for example .calc 10.1.2.3/20" },
     { name: ".run", args: "file", info: "Run a workspace file in this shell, its variables stay available" },
     { name: ".history", args: "", info: "Commands typed in this session" },
+    { name: ".plugins", args: "", info: "Installed plugins and their state" },
     { name: ".exit", args: "", info: "Leave CLI mode, or close the terminal" }
 ];
 
@@ -309,7 +310,7 @@ Terminal.prototype.candidates = function (word) {
         }
     };
     if (word.charAt(0) === ".") {
-        shellCommands.forEach(function (c) { add(c.name); });
+        shellCommands.concat(terminalState.pluginCommands).forEach(function (c) { add(c.name); });
     } else {
         (typeof functionCatalog !== "undefined" ? functionCatalog : []).forEach(function (f) { add(f.name); });
         editorKeywords.forEach(add);
@@ -386,7 +387,7 @@ Terminal.prototype.submit = function () {
         return;
     }
     var word = trimmed.split(/\s+/)[0];
-    if (trimmed.charAt(0) === "." && /^\.[a-z]+$/.test(word)) {
+    if (trimmed.charAt(0) === "." && /^\.[a-z][a-z0-9-]*$/.test(word)) {
         this.runDot(word, splitArgs(trimmed.substring(word.length)));
         return;
     }
@@ -547,12 +548,22 @@ Terminal.prototype.runDot = function (name, args) {
                 var head = (c.name + " " + c.args + new Array(width).join(" ")).substring(0, width);
                 return "  <span class=\"t-byellow\">" + termEscape(head) + "</span><span class=\"t-dim\">" + termEscape(c.info) + "</span>";
             }).join("\n"));
+            if (terminalState.pluginCommands.length) {
+                this.write("Plugin commands", "t-bold");
+                this.writeHtml(terminalState.pluginCommands.map(function (c) {
+                    var head = (c.name + new Array(width).join(" ")).substring(0, width);
+                    return "  <span class=\"t-bmagenta\">" + termEscape(head) + "</span><span class=\"t-dim\">" + termEscape(c.info || "") + " (" + termEscape(c.plugin) + ")</span>";
+                }).join("\n"));
+            }
             this.write("Everything else is JavaScript: every PTForge function is available, for example", "t-dim");
             this.writeHtml("  <span class=\"t-cyan\">setPcStatic(\"PC1\", \"192.168.1.20/24\", \"192.168.1.1\")</span>");
             this.write("Keys: Enter runs, Shift+Enter adds a line, Tab completes, Up and Down walk the history, Ctrl+L clears, Ctrl+C cancels the line.", "t-dim");
             return;
         case ".clear":
             this.clear();
+            return;
+        case ".plugins":
+            this.runEngineText("var list = listPlugins(); return list.length ? list.map(function (p) { return (p.enabled ? \"on   \" : p.error ? \"err  \" : \"off  \") + (p.id || p.file) + (p.version ? \" \" + p.version : \"\") + (p.error ? \"  \" + p.error : p.commands.length ? \"  .\" + p.commands.join(\" .\") : \"\"); }).join(\"\\n\") : \"No plugins in \" + getPluginFolder();");
             return;
         case ".history":
             this.write(terminalState.history.map(function (h, i) { return ("   " + (i + 1)).slice(-4) + "  " + h; }).join("\n") || "No history yet", "t-dim");
@@ -639,6 +650,12 @@ Terminal.prototype.runDot = function (name, args) {
             }
             this.runEngineText("var d = showSnapshotDiff(" + q(args[0]) + (args[1] ? ", " + q(args[1]) : "") + "); return d.changes + \" changes from \" + d.from + \" to \" + d.to;");
             return;
+    }
+    var plugin = terminalState.pluginCommands.filter(function (c) { return c.name === name; })[0];
+    if (plugin) {
+        var rest = args.map(function (a) { return /[\s"']/.test(a) || a === "" ? JSON.stringify(a) : a; }).join(" ");
+        this.runEngineText("return runPluginCommand(" + q(name) + ", " + q(rest) + ");");
+        return;
     }
     this.write("Unknown shell command " + name + ". Type .help for the list.", "t-red");
 };
