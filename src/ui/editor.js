@@ -30,6 +30,9 @@ function CodeEditor(host, options) {
     this.suggestions = [];
     this.suggestIndex = 0;
     this.bracketMarks = {};
+    this.breakpoints = {};
+    this.execLine = 0;
+    this.execKind = "";
     this.build(host);
     this.setFontSize(this.options.fontSize || 14);
     this.bind();
@@ -42,6 +45,7 @@ CodeEditor.prototype.build = function (host) {
     this.scroller = el("div", "ed-scroll", this.root);
     this.inner = el("div", "ed-inner", this.scroller);
     this.current = el("div", "ed-current", this.inner);
+    this.execBar = el("div", "ed-exec hidden", this.inner);
     this.findLayer = el("pre", "ed-layer ed-find", this.inner);
     this.hl = el("pre", "ed-layer ed-hl", this.inner);
     this.input = el("textarea", "ed-input", this.inner);
@@ -55,6 +59,7 @@ CodeEditor.prototype.build = function (host) {
     this.suggestList = el("div", "ed-suggest-list", this.suggestBox);
     this.suggestDoc = el("div", "ed-suggest-doc", this.suggestBox);
     this.hint = el("div", "ed-hint hidden", this.root);
+    this.zone = el("div", "ed-zone hidden", this.inner);
 };
 
 CodeEditor.prototype.bind = function () {
@@ -93,11 +98,139 @@ CodeEditor.prototype.bind = function () {
     });
     this.gutter.addEventListener("mousedown", function (event) {
         var row = event.target.closest(".ed-ln");
-        if (row) {
-            event.preventDefault();
-            self.selectLine(Number(row.textContent));
+        if (!row || event.button !== 0) {
+            return;
+        }
+        event.preventDefault();
+        var line = Number(row.getAttribute("data-line"));
+        if (event.target.closest(".ed-glyph") && self.options.onGlyphClick) {
+            self.options.onGlyphClick(line, event);
+        } else {
+            self.selectLine(line);
         }
     });
+    this.gutter.addEventListener("contextmenu", function (event) {
+        var row = event.target.closest(".ed-ln");
+        if (row && self.options.onGutterMenu) {
+            event.preventDefault();
+            self.options.onGutterMenu(Number(row.getAttribute("data-line")), event);
+        }
+    });
+    this.input.addEventListener("beforeinput", function () {
+        self.rememberLines();
+    });
+    this.input.addEventListener("mousemove", function (event) {
+        self.onHoverMove(event);
+    });
+    this.input.addEventListener("mouseleave", function () {
+        clearTimeout(self.hoverTimer);
+        if (self.options.onHover) {
+            self.options.onHover(null);
+        }
+    });
+};
+
+CodeEditor.prototype.rememberLines = function () {
+    var sel = this.selection();
+    var text = this.input.value;
+    var startLine = text.substring(0, sel.start).split("\n").length;
+    var endLine = text.substring(0, sel.end).split("\n").length;
+    var lineStart = text.lastIndexOf("\n", sel.start - 1) + 1;
+    this.before = { count: text.split("\n").length, start: startLine, end: endLine, atLineStart: sel.start === lineStart && sel.start === sel.end };
+};
+
+CodeEditor.prototype.trackLines = function () {
+    var before = this.before;
+    this.before = null;
+    if (!before) {
+        return;
+    }
+    var delta = this.input.value.split("\n").length - before.count;
+    if (!delta || !this.options.onLinesShift) {
+        return;
+    }
+    this.options.onLinesShift({ start: before.start, end: before.end, delta: delta, atLineStart: before.atLineStart });
+};
+
+CodeEditor.prototype.positionAt = function (clientX, clientY) {
+    var box = this.scroller.getBoundingClientRect();
+    var y = clientY - box.top + this.scroller.scrollTop;
+    var x = clientX - box.left + this.scroller.scrollLeft - 8;
+    var lines = this.input.value.split("\n");
+    var line = Math.floor(y / this.lineHeight) + 1;
+    if (line < 1 || line > lines.length || x < 0) {
+        return null;
+    }
+    var column = Math.floor(x / this.measure());
+    if (column >= lines[line - 1].length) {
+        return null;
+    }
+    return { line: line, column: column + 1, offset: this.offsetOfLine(line) + column };
+};
+
+CodeEditor.prototype.expressionAt = function (offset) {
+    var text = this.input.value;
+    if (!/[\w$]/.test(text.charAt(offset))) {
+        return null;
+    }
+    var start = offset;
+    var end = offset;
+    while (end < text.length && /[\w$]/.test(text.charAt(end))) {
+        end++;
+    }
+    while (start > 0 && /[\w$.]/.test(text.charAt(start - 1))) {
+        start--;
+    }
+    var expression = text.substring(start, end).replace(/^\.+/, "");
+    if (!/^[A-Za-z_$][\w$]*(\.[A-Za-z_$][\w$]*)*$/.test(expression) || this.inStringOrComment(offset)) {
+        return null;
+    }
+    return { expression: expression, start: start, end: end };
+};
+
+CodeEditor.prototype.onHoverMove = function (event) {
+    var self = this;
+    if (!this.options.onHover) {
+        return;
+    }
+    clearTimeout(this.hoverTimer);
+    var x = event.clientX;
+    var y = event.clientY;
+    this.hoverTimer = setTimeout(function () {
+        var pos = self.positionAt(x, y);
+        var found = pos ? self.expressionAt(pos.offset) : null;
+        self.options.onHover(found ? { expression: found.expression, line: pos.line, x: x, y: y } : null);
+    }, 350);
+};
+
+CodeEditor.prototype.setBreakpoints = function (map) {
+    this.breakpoints = map || {};
+    this.gutterDirty = true;
+    this.renderGutter(this.input.value.split("\n").length);
+};
+
+CodeEditor.prototype.setExecution = function (line, kind, message) {
+    this.execLine = line || 0;
+    this.execKind = kind || "";
+    this.execBar.classList.toggle("hidden", !this.execLine);
+    this.execBar.classList.toggle("focus", this.execKind === "frame");
+    if (this.execLine) {
+        this.execBar.style.top = (this.execLine - 1) * this.lineHeight + "px";
+    }
+    this.zone.classList.toggle("hidden", !(this.execLine && message));
+    if (this.execLine && message) {
+        this.zone.style.top = this.execLine * this.lineHeight + "px";
+        this.zone.innerHTML = "<div class=\"ed-zone-head\">Exception has occurred: " + escapeHtml(message.split(":")[0]) + "</div><div class=\"ed-zone-body\">" + escapeHtml(message) + "</div>";
+    }
+    this.gutterDirty = true;
+    this.renderGutter(this.input.value.split("\n").length);
+    if (this.execLine) {
+        var top = (this.execLine - 1) * this.lineHeight;
+        var view = this.scroller.clientHeight;
+        if (top < this.scroller.scrollTop || top + this.lineHeight * 3 > this.scroller.scrollTop + view) {
+            this.scroller.scrollTop = Math.max(0, top - Math.round(view / 3));
+        }
+    }
 };
 
 CodeEditor.prototype.setFontSize = function (size) {
@@ -122,6 +255,7 @@ CodeEditor.prototype.getValue = function () {
 };
 
 CodeEditor.prototype.setValue = function (text) {
+    this.before = null;
     this.input.value = String(text).replace(/\r\n?/g, "\n");
     this.input.setSelectionRange(0, 0);
     this.render();
@@ -154,6 +288,7 @@ CodeEditor.prototype.replaceRange = function (start, end, text, selStart, selEnd
     var input = this.input;
     input.focus();
     input.setSelectionRange(start, end);
+    this.rememberLines();
     this.programmatic = true;
     var done = false;
     try {
@@ -162,9 +297,12 @@ CodeEditor.prototype.replaceRange = function (start, end, text, selStart, selEnd
         done = false;
     }
     if (!done || input.value.substring(start, start + text.length) !== text) {
+        input.setSelectionRange(start, end);
+        this.rememberLines();
         input.setRangeText(text, start, end, "end");
         this.onInput({ inputType: "insertReplacementText" });
     }
+    this.before = null;
     this.programmatic = false;
     var caretStart = selStart === undefined ? start + text.length : selStart;
     input.setSelectionRange(caretStart, selEnd === undefined ? caretStart : selEnd);
@@ -177,6 +315,7 @@ CodeEditor.prototype.insert = function (text) {
 };
 
 CodeEditor.prototype.onInput = function (event) {
+    this.trackLines();
     this.render();
     this.updateCursor();
     if (this.options.onChange) {
@@ -233,7 +372,14 @@ CodeEditor.prototype.renderGutter = function (count) {
     var html = [];
     for (var i = 1; i <= count; i++) {
         var css = "ed-ln" + (byLine[i] ? " ed-ln-" + byLine[i] : "") + (i === this.activeLine ? " active" : "");
-        html.push("<div class=\"" + css + "\">" + i + "</div>");
+        var bp = this.breakpoints[i];
+        if (bp) {
+            css += " bp" + (bp.enabled === false ? " bp-off" : "") + (bp.log ? " bp-log" : bp.condition || bp.hit ? " bp-cond" : "") + (bp.verified === false ? " bp-unverified" : "");
+        }
+        if (i === this.execLine) {
+            css += this.execKind === "frame" ? " exec-frame" : " exec";
+        }
+        html.push("<div class=\"" + css + "\" data-line=\"" + i + "\"><span class=\"ed-glyph\"></span><span class=\"ed-num\">" + i + "</span></div>");
     }
     this.lines.innerHTML = html.join("");
     this.lineCount = count;

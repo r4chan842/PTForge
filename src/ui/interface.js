@@ -1,4 +1,5 @@
 var inPacketTracer = typeof $se === "function";
+var appVersion = "1.2.0";
 var storageKey = "ptforge.workspace";
 
 var app = {
@@ -21,7 +22,10 @@ var app = {
     running: false,
     devices: null,
     reports: [],
-    browserFolder: {}
+    browserFolder: {},
+    snapshots: [],
+    termHistory: [],
+    panelMax: false
 };
 
 var icons = {
@@ -60,7 +64,26 @@ var icons = {
     arrowUp: "<path d='M3.15 10.35l.7.7L8 6.92l4.15 4.13.7-.7L8.35 5.87h-.7l-4.5 4.48z'/>",
     arrowDown: "<path d='M12.85 5.65l-.7-.7L8 9.08 3.85 4.95l-.7.7 4.5 4.48h.7l4.5-4.48z'/>",
     replaceOne: "<path d='M3.2 9.5H1v-1h2.2l.5.5v2.3l1.2-1.2.7.7-2.4 2.4H2.5L.1 10.8l.7-.7 1.2 1.2V9.5h1.2zM6 4h8v1H6V4zm0 3h8v1H6V7zm0 3h8v1H6v-1zm0 3h8v1H6v-1z'/>",
-    replaceAll: "<path d='M11.6 2.7l.7-.7 1.3 1.3V1h1v2.3l1.3-1.3.7.7-2.5 2.5h-.4L11.6 2.7zM1 5h9v1H1V5zm0 3h13v1H1V8zm0 3h13v1H1v-1zm0 3h9v1H1v-1z'/>"
+    replaceAll: "<path d='M11.6 2.7l.7-.7 1.3 1.3V1h1v2.3l1.3-1.3.7.7-2.5 2.5h-.4L11.6 2.7zM1 5h9v1H1V5zm0 3h13v1H1V8zm0 3h13v1H1v-1zm0 3h9v1H1v-1z'/>",
+    debug: "<path d='M10.94 13.5l-1.32 1.32a3.73 3.73 0 0 0-7.24 0L1.06 13.5 2.4 12.2a3.7 3.7 0 0 0-.4-.95H0V9.75h1.9a3.9 3.9 0 0 1 .4-1.05L1.06 7.5l1.06-1.06L3.36 7.68A3.7 3.7 0 0 1 4.5 7.03V6h3v1.03c.41.14.8.36 1.14.65l1.24-1.24L10.94 7.5 9.7 8.7c.2.33.33.68.4 1.05H12v1.5h-2c-.07.33-.2.65-.37.95l1.31 1.3zM6 8.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z' transform='translate(2 -1)'/><path d='M6.5 1.5L14 6l-3.4 2.1-.02-1.2L12 6 6.5 2.7v1.8h-1V1.5h1z'/>",
+    "continue": "<path d='M2.5 2H4v12H2.5V2zm4.04.13L13.7 7.4v1.2l-7.16 5.27L5.5 13.4V2.6l1.04-.47zM7 12.3L12.1 8 7 3.7v8.6z'/>",
+    stepOver: "<path d='M14.25 5.75v-4h-1.5v2.542c-1.145-1.359-2.911-2.209-4.84-2.209-3.177 0-5.92 2.307-6.16 5.398l-.02.269h1.501l.022-.226c.212-2.195 2.202-3.94 4.656-3.94 1.736 0 3.244.875 4.05 2.166h-2.83v1.5h4.163l.962-.975V5.75h-.004zM8 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z'/>",
+    stepInto: "<path d='M8 9.532h.542l3.905-3.905-1.061-1.06-2.637 2.61V1H7.251v6.177l-2.637-2.61-1.061 1.06 3.905 3.905H8zm1.956 3.481a2 2 0 1 1-4 0 2 2 0 0 1 4 0z'/>",
+    stepOut: "<path d='M8 1h-.542L3.553 4.905l1.061 1.06 2.637-2.61v6.177h1.498V3.355l2.637 2.61 1.061-1.06L8.542 1H8zm1.956 12.013a2 2 0 1 1-4 0 2 2 0 0 1 4 0z'/>",
+    stepBack: "<path d='M1.75 5.75v-4h1.5v2.542c1.145-1.359 2.911-2.209 4.84-2.209 3.177 0 5.92 2.307 6.16 5.398l.02.269h-1.501l-.022-.226c-.212-2.195-2.202-3.94-4.656-3.94-1.736 0-3.244.875-4.05 2.166h2.83v1.5H2.707l-.962-.975V5.75h.005zM8 14a2 2 0 1 1 0-4 2 2 0 0 1 0 4z'/>",
+    restart: "<path d='M12.75 8a4.5 4.5 0 0 1-8.61 1.834l-1.391.565A6.001 6.001 0 0 0 14.25 8 6 6 0 0 0 3.5 4.334V2.5H2v4l.75.75h3.5v-1.5H4.352A4.5 4.5 0 0 1 12.75 8z'/>",
+    stop: "<path d='M2 2v12h12V2H2zm10.75 10.75h-9.5v-9.5h9.5v9.5z'/>",
+    terminal: "<path d='M1 2.5l.5-.5h13l.5.5v11l-.5.5h-13l-.5-.5v-11zM2 3v10h12V3H2zm2.15 1.85l.7-.7 3 3v.7l-3 3-.7-.7L6.79 7.5 4.15 4.85zM8 10h4v1H8v-1z'/>",
+    add: "<path d='M14 7v1H8v6H7V8H1V7h6V1h1v6h6z'/>",
+    chevronDown: "<path d='M7.976 10.072l4.357-4.357.62.618L8.284 11h-.618L3 6.333l.619-.618 4.357 4.357z'/>",
+    chevronUp: "<path d='M8.024 5.928l-4.357 4.357-.62-.618L7.716 5h.618L13 9.667l-.619.618-4.357-4.357z'/>",
+    calculator: "<path d='M3.5 1h9l.5.5v13l-.5.5h-9l-.5-.5v-13l.5-.5zM4 2v12h8V2H4zm1 1h6v3H5V3zm1 1v1h4V4H6zM5 7.5h1.5V9H5V7.5zm2.25 0h1.5V9h-1.5V7.5zm2.25 0H11V9H9.5V7.5zM5 10h1.5v1.5H5V10zm2.25 0h1.5v1.5h-1.5V10zm2.25 0H11v3H9.5v-3zM5 12h3.75v1H5v-1z'/>",
+    pulse: "<path d='M1 8h3l2-5 3 10 2-5h4' fill='none' stroke='currentColor' stroke-width='1.2' stroke-linejoin='round'/>",
+    diff: "<path d='M2 3.5l.5-.5h5l.5.5v9l-.5.5h-5l-.5-.5v-9zM3 12h4V6H3v6zm0-7h4V4H3v1zm6.5-2h5l.5.5v9l-.5.5h-5l-.5-.5v-9l.5-.5zm.5 9h4v-2h-4v2zm0-4h4V4h-4v4z'/>",
+    snapshot: "<path d='M5.5 2h5l1 2h2l.5.5v8l-.5.5h-11l-.5-.5v-8l.5-.5h2l1-2zm.6 1l-1 2H3v7h10V5h-2.1l-1-2H6.1zM8 6a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zm0 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z'/>",
+    collapseAll: "<path d='M9 9H4v1h5V9z'/><path d='M5 3l1-1h7l1 1v7l-1 1h-2v2l-1 1H3l-1-1V6l1-1h2V3zm1 2h4l1 1v4h2V3H6v2zm4 1H3v7h7V6z'/>",
+    breakpoints: "<path d='M8 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm0 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6z'/><path d='M1.5 14.5l13-13' stroke='currentColor'/>",
+    closeAll: "<path d='M6 10L5.3 9.3 7.6 7 5.3 4.7 6 4l2.3 2.3L10.6 4l.7.7L9 7l2.3 2.3-.7.7-2.3-2.3L6 10z'/><path d='M4 1l-1 1v9l1 1h9l1-1V2l-1-1H4zm0 1h9v9H4V2z'/><path d='M1 4v9l1 1h9v-1H2V4H1z'/>"
 };
 
 function icon(name, css) {
@@ -126,6 +149,9 @@ function persist() {
 }
 
 function persistNow() {
+    var fileTabs = app.open.filter(function (id) {
+        return !!app.files[id];
+    });
     var files = app.order.map(function (id) {
         var f = app.files[id];
         return { id: f.id, name: f.name, path: f.path, text: f.text, saved: f.saved, source: f.source };
@@ -133,8 +159,8 @@ function persistNow() {
     storeData(storageKey, JSON.stringify({
         version: 2,
         files: files,
-        open: app.open,
-        active: app.active,
+        open: fileTabs,
+        active: app.files[app.active] ? app.active : fileTabs[0] || null,
         nextId: app.nextId,
         folder: app.folder,
         fontSize: app.fontSize,
@@ -143,7 +169,9 @@ function persistNow() {
         sidebarWidth: app.sidebarWidth,
         panelVisible: app.panelVisible,
         panelHeight: app.panelHeight,
-        panelTab: app.panelTab
+        panelTab: app.panelTab,
+        debug: debugSettings(),
+        termHistory: terminalState.history.slice(-300)
     }));
 }
 
@@ -247,9 +275,22 @@ function ensureEditor(id) {
             }
             scheduleLint();
             persist();
+            debugSourceChanged(id);
             if (app.findOpen) {
                 refreshFindCount();
             }
+        },
+        onGlyphClick: function (line) {
+            toggleBreakpoint(id, line);
+        },
+        onGutterMenu: function (line, event) {
+            breakpointMenu(id, line, event);
+        },
+        onLinesShift: function (change) {
+            shiftBreakpoints(id, change);
+        },
+        onHover: function (info) {
+            showDebugHover(info);
         },
         onCursor: function (pos, selected) {
             byId("sb-position").textContent = "Ln " + pos.line + ", Col " + pos.column + (selected ? " (" + selected + " selected)" : "");
@@ -260,6 +301,7 @@ function ensureEditor(id) {
     editor.setValue(file.text);
     editor.show(false);
     app.editors[id] = editor;
+    refreshBreakpointGlyphs(id);
     return editor;
 }
 
@@ -278,16 +320,33 @@ function openTab(id) {
     activate(id);
 }
 
+function tabInfo(id) {
+    if (isViewId(id)) {
+        var v = viewTabs[id];
+        return { name: v.title, icon: viewTabIcon(v.kind), dirty: false, title: v.title };
+    }
+    var f = app.files[id];
+    return { name: f.name, icon: fileIcon(f.name), dirty: isDirty(f), title: f.path || f.name };
+}
+
 function activate(id) {
     app.active = id;
+    closeBreakpointWidget();
+    hideDebugHover();
     Object.keys(app.editors).forEach(function (key) {
         if (key !== id) {
             app.editors[key].show(false);
         }
     });
+    Object.keys(viewTabs).forEach(function (key) {
+        showViewTab(key, key === id);
+    });
     var hasFile = !!id && !!app.files[id];
-    byId("welcome").classList.toggle("hidden", hasFile);
+    byId("welcome").classList.toggle("hidden", hasFile || isViewId(id));
     byId("editor-title").classList.toggle("hidden", !hasFile);
+    if (isViewId(id) && app.findOpen) {
+        closeFind();
+    }
     if (hasFile) {
         var editor = ensureEditor(id);
         editor.show(true);
@@ -306,6 +365,20 @@ function activate(id) {
 }
 
 function closeTab(id, force) {
+    if (isViewId(id)) {
+        var at = app.open.indexOf(id);
+        if (at !== -1) {
+            app.open.splice(at, 1);
+        }
+        closeViewTab(id);
+        if (app.active === id) {
+            activate(app.open[Math.min(at, app.open.length - 1)] || null);
+        } else {
+            renderTabs();
+            renderExplorer();
+        }
+        return;
+    }
     var file = app.files[id];
     if (!file) {
         return;
@@ -364,10 +437,10 @@ function cycleTab(step) {
 function renderTabs() {
     var bar = byId("tabs");
     bar.innerHTML = app.open.map(function (id) {
-        var f = app.files[id];
-        var css = "tab" + (id === app.active ? " active" : "") + (isDirty(f) ? " dirty" : "");
-        return "<div class=\"" + css + "\" data-id=\"" + id + "\" title=\"" + escapeHtml(f.path || f.name) + "\">" + fileIcon(f.name) +
-            "<span class=\"tab-name\">" + escapeHtml(f.name) + "</span><span class=\"tab-close\" data-close=\"" + id + "\">" + icon("close") + "</span></div>";
+        var info = tabInfo(id);
+        var css = "tab" + (id === app.active ? " active" : "") + (info.dirty ? " dirty" : "");
+        return "<div class=\"" + css + "\" data-id=\"" + id + "\" title=\"" + escapeHtml(info.title) + "\">" + info.icon +
+            "<span class=\"tab-name\">" + escapeHtml(info.name) + "</span><span class=\"tab-close\" data-close=\"" + id + "\">" + icon("close") + "</span></div>";
     }).join("");
     var active = bar.querySelector(".tab.active");
     if (active && active.scrollIntoView) {
@@ -459,13 +532,41 @@ function setRunning(running, text) {
 function receiveOutput(message) {
     var kind = message.kind;
     var data = null;
-    if (/^(file-opened|folder-opened|file-saved|bridge-error|devices|report|audit)$/.test(kind)) {
+    if (/^(file-opened|folder-opened|file-saved|bridge-error|devices|report|audit|shell-result|shell-log|shell-cli|debug-trace|reachability|snapshots|snapshot-diff)$/.test(kind)) {
         try {
             data = JSON.parse(message.text);
         } catch (error) {
             addOutput("error", "Bad message from Packet Tracer: " + kind);
             return;
         }
+    }
+    if (/^shell-/.test(kind)) {
+        if (data.id === "debug-console") {
+            receiveConsoleShell(kind, data);
+        } else {
+            routeShellMessage(kind, data);
+        }
+        return;
+    }
+    if (kind === "debug-trace") {
+        receiveDebugTrace(data);
+        return;
+    }
+    if (kind === "reachability") {
+        receiveReachability(data);
+        return;
+    }
+    if (kind === "snapshots") {
+        app.snapshots = data;
+        renderSnapshots();
+        return;
+    }
+    if (kind === "snapshot-diff") {
+        receiveSnapshotDiff(data);
+        return;
+    }
+    if (debugState.session && (kind === "log" || kind === "result")) {
+        debugState.session.output.push(message.text);
     }
     if (kind === "file-opened") {
         openDiskFile(data.path, data.name, data.text, "disk");
@@ -480,6 +581,13 @@ function receiveOutput(message) {
     } else if (kind === "bridge-error") {
         addOutput("error", data.action + ": " + data.message);
         notify("error", data.message);
+        if (data.action === "reachability") {
+            setRunning(false, "");
+            if (viewTabs["v-reach"]) {
+                viewTabs["v-reach"].running = false;
+                renderReachability(viewTabs["v-reach"]);
+            }
+        }
     } else if (kind === "devices") {
         app.devices = data;
         renderDevices();
@@ -739,9 +847,9 @@ function renderExplorer() {
     var html = [];
     html.push(sectionHead("open", "Open Editors", ""));
     html.push("<div class=\"section-body\" data-body=\"open\">" + (app.open.length ? app.open.map(function (id) {
-        var f = app.files[id];
-        return "<div class=\"tree-row" + (id === app.active ? " selected" : "") + "\" data-open=\"" + id + "\"><span class=\"row-close\" data-close=\"" + id + "\">" + icon("close") + "</span>" + fileIcon(f.name) +
-            "<span class=\"row-name\">" + escapeHtml(f.name) + "</span>" + (isDirty(f) ? "<span class=\"dot\"></span>" : "") + "</div>";
+        var info = tabInfo(id);
+        return "<div class=\"tree-row" + (id === app.active ? " selected" : "") + "\" data-open=\"" + id + "\"><span class=\"row-close\" data-close=\"" + id + "\">" + icon("close") + "</span>" + info.icon +
+            "<span class=\"row-name\">" + escapeHtml(info.name) + "</span>" + (info.dirty ? "<span class=\"dot\"></span>" : "") + "</div>";
     }).join("") : "<div class=\"tree-empty\">No open editors</div>") + "</div>");
     html.push(sectionHead("workspace", "Workspace", "<span class=\"sec-act\" data-cmd=\"file.new\" title=\"New File (Ctrl+N)\">" + icon("newFile") + "</span>"));
     html.push("<div class=\"section-body\" data-body=\"workspace\">" + workspaceFiles.map(function (id) {
@@ -969,6 +1077,9 @@ function insertIntoEditor(text) {
 }
 
 function showView(name) {
+    if (!byId("view-" + name)) {
+        name = "explorer";
+    }
     if (app.view === name && app.sidebarVisible && arguments[1] === true) {
         app.sidebarVisible = false;
     } else {
@@ -979,6 +1090,12 @@ function showView(name) {
     if (name === "devices" && !app.devices) {
         refreshDevices();
     }
+    if (name === "devices" && !app.snapshotsLoaded) {
+        app.snapshotsLoaded = callEngine("editorSnapshot", "list");
+    }
+    if (name === "debug") {
+        renderDebugView();
+    }
     if (name === "search") {
         setTimeout(function () {
             byId("fn-search").focus();
@@ -988,10 +1105,56 @@ function showView(name) {
 }
 
 function showPanel(name) {
+    if (!byId("panel-" + name)) {
+        name = "output";
+    }
     app.panelTab = name;
     app.panelVisible = true;
     layout();
+    if (name === "terminal") {
+        if (!terminalState.list.length) {
+            createTerminal("js");
+        } else {
+            var term = activeTerminal();
+            if (term) {
+                term.scrollDown();
+                term.focus();
+            }
+        }
+    }
+    if (name === "debug") {
+        setTimeout(function () {
+            var input = byId("debug-console-input");
+            if (input && !debugState.session) {
+                input.focus();
+            }
+        }, 0);
+    }
     persist();
+}
+
+var panelActions = {
+    terminal: [["terminal.new", "add", "New Terminal (Ctrl+Shift+`)"], ["terminal.profiles", "chevronDown", "Launch Profile..."], ["terminal.kill", "trash", "Kill Terminal"]],
+    output: [["output.clear", "clear", "Clear Output"]],
+    debug: [["debug.clearConsole", "clear", "Clear Console"]],
+    checks: [["checks.clear", "clear", "Clear Reports"]],
+    problems: []
+};
+
+function renderPanelActions() {
+    var box = byId("panel-actions");
+    if (!box) {
+        return;
+    }
+    var list = panelActions[app.panelTab] || [];
+    box.innerHTML = (app.panelTab === "terminal" ? "<span class=\"pa-label\" id=\"term-title\"></span>" : "") + list.map(function (a) {
+        return "<span class=\"pa\" data-cmd=\"" + a[0] + "\" title=\"" + escapeHtml(a[2]) + "\">" + icon(a[1]) + "</span>";
+    }).join("") + (list.length ? "<span class=\"pa-sep\"></span>" : "") +
+        "<span class=\"pa\" data-cmd=\"view.panelMax\" title=\"" + (app.panelMax ? "Restore Panel Size" : "Maximize Panel Size") + "\">" + icon(app.panelMax ? "chevronDown" : "chevronUp") + "</span>" +
+        "<span class=\"pa\" data-cmd=\"view.panel\" title=\"Hide Panel (Ctrl+J)\">" + icon("close") + "</span>";
+    if (app.panelTab === "terminal") {
+        renderTerminalTabs();
+    }
 }
 
 function layout() {
@@ -1008,7 +1171,7 @@ function layout() {
     byId("sidebar").style.width = app.sidebarWidth + "px";
     byId("panel").classList.toggle("hidden", !app.panelVisible);
     byId("sash-panel").classList.toggle("hidden", !app.panelVisible);
-    byId("panel").style.height = app.panelHeight + "px";
+    byId("panel").style.height = (app.panelMax ? Math.max(120, window.innerHeight - 140) : app.panelHeight) + "px";
     var tabs = document.querySelectorAll(".panel-tab");
     for (var k = 0; k < tabs.length; k++) {
         tabs[k].classList.toggle("active", tabs[k].getAttribute("data-panel") === app.panelTab);
@@ -1017,6 +1180,7 @@ function layout() {
     for (var m = 0; m < bodies.length; m++) {
         bodies[m].classList.toggle("hidden", bodies[m].id !== "panel-" + app.panelTab);
     }
+    renderPanelActions();
     var editor = activeEditor();
     if (editor) {
         editor.render();
@@ -1034,6 +1198,10 @@ function setFontSize(size) {
 
 function runActive(selectionOnly) {
     var editor = activeEditor();
+    if (debugState.session && !selectionOnly) {
+        notify("info", "A debug session is active. Stop it with Shift+F5 first.");
+        return;
+    }
     if (!editor) {
         notify("warning", "Open a script first");
         return;
@@ -1101,7 +1269,7 @@ var commands = [
     { id: "view.explorer", title: "Show Explorer", category: "View", key: "Ctrl+Shift+E", run: function () { showView("explorer"); } },
     { id: "view.functions", title: "Show Function Reference", category: "View", key: "Ctrl+Shift+F", run: function () { showView("search"); } },
     { id: "view.snippets", title: "Show Snippets", category: "View", run: function () { showView("snippets"); } },
-    { id: "view.devices", title: "Show Devices", category: "View", key: "Ctrl+Shift+D", run: function () { showView("devices"); } },
+    { id: "view.devices", title: "Show Devices", category: "View", run: function () { showView("devices"); } },
     { id: "view.tools", title: "Show Network Tools", category: "View", key: "Ctrl+Shift+T", run: function () { showView("tools"); } },
     { id: "view.sidebar", title: "Toggle Primary Side Bar", category: "View", key: "Ctrl+B", run: function () { app.sidebarVisible = !app.sidebarVisible; layout(); persist(); } },
     { id: "view.panel", title: "Toggle Panel", category: "View", key: "Ctrl+J", run: function () { app.panelVisible = !app.panelVisible; layout(); persist(); } },
@@ -1112,8 +1280,44 @@ var commands = [
     { id: "view.zoomOut", title: "Zoom Out", category: "View", key: "Ctrl+-", run: function () { setFontSize(app.fontSize - 1); } },
     { id: "view.zoomReset", title: "Reset Zoom", category: "View", key: "Ctrl+0", run: function () { setFontSize(14); } },
     { id: "output.clear", title: "Clear Output", category: "View", run: function () { byId("panel-output").innerHTML = ""; } },
-    { id: "run.script", title: "Run Script", category: "Run", key: "F5", run: function () { runActive(false); } },
+    { id: "run.script", title: "Run Without Debugging", category: "Run", key: "Ctrl+F5", run: function () { runActive(false); } },
     { id: "run.selection", title: "Run Selection", category: "Run", key: "Ctrl+Shift+Enter", run: function () { runActive(true); } },
+    { id: "debug.start", title: "Start Debugging", category: "Debug", key: "F5", run: startDebugging },
+    { id: "debug.continue", title: "Continue", category: "Debug", key: "F5", run: debugContinue },
+    { id: "debug.stop", title: "Stop Debugging", category: "Debug", key: "Shift+F5", run: stopDebugging },
+    { id: "debug.restart", title: "Restart Debugging", category: "Debug", key: "Ctrl+Shift+F5", run: restartDebugging },
+    { id: "debug.stepOver", title: "Step Over", category: "Debug", key: "F10", run: function () { debugMove("over"); } },
+    { id: "debug.stepInto", title: "Step Into", category: "Debug", key: "F11", run: function () { debugMove("into"); } },
+    { id: "debug.stepOut", title: "Step Out", category: "Debug", key: "Shift+F11", run: function () { debugMove("out"); } },
+    { id: "debug.stepBack", title: "Step Back", category: "Debug", key: "Shift+F10", run: function () { debugMove("back"); } },
+    { id: "debug.reverse", title: "Reverse Continue", category: "Debug", run: function () { debugMove("reverse"); } },
+    { id: "debug.toggleBreakpoint", title: "Toggle Breakpoint", category: "Debug", key: "F9", run: toggleBreakpointAtCursor },
+    { id: "debug.conditional", title: "Add Conditional Breakpoint...", category: "Debug", run: function () { var f = activeFile(); var e = activeEditor(); if (f && e) { editBreakpoint(f.id, e.lineColumn().line, "condition"); } } },
+    { id: "debug.logpoint", title: "Add Logpoint...", category: "Debug", run: function () { var f = activeFile(); var e = activeEditor(); if (f && e) { editBreakpoint(f.id, e.lineColumn().line, "log"); } } },
+    { id: "debug.enableAll", title: "Enable All Breakpoints", category: "Debug", run: function () { setAllBreakpoints(true); } },
+    { id: "debug.disableAll", title: "Disable All Breakpoints", category: "Debug", run: function () { setAllBreakpoints(false); } },
+    { id: "debug.toggleActive", title: "Toggle Activate Breakpoints", category: "Debug", run: toggleBreakpointsActive },
+    { id: "debug.removeAll", title: "Remove All Breakpoints", category: "Debug", run: removeAllBreakpoints },
+    { id: "debug.addWatch", title: "Add to Watch", category: "Debug", run: function () { var e = activeEditor(); addWatch(e ? e.selectedText().trim() : ""); } },
+    { id: "debug.clearConsole", title: "Clear Console", category: "Debug", run: clearDebugConsole },
+    { id: "debug.collapse", title: "Collapse All Variables", category: "Debug", run: function () { debugState.expanded = { "scope:0": false }; renderDebugView(); } },
+    { id: "debug.removeWatches", title: "Remove All Watch Expressions", category: "Debug", run: function () { debugState.watches = []; renderDebugView(); persist(); } },
+    { id: "view.debug", title: "Show Run and Debug", category: "View", key: "Ctrl+Shift+D", run: function () { showView("debug"); } },
+    { id: "view.debugConsole", title: "Show Debug Console", category: "View", key: "Ctrl+Shift+Y", run: function () { showPanel("debug"); } },
+    { id: "view.panelMax", title: "Toggle Maximized Panel", category: "View", run: function () { app.panelMax = !app.panelMax; app.panelVisible = true; layout(); } },
+    { id: "terminal.new", title: "Create New Terminal", category: "Terminal", key: "Ctrl+Shift+`", run: function () { app.panelVisible = true; app.panelTab = "terminal"; layout(); createTerminal("js"); } },
+    { id: "terminal.toggle", title: "Toggle Terminal", category: "View", key: "Ctrl+`", run: toggleTerminal },
+    { id: "terminal.cli", title: "Create New Device CLI Terminal...", category: "Terminal", run: askCliTerminal },
+    { id: "terminal.profiles", title: "Select Terminal Profile", category: "Terminal", run: showTerminalProfiles },
+    { id: "terminal.runSelection", title: "Run Selected Text in Active Terminal", category: "Terminal", run: function () { runInTerminal(true); } },
+    { id: "terminal.runFile", title: "Run Active File in Active Terminal", category: "Terminal", run: function () { runInTerminal(false); } },
+    { id: "terminal.clear", title: "Clear Terminal", category: "Terminal", run: function () { var t = activeTerminal(); if (t) { t.clear(); } } },
+    { id: "terminal.kill", title: "Kill the Active Terminal Instance", category: "Terminal", run: function () { killTerminal(); } },
+    { id: "net.reach", title: "Reachability Matrix (Ping All)", category: "Network", run: runReachability },
+    { id: "net.snapshot", title: "Take Snapshot...", category: "Network", run: takeSnapshotUi },
+    { id: "net.compare", title: "Compare Snapshots...", category: "Network", run: compareTwoSnapshotsUi },
+    { id: "net.calc", title: "Open Network Calculator", category: "Network", run: function () { openCalculator(); } },
+    { id: "checks.clear", title: "Clear Lab Check Reports", category: "View", run: function () { app.reports = []; renderChecks(); } },
     { id: "run.audit", title: "Audit Network", category: "Network", run: function () { runCode("auditNetwork();", "Auditing the network"); } },
     { id: "run.summary", title: "Topology Summary", category: "Network", run: function () { runCode("showResult(getTopologySummary());", "Topology summary"); } },
     { id: "run.inventory", title: "IP Inventory", category: "Network", run: function () { runCode("showResult(getIpInventory());", "IP inventory"); } },
@@ -1125,10 +1329,92 @@ var commands = [
     { id: "help.about", title: "About PTForge", category: "Help", run: showAbout }
 ];
 
+calcTools.forEach(function (tool) {
+    commands.push({ id: "calc." + tool.id, title: "Network Calculator: " + tool.title, category: "Network", run: function () { openCalculator(tool.id); } });
+});
+
 var commandIndex = {};
 commands.forEach(function (c) {
     commandIndex[c.id] = c;
 });
+
+function toggleTerminal() {
+    if (app.panelVisible && app.panelTab === "terminal") {
+        var term = activeTerminal();
+        if (term && document.activeElement === term.input) {
+            app.panelVisible = false;
+            layout();
+            var editor = activeEditor();
+            if (editor) {
+                editor.focus();
+            }
+            persist();
+            return;
+        }
+    }
+    showPanel("terminal");
+}
+
+function deviceNames(filter) {
+    return ((app.devices && app.devices.devices) || []).filter(function (d) {
+        return !filter || filter(d);
+    }).map(function (d) {
+        return d.name;
+    });
+}
+
+function askCliTerminal() {
+    var names = deviceNames(function (d) { return /router|switch|multilayer|firewall|asa/i.test(d.type); });
+    showDialog({ title: "Device CLI terminal", message: names.length ? "Device name. Routers and switches: " + names.join(", ") : "Device name, for example R1", input: names[0] || "R1", buttons: ["Open", "Cancel"] }, function (choice, value) {
+        if (choice === 0 && value && value.trim()) {
+            app.panelVisible = true;
+            app.panelTab = "terminal";
+            layout();
+            createTerminal("cli", value.trim());
+        }
+    });
+}
+
+function showTerminalProfiles() {
+    var button = document.querySelector("[data-cmd=\"terminal.profiles\"]");
+    var box = button ? button.getBoundingClientRect() : { left: 200, bottom: 200 };
+    var items = [
+        { label: "JavaScript Shell", run: function () { runCommandId("terminal.new"); } },
+        { label: "Device CLI...", run: askCliTerminal }
+    ];
+    var names = deviceNames(function (d) { return /router|switch|multilayer/i.test(d.type); }).slice(0, 12);
+    if (names.length) {
+        items.push({ separator: true });
+        names.forEach(function (name) {
+            items.push({ label: name + " CLI", run: function () { app.panelVisible = true; app.panelTab = "terminal"; layout(); createTerminal("cli", name); } });
+        });
+    }
+    items.push({ separator: true });
+    items.push({ label: "Clear Terminal", run: function () { runCommandId("terminal.clear"); } });
+    showContextMenu(box.left, box.bottom + 2, items);
+}
+
+function runInTerminal(selectionOnly) {
+    var editor = activeEditor();
+    if (!editor) {
+        return;
+    }
+    var code = selectionOnly ? editor.selectedText() : editor.getValue();
+    if (selectionOnly && !code) {
+        var pos = editor.lineColumn();
+        code = editor.getValue().split("\n")[pos.line - 1] || "";
+    }
+    if (!code.trim()) {
+        return;
+    }
+    showPanel("terminal");
+    var term = activeTerminal();
+    if (term.kind !== "js" || term.busy) {
+        term = createTerminal("js");
+    }
+    term.input.value = code;
+    term.submit();
+}
 
 function runCommandId(id) {
     var c = commandIndex[id];
@@ -1185,9 +1471,11 @@ var menus = {
     File: ["file.new", "file.open", "folder.open", "-", "file.save", "file.saveAs", "file.saveAll", "-", "file.importClipboard", "file.download", "-", "file.rename", "file.close", "file.closeAll"],
     Edit: ["edit.undo", "edit.redo", "-", "edit.find", "edit.replace", "-", "edit.comment", "edit.deleteLine", "edit.copyAll"],
     Selection: ["edit.selectAll", "-", "edit.moveUp", "edit.moveDown", "edit.copyDown"],
-    View: ["view.palette", "-", "view.explorer", "view.functions", "view.snippets", "view.devices", "view.tools", "-", "view.problems", "view.output", "view.checks", "-", "view.sidebar", "view.panel", "-", "view.zoomIn", "view.zoomOut", "view.zoomReset"],
+    View: ["view.palette", "-", "view.explorer", "view.functions", "view.debug", "view.snippets", "view.devices", "view.tools", "-", "view.problems", "view.output", "view.debugConsole", "terminal.toggle", "view.checks", "-", "view.sidebar", "view.panel", "view.panelMax", "-", "view.zoomIn", "view.zoomOut", "view.zoomReset"],
     Go: ["go.file", "go.line", "go.nextProblem", "-", "go.nextTab", "go.prevTab"],
-    Run: ["run.script", "run.selection", "-", "run.audit", "run.summary", "run.inventory", "run.showAll", "run.cliScript", "-", "snippet.labcheck"],
+    Run: ["debug.start", "run.script", "debug.stop", "debug.restart", "-", "debug.stepOver", "debug.stepInto", "debug.stepOut", "debug.stepBack", "debug.continue", "-", "debug.toggleBreakpoint", "debug.conditional", "debug.logpoint", "-", "debug.enableAll", "debug.disableAll", "debug.removeAll", "-", "run.selection"],
+    Network: ["net.reach", "net.snapshot", "net.compare", "net.calc", "-", "run.audit", "run.summary", "run.inventory", "run.showAll", "run.cliScript", "-", "snippet.labcheck"],
+    Terminal: ["terminal.new", "terminal.cli", "-", "terminal.runFile", "terminal.runSelection", "-", "terminal.clear", "terminal.kill"],
     Help: ["help.keys", "help.about"]
 };
 
@@ -1363,7 +1651,9 @@ function findStep(step) {
 }
 
 var shortcutKeys = [
-    ["Ctrl+Shift+P, F1", "Command palette"], ["Ctrl+P", "Go to file"], ["Ctrl+G", "Go to line"], ["F5, Ctrl+Enter", "Run script"], ["Ctrl+Shift+Enter", "Run selection"],
+    ["Ctrl+Shift+P, F1", "Command palette"], ["Ctrl+P", "Go to file"], ["Ctrl+G", "Go to line"], ["F5", "Start debugging / continue"], ["Ctrl+F5, Ctrl+Enter", "Run without debugging"],
+    ["Shift+F5", "Stop debugging"], ["Ctrl+Shift+F5", "Restart debugging"], ["F10", "Step over"], ["F11", "Step into"], ["Shift+F11", "Step out"], ["Shift+F10", "Step back"], ["F9", "Toggle breakpoint"],
+    ["Ctrl+`", "Toggle terminal"], ["Ctrl+Shift+`", "New terminal"], ["Ctrl+Shift+Y", "Debug console"], ["Ctrl+Shift+D", "Run and Debug"], ["Ctrl+Shift+Enter", "Run selection"],
     ["Ctrl+S", "Save"], ["Ctrl+Shift+S", "Save as"], ["Ctrl+O", "Open file"], ["Ctrl+N", "New file"], ["Ctrl+W", "Close editor"], ["Ctrl+Tab", "Next editor"],
     ["Ctrl+F", "Find"], ["Ctrl+H", "Replace"], ["F3, Shift+F3", "Next / previous match"], ["Ctrl+/", "Toggle line comment"], ["Ctrl+Space", "Suggestions"],
     ["Tab, Shift+Tab", "Indent / outdent"], ["Alt+Up/Down", "Move line"], ["Shift+Alt+Up/Down", "Copy line"], ["Ctrl+Shift+K", "Delete line"], ["Ctrl+L", "Select line"],
@@ -1387,7 +1677,7 @@ function showShortcuts() {
 function showAbout() {
     showDialog({
         title: "PTForge",
-        html: "<p>Version 1.1.0</p><p>JavaScript automation for Cisco Packet Tracer. " + functionCatalog.length + " functions.</p><p>" + (inPacketTracer ? "Connected to Packet Tracer." : "Preview mode, scripts run only inside Packet Tracer.") + "</p><p class=\"muted\">github.com/r4chan842/PTForge &middot; MIT License</p>",
+        html: "<p>Version " + appVersion + "</p><p>JavaScript automation for Cisco Packet Tracer. " + functionCatalog.length + " functions.</p><p>" + (inPacketTracer ? "Connected to Packet Tracer." : "Preview mode, scripts run only inside Packet Tracer.") + "</p><p class=\"muted\">github.com/r4chan842/PTForge &middot; MIT License</p>",
         buttons: ["OK"]
     });
 }
@@ -1471,11 +1761,15 @@ function keyName(event) {
 var globalKeys = {
     "Ctrl+Shift+P": "view.palette", "F1": "view.palette", "Ctrl+P": "go.file", "Ctrl+G": "go.line", "Ctrl+N": "file.new", "Ctrl+O": "file.open",
     "Ctrl+S": "file.save", "Ctrl+Shift+S": "file.saveAs", "Ctrl+Alt+S": "file.saveAll", "Ctrl+W": "file.close", "Ctrl+Tab": "go.nextTab", "Ctrl+Shift+Tab": "go.prevTab",
-    "Ctrl+PageDown": "go.nextTab", "Ctrl+PageUp": "go.prevTab", "F5": "run.script", "Ctrl+Enter": "run.script", "Ctrl+Shift+Enter": "run.selection",
+    "Ctrl+PageDown": "go.nextTab", "Ctrl+PageUp": "go.prevTab", "F5": "debug.start", "Ctrl+F5": "run.script", "Ctrl+Enter": "run.script", "Ctrl+Shift+Enter": "run.selection",
+    "Shift+F5": "debug.stop", "Ctrl+Shift+F5": "debug.restart", "F10": "debug.stepOver", "F11": "debug.stepInto", "Shift+F11": "debug.stepOut", "Shift+F10": "debug.stepBack", "F9": "debug.toggleBreakpoint",
+    "Ctrl+`": "terminal.toggle", "Ctrl+Shift+`": "terminal.new", "Ctrl+Shift+~": "terminal.new", "Ctrl+Shift+Y": "view.debugConsole", "Ctrl+Shift+D": "view.debug",
     "Ctrl+F": "edit.find", "Ctrl+H": "edit.replace", "Ctrl+B": "view.sidebar", "Ctrl+J": "view.panel", "Ctrl+Shift+E": "view.explorer", "Ctrl+Shift+F": "view.functions",
-    "Ctrl+Shift+D": "view.devices", "Ctrl+Shift+T": "view.tools", "Ctrl+Shift+M": "view.problems", "Ctrl+Shift+U": "view.output", "Ctrl+=": "view.zoomIn",
+    "Ctrl+Shift+T": "view.tools", "Ctrl+Shift+M": "view.problems", "Ctrl+Shift+U": "view.output", "Ctrl+=": "view.zoomIn",
     "Ctrl+-": "view.zoomOut", "Ctrl+0": "view.zoomReset", "F2": "file.rename", "F8": "go.nextProblem"
 };
+
+var fieldKeys = { "Ctrl+Enter": true, "Ctrl+Shift+Enter": true, "F2": true, "Ctrl+W": true, "F9": true };
 
 function onGlobalKey(event) {
     var name = keyName(event);
@@ -1505,7 +1799,15 @@ function onGlobalKey(event) {
         event.preventDefault();
         return;
     }
+    if (event.key === "Escape" && (debugState.menu || debugState.widget)) {
+        if (debugState.menu) {
+            closeContextMenu();
+            event.preventDefault();
+            return;
+        }
+    }
     if (event.key === "Escape") {
+        hideDebugHover();
         if (app.menuOpen) {
             closeMenus();
         } else if (!byId("palette").classList.contains("hidden")) {
@@ -1520,11 +1822,21 @@ function onGlobalKey(event) {
         event.preventDefault();
         return;
     }
-    if (event.target.id === "palette-input" || (event.target.tagName === "INPUT" && !/^(Ctrl|F\d)/.test(name))) {
+    if (event.target.id === "palette-input" || (event.target.tagName === "INPUT" && !/^(Ctrl|Shift\+F\d|F\d)/.test(name))) {
         return;
     }
     var id = globalKeys[name];
     if (id === "file.rename" && event.target.tagName === "TEXTAREA") {
+        return;
+    }
+    var inField = event.target.closest && event.target.closest(".term, .dc-input-row, .vt, .bp-widget, .dv-watch-input");
+    if (inField && fieldKeys[name]) {
+        return;
+    }
+    if (id === "debug.start" && debugState.session) {
+        id = "debug.continue";
+    }
+    if (/^debug\.step/.test(id || "") && !debugState.session) {
         return;
     }
     if (id) {
@@ -1588,6 +1900,46 @@ function toggleSection(head) {
 function onClick(event) {
     var t = event.target;
     var node;
+    if (debugState.menu && !t.closest(".ctx-menu")) {
+        closeContextMenu();
+    }
+    if (debugState.widget && !t.closest(".bp-widget")) {
+        closeBreakpointWidget();
+    }
+    if (t.closest("#view-debug") && onDebugViewClick(event)) {
+        return;
+    }
+    if (t.closest("#debug-hover")) {
+        onDebugHoverClick(event);
+        return;
+    }
+    if (onSnapshotClick(event)) {
+        return;
+    }
+    if (t.closest(".vt") && onViewClick(event)) {
+        return;
+    }
+    if ((node = t.closest("[data-term-kill]"))) {
+        killTerminal(node.getAttribute("data-term-kill"));
+        return;
+    }
+    if ((node = t.closest("[data-term-tab]"))) {
+        activateTerminal(node.getAttribute("data-term-tab"));
+        return;
+    }
+    if ((node = t.closest("[data-debug-line]"))) {
+        var session = debugState.session;
+        var target = session ? session.fileId : app.active;
+        if (target && app.files[target]) {
+            activate(target);
+            app.editors[target].goToLine(Number(node.getAttribute("data-debug-line")));
+        }
+        return;
+    }
+    if ((node = t.closest("[data-calc-open]"))) {
+        openCalculator(node.getAttribute("data-calc-open"));
+        return;
+    }
     if ((node = t.closest(".menu-title"))) {
         var menu = node.parentNode;
         var wasOpen = menu.classList.contains("open");
@@ -1696,8 +2048,8 @@ function onClick(event) {
 
 function buildLayout() {
     byId("activitybar").innerHTML = [
-        ["explorer", "files", "Explorer (Ctrl+Shift+E)"], ["search", "search", "Function Reference (Ctrl+Shift+F)"], ["snippets", "snippets", "Snippets"],
-        ["devices", "devices", "Devices (Ctrl+Shift+D)"], ["tools", "tools", "Network Tools (Ctrl+Shift+T)"]
+        ["explorer", "files", "Explorer (Ctrl+Shift+E)"], ["search", "search", "Function Reference (Ctrl+Shift+F)"], ["debug", "debug", "Run and Debug (Ctrl+Shift+D)"],
+        ["snippets", "snippets", "Snippets"], ["devices", "devices", "Devices"], ["tools", "tools", "Network Tools (Ctrl+Shift+T)"]
     ].map(function (a) {
         return "<div class=\"act\" data-view=\"" + a[0] + "\" title=\"" + a[2] + "\">" + icon(a[1]) + "</div>";
     }).join("") + "<div class=\"act-grow\"></div><div class=\"act\" data-cmd=\"view.checks\" title=\"Lab Check reports\">" + icon("checks") + "</div>";
@@ -1708,11 +2060,29 @@ function buildLayout() {
         view("snippets", "Snippets", "", "<div id=\"snippet-list\"></div>") +
         view("devices", "Devices", "<span class=\"sec-act\" data-cmd=\"run.audit\" title=\"Audit Network\">" + icon("checks") + "</span><span class=\"sec-act\" id=\"dev-refresh\" title=\"Refresh\">" + icon("refresh") + "</span>",
             "<div class=\"search-box\"><input id=\"dev-search\" placeholder=\"Filter devices\" spellcheck=\"false\"><span id=\"dev-count\" class=\"count-note\"></span></div><div id=\"device-list\"></div>" +
-            "<div class=\"dev-actions\"><button class=\"btn block\" data-cmd=\"run.audit\">Audit Network</button><button class=\"btn block\" data-cmd=\"run.summary\">Topology Summary</button><button class=\"btn block\" data-cmd=\"run.showAll\">Show Command on All</button><button class=\"btn block\" data-cmd=\"run.cliScript\">Command Log to Script</button></div>") +
-        view("tools", "Network Tools", "",
-            "<div class=\"tool\"><div class=\"tool-title\">Subnet calculator</div><input id=\"calc-subnet\" value=\"192.168.10.77/26\" spellcheck=\"false\"><div id=\"calc-subnet-out\"></div></div>" +
-            "<div class=\"tool\"><div class=\"tool-title\">VLSM planner</div><input id=\"calc-vlsm-base\" value=\"192.168.1.0/24\" spellcheck=\"false\"><input id=\"calc-vlsm-list\" value=\"Sales:50, IT:20, Guest:12, WAN:2\" spellcheck=\"false\"><div id=\"calc-vlsm-out\"></div></div>" +
-            "<div class=\"tool\"><div class=\"tool-title\">Mask and wildcard</div><input id=\"calc-wild\" value=\"255.255.255.224\" spellcheck=\"false\"><div id=\"calc-wild-out\"></div></div>");
+            sectionHead("snapshots", "Snapshots", "<span class=\"sec-act\" data-cmd=\"net.snapshot\" title=\"Take Snapshot\">" + icon("snapshot") + "</span><span class=\"sec-act\" data-cmd=\"net.compare\" title=\"Compare Snapshots\">" + icon("diff") + "</span>") +
+            "<div class=\"section-body\"><div id=\"snapshot-list\"></div></div>" +
+            "<div class=\"dev-actions\"><button class=\"btn block primary\" data-cmd=\"net.reach\">Reachability Matrix</button><button class=\"btn block\" data-cmd=\"run.audit\">Audit Network</button><button class=\"btn block\" data-cmd=\"run.summary\">Topology Summary</button><button class=\"btn block\" data-cmd=\"run.showAll\">Show Command on All</button><button class=\"btn block\" data-cmd=\"run.cliScript\">Command Log to Script</button></div>") +
+        view("debug", "Run and Debug", "<span class=\"sec-act\" data-cmd=\"debug.start\" title=\"Start Debugging (F5)\">" + icon("runFill", "run-ico") + "</span><span class=\"sec-act\" data-cmd=\"debug.clearConsole\" title=\"Clear Console\">" + icon("clear") + "</span>",
+            "<div class=\"debug-start\" id=\"debug-start\"><button class=\"btn primary block\" data-cmd=\"debug.start\">Run and Debug</button>" +
+            "<p class=\"tree-hint\">Runs the active script in Packet Tracer and records every step. Then pause on breakpoints, step forward and back, and read variables. Press <kbd>F5</kbd>.</p>" +
+            "<label class=\"check-line\"><input type=\"checkbox\" id=\"debug-entry\"><span>Stop on entry</span></label>" +
+            "<label class=\"check-line\"><span>Recorded steps</span><select class=\"vt-select mini\" id=\"debug-limit\"><option value=\"1000\">1,000</option><option value=\"3000\">3,000</option><option value=\"10000\">10,000</option><option value=\"20000\">20,000</option></select></label>" +
+            "<p class=\"tree-hint\">To run code line by line, <a data-cmd=\"terminal.new\">open a terminal</a>.</p></div>" +
+            "<div id=\"debug-sections\"><div class=\"debug-progress\" id=\"debug-progress\"></div>" +
+            "<div id=\"sec-variables\">" + sectionHead("dbg-vars", "Variables", "<span class=\"sec-act\" data-cmd=\"debug.collapse\" title=\"Collapse All\">" + icon("collapseAll") + "</span>") + "<div class=\"section-body\"><div id=\"dbg-variables\" class=\"dv-tree\"></div></div></div>" +
+            sectionHead("dbg-watch", "Watch", "<span class=\"sec-act\" data-cmd=\"debug.addWatch\" title=\"Add Expression\">" + icon("add") + "</span><span class=\"sec-act\" data-cmd=\"debug.removeWatches\" title=\"Remove All Expressions\">" + icon("closeAll") + "</span>") + "<div class=\"section-body\"><div id=\"dbg-watch\" class=\"dv-tree\"></div></div>" +
+            "<div id=\"sec-stack\">" + sectionHead("dbg-stack", "Call Stack", "") + "<div class=\"section-body\"><div id=\"dbg-stack\"></div></div></div>" +
+            sectionHead("dbg-bps", "Breakpoints", "<span class=\"sec-act\" data-cmd=\"debug.toggleActive\" title=\"Toggle Activate Breakpoints\">" + icon("breakpoints") + "</span><span class=\"sec-act\" data-cmd=\"debug.removeAll\" title=\"Remove All Breakpoints\">" + icon("closeAll") + "</span>") + "<div class=\"section-body\"><div id=\"dbg-breakpoints\"></div></div></div>") +
+        view("tools", "Network Tools", "<span class=\"sec-act\" data-cmd=\"net.calc\" title=\"Open Network Calculator\">" + icon("calculator") + "</span>",
+            sectionHead("tool-calcs", "Calculators", "") + "<div class=\"section-body\">" + calcTools.map(function (tool) {
+                return "<div class=\"tree-row\" data-calc-open=\"" + tool.id + "\" title=\"" + escapeHtml(tool.info) + "\">" + icon("calculator") + "<span class=\"row-name\">" + escapeHtml(tool.title) + "</span></div>";
+            }).join("") + "</div>" +
+            sectionHead("tool-tests", "Network Tests", "") + "<div class=\"section-body\"><div class=\"tree-row\" data-cmd=\"net.reach\">" + icon("pulse") + "<span class=\"row-name\">Reachability Matrix</span></div><div class=\"tree-row\" data-cmd=\"net.snapshot\">" + icon("snapshot") + "<span class=\"row-name\">Take Snapshot</span></div><div class=\"tree-row\" data-cmd=\"net.compare\">" + icon("diff") + "<span class=\"row-name\">Compare Snapshots</span></div><div class=\"tree-row\" data-cmd=\"run.audit\">" + icon("checks") + "<span class=\"row-name\">Audit Network</span></div></div>" +
+            sectionHead("tool-quick", "Quick Calculations", "") + "<div class=\"section-body\">" +
+            "<div class=\"tool\"><div class=\"tool-title\">Subnet</div><input id=\"calc-subnet\" value=\"192.168.10.77/26\" spellcheck=\"false\"><div id=\"calc-subnet-out\"></div></div>" +
+            "<div class=\"tool\"><div class=\"tool-title\">VLSM</div><input id=\"calc-vlsm-base\" value=\"192.168.1.0/24\" spellcheck=\"false\"><input id=\"calc-vlsm-list\" value=\"Sales:50, IT:20, Guest:12, WAN:2\" spellcheck=\"false\"><div id=\"calc-vlsm-out\"></div></div>" +
+            "<div class=\"tool\"><div class=\"tool-title\">Mask and wildcard</div><input id=\"calc-wild\" value=\"255.255.255.224\" spellcheck=\"false\"><div id=\"calc-wild-out\"></div></div></div>");
 }
 
 function view(name, title, actions, body) {
@@ -1720,12 +2090,15 @@ function view(name, title, actions, body) {
 }
 
 function renderWelcome() {
+    var key = function (list) {
+        return list.split("+").map(function (k) { return "<kbd>" + k + "</kbd>"; }).join("+");
+    };
     byId("welcome").innerHTML = "<div class=\"welcome-inner\"><div class=\"wl-logo\">" + byId("brand-logo").innerHTML + "</div><h1>PTForge</h1><p class=\"wl-sub\">Automation for Cisco Packet Tracer</p>" +
         "<div class=\"wl-cols\"><div><h2>Start</h2>" +
-        "<a data-cmd=\"file.new\">" + icon("newFile") + "New File...</a><a data-cmd=\"file.open\">" + icon("openFile") + "Open File...</a><a data-cmd=\"folder.open\">" + icon("folder") + "Open Folder...</a><a data-cmd=\"snippet.labcheck\">" + icon("checks") + "New Lab Check...</a>" +
-        "<h2>Network</h2><a data-cmd=\"run.audit\">" + icon("checks") + "Audit Network</a><a data-cmd=\"view.tools\">" + icon("tools") + "Subnet and VLSM Tools</a><a data-cmd=\"view.devices\">" + icon("devices") + "Live Devices</a></div>" +
-        "<div><h2>Shortcuts</h2><div class=\"wl-keys\"><span>Show All Commands</span><span><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd></span><span>Go to File</span><span><kbd>Ctrl</kbd>+<kbd>P</kbd></span>" +
-        "<span>Run Script</span><span><kbd>F5</kbd></span><span>Find</span><span><kbd>Ctrl</kbd>+<kbd>F</kbd></span><span>Toggle Comment</span><span><kbd>Ctrl</kbd>+<kbd>/</kbd></span><span>Suggestions</span><span><kbd>Ctrl</kbd>+<kbd>Space</kbd></span></div></div></div></div>";
+        "<a data-cmd=\"file.new\">" + icon("newFile") + "New File...</a><a data-cmd=\"file.open\">" + icon("openFile") + "Open File...</a><a data-cmd=\"folder.open\">" + icon("folder") + "Open Folder...</a><a data-cmd=\"terminal.new\">" + icon("terminal") + "New Terminal</a>" +
+        "<h2>Network</h2><a data-cmd=\"net.reach\">" + icon("pulse") + "Reachability Matrix</a><a data-cmd=\"net.snapshot\">" + icon("snapshot") + "Take Snapshot</a><a data-cmd=\"net.calc\">" + icon("calculator") + "Network Calculator</a><a data-cmd=\"run.audit\">" + icon("checks") + "Audit Network</a></div>" +
+        "<div><h2>Shortcuts</h2><div class=\"wl-keys\"><span>Show All Commands</span><span>" + key("Ctrl+Shift+P") + "</span><span>Go to File</span><span>" + key("Ctrl+P") + "</span>" +
+        "<span>Start Debugging</span><span>" + key("F5") + "</span><span>Run Without Debugging</span><span>" + key("Ctrl+F5") + "</span><span>Toggle Breakpoint</span><span>" + key("F9") + "</span><span>Toggle Terminal</span><span>" + key("Ctrl+`") + "</span><span>Find</span><span>" + key("Ctrl+F") + "</span><span>Suggestions</span><span>" + key("Ctrl+Space") + "</span></div></div></div></div>";
 }
 
 function bindEvents() {
@@ -1807,7 +2180,46 @@ function bindEvents() {
             editor.render();
         }
     });
+    byId("debug-entry").addEventListener("change", function (e) {
+        debugState.stopOnEntry = e.target.checked;
+        persist();
+    });
+    byId("debug-limit").addEventListener("change", function (e) {
+        debugState.limit = Number(e.target.value) || 3000;
+        persist();
+    });
+    byId("debug-console-input").addEventListener("keydown", onDebugConsoleKey);
+    byId("debug-hover").addEventListener("mouseleave", hideDebugHover);
+    document.addEventListener("input", onViewInput);
+    document.addEventListener("keydown", function (e) {
+        if (onWatchKey(e)) {
+            e.preventDefault();
+        }
+    });
+    bindDebugToolbar();
     window.addEventListener("beforeunload", persistNow);
+}
+
+function bindDebugToolbar() {
+    var bar = byId("debug-toolbar");
+    var grip = bar.querySelector(".dt-grip");
+    grip.addEventListener("mousedown", function (event) {
+        event.preventDefault();
+        var startX = event.clientX;
+        var startLeft = bar.offsetLeft;
+        function move(e) {
+            var parent = bar.parentNode.clientWidth;
+            var left = Math.max(0, Math.min(parent - bar.offsetWidth, startLeft + e.clientX - startX));
+            bar.style.left = left + "px";
+            bar.style.transform = "none";
+        }
+        function up() {
+            document.removeEventListener("mousemove", move);
+            document.removeEventListener("mouseup", up);
+        }
+        document.addEventListener("mousemove", move);
+        document.addEventListener("mouseup", up);
+    });
 }
 
 function replaceOne(all) {
@@ -1852,6 +2264,8 @@ function restoreState(saved) {
         app.open = (state.open || []).filter(function (id) {
             return !!app.files[id];
         });
+        restoreDebugSettings(state.debug);
+        terminalState.history = Array.isArray(state.termHistory) ? state.termHistory.filter(function (h) { return typeof h === "string"; }) : [];
         return app.files[state.active] ? state.active : app.open[0] || null;
     }
     return null;
@@ -1889,6 +2303,22 @@ function initEditor() {
     runVlsmCalc();
     runWildcardCalc();
     bindEvents();
+    renderSnapshots();
+    terminalState.host = {
+        connected: function () { return inPacketTracer; },
+        engine: callEngine,
+        fileText: function (name) {
+            for (var i = 0; i < app.order.length; i++) {
+                var f = app.files[app.order[i]];
+                if (f.name === name || f.name === name + ".js") {
+                    return f.text;
+                }
+            }
+            return null;
+        },
+        saveHistory: function () { persist(); },
+        version: appVersion
+    };
     byId("sb-mode").innerHTML = inPacketTracer ? icon("devices") + "Packet Tracer" : icon("warning") + "Preview";
     byId("sb-mode").title = inPacketTracer ? "Connected to Packet Tracer" : "Not running inside Packet Tracer, scripts cannot run";
     readData(storageKey, function (saved) {
@@ -1916,5 +2346,9 @@ function finishInit(active) {
     layout();
     renderExplorer();
     activate(active);
+    renderDebugView();
+    if (app.panelVisible && app.panelTab === "terminal" && !terminalState.list.length) {
+        createTerminal("js");
+    }
     persist();
 }
