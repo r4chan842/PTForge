@@ -1,11 +1,11 @@
-cff-version: 1.2.0
+cff-version: 1.2.1
 message: "If you use PTForge in teaching or research, please cite it as below."
 title: "PTForge"
 abstract: "JavaScript automation for Cisco Packet Tracer: build, configure, verify and audit networks from scripts."
 type: software
 authors:
   - alias: r4chan842
-version: 1.2.0
+version: 1.2.1
 date-released: 2026-09-30
 license: MIT
 repository-code: "https://github.com/r4chan842/PTForge"

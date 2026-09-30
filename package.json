@@ -1,6 +1,6 @@
 {
     "name": "ptforge",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "JavaScript automation for Cisco Packet Tracer: build and configure whole networks from scripts",
     "private": true,
     "license": "MIT",

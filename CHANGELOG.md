@@ -2,6 +2,19 @@
 
 All notable changes to PTForge are listed here. The format follows [Keep a Changelog](https://keepachangelog.com) and the project uses [Semantic Versioning](https://semver.org).
 
+## [1.2.1] - 2026-09-30
+
+### Fixed
+
+- `pingAll`, `reachability`, `pingMatrix` and the terminal `.ping` no longer report every ping as 0 percent. A ping needs simulated time, and Packet Tracer only moves time forward after the script returns, so reading the result inside the same call always showed no replies. Each ping now goes through the device command line and the result is read from the `outputWritten` and `commandEnded` events of `TerminalLine`
+- The report fills in as replies arrive and the Reachability view opens when every ping has finished. The terminal that started the test prints the result table
+- When no router or switch has an address, PCs and servers are used as ping sources
+
+### Added
+
+- `stopPings()` cancels a running reachability test
+- `onDone(report)` option for `reachability` and `pingMatrix`
+
 ## [1.2.0] - 2026-09-30
 
 ### Terminal
@@ -124,6 +137,7 @@ First public release.
 - Test suite with a Packet Tracer mock: unit, integration, examples, recipes, bundle and hygiene checks
 - Documentation: guides, API reference, recipes, architecture, CCNA topic map, cheat sheets, reference tables
 
+[1.2.1]: https://github.com/r4chan842/PTForge/releases/tag/v1.2.1
 [1.2.0]: https://github.com/r4chan842/PTForge/releases/tag/v1.2.0
 [1.1.0]: https://github.com/r4chan842/PTForge/releases/tag/v1.1.0
 [1.0.0]: https://github.com/r4chan842/PTForge/releases/tag/v1.0.0
