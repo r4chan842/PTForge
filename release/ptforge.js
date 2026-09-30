@@ -4168,11 +4168,400 @@ function traceroute(deviceName, target) {
 }
 
 function pingAll(sourceDevice, targets) {
+    if (!isDefined(sourceDevice)) {
+        return reachability();
+    }
     var report = {};
     toList(targets).forEach(function (target) {
         report[target] = ping(sourceDevice, target);
     });
     return report;
+}
+
+function parsePingOutput(text) {
+    var output = String(text || "");
+    var result = { sent: 0, received: 0, percent: null, rtt: null };
+    var ios = /Success +rate +is +(\d+) +percent +\((\d+)\/(\d+)\)/i.exec(output);
+    if (ios) {
+        result.percent = Number(ios[1]);
+        result.received = Number(ios[2]);
+        result.sent = Number(ios[3]);
+        var times = /min\/avg\/max *= *(\d+)\/(\d+)\/(\d+)/i.exec(output);
+        if (times) {
+            result.rtt = { min: Number(times[1]), avg: Number(times[2]), max: Number(times[3]) };
+        }
+        return result;
+    }
+    var host = /Sent *= *(\d+), *Received *= *(\d+)/i.exec(output);
+    if (host) {
+        result.sent = Number(host[1]);
+        result.received = Number(host[2]);
+        result.percent = result.sent ? Math.round(result.received * 100 / result.sent) : 0;
+        var hostTimes = /Minimum *= *(\d+)ms, *Maximum *= *(\d+)ms, *Average *= *(\d+)ms/i.exec(output);
+        if (hostTimes) {
+            result.rtt = { min: Number(hostTimes[1]), avg: Number(hostTimes[3]), max: Number(hostTimes[2]) };
+        }
+    }
+    return result;
+}
+
+function pingState(percent) {
+    if (percent === null) {
+        return "unknown";
+    }
+    if (percent >= 100) {
+        return "ok";
+    }
+    return percent > 0 ? "partial" : "failed";
+}
+
+function resolveTarget(target) {
+    var text = String(target);
+    if (isValidIp(text)) {
+        return { label: text, ip: text };
+    }
+    var rows = getIpInventory().filter(function (row) {
+        return row.device === text;
+    });
+    if (!rows.length) {
+        throw new Error("No IPv4 address found on " + text);
+    }
+    return { label: text, ip: rows[0].ip };
+}
+
+function pingTest(source, target, count) {
+    var resolved = resolveTarget(target);
+    var device = findDevice(source);
+    var row = { source: String(source), target: resolved.label, ip: resolved.ip, state: "unknown", percent: null, sent: 0, received: 0, rtt: null, output: "" };
+    if (typeof device.enterCommand !== "function") {
+        runHostCommand(source, "ping " + (count ? "-n " + count + " " : "") + resolved.ip);
+        row.state = "sent";
+        return row;
+    }
+    var answer = runCommand(source, "ping " + resolved.ip + (count ? " repeat " + count : ""), "enable");
+    var parsed = parsePingOutput(answer.output);
+    row.output = answer.output;
+    row.percent = parsed.percent;
+    row.sent = parsed.sent;
+    row.received = parsed.received;
+    row.rtt = parsed.rtt;
+    row.state = pingState(parsed.percent);
+    return row;
+}
+
+function reachabilityReport(rows) {
+    var report = { rows: rows, total: rows.length, ok: 0, partial: 0, failed: 0, unknown: 0 };
+    rows.forEach(function (row) {
+        if (row.state === "ok" || row.state === "partial" || row.state === "failed") {
+            report[row.state]++;
+        } else {
+            report.unknown++;
+        }
+    });
+    return report;
+}
+
+function pingMatrix(sources, targets, count) {
+    var rows = [];
+    var inventory = getIpInventory();
+    toList(sources).forEach(function (source) {
+        var ownIps = inventory.filter(function (r) { return r.device === source; }).map(function (r) { return r.ip; });
+        toList(targets).forEach(function (target) {
+            try {
+                var resolved = resolveTarget(target);
+                if (String(target) === String(source) || ownIps.indexOf(resolved.ip) !== -1) {
+                    return;
+                }
+                rows.push(pingTest(source, target, count));
+            } catch (error) {
+                rows.push({ source: String(source), target: String(target), ip: "", state: "error", percent: null, sent: 0, received: 0, rtt: null, output: error.message });
+            }
+        });
+    });
+    return reachabilityReport(rows);
+}
+
+function reachability(options) {
+    var settings = options || {};
+    var inventory = getIpInventory();
+    var sources = settings.sources ? toList(settings.sources) : getDevices(iosDeviceTypes).filter(function (name) {
+        return inventory.some(function (row) {
+            return row.device === name;
+        });
+    });
+    var targets = settings.targets ? toList(settings.targets) : inventory.filter(function (row) {
+        return !/^(127\.|169\.254\.)/.test(row.ip);
+    }).map(function (row) {
+        return row.ip;
+    }).filter(function (ip, index, list) {
+        return list.indexOf(ip) === index;
+    });
+    var report = pingMatrix(sources, targets, settings.count);
+    report.sources = sources;
+    report.targets = targets;
+    editorSend("reachability", report);
+    return report;
+}
+
+var snapshotStore = {};
+var snapshotOrder = [];
+var snapshotNoise = /^(Building configuration|Current configuration|Last configuration change|NVRAM config last updated|!\s*$|\s*$|--More--)/;
+
+function configLines(text) {
+    return String(text || "").replace(/\r/g, "").split("\n").map(function (line) {
+        return line.replace(/\s+$/, "");
+    }).filter(function (line) {
+        return !snapshotNoise.test(line);
+    });
+}
+
+function diffLines(before, after) {
+    var a = toList(before);
+    var b = toList(after);
+    var start = 0;
+    while (start < a.length && start < b.length && a[start] === b[start]) {
+        start++;
+    }
+    var endA = a.length;
+    var endB = b.length;
+    while (endA > start && endB > start && a[endA - 1] === b[endB - 1]) {
+        endA--;
+        endB--;
+    }
+    var midA = a.slice(start, endA);
+    var midB = b.slice(start, endB);
+    var result = [];
+    var i;
+    for (i = 0; i < start; i++) {
+        result.push({ op: " ", text: a[i] });
+    }
+    if (midA.length * midB.length > 4000000) {
+        midA.forEach(function (line) { result.push({ op: "-", text: line }); });
+        midB.forEach(function (line) { result.push({ op: "+", text: line }); });
+    } else {
+        var table = [];
+        for (i = 0; i <= midA.length; i++) {
+            var row = [];
+            for (var k = 0; k <= midB.length; k++) {
+                row.push(0);
+            }
+            table.push(row);
+        }
+        for (i = midA.length - 1; i >= 0; i--) {
+            for (var j = midB.length - 1; j >= 0; j--) {
+                table[i][j] = midA[i] === midB[j] ? table[i + 1][j + 1] + 1 : Math.max(table[i + 1][j], table[i][j + 1]);
+            }
+        }
+        var x = 0;
+        var y = 0;
+        while (x < midA.length && y < midB.length) {
+            if (midA[x] === midB[y]) {
+                result.push({ op: " ", text: midA[x] });
+                x++;
+                y++;
+            } else if (table[x + 1][y] >= table[x][y + 1]) {
+                result.push({ op: "-", text: midA[x] });
+                x++;
+            } else {
+                result.push({ op: "+", text: midB[y] });
+                y++;
+            }
+        }
+        for (; x < midA.length; x++) {
+            result.push({ op: "-", text: midA[x] });
+        }
+        for (; y < midB.length; y++) {
+            result.push({ op: "+", text: midB[y] });
+        }
+    }
+    for (i = endA; i < a.length; i++) {
+        result.push({ op: " ", text: a[i] });
+    }
+    return result;
+}
+
+function captureState() {
+    var devices = [];
+    for (var i = 0; i < network().getDeviceCount(); i++) {
+        var device = network().getDeviceAt(i);
+        var name = String(device.getName());
+        var ports = [];
+        for (var j = 0; j < device.getPortCount(); j++) {
+            var info = describePort(device.getPortAt(j));
+            ports.push({ name: info.name, ip: isAssigned(info.ip) ? info.ip + "/" + maskToCidr(info.mask) : "", up: info.up, peer: info.connectedTo });
+        }
+        var config = "";
+        if (isIosDevice(device)) {
+            try {
+                config = getRunningConfig(name);
+            } catch (error) {
+                config = "";
+            }
+        }
+        devices.push({
+            name: name,
+            model: String(callIfExists(device, "getModel", "")),
+            type: deviceTypeName(device.getType()),
+            power: callIfExists(device, "getPower", true) !== false,
+            ports: ports,
+            config: configLines(config)
+        });
+    }
+    var links = getLinks().filter(function (link) {
+        return link.from;
+    }).map(function (link) {
+        var ends = [link.from.device + " " + link.from.port, link.to.device + " " + link.to.port].sort();
+        return ends[0] + " <-> " + ends[1];
+    }).sort();
+    return { devices: devices, links: links };
+}
+
+function snapshotSummary(snapshot) {
+    return { name: snapshot.name, time: snapshot.time, devices: snapshot.state.devices.length, links: snapshot.state.links.length };
+}
+
+function takeSnapshot(name) {
+    var label = name ? String(name) : "snapshot-" + (snapshotOrder.length + 1);
+    if (!snapshotStore[label]) {
+        snapshotOrder.push(label);
+    }
+    snapshotStore[label] = { name: label, time: new Date().toISOString(), state: captureState() };
+    editorSend("snapshots", getSnapshots());
+    return label;
+}
+
+function getSnapshots() {
+    return snapshotOrder.map(function (name) {
+        return snapshotSummary(snapshotStore[name]);
+    });
+}
+
+function getSnapshot(name) {
+    var snapshot = snapshotStore[name];
+    if (!snapshot) {
+        throw new Error("Unknown snapshot: " + name + ". Existing: " + (snapshotOrder.join(", ") || "none"));
+    }
+    return snapshot;
+}
+
+function deleteSnapshot(name) {
+    getSnapshot(name);
+    delete snapshotStore[name];
+    snapshotOrder = snapshotOrder.filter(function (item) {
+        return item !== name;
+    });
+    editorSend("snapshots", getSnapshots());
+    return true;
+}
+
+function byName(list) {
+    var map = {};
+    list.forEach(function (item) {
+        map[item.name] = item;
+    });
+    return map;
+}
+
+function compareStates(before, after) {
+    var oldDevices = byName(before.devices);
+    var newDevices = byName(after.devices);
+    var result = {
+        devicesAdded: [],
+        devicesRemoved: [],
+        linksAdded: [],
+        linksRemoved: [],
+        powerChanges: [],
+        addressChanges: [],
+        portChanges: [],
+        configChanges: []
+    };
+    after.devices.forEach(function (device) {
+        if (!oldDevices[device.name]) {
+            result.devicesAdded.push(device.name);
+        }
+    });
+    before.devices.forEach(function (device) {
+        var next = newDevices[device.name];
+        if (!next) {
+            result.devicesRemoved.push(device.name);
+            return;
+        }
+        if (device.power !== next.power) {
+            result.powerChanges.push({ device: device.name, before: device.power, after: next.power });
+        }
+        var nextPorts = byName(next.ports);
+        device.ports.forEach(function (port) {
+            var later = nextPorts[port.name];
+            if (!later) {
+                return;
+            }
+            if (port.ip !== later.ip) {
+                result.addressChanges.push({ device: device.name, port: port.name, before: port.ip, after: later.ip });
+            }
+            if (port.up !== later.up) {
+                result.portChanges.push({ device: device.name, port: port.name, before: port.up ? "up" : "down", after: later.up ? "up" : "down" });
+            }
+        });
+        var lines = diffLines(device.config, next.config);
+        var added = lines.filter(function (l) { return l.op === "+"; }).map(function (l) { return l.text; });
+        var removed = lines.filter(function (l) { return l.op === "-"; }).map(function (l) { return l.text; });
+        if (added.length || removed.length) {
+            result.configChanges.push({ device: device.name, added: added, removed: removed, diff: lines });
+        }
+    });
+    var oldLinks = {};
+    var newLinks = {};
+    before.links.forEach(function (l) { oldLinks[l] = true; });
+    after.links.forEach(function (l) {
+        newLinks[l] = true;
+        if (!oldLinks[l]) {
+            result.linksAdded.push(l);
+        }
+    });
+    before.links.forEach(function (l) {
+        if (!newLinks[l]) {
+            result.linksRemoved.push(l);
+        }
+    });
+    result.changes = result.devicesAdded.length + result.devicesRemoved.length + result.linksAdded.length + result.linksRemoved.length +
+        result.powerChanges.length + result.addressChanges.length + result.portChanges.length + result.configChanges.length;
+    return result;
+}
+
+function compareSnapshots(from, to) {
+    var before = getSnapshot(from);
+    var after = to ? getSnapshot(to) : { name: "current", time: new Date().toISOString(), state: captureState() };
+    var result = compareStates(before.state, after.state);
+    result.from = before.name;
+    result.to = after.name;
+    return result;
+}
+
+function showSnapshotDiff(from, to) {
+    var result = compareSnapshots(from, to);
+    if (!editorSend("snapshot-diff", result)) {
+        showMessage(result.changes + " changes between " + result.from + " and " + result.to);
+    }
+    return result;
+}
+
+function saveSnapshot(name, path) {
+    writeTextFile(path, JSON.stringify(getSnapshot(name), null, 2));
+    return path;
+}
+
+function loadSnapshot(path, name) {
+    var data = JSON.parse(readTextFile(path));
+    if (!data || !data.state || !data.state.devices) {
+        throw new Error("Not a PTForge snapshot: " + path);
+    }
+    var label = name ? String(name) : String(data.name || baseName(path).replace(/\.json$/i, ""));
+    if (!snapshotStore[label]) {
+        snapshotOrder.push(label);
+    }
+    snapshotStore[label] = { name: label, time: String(data.time || ""), state: data.state };
+    editorSend("snapshots", getSnapshots());
+    return label;
 }
 
 var eventHandlers = [];
@@ -4303,6 +4692,9 @@ function showMessage(text) {
 function showResult(value) {
     var text = formatValue(value);
     console.log(text);
+    if (shellOutput("result", text)) {
+        return value;
+    }
     if (!notifyEditor("result", text)) {
         showMessage(text);
     }
@@ -4312,7 +4704,9 @@ function showResult(value) {
 function log(value) {
     var text = formatValue(value);
     console.log(text);
-    notifyEditor("log", text);
+    if (!shellOutput("log", text)) {
+        notifyEditor("log", text);
+    }
     return value;
 }
 
@@ -4462,6 +4856,564 @@ function editorDevices() {
         editorSend("devices", { devices: list, links: network().getLinkCount() });
         return true;
     });
+}
+
+function editorSnapshot(encodedAction, encodedFirst, encodedSecond) {
+    var action = decodeArgument(encodedAction);
+    var first = decodeArgument(encodedFirst || "");
+    var second = decodeArgument(encodedSecond || "");
+    return guardBridge("snapshot", function () {
+        if (action === "take") {
+            return takeSnapshot(first || undefined);
+        }
+        if (action === "delete") {
+            return deleteSnapshot(first);
+        }
+        if (action === "diff") {
+            showSnapshotDiff(first, second || undefined);
+            return true;
+        }
+        editorSend("snapshots", getSnapshots());
+        return true;
+    });
+}
+
+function editorReachability() {
+    return guardBridge("reachability", function () {
+        reachability();
+        return true;
+    });
+}
+
+var shellSessionId = "";
+var shellInspectDepth = 2;
+var shellMaxItems = 100;
+
+function shellQuote(text) {
+    var body = String(text).replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/\r/g, "\\r").replace(/\t/g, "\\t");
+    return "'" + body.replace(/'/g, "\\'") + "'";
+}
+
+function shellKey(key) {
+    return /^[A-Za-z_$][\w$]*$/.test(key) ? key : shellQuote(key);
+}
+
+function shellFunctionLabel(value) {
+    var name = "";
+    try {
+        name = value.name || "";
+    } catch (error) {
+        name = "";
+    }
+    return name ? "[Function: " + name + "]" : "[Function (anonymous)]";
+}
+
+function readProperty(target, key) {
+    var descriptor = null;
+    try {
+        descriptor = Object.getOwnPropertyDescriptor(target, key);
+    } catch (error) {
+        descriptor = null;
+    }
+    if (descriptor && typeof descriptor.get === "function") {
+        return { getter: true };
+    }
+    return { value: descriptor ? descriptor.value : target[key] };
+}
+
+function shellObjectKeys(value) {
+    try {
+        return Object.keys(value);
+    } catch (error) {
+        return [];
+    }
+}
+
+function shellJoin(open, parts, close, indent) {
+    if (!parts.length) {
+        return open + close;
+    }
+    var single = open + " " + parts.join(", ") + " " + close;
+    if (single.length <= 76 && single.indexOf("\n") === -1) {
+        return single;
+    }
+    var pad = new Array(indent + 2).join("  ");
+    var end = new Array(indent + 1).join("  ");
+    return open + "\n" + pad + parts.join(",\n" + pad) + "\n" + end + close;
+}
+
+function inspectValue(value, depth, seen, indent) {
+    var level = isDefined(depth) ? depth : 0;
+    var stack = seen || [];
+    var pad = indent || 0;
+    if (value === null) {
+        return "null";
+    }
+    if (value === undefined) {
+        return "undefined";
+    }
+    var kind = typeof value;
+    if (kind === "string") {
+        return shellQuote(value);
+    }
+    if (kind === "number" || kind === "boolean") {
+        return value === 0 && 1 / value < 0 ? "-0" : String(value);
+    }
+    if (kind === "function") {
+        return shellFunctionLabel(value);
+    }
+    if (kind !== "object") {
+        return String(value);
+    }
+    if (stack.indexOf(value) !== -1) {
+        return "[Circular]";
+    }
+    if (value instanceof Date) {
+        return isNaN(value.getTime()) ? "Invalid Date" : value.toISOString();
+    }
+    if (value instanceof RegExp) {
+        return String(value);
+    }
+    if (value instanceof Error) {
+        return (value.name || "Error") + ": " + value.message;
+    }
+    var isArray = Array.isArray(value);
+    if (level > shellInspectDepth) {
+        return isArray ? "[Array]" : "[Object]";
+    }
+    var inner = stack.concat([value]);
+    var parts = [];
+    if (isArray) {
+        var shown = Math.min(value.length, shellMaxItems);
+        for (var i = 0; i < shown; i++) {
+            parts.push(inspectValue(value[i], level + 1, inner, pad + 1));
+        }
+        if (value.length > shown) {
+            parts.push("... " + (value.length - shown) + " more items");
+        }
+        return shellJoin("[", parts, "]", pad);
+    }
+    var keys = shellObjectKeys(value);
+    keys.slice(0, shellMaxItems).forEach(function (key) {
+        var item;
+        try {
+            var read = readProperty(value, key);
+            item = read.getter ? "[Getter]" : inspectValue(read.value, level + 1, inner, pad + 1);
+        } catch (error) {
+            item = "[Unreadable]";
+        }
+        parts.push(shellKey(key) + ": " + item);
+    });
+    if (keys.length > shellMaxItems) {
+        parts.push("... " + (keys.length - shellMaxItems) + " more properties");
+    }
+    if (!keys.length && typeof value.getClassName === "function") {
+        try {
+            return "[" + value.getClassName() + "]";
+        } catch (error) {
+            return "[Object]";
+        }
+    }
+    return shellJoin("{", parts, "}", pad);
+}
+
+function shellErrorText(error) {
+    if (error && error.message) {
+        var line = error.lineNumber ? " (line " + error.lineNumber + ")" : "";
+        return (error.name || "Error") + ": " + error.message + line;
+    }
+    return "Uncaught " + inspectValue(error);
+}
+
+function shellGlobalEval(code) {
+    var indirect = eval;
+    return indirect(code);
+}
+
+function shellEval(encodedId, encodedCode) {
+    var id = decodeArgument(encodedId);
+    var code = decodeArgument(encodedCode);
+    var started = new Date().getTime();
+    shellSessionId = id;
+    try {
+        var value = shellGlobalEval(code);
+        var raw = typeof value === "string" && value.indexOf("\n") !== -1;
+        editorSend("shell-result", { id: id, ok: true, type: raw ? "text" : value === null ? "null" : typeof value, text: raw ? value : inspectValue(value), ms: new Date().getTime() - started });
+        return true;
+    } catch (error) {
+        editorSend("shell-result", { id: id, ok: false, text: shellErrorText(error), ms: new Date().getTime() - started });
+        return false;
+    } finally {
+        shellSessionId = "";
+    }
+}
+
+function shellOutput(kind, text) {
+    if (!shellSessionId) {
+        return false;
+    }
+    return editorSend("shell-log", { id: shellSessionId, kind: kind, text: String(text) });
+}
+
+function shellDeviceKind(device) {
+    if (typeof device.enterCommand === "function") {
+        return "ios";
+    }
+    if (typeof device.getCommandPrompt === "function") {
+        return "host";
+    }
+    return "";
+}
+
+function shellAttach(encodedId, encodedDevice) {
+    var id = decodeArgument(encodedId);
+    var name = decodeArgument(encodedDevice);
+    try {
+        var device = findDevice(name);
+        var kind = shellDeviceKind(device);
+        if (!kind) {
+            throw new Error(name + " has no command line");
+        }
+        if (kind === "ios") {
+            skipBootIfIos(device);
+        }
+        editorSend("shell-cli", { id: id, device: String(device.getName()), kind: kind, attached: true, output: "", status: "ok", prompt: kind === "ios" ? getPrompt(name) : "C:\\>" });
+        return true;
+    } catch (error) {
+        editorSend("shell-cli", { id: id, device: name, attached: false, output: "", status: "error", error: shellErrorText(error) });
+        return false;
+    }
+}
+
+function shellCli(encodedId, encodedDevice, encodedCommand) {
+    var id = decodeArgument(encodedId);
+    var name = decodeArgument(encodedDevice);
+    var command = decodeArgument(encodedCommand);
+    try {
+        var device = findDevice(name);
+        if (shellDeviceKind(device) === "host") {
+            runHostCommand(name, command);
+            editorSend("shell-cli", { id: id, device: name, kind: "host", output: "", status: "sent", prompt: "C:\\>" });
+            return true;
+        }
+        var result = runCommand(name, command, "");
+        editorSend("shell-cli", { id: id, device: name, kind: "ios", output: result.output, status: result.status, prompt: getPrompt(name) });
+        return true;
+    } catch (error) {
+        editorSend("shell-cli", { id: id, device: name, output: "", status: "error", error: shellErrorText(error) });
+        return false;
+    }
+}
+
+var debugSession = null;
+var debugPreviewItems = 50;
+var debugPreviewDepth = 2;
+var debugTextLimit = 300;
+
+function debugShortText(text) {
+    var value = String(text);
+    return value.length > debugTextLimit ? value.substring(0, debugTextLimit) + "…" : value;
+}
+
+function debugFunctionLabel(value) {
+    var source = "";
+    try {
+        source = Function.prototype.toString.call(value);
+    } catch (error) {
+        source = "";
+    }
+    var match = /^[^(]*\(([^)]*)\)/.exec(source);
+    var name = "";
+    try {
+        name = value.name || "";
+    } catch (error) {
+        name = "";
+    }
+    return "ƒ " + name + "(" + (match ? match[1].replace(/\s+/g, " ").trim() : "") + ")";
+}
+
+function debugSummary(value) {
+    if (Array.isArray(value)) {
+        return "Array(" + value.length + ")";
+    }
+    var keys = shellObjectKeys(value);
+    var parts = keys.slice(0, 4).map(function (key) {
+        var read = readProperty(value, key);
+        var item = read.value;
+        var text;
+        if (read.getter) {
+            text = "(…)";
+        } else if (item === null || typeof item !== "object") {
+            text = typeof item === "string" ? shellQuote(debugShortText(item).substring(0, 24)) : typeof item === "function" ? "ƒ" : String(item);
+        } else {
+            text = Array.isArray(item) ? "Array(" + item.length + ")" : "{…}";
+        }
+        return shellKey(key) + ": " + text;
+    });
+    return "{" + parts.join(", ") + (keys.length > 4 ? ", …" : "") + "}";
+}
+
+function debugPreview(value, depth) {
+    var level = depth || 0;
+    if (value === null) {
+        return { t: "null", d: "null" };
+    }
+    if (value === undefined) {
+        return { t: "undefined", d: "undefined" };
+    }
+    var kind = typeof value;
+    if (kind === "string") {
+        return { t: "string", d: shellQuote(debugShortText(value)) };
+    }
+    if (kind === "number" || kind === "boolean") {
+        return { t: kind, d: String(value) };
+    }
+    if (kind === "function") {
+        return { t: "function", d: debugFunctionLabel(value) };
+    }
+    if (kind !== "object") {
+        return { t: kind, d: String(value) };
+    }
+    if (value instanceof Date) {
+        return { t: "date", d: isNaN(value.getTime()) ? "Invalid Date" : value.toISOString() };
+    }
+    if (value instanceof RegExp) {
+        return { t: "regexp", d: String(value) };
+    }
+    if (value instanceof Error) {
+        return { t: "error", d: (value.name || "Error") + ": " + value.message };
+    }
+    var result = { t: Array.isArray(value) ? "array" : "object", d: debugSummary(value) };
+    if (level < debugPreviewDepth) {
+        var keys = Array.isArray(value) ? value.map(function (item, index) { return String(index); }) : shellObjectKeys(value);
+        result.c = keys.slice(0, debugPreviewItems).map(function (key) {
+            var child;
+            try {
+                var read = readProperty(value, key);
+                child = read.getter ? { t: "getter", d: "(…)" } : debugPreview(read.value, level + 1);
+            } catch (error) {
+                child = { t: "error", d: "<unreadable>" };
+            }
+            return [key, child];
+        });
+        if (keys.length > debugPreviewItems) {
+            result.more = keys.length - debugPreviewItems;
+        }
+        if (Array.isArray(value)) {
+            result.c.push(["length", { t: "number", d: String(value.length) }]);
+        }
+    }
+    return result;
+}
+
+function debugPeek(peek, expression) {
+    try {
+        return { ok: true, value: peek(expression) };
+    } catch (error) {
+        return { ok: false, error: error };
+    }
+}
+
+function debugReadScopes(step, peek) {
+    return (step.scopes || []).map(function (scope) {
+        return {
+            name: scope.name,
+            vars: scope.names.map(function (name) {
+                var read = debugPeek(peek, name);
+                if (!read.ok) {
+                    return [name, { t: "unavailable", d: /before initialization|not initialized|TDZ/i.test(String(read.error && read.error.message)) ? "<uninitialized>" : "<unavailable>" }];
+                }
+                return [name, debugPreview(read.value, 0)];
+            })
+        };
+    });
+}
+
+function debugHitMatches(rule, count) {
+    var text = String(rule || "").replace(/\s+/g, "");
+    if (!text) {
+        return true;
+    }
+    var match = /^(>=|<=|==|>|<|%)?(\d+)$/.exec(text);
+    if (!match) {
+        return true;
+    }
+    var target = Number(match[2]);
+    switch (match[1]) {
+        case ">=": return count >= target;
+        case "<=": return count <= target;
+        case ">": return count > target;
+        case "<": return count < target;
+        case "%": return target > 0 && count % target === 0;
+        default: return count === target;
+    }
+}
+
+function debugInterpolate(message, peek) {
+    return String(message).replace(/\{([^}]+)\}/g, function (whole, expression) {
+        var read = debugPeek(peek, expression);
+        if (!read.ok) {
+            return "<" + (read.error && read.error.message ? read.error.message : "error") + ">";
+        }
+        return typeof read.value === "string" ? read.value : inspectValue(read.value);
+    });
+}
+
+function debugStackCopy(session) {
+    return session.stack.map(function (frame) {
+        return [frame.fid, frame.line];
+    });
+}
+
+function debugRecord(session, id, peek, reason, extra, stack) {
+    var step = session.config.steps[id] || { line: 0, scopes: [] };
+    var frames = stack || debugStackCopy(session);
+    var entry = {
+        id: id,
+        n: session.count,
+        depth: frames.length,
+        top: session.topLine,
+        stack: frames,
+        scopes: debugReadScopes(step, peek),
+        watches: session.config.watches.map(function (expression) {
+            var read = debugPeek(peek, expression);
+            return read.ok ? debugPreview(read.value, 0) : { t: "error", d: read.error && read.error.message ? read.error.message : String(read.error) };
+        })
+    };
+    if (reason) {
+        entry.reason = reason;
+    }
+    if (extra) {
+        entry.message = extra;
+    }
+    session.trace.push(entry);
+}
+
+var debugRuntime = {
+    s: function (id, peek) {
+        var session = debugSession;
+        if (!session || session.busy) {
+            return;
+        }
+        session.count++;
+        var step = session.config.steps[id] || { line: 0 };
+        if (session.stack.length) {
+            session.stack[session.stack.length - 1].line = step.line;
+        } else {
+            session.topLine = step.line;
+        }
+        session.last = id;
+        session.lastPeek = peek;
+        session.lastStack = debugStackCopy(session);
+        var reason = "";
+        var message = "";
+        var point = session.config.breakpoints[id];
+        if (point) {
+            session.hits[id] = (session.hits[id] || 0) + 1;
+            var passes = true;
+            if (point.condition) {
+                session.busy = true;
+                var read = debugPeek(peek, point.condition);
+                session.busy = false;
+                passes = read.ok ? Boolean(read.value) : true;
+                if (!read.ok) {
+                    message = "Condition failed: " + (read.error && read.error.message ? read.error.message : String(read.error));
+                }
+            }
+            passes = passes && debugHitMatches(point.hit, session.hits[id]);
+            if (passes && point.log) {
+                session.busy = true;
+                try {
+                    session.logs.push({ n: session.count, line: step.line, text: debugInterpolate(point.log, peek) });
+                } finally {
+                    session.busy = false;
+                }
+            } else if (passes) {
+                reason = "breakpoint";
+            }
+        }
+        var room = session.trace.length < session.config.limit;
+        var extraRoom = session.trace.length < session.config.limit + 500;
+        if (room || (reason && extraRoom)) {
+            session.busy = true;
+            try {
+                debugRecord(session, id, peek, reason, message);
+            } finally {
+                session.busy = false;
+            }
+        } else {
+            session.truncated = true;
+        }
+    },
+    e: function (fid) {
+        var session = debugSession;
+        if (!session || session.busy) {
+            return;
+        }
+        var fn = session.config.functions[fid] || { line: 0 };
+        session.stack.push({ fid: fid, line: fn.line });
+        if (session.stack.length > 2000) {
+            throw new RangeError("Maximum call stack size exceeded");
+        }
+    },
+    x: function () {
+        if (debugSession && !debugSession.busy) {
+            debugSession.stack.pop();
+        }
+    }
+};
+
+function debugParseConfig(text) {
+    var config = JSON.parse(text);
+    config.steps = config.steps || [];
+    config.functions = config.functions || [];
+    config.breakpoints = config.breakpoints || {};
+    config.watches = config.watches || [];
+    config.limit = Math.max(50, Math.min(20000, Number(config.limit) || 3000));
+    return config;
+}
+
+function debugRun(encodedCode, encodedConfig) {
+    var code = decodeArgument(encodedCode);
+    var config;
+    try {
+        config = debugParseConfig(decodeArgument(encodedConfig));
+    } catch (error) {
+        editorSend("debug-trace", { ok: false, phase: "config", error: { name: "Error", message: "Bad debug configuration" }, trace: [], logs: [] });
+        return false;
+    }
+    var compiled;
+    try {
+        compiled = new Function("__dbg", code);
+    } catch (error) {
+        editorSend("debug-trace", { ok: false, phase: "compile", error: { name: error.name || "SyntaxError", message: error.message || String(error) }, trace: [], logs: [] });
+        return false;
+    }
+    debugSession = { config: config, trace: [], stack: [], hits: {}, logs: [], count: 0, last: -1, truncated: false, topLine: 0 };
+    var session = debugSession;
+    var started = new Date().getTime();
+    var failure = null;
+    try {
+        compiled(debugRuntime);
+    } catch (error) {
+        failure = { name: error && error.name ? error.name : "Error", message: error && error.message ? error.message : inspectValue(error) };
+        if (session.lastPeek) {
+            debugRecord(session, session.last, session.lastPeek, "exception", failure.name + ": " + failure.message, session.lastStack);
+        }
+    }
+    debugSession = null;
+    editorSend("debug-trace", {
+        ok: !failure,
+        phase: "run",
+        error: failure,
+        errorStep: failure ? session.last : -1,
+        trace: session.trace,
+        logs: session.logs,
+        steps: session.count,
+        truncated: session.truncated,
+        ms: new Date().getTime() - started
+    });
+    return !failure;
 }
 
 function EditorWindow() {
