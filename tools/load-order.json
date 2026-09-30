@@ -66,9 +66,13 @@
         "src/api/audit/audit.js",
         "src/api/checks/lab-check.js",
         "src/api/simulation/simulation.js",
+        "src/api/simulation/reachability.js",
+        "src/api/snapshot/snapshot.js",
         "src/api/events/events.js",
         "src/core/runner.js",
         "src/core/bridge.js",
+        "src/core/shell.js",
+        "src/core/debugger.js",
         "src/core/window.js",
         "src/core/main.js"
     ],

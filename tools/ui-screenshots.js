@@ -2,6 +2,8 @@
 
 const path = require("path");
 const { chromium } = require(process.env.PLAYWRIGHT_PATH || "playwright");
+const { initScript } = require("./ui-harness");
+const { labSetup } = require("./ui-lab");
 
 const root = path.join(__dirname, "..");
 const page = "file://" + path.join(root, "src", "ui", "index.html");
@@ -53,6 +55,83 @@ const devices = { links: 5, devices: [
     { name: "PC1", type: "pc", model: "PC-PT", ports: [{ name: "FastEthernet0", ip: "192.168.10.11/24", up: true }] },
     { name: "PC2", type: "pc", model: "PC-PT", ports: [{ name: "FastEthernet0", ip: "192.168.20.11/24", up: true }] },
     { name: "SRV", type: "server", model: "Server-PT", ports: [{ name: "FastEthernet0", ip: "192.168.10.10/24", up: true }] }] };
+
+const debugSample = [
+    "// Count router ports and find hosts without a gateway",
+    "var routers = [\"R1\", \"R2\"];",
+    "var plan = { network: \"10.0.0.0/24\", gateway: \"10.0.0.1\" };",
+    "",
+    "function portCount(name) {",
+    "    var info = getDeviceInfo(name);",
+    "    return info.ports.length;",
+    "}",
+    "",
+    "var total = 0;",
+    "for (var i = 0; i < routers.length; i++) {",
+    "    total += portCount(routers[i]);",
+    "}",
+    "log(\"ports on routers: \" + total);",
+    ""
+].join("\n");
+
+async function workbenchShots(browser) {
+    const p = await browser.newPage({ viewport: { width: 1360, height: 820 }, deviceScaleFactor: 1.5 });
+    await p.addInitScript(initScript(labSetup));
+    await p.goto(page);
+    await p.waitForTimeout(600);
+    await p.evaluate((code) => { activeFile().name = "ports.js"; renderTabs(); renderExplorer(); activate(app.active); const e = activeEditor(); e.setValue(code); e.onInput({}); }, debugSample);
+
+    await p.keyboard.press("Control+Backquote");
+    await p.waitForTimeout(300);
+    const say = async (text) => { await p.locator(".term:visible .term-input").fill(text); await p.keyboard.press("Enter"); await p.waitForTimeout(250); };
+    await say("getDevices().length");
+    await say("var r1 = getDeviceInfo(\"R1\")");
+    await say("r1.ports.map(function (p) { return p.name + \" \" + (p.ip || \"-\"); })");
+    await say(".calc 10.0.12.1/30");
+    await say("pingAll ? \"ready\" : \"missing\"");
+    await p.locator(".term:visible .term-input").fill("getDeviceIn");
+    await p.evaluate(() => { app.panelHeight = 430; layout(); });
+    await p.screenshot({ path: out("terminal.png") });
+    await p.locator(".term:visible .term-input").fill("");
+
+    await p.evaluate(() => { app.panelHeight = 230; layout(); toggleBreakpoint(app.active, 6); toggleBreakpoint(app.active, 12); addWatch("total + 1"); addWatch("routers.length"); });
+    await p.keyboard.press("F5");
+    await p.waitForTimeout(900);
+    await p.keyboard.press("F5");
+    await p.waitForTimeout(200);
+    await p.evaluate(() => { debugState.expanded["scope:0/info"] = true; renderDebugView(); });
+    await p.locator("#debug-console-input").fill("routers.join(\" + \")");
+    await p.keyboard.press("Enter");
+    await p.waitForTimeout(200);
+    await p.screenshot({ path: out("debugger.png") });
+    await p.keyboard.press("Shift+F5");
+    await p.waitForTimeout(200);
+
+    await p.evaluate(() => openCalculator("ipv4"));
+    await p.waitForTimeout(300);
+    await p.locator(".calc-page .vt-input").first().fill("172.16.35.9/19");
+    await p.waitForTimeout(200);
+    await p.screenshot({ path: out("calculator.png") });
+    await p.click("[data-calc-tool=\"vlsm\"]");
+    await p.waitForTimeout(250);
+    await p.screenshot({ path: out("vlsm.png") });
+
+    await p.evaluate(() => runCommandId("net.reach"));
+    await p.waitForTimeout(1300);
+    await p.screenshot({ path: out("reachability.png") });
+
+    await p.evaluate(() => callEngine("editorSnapshot", "take", "before"));
+    await p.waitForTimeout(300);
+    await p.evaluate(() => {
+        window.__engine.eval("labConfigs.R2 = labConfigs.R2.replace('end', 'interface GigabitEthernet0/0\\n ip address 192.168.5.1 255.255.255.0\\n no shutdown\\nend'); world.devices.R2.ports.filter(function (x) { return x.name === 'GigabitEthernet0/0'; })[0].ip = '192.168.5.1'; world.devices.R2.ports.filter(function (x) { return x.name === 'GigabitEthernet0/0'; })[0].mask = '255.255.255.0';");
+    });
+    await p.evaluate(() => compareSnapshotsUi("before", ""));
+    await p.waitForTimeout(600);
+    await p.evaluate(() => showView("devices"));
+    await p.waitForTimeout(400);
+    await p.screenshot({ path: out("snapshot-diff.png") });
+    await p.close();
+}
 
 (async () => {
     const browser = await chromium.launch();
@@ -115,6 +194,7 @@ const devices = { links: 5, devices: [
     await p.fill("#find-input", "S1");
     await p.fill("#replace-input", "ACCESS-1");
     await p.screenshot({ path: out("find-replace.png") });
+    await workbenchShots(browser);
     await browser.close();
     console.log("screenshots written");
 })();

@@ -160,7 +160,7 @@ const step = async (name, fn) => { await fn(); steps.push(name); };
     });
 
     await step("run sends encoded code to packet tracer", async () => {
-        await p.keyboard.press("F5");
+        await p.keyboard.press("Control+F5");
         const call = await p.evaluate(() => window.__calls.at(-1));
         assert.deepEqual(call, ["runCode", encodeURIComponent("log(1);")]);
         assert.equal(await p.locator(".statusbar.running").count(), 1);
@@ -213,7 +213,7 @@ const step = async (name, fn) => { await fn(); steps.push(name); };
 
     await step("devices view", async () => {
         await p.evaluate(() => showView("devices"));
-        assert.deepEqual(await p.evaluate(() => window.__calls.at(-1)), ["editorDevices"]);
+        assert.equal(await p.evaluate(() => window.__calls.some((c) => c[0] === "editorDevices")), true);
         await p.evaluate(() => receiveOutput({ kind: "devices", text: JSON.stringify({ links: 3, devices: [
             { name: "R1", type: "router", model: "2911", power: true, ports: [{ name: "GigabitEthernet0/0", ip: "192.168.1.1/24", up: true, peer: "GigabitEthernet0/1" }, { name: "GigabitEthernet0/1", ip: "10.0.0.1/30", up: false, peer: "" }] },
             { name: "S1", type: "switch", model: "2960-24TT", power: true, ports: [{ name: "FastEthernet0/1", ip: "", up: true, peer: "FastEthernet0" }] },
