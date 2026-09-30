@@ -62,7 +62,7 @@ PTForge replaces the clicking with a script. You describe the network once, pres
 
 | | |
 |---|---|
-| 🖥️ **JavaScript terminal** | `Ctrl+`` opens a terminal like VS Code's *New Terminal*. Every line runs directly against the open topology, with history, Tab completion and dot commands such as `.calc`, `.ping` and `.cli R1` |
+|  **JavaScript terminal** | `Ctrl+`` opens a terminal like VS Code's *New Terminal*. Every line runs directly against the open topology, with history, Tab completion and dot commands such as `.calc`, `.ping` and `.cli R1` |
 |  **Debugger** | `F5` runs the script and records every step. Pause on breakpoints, conditional breakpoints and exceptions, step over, into, out and **back**, read variables, watch expressions and the call stack, and evaluate expressions in the Debug Console |
 |  **Network calculator** | IPv4 subnet, subnet splitter, VLSM planner, route summarization, range to CIDR, wildcard masks, IPv6, EUI-64 and number conversion in one editor tab |
 |  **Reachability matrix** | `pingAll()` pings every address from every router and switch and shows a color matrix with loss and round-trip times |
