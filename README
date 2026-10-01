@@ -13,19 +13,98 @@ an editor, a terminal and a debugger to Packet Tracer, and a library of more
 than 380 functions for building topologies, configuring Cisco IOS devices,
 servers and hosts, and verifying the result.
 
+A script can place devices, cable them, configure VLANs, routing, security
+and server services, and then test reachability across the whole network.
+The editor works like Visual Studio Code, with tabs, IntelliSense, a
+JavaScript terminal that runs inside Packet Tracer and a step debugger.
+Plugins in .pf files can add commands, functions and lab checks.
+
 WARNING: PTForge is in early development and still contains known bugs.
 Several features have only been tested outside Packet Tracer. Check the
 results of your scripts and keep backups of your .pkt files.
 
-Documentation
--------------
+Quick Start
+-----------
 
-Installation, the function reference, guides and translations can be viewed
-online at:
+* Get the latest release: https://github.com/r4chan842/PTForge/releases/latest
+* Install it: https://r4chan842.github.io/PTForge/guides/installation.html
+* Write a first script: https://r4chan842.github.io/PTForge/guides/getting-started.html
+* Report a bug: https://github.com/r4chan842/PTForge/issues
+
+Essential Documentation
+-----------------------
+
+All users should be familiar with:
+
+* Requirements and installation: https://r4chan842.github.io/PTForge/guides/installation.html
+* Known limitations: https://r4chan842.github.io/PTForge/guides/limitations.html
+* Function reference: https://r4chan842.github.io/PTForge/api/index.html
+* Cisco Packet Tracer API: https://tutorials.ptnetacad.net/help/default/IpcAPI/annotated.html
+
+The complete documentation, including translations, can be viewed online at:
 https://r4chan842.github.io/PTForge/
 
-License
+
+Who Are You?
+============
+
+Find your role below:
+
+* Student: Building and checking CCNA labs
+* Instructor: Preparing labs and grading them
+* Network Engineer: Automating topologies and configurations
+* Plugin Author: Extending PTForge with .pf plugins
+* Contributor: Working on PTForge itself
+
+
+For Specific Users
+==================
+
+Student
 -------
+
+* Getting Started: https://r4chan842.github.io/PTForge/guides/getting-started.html
+* CCNA Topics: https://r4chan842.github.io/PTForge/ccna/index.html
+* Subnetting: https://r4chan842.github.io/PTForge/cheatsheets/subnetting.html
+
+Instructor
+----------
+
+* Lab Check: https://r4chan842.github.io/PTForge/api/checks.html
+* Audit: https://r4chan842.github.io/PTForge/api/audit.html
+* Lab Checklist: https://r4chan842.github.io/PTForge/ccna/lab-checklist.html
+
+Network Engineer
+----------------
+
+* Writing Scripts: https://r4chan842.github.io/PTForge/guides/writing-scripts.html
+* Cisco IOS Functions: https://r4chan842.github.io/PTForge/api/ios.html
+* Network Tools: https://r4chan842.github.io/PTForge/guides/network-tools.html
+
+Plugin Author
+-------------
+
+* Plugin Guide: https://r4chan842.github.io/PTForge/guides/plugins.html
+* Plugin Functions: https://r4chan842.github.io/PTForge/api/plugins.html
+
+Contributor
+-----------
+
+* Contributing: https://r4chan842.github.io/PTForge/project/CONTRIBUTING.html
+* Architecture: https://r4chan842.github.io/PTForge/architecture/overview.html
+* Testing: https://r4chan842.github.io/PTForge/architecture/testing.html
+
+
+Communication and Support
+=========================
+
+* Issues: https://github.com/r4chan842/PTForge/issues
+* Discussions: https://github.com/r4chan842/PTForge/discussions
+* Security Policy: https://r4chan842.github.io/PTForge/project/SECURITY.html
+
+
+License
+=======
 
 PTForge is distributed under the MIT License. See LICENSE.
 
