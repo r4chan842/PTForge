@@ -231,7 +231,7 @@ function sidebar(from) {
             const link = resolveUrl(it.url, from);
             return "<li><a href=\"" + escape(link.href) + "\">" + escape(it.label) + "</a></li>";
         }).join("") + "</ul>").join("");
-    return groups;
+    return groups + "<p class=\"caption\">Translations</p><ul><li><a href=\"" + relative(from, "index.html") + "#translations\">Translations</a></li></ul>";
 }
 
 function languageMenu(from, current) {
@@ -251,7 +251,7 @@ function layout(doc, body, toc) {
         toc.map((t) => "<li class=\"l" + t.level + "\"><a href=\"#" + t.id + "\">" + escape(t.text) + "</a></li>").join("") + "</ul></div>" : "";
     const source = blob + doc.file;
     return "<!DOCTYPE html>\n<html lang=\"" + lang + "\">\n<head>\n<meta charset=\"utf-8\">\n" +
-        "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
+        "<meta name=\"viewport\" content=\"width=1000\">\n" +
         "<title>" + escape(doc.title) + (doc.page === "index.html" ? "" : " — PTForge documentation") + "</title>\n" +
         "<link rel=\"icon\" href=\"" + up("_static/logo.svg") + "\">\n" +
         "<link rel=\"stylesheet\" href=\"" + up("_static/style.css") + "\">\n</head>\n<body>\n" +
@@ -367,12 +367,12 @@ const style = `:root {
     --warn-line: #d9a441;
 }
 * { box-sizing: border-box; }
-html { font-size: 17px; }
+html { font-size: 15px; }
 body { margin: 0; color: var(--ink); background: #fff; font-family: Georgia, "Times New Roman", "DejaVu Serif", serif; line-height: 1.5; }
-.document { display: flex; max-width: 1180px; margin: 0 auto; padding: 24px 24px 0; gap: 36px; }
-.sidebar { flex: 0 0 230px; font-size: 0.86rem; }
+.document { display: flex; max-width: 1100px; margin: 0 auto; padding: 18px 16px 0; gap: 28px; }
+.sidebar { flex: 0 0 200px; font-size: 0.9rem; }
 .sidebar .brand img { display: block; width: 120px; height: 120px; margin: 4px auto 14px; }
-.sidebar .project { margin: 0; font-size: 1.75rem; font-weight: normal; line-height: 1.15; }
+.sidebar .project { margin: 0; font-size: 1.75rem; font-weight: bold; line-height: 1.2; }
 .sidebar .project a { color: var(--accent); text-decoration: none; border: 0; }
 .sidebar .version { margin: 4px 0 18px; color: var(--muted); }
 .sidebar h3 { margin: 20px 0 6px; font-size: 1.15rem; font-weight: normal; color: var(--accent); }
@@ -392,8 +392,8 @@ body { margin: 0; color: var(--ink); background: #fff; font-family: Georgia, "Ti
 .topbar { display: flex; justify-content: flex-end; }
 .language { font: inherit; font-size: 0.85rem; padding: 3px 6px; background: var(--side); border: 1px solid var(--rule); color: var(--ink); }
 h1, h2, h3 { font-weight: normal; color: var(--accent); line-height: 1.25; }
-h1 { font-size: 1.9rem; margin: 0 0 14px; }
-h2 { font-size: 1.45rem; margin: 30px 0 10px; }
+h1 { font-size: 1.6rem; margin: 0 0 12px; }
+h2 { font-size: 1.3rem; margin: 26px 0 8px; }
 h3 { font-size: 1.2rem; margin: 24px 0 8px; }
 .anchor { visibility: hidden; margin-left: 6px; font-size: 0.8em; color: var(--muted); border: 0; text-decoration: none; }
 h2:hover .anchor, h3:hover .anchor, dt:hover .anchor { visibility: visible; }
@@ -421,11 +421,6 @@ dl.function dd { margin: 4px 0 0 24px; }
 footer { max-width: 1180px; margin: 0 auto; padding: 18px 24px 28px; font-size: 0.8rem; color: var(--muted); text-align: right; }
 [dir="rtl"] { text-align: right; }
 [dir="rtl"] ul, [dir="rtl"] ol { padding-left: 0; padding-right: 26px; }
-@media (max-width: 820px) {
-    .document { flex-direction: column-reverse; gap: 10px; }
-    .sidebar { flex: none; border-top: 1px solid var(--rule); padding-top: 16px; }
-    .sidebar .brand img { width: 80px; height: 80px; margin: 0 0 8px; }
-}
 `;
 
 function write(rel, data) {
