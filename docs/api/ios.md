@@ -69,7 +69,7 @@ Show commands
 | `getVlanBrief(name)` | string | `show vlan brief` |
 | `getHostname(name)` | string | Configured hostname |
 
-The text returned by show commands comes from the Packet Tracer API. Some Packet Tracer versions return an empty string. See ../guides/limitations.md.
+The text returned by show commands comes from the Packet Tracer API. Some Packet Tracer versions return an empty string. See https://github.com/r4chan842/PTForge/blob/main/docs/guides/limitations.md.
 
 Device basics
 -------------

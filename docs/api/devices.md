@@ -48,7 +48,7 @@ Queries
 | `getDeviceType(name)` | number | Numeric device type |
 | `getDeviceInfo(name)` | object | Model, type, power, serial, position and every port in the same shape as `getPortInfo` |
 
-filter accepts a type name, a type number or an array of both. See device types (../reference/device-types.md).
+filter accepts a type name, a type number or an array of both. See device types (https://github.com/r4chan842/PTForge/blob/main/docs/reference/device-types.md).
 
     getDevices();
     getDevices("switch");
@@ -80,7 +80,7 @@ Modules
     addDevice("R1", "2911", 100, 100);
     addModules("R1", { "0/0": "HWIC-2T", "0/1": "HWIC-2T" });
 
-Slot 0/1 on a 2911 creates Serial0/1/0 and Serial0/1/1. The full module list is in ../reference/modules.md.
+Slot 0/1 on a 2911 creates Serial0/1/0 and Serial0/1/1. The full module list is in https://github.com/r4chan842/PTForge/blob/main/docs/reference/modules.md.
 
 Ports
 -----

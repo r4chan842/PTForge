@@ -5,13 +5,13 @@ The menu entry does not appear
 ------------------------------
 
 - Check that the module is started in Configure PT Script Modules
-- main.js must be the last script (already true in release/ptforge.js)
+- main.js must be the last script (already true in https://github.com/r4chan842/PTForge/blob/main/release/ptforge.js)
 - Open Extensions → Scripting → the script console to see load errors
 
 Unknown device model
 ----------------------
 
-Model names are case sensitive and must match device models (../reference/device-models.md). 2960 is wrong, 2960-24TT is right.
+Model names are case sensitive and must match device models (https://github.com/r4chan842/PTForge/blob/main/docs/reference/device-models.md). 2960 is wrong, 2960-24TT is right.
 
 Device name already exists
 ----------------------------
@@ -68,7 +68,7 @@ forEach passes the index as the second argument, which becomes the port name. Wr
 Scripts with let, => or template strings fail
 -------------------------------------------------
 
-The Packet Tracer engine is ES5. See writing scripts (writing-scripts.md).
+The Packet Tracer engine is ES5. See writing scripts (https://github.com/r4chan842/PTForge/blob/main/docs/guides/writing-scripts.md).
 
 Reporting a bug
 ---------------

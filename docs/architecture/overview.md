@@ -36,7 +36,7 @@ Layers
     API      src/api   Public functions users call
     UI       src/ui    The editor, runs in a separate web view
 
-Lower layers never call higher ones. The load order in tools/load-order.json follows the same direction.
+Lower layers never call higher ones. The load order in https://github.com/r4chan842/PTForge/blob/main/tools/load-order.json follows the same direction.
 
 How a script runs
 -----------------
@@ -48,7 +48,7 @@ How a script runs
 5. IOS helpers build command lines and pass them to configureIosDevice
 6. showResult, log and errors are sent back to the editor with evaluateJavaScriptAsync
 
-See runtime.md and testing.md.
+See https://github.com/r4chan842/PTForge/blob/main/docs/architecture/runtime.md and https://github.com/r4chan842/PTForge/blob/main/docs/architecture/testing.md.
 
 Editor files
 ------------

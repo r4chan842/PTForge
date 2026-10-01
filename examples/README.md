@@ -17,4 +17,4 @@ Complete scripts you can paste into the PTForge editor. Each one starts from an 
 * 12-automation: config backup, command audit, script library
 * 13-operations: reachability test, change tracking with snapshots
 
-More starting points are in ../templates/README.md.
+More starting points are in https://github.com/r4chan842/PTForge/blob/main/templates/README.md.

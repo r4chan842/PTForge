@@ -56,7 +56,7 @@ Unknown functions are warnings: functions and variables declared in the script, 
 Running
 -------
 
-Ctrl+F5, Ctrl+Enter or the triangle in the editor title runs the whole file, Ctrl+Shift+Enter runs the selection. F5 starts the debugger.md. The Packet Tracer item in the status bar turns orange while Packet Tracer works and shows the run time when it finishes. log and showResult write to Output. Lab Check and audit reports open in the Lab Check panel.
+Ctrl+F5, Ctrl+Enter or the triangle in the editor title runs the whole file, Ctrl+Shift+Enter runs the selection. F5 starts the https://github.com/r4chan842/PTForge/blob/main/docs/guides/debugger.md. The Packet Tracer item in the status bar turns orange while Packet Tracer works and shows the run time when it finishes. log and showResult write to Output. Lab Check and audit reports open in the Lab Check panel.
 
 Devices view
 ------------
@@ -66,12 +66,12 @@ Lists every device in the open Packet Tracer file with its model, and the ports 
 Network tools
 -------------
 
-The Network tools view has a quick subnet calculator, VLSM planner and wildcard converter next to your code. The full calculator with nine tools, the reachability matrix and snapshot compare open as editor tabs. See network tools (network-tools.md).
+The Network tools view has a quick subnet calculator, VLSM planner and wildcard converter next to your code. The full calculator with nine tools, the reachability matrix and snapshot compare open as editor tabs. See network tools (https://github.com/r4chan842/PTForge/blob/main/docs/guides/network-tools.md).
 
 Terminal and debugger
 ---------------------
 
-Ctrl+` opens the terminal (terminal.md). F5 starts the debugger (debugger.md).
+Ctrl+` opens the terminal (https://github.com/r4chan842/PTForge/blob/main/docs/guides/terminal.md). F5 starts the debugger (https://github.com/r4chan842/PTForge/blob/main/docs/guides/debugger.md).
 
 Settings kept between sessions
 ------------------------------

@@ -38,8 +38,8 @@ The test suite enforces most of these.
 - ES5 only in src and examples, because that is what Packet Tracer runs
 - No comments in source files. Names should explain the code
 - Every public function is documented in docs/api as a table row starting with | `name(
-- Internal helpers are listed in tools/internal-functions.txt
-- New files go into tools/load-order.json before any file that uses them
+- Internal helpers are listed in https://github.com/r4chan842/PTForge/blob/main/tools/internal-functions.txt
+- New files go into https://github.com/r4chan842/PTForge/blob/main/tools/load-order.json before any file that uses them
 - IOS helpers come in pairs: buildX returns lines, x sends them with configureIosDevice
 - Packet Tracer API calls must match the official IPC documentation. Link the class page in your pull request
 - Wrong names, ports and options throw. Commands rejected by IOS are returned
@@ -54,7 +54,7 @@ Before opening a pull request
 
     npm run check
 
-That regenerates src/ui/catalog.js, rebuilds release/ptforge.js, checks its syntax and runs every test. Commit the rebuilt bundle.
+That regenerates https://github.com/r4chan842/PTForge/blob/main/src/ui/catalog.js, rebuilds https://github.com/r4chan842/PTForge/blob/main/release/ptforge.js, checks its syntax and runs every test. Commit the rebuilt bundle.
 
 Adding a function
 -----------------
@@ -63,9 +63,9 @@ Adding a function
 2. Add tests in tests/integration
 3. Document it in docs/api
 4. Optionally add an example in examples
-5. Add an entry under Unreleased in CHANGELOG.md
+5. Add an entry under Unreleased in https://github.com/r4chan842/PTForge/blob/main/CHANGELOG.md
 
 Continuous integration
 ----------------------
 
-tools/ci/ci.yml is a GitHub Actions workflow that runs npm run check on Node 18, 20 and 22 and checks that generated files are committed. To enable it, copy it to .github/workflows/ci.yml (the maintainer adds it from the GitHub web interface). Browser tests of the editor run with npm run ui-test after installing playwright.
+https://github.com/r4chan842/PTForge/blob/main/tools/ci/ci.yml is a GitHub Actions workflow that runs npm run check on Node 18, 20 and 22 and checks that generated files are committed. To enable it, copy it to .github/workflows/ci.yml (the maintainer adds it from the GitHub web interface). Browser tests of the editor run with npm run ui-test after installing playwright.

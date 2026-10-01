@@ -6,7 +6,7 @@ PTForge includes the following third party software.
 Acorn
 -----
 
-- File: src/ui/acorn.js, minified and unchanged in behavior
+- File: https://github.com/r4chan842/PTForge/blob/main/src/ui/acorn.js, minified and unchanged in behavior
 - Version: 8.18.0
 - Project: https://github.com/acornjs/acorn
 - Used by: the debugger, to parse scripts before recording them

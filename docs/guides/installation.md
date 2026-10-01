@@ -30,7 +30,7 @@ Step 3: add the scripts
 
 Option A: one file (recommended)
 
-Add a single script file and paste ../../release/ptforge.js. It contains every source file already in the right order. Rebuild it after editing the sources with:
+Add a single script file and paste https://github.com/r4chan842/PTForge/blob/main/release/ptforge.js. It contains every source file already in the right order. Rebuild it after editing the sources with:
 
     node tools/bundle.js
 
@@ -38,21 +38,21 @@ Option B: separate files
 
 Useful when you want to change parts of the code inside Packet Tracer.
 
-Packet Tracer loads script files top to bottom, so the order matters. Add a script file for each entry below and paste the matching file from src/. The same list is in ../../tools/load-order.json and the test suite fails if the two ever differ.
+Packet Tracer loads script files top to bottom, so the order matters. Add a script file for each entry below and paste the matching file from https://github.com/r4chan842/PTForge/tree/main/src. The same list is in https://github.com/r4chan842/PTForge/blob/main/tools/load-order.json and the test suite fails if the two ever differ.
 
-1. src/data/devices.js, links.js, modules.js, types.js
-2. src/lib/text.js, colors.js, ipv4.js
-3. src/core/context.js, layers.js
-4. Every file in src/api/, in the order listed in load-order.json
-5. src/core/runner.js, window.js
-6. src/core/main.js last
+1. https://github.com/r4chan842/PTForge/blob/main/src/data/devices.js, links.js, modules.js, types.js
+2. https://github.com/r4chan842/PTForge/blob/main/src/lib/text.js, colors.js, ipv4.js
+3. https://github.com/r4chan842/PTForge/blob/main/src/core/context.js, layers.js
+4. Every file in https://github.com/r4chan842/PTForge/tree/main/src/api, in the order listed in load-order.json
+5. https://github.com/r4chan842/PTForge/blob/main/src/core/runner.js, window.js
+6. https://github.com/r4chan842/PTForge/blob/main/src/core/main.js last
 
 main.js must be the last script because it opens the menu entry after every function exists.
 
 Step 4: add the interface
 -------------------------
 
-Add the fourteen files in src/ui/ as the module's interface files, keeping the names:
+Add the fourteen files in https://github.com/r4chan842/PTForge/tree/main/src/ui as the module's interface files, keeping the names:
 
 * index.html: Page layout
 * style.css: VS Code Dark Modern theme
@@ -91,7 +91,7 @@ If your version offers an option to load the module at startup, enable it so the
 Updating
 --------
 
-Pull the new version, open the module in Edit, replace the changed files and save. CHANGELOG.md lists which files changed in each release.
+Pull the new version, open the module in Edit, replace the changed files and save. https://github.com/r4chan842/PTForge/blob/main/CHANGELOG.md lists which files changed in each release.
 
 Uninstalling
 ------------

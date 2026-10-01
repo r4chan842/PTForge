@@ -33,4 +33,4 @@ Every CCNA 200-301 lab topic with the PTForge functions and examples that cover 
                            WPA2                            configureWireless                                   06-wireless/home-wireless.js
     Automation             Scripting a network             Everything above                                    10-ccna-labs/full-enterprise.js
 
-See also the lab checklist (lab-checklist.md).
+See also the lab checklist (https://github.com/r4chan842/PTForge/blob/main/docs/ccna/lab-checklist.md).

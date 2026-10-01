@@ -7,7 +7,7 @@ A Packet Tracer extension that turns JavaScript into complete networks: devices,
 
 Do old scripts keep working between versions?
 
-Public function names and arguments only change in major versions, and every change is listed in CHANGELOG.md. configureIosDevice returns rejected commands and saves by default. Pass false as the third argument to skip saving.
+Public function names and arguments only change in major versions, and every change is listed in https://github.com/r4chan842/PTForge/blob/main/CHANGELOG.md. configureIosDevice returns rejected commands and saves by default. Pass false as the third argument to skip saving.
 
 Which Packet Tracer version do I need?
 
@@ -23,7 +23,7 @@ Follow the rules of your course. Activity files can lock scripting.
 
 Why is there no .pts file?
 
-Packet Tracer encrypts packages and only Packet Tracer can create them. See installation.md.
+Packet Tracer encrypts packages and only Packet Tracer can create them. See https://github.com/r4chan842/PTForge/blob/main/docs/guides/installation.md.
 
 Why ES5?
 
@@ -39,4 +39,4 @@ Use its build... twin, for example showResult(buildOspf({ networks: ["10.0.0.0/8
 
 Where are the examples?
 
-In examples/, grouped by topic from basics to complete CCNA labs.
+In https://github.com/r4chan842/PTForge/tree/main/examples, grouped by topic from basics to complete CCNA labs.

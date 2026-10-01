@@ -1,7 +1,7 @@
 Getting started
 ===============
 
-This guide walks through a first script. PTForge must be installed first, see installation.md.
+This guide walks through a first script. PTForge must be installed first, see https://github.com/r4chan842/PTForge/blob/main/docs/guides/installation.md.
 
 Open the editor
 ---------------
@@ -78,7 +78,7 @@ It is plain JavaScript:
 Next
 ----
 
-- Writing scripts (writing-scripts.md)
-- API reference (../api/README.md)
-- Recipes (../recipes/README.md)
-- The examples/ folder has 27 complete labs
+- Writing scripts (https://github.com/r4chan842/PTForge/blob/main/docs/guides/writing-scripts.md)
+- API reference (https://github.com/r4chan842/PTForge/blob/main/docs/api/README.md)
+- Recipes (https://github.com/r4chan842/PTForge/blob/main/docs/recipes/README.md)
+- The https://github.com/r4chan842/PTForge/tree/main/examples folder has 27 complete labs

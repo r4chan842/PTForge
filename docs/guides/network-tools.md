@@ -18,7 +18,7 @@ Network → Open Network Calculator opens a calculator tab. Results update while
     EUI-64               A prefix and a MAC address                                                       The interface ID and the full address
     Number Converter     Dotted, decimal, hex or binary                                                   All forms
 
-The same math is available in the terminal with .calc, and in scripts with the functions in ../api/utilities.md.
+The same math is available in the terminal with .calc, and in scripts with the functions in https://github.com/r4chan842/PTForge/blob/main/docs/api/utilities.md.
 
 Reachability matrix
 -------------------
@@ -37,7 +37,7 @@ Each ping runs in Packet Tracer's own time, so the matrix fills in a few seconds
         log(report.ok + " of " + report.total + " answered");
     });
 
-See ../api/simulation.md#reachability for every option.
+See https://github.com/r4chan842/PTForge/blob/main/docs/api/simulation.md#reachability for every option.
 
 Snapshots
 ---------
@@ -55,4 +55,4 @@ The compare tab shows counters for devices, links, addresses, ports, power and c
     configureOspf("R1", { routerId: "1.1.1.1", networks: ["10.0.0.0/30"] });
     showSnapshotDiff("before");
 
-See ../api/snapshots.md.
+See https://github.com/r4chan842/PTForge/blob/main/docs/api/snapshots.md.

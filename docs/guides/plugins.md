@@ -79,7 +79,7 @@ Permissions
 * files: Reading, writing and deleting files, opening and saving projects
 * raw: Direct ipc, network(), appWindow(), Function and eval. This skips every other check
 
-The list of functions behind each permission is generated from the source into src/data/permissions.js by npm run permissions. A plugin that calls a function it has no permission for gets an error such as Plugin guard needs the "cli" permission to use setHostname. Plugins can never call enablePlugin, disablePlugin, reloadPlugins or setPluginFolder.
+The list of functions behind each permission is generated from the source into https://github.com/r4chan842/PTForge/blob/main/src/data/permissions.js by npm run permissions. A plugin that calls a function it has no permission for gets an error such as Plugin guard needs the "cli" permission to use setHostname. Plugins can never call enablePlugin, disablePlugin, reloadPlugins or setPluginFolder.
 
 Consent
 -------
