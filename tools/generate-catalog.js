@@ -8,17 +8,19 @@ const apiDir = path.join(root, "docs", "api");
 const catalog = [];
 const seen = new Set();
 
-fs.readdirSync(apiDir).filter((f) => f.endsWith(".md") && f !== "README.md").sort().forEach((file) => {
+fs.readdirSync(apiDir).filter((f) => f !== "README").sort().forEach((file) => {
     const text = fs.readFileSync(path.join(apiDir, file), "utf8");
     const area = (text.match(/^# (.+)$/m) || text.match(/^(.+)\n=+$/m))[1];
-    text.split("\n").forEach((line) => {
-        const match = line.match(/^\| `(\w+)\(([^`]*)\)` \|(.*)\|\s*$/);
+    const lines = text.split("\n");
+    lines.forEach((line, i) => {
+        const match = line.match(/^(\w+)\((.*)\)(?: -> (.+))?$/);
         if (!match || seen.has(match[1])) {
             return;
         }
         seen.add(match[1]);
-        const cells = match[3].split("|").map((c) => c.trim().replace(/`/g, ""));
-        catalog.push({ name: match[1], args: match[2], area, info: cells[cells.length - 1] });
+        const next = lines[i + 1] || "";
+        const info = /^ {4}\S/.test(next) ? next.trim() : match[3] || "";
+        catalog.push({ name: match[1], args: match[2], area, info });
     });
 });
 

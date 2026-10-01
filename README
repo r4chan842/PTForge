@@ -23,8 +23,8 @@ Quick Start
 -----------
 
 * Get the latest release: https://github.com/r4chan842/PTForge/releases/latest
-* Install it: https://github.com/r4chan842/PTForge/blob/main/docs/guides/installation.md
-* Write a first script: https://github.com/r4chan842/PTForge/blob/main/docs/guides/getting-started.md
+* Install it: https://github.com/r4chan842/PTForge/blob/main/docs/guides/installation
+* Write a first script: https://github.com/r4chan842/PTForge/blob/main/docs/guides/getting-started
 * Report a bug: https://github.com/r4chan842/PTForge/issues
 
 A short script looks like this:
@@ -42,12 +42,12 @@ Essential Documentation
 
 All users should be familiar with:
 
-* Requirements and installation: https://github.com/r4chan842/PTForge/blob/main/docs/guides/installation.md
-* Known limitations: https://github.com/r4chan842/PTForge/blob/main/docs/guides/limitations.md
-* Function reference: https://github.com/r4chan842/PTForge/blob/main/docs/api/README.md
+* Requirements and installation: https://github.com/r4chan842/PTForge/blob/main/docs/guides/installation
+* Known limitations: https://github.com/r4chan842/PTForge/blob/main/docs/guides/limitations
+* Function reference: https://github.com/r4chan842/PTForge/blob/main/docs/api/README
 * License: https://github.com/r4chan842/PTForge/blob/main/LICENSE
 
-A complete list of documents is kept in https://github.com/r4chan842/PTForge/blob/main/docs/README.md.
+A complete list of documents is kept in https://github.com/r4chan842/PTForge/blob/main/docs/README.
 
 
 Who Are You?
@@ -68,44 +68,44 @@ For Specific Users
 Student
 -------
 
-* Getting Started: https://github.com/r4chan842/PTForge/blob/main/docs/guides/getting-started.md
-* CCNA Topics: https://github.com/r4chan842/PTForge/blob/main/docs/ccna/README.md
-* Examples: https://github.com/r4chan842/PTForge/blob/main/examples/README.md
-* Subnetting Cheat Sheet: https://github.com/r4chan842/PTForge/blob/main/docs/cheatsheets/subnetting.md
-* Terminal: https://github.com/r4chan842/PTForge/blob/main/docs/guides/terminal.md
+* Getting Started: https://github.com/r4chan842/PTForge/blob/main/docs/guides/getting-started
+* CCNA Topics: https://github.com/r4chan842/PTForge/blob/main/docs/ccna/README
+* Examples: https://github.com/r4chan842/PTForge/blob/main/examples/README
+* Subnetting Cheat Sheet: https://github.com/r4chan842/PTForge/blob/main/docs/cheatsheets/subnetting
+* Terminal: https://github.com/r4chan842/PTForge/blob/main/docs/guides/terminal
 
 Instructor
 ----------
 
-* Lab Check: https://github.com/r4chan842/PTForge/blob/main/docs/api/checks.md
-* Audit: https://github.com/r4chan842/PTForge/blob/main/docs/api/audit.md
-* Lab Templates: https://github.com/r4chan842/PTForge/blob/main/templates/README.md
-* Lab Checklist: https://github.com/r4chan842/PTForge/blob/main/docs/ccna/lab-checklist.md
+* Lab Check: https://github.com/r4chan842/PTForge/blob/main/docs/api/checks
+* Audit: https://github.com/r4chan842/PTForge/blob/main/docs/api/audit
+* Lab Templates: https://github.com/r4chan842/PTForge/blob/main/templates/README
+* Lab Checklist: https://github.com/r4chan842/PTForge/blob/main/docs/ccna/lab-checklist
 
 Network Engineer
 ----------------
 
-* Writing Scripts: https://github.com/r4chan842/PTForge/blob/main/docs/guides/writing-scripts.md
-* Cisco IOS Functions: https://github.com/r4chan842/PTForge/blob/main/docs/api/ios.md
-* Network Tools: https://github.com/r4chan842/PTForge/blob/main/docs/guides/network-tools.md
-* Recipes: https://github.com/r4chan842/PTForge/blob/main/docs/recipes/README.md
-* Debugger: https://github.com/r4chan842/PTForge/blob/main/docs/guides/debugger.md
+* Writing Scripts: https://github.com/r4chan842/PTForge/blob/main/docs/guides/writing-scripts
+* Cisco IOS Functions: https://github.com/r4chan842/PTForge/blob/main/docs/api/ios
+* Network Tools: https://github.com/r4chan842/PTForge/blob/main/docs/guides/network-tools
+* Recipes: https://github.com/r4chan842/PTForge/blob/main/docs/recipes/README
+* Debugger: https://github.com/r4chan842/PTForge/blob/main/docs/guides/debugger
 
 Plugin Author
 -------------
 
-* Plugin Guide: https://github.com/r4chan842/PTForge/blob/main/docs/guides/plugins.md
-* Plugin Functions: https://github.com/r4chan842/PTForge/blob/main/docs/api/plugins.md
+* Plugin Guide: https://github.com/r4chan842/PTForge/blob/main/docs/guides/plugins
+* Plugin Functions: https://github.com/r4chan842/PTForge/blob/main/docs/api/plugins
 * Sample Plugins: https://github.com/r4chan842/PTForge/tree/main/plugins (plugins)
 
 Contributor
 -----------
 
-* Contributing: https://github.com/r4chan842/PTForge/blob/main/CONTRIBUTING.md
-* Architecture: https://github.com/r4chan842/PTForge/blob/main/docs/architecture/overview.md
-* Testing: https://github.com/r4chan842/PTForge/blob/main/docs/architecture/testing.md
-* Code of Conduct: https://github.com/r4chan842/PTForge/blob/main/CODE_OF_CONDUCT.md
-* Security Policy: https://github.com/r4chan842/PTForge/blob/main/SECURITY.md
+* Contributing: https://github.com/r4chan842/PTForge/blob/main/CONTRIBUTING
+* Architecture: https://github.com/r4chan842/PTForge/blob/main/docs/architecture/overview
+* Testing: https://github.com/r4chan842/PTForge/blob/main/docs/architecture/testing
+* Code of Conduct: https://github.com/r4chan842/PTForge/blob/main/CODE_OF_CONDUCT
+* Security Policy: https://github.com/r4chan842/PTForge/blob/main/SECURITY
 
 
 Communication and Support
@@ -113,15 +113,15 @@ Communication and Support
 
 * Issues: https://github.com/r4chan842/PTForge/issues
 * Discussions: https://github.com/r4chan842/PTForge/discussions
-* Changes between releases: https://github.com/r4chan842/PTForge/blob/main/CHANGELOG.md
-* Support: https://github.com/r4chan842/PTForge/blob/main/SUPPORT.md
+* Changes between releases: https://github.com/r4chan842/PTForge/blob/main/CHANGELOG
+* Support: https://github.com/r4chan842/PTForge/blob/main/SUPPORT
 
 
 License
 =======
 
 PTForge is distributed under the MIT License. Third-party components are
-listed in https://github.com/r4chan842/PTForge/blob/main/THIRD_PARTY_NOTICES.md.
+listed in https://github.com/r4chan842/PTForge/blob/main/THIRD_PARTY_NOTICES.
 
 Cisco and Packet Tracer are trademarks of Cisco Systems, Inc. PTForge is not
 affiliated with or endorsed by Cisco Systems, Inc.

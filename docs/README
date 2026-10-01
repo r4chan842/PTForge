@@ -1,0 +1,112 @@
+PTForge Documentation
+=====================
+
+This is the index of every document in the PTForge source tree.
+
+
+User Guides
+-----------
+
+* Installation: https://github.com/r4chan842/PTForge/blob/main/docs/guides/installation
+* Getting Started: https://github.com/r4chan842/PTForge/blob/main/docs/guides/getting-started
+* Writing Scripts: https://github.com/r4chan842/PTForge/blob/main/docs/guides/writing-scripts
+* Editor: https://github.com/r4chan842/PTForge/blob/main/docs/guides/editor
+* Terminal: https://github.com/r4chan842/PTForge/blob/main/docs/guides/terminal
+* Debugger: https://github.com/r4chan842/PTForge/blob/main/docs/guides/debugger
+* Network Tools: https://github.com/r4chan842/PTForge/blob/main/docs/guides/network-tools
+* Plugins: https://github.com/r4chan842/PTForge/blob/main/docs/guides/plugins
+* Troubleshooting: https://github.com/r4chan842/PTForge/blob/main/docs/guides/troubleshooting
+* Limitations: https://github.com/r4chan842/PTForge/blob/main/docs/guides/limitations
+* Frequently Asked Questions: https://github.com/r4chan842/PTForge/blob/main/docs/guides/faq
+
+
+Function Reference
+------------------
+
+* Index: https://github.com/r4chan842/PTForge/blob/main/docs/api/README
+* Devices: https://github.com/r4chan842/PTForge/blob/main/docs/api/devices
+* Links: https://github.com/r4chan842/PTForge/blob/main/docs/api/links
+* End Devices: https://github.com/r4chan842/PTForge/blob/main/docs/api/hosts
+* Cisco IOS: https://github.com/r4chan842/PTForge/blob/main/docs/api/ios
+* Switching: https://github.com/r4chan842/PTForge/blob/main/docs/api/switching
+* Routing: https://github.com/r4chan842/PTForge/blob/main/docs/api/routing
+* Security: https://github.com/r4chan842/PTForge/blob/main/docs/api/security
+* Server Services: https://github.com/r4chan842/PTForge/blob/main/docs/api/services
+* Wireless: https://github.com/r4chan842/PTForge/blob/main/docs/api/wireless
+* Canvas: https://github.com/r4chan842/PTForge/blob/main/docs/api/canvas
+* Topology: https://github.com/r4chan842/PTForge/blob/main/docs/api/topology
+* Workspace: https://github.com/r4chan842/PTForge/blob/main/docs/api/workspace
+* Inspection: https://github.com/r4chan842/PTForge/blob/main/docs/api/inspect
+* Lab Check: https://github.com/r4chan842/PTForge/blob/main/docs/api/checks
+* Audit: https://github.com/r4chan842/PTForge/blob/main/docs/api/audit
+* Simulation: https://github.com/r4chan842/PTForge/blob/main/docs/api/simulation
+* Snapshots: https://github.com/r4chan842/PTForge/blob/main/docs/api/snapshots
+* Events: https://github.com/r4chan842/PTForge/blob/main/docs/api/events
+* Plugins: https://github.com/r4chan842/PTForge/blob/main/docs/api/plugins
+* Utilities: https://github.com/r4chan842/PTForge/blob/main/docs/api/utilities
+
+
+CCNA
+----
+
+* Topic Map: https://github.com/r4chan842/PTForge/blob/main/docs/ccna/README
+* Lab Checklist: https://github.com/r4chan842/PTForge/blob/main/docs/ccna/lab-checklist
+
+
+Recipes
+-------
+
+* Index: https://github.com/r4chan842/PTForge/blob/main/docs/recipes/README
+* Campus Switching: https://github.com/r4chan842/PTForge/blob/main/docs/recipes/campus-switching
+* Routing Labs: https://github.com/r4chan842/PTForge/blob/main/docs/recipes/routing-labs
+* Edge Router: https://github.com/r4chan842/PTForge/blob/main/docs/recipes/edge-router
+* Servers: https://github.com/r4chan842/PTForge/blob/main/docs/recipes/servers
+* Documenting a Topology: https://github.com/r4chan842/PTForge/blob/main/docs/recipes/documenting
+
+
+Cheat Sheets
+------------
+
+* IOS Commands and PTForge Calls: https://github.com/r4chan842/PTForge/blob/main/docs/cheatsheets/ios-to-ptforge
+* Subnetting: https://github.com/r4chan842/PTForge/blob/main/docs/cheatsheets/subnetting
+* Keyboard Shortcuts: https://github.com/r4chan842/PTForge/blob/main/docs/cheatsheets/keyboard
+
+
+Reference Tables
+----------------
+
+These files are generated from src/data by node https://github.com/r4chan842/PTForge/blob/main/tools/generate-reference.js
+and should not be edited by hand.
+
+* Device Models: https://github.com/r4chan842/PTForge/blob/main/docs/reference/device-models
+* Device Types: https://github.com/r4chan842/PTForge/blob/main/docs/reference/device-types
+* Modules: https://github.com/r4chan842/PTForge/blob/main/docs/reference/modules
+* Link Types: https://github.com/r4chan842/PTForge/blob/main/docs/reference/link-types
+* Port Names: https://github.com/r4chan842/PTForge/blob/main/docs/reference/port-names
+
+
+Architecture
+------------
+
+* Overview: https://github.com/r4chan842/PTForge/blob/main/docs/architecture/overview
+* Runtime: https://github.com/r4chan842/PTForge/blob/main/docs/architecture/runtime
+* Testing: https://github.com/r4chan842/PTForge/blob/main/docs/architecture/testing
+
+
+Project Files
+-------------
+
+These files are in the top-level directory.
+
+* Introduction: https://github.com/r4chan842/PTForge/blob/main/README
+* Changes: https://github.com/r4chan842/PTForge/blob/main/CHANGELOG
+* Roadmap: https://github.com/r4chan842/PTForge/blob/main/ROADMAP
+* Contributing: https://github.com/r4chan842/PTForge/blob/main/CONTRIBUTING
+* Code of Conduct: https://github.com/r4chan842/PTForge/blob/main/CODE_OF_CONDUCT
+* Security Policy: https://github.com/r4chan842/PTForge/blob/main/SECURITY
+* Support: https://github.com/r4chan842/PTForge/blob/main/SUPPORT
+* Third-Party Notices: https://github.com/r4chan842/PTForge/blob/main/THIRD_PARTY_NOTICES
+* License: ../LICENSE
+* Examples: https://github.com/r4chan842/PTForge/blob/main/examples/README
+* Templates: https://github.com/r4chan842/PTForge/blob/main/templates/README
+* Sample Plugins: https://github.com/r4chan842/PTForge/tree/main/plugins (../plugins)

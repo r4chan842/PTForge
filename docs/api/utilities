@@ -1,0 +1,100 @@
+Utilities
+=========
+
+Helpers available in every script.
+
+IPv4
+----
+
+isValidIp(ip)
+    false
+    Example: isValidIp("10.0.0.300")
+
+ipToInt(ip)
+    256
+    Example: ipToInt("0.0.1.0")
+
+intToIp(number)
+    "10.0.0.1"
+    Example: intToIp(167772161)
+
+cidrToMask(prefix)
+    "255.255.255.192"
+    Example: cidrToMask(26)
+
+maskToCidr(mask)
+    20
+    Example: maskToCidr("255.255.240.0")
+
+maskToWildcard(mask)
+    "0.0.0.255"
+    Example: maskToWildcard("255.255.255.0")
+
+normalizeMask(mask)
+    "255.255.255.252"
+    Example: normalizeMask(30)
+
+parseNetwork(address, mask)
+    { ip, mask, prefix, wildcard, network, broadcast, size }
+    Example: parseNetwork("10.1.2.3/16")
+
+networkAddress(address, mask)
+    "10.1.0.0"
+    Example: networkAddress("10.1.2.3/16")
+
+broadcastAddress(address, mask)
+    "10.1.255.255"
+    Example: broadcastAddress("10.1.2.3/16")
+
+hostRange(address, mask)
+    { first, last, count }
+    Example: hostRange("10.0.0.0/29")
+
+nthHost(network, index)
+    "10.0.0.254"
+    Example: nthHost("10.0.0.0/24", -1)
+
+splitSubnet(network, prefix)
+    four /26 networks
+    Example: splitSubnet("10.0.0.0/24", 26)
+
+isInSubnet(ip, network)
+    true
+    Example: isInSubnet("10.0.0.9", "10.0.0.0/28")
+
+ipAndMask(address, mask)
+    { ip, mask }
+    Example: ipAndMask("10.0.0.1/30")
+
+networkAndWildcard(address)
+    "10.0.0.0 0.0.0.3"
+    Example: networkAndWildcard("10.0.0.1/30")
+
+networkAndMask(address)
+    "10.0.0.0 255.255.255.252"
+    Example: networkAndMask("10.0.0.1/30")
+
+aclAddress(value)
+    "10.0.0.0 0.255.255.255"
+    Example: aclAddress("10.0.0.0/8")
+
+Output
+------
+
+showResult(value)
+    Show a value or object in the editor output panel and return it. Falls back to a message box when the editor is closed
+
+log(value)
+    Write a line to the output panel without interrupting the script
+
+showMessage(text)
+    Show a message box
+
+Lists and colors
+----------------
+
+toList(value)
+    Wrap a single value in an array
+
+toRgb(color)
+    Convert a color name or hex string to [r, g, b]

@@ -75,11 +75,11 @@ test("no duplicate global function names", () => {
 
 test("every documented function exists", () => {
     const { run } = require("../helpers/load").loadExtension();
-    const docs = walk(path.join(root, "docs", "api")).filter((f) => f.endsWith(".md"));
+    const docs = walk(path.join(root, "docs", "api")).filter((f) => path.basename(f) !== "README");
     assert.ok(docs.length > 0);
     docs.forEach((file) => {
         const text = fs.readFileSync(file, "utf8");
-        for (const match of text.matchAll(/^\| `(\w+)\(/gm)) {
+        for (const match of text.matchAll(/^(\w+)\(.*\)(?: -> .+)?$/gm)) {
             assert.equal(run("typeof " + match[1]), "function", match[1] + " documented in " + path.basename(file));
         }
     });
@@ -92,7 +92,7 @@ test("every public api function is documented", () => {
         const text = fs.readFileSync(path.join(root, file), "utf8");
         for (const match of text.matchAll(/^function (\w+)\s*\(/gm)) {
             if (internal.has(match[1])) continue;
-            assert.ok(docsText.includes("`" + match[1] + "("), match[1] + " from " + file + " is not documented");
+            assert.ok(new RegExp("^" + match[1] + "\\(", "m").test(docsText), match[1] + " from " + file + " is not documented");
         }
     });
 });

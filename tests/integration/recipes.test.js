@@ -8,11 +8,11 @@ const { loadExtension, root } = require("../helpers/load");
 
 const routers = 'addDevice("R1", "2911", 100, 100); addDevice("R2", "2911", 300, 100); addModule("R1", "0/0", "HWIC-2T"); addModule("R2", "0/0", "HWIC-2T"); addLink("R1", "Serial0/0/0", "R2", "Serial0/0/0", "serial");';
 const setups = {
-    "campus-switching.md": 'addDevice("D1", "3560-24PS", 100, 100); addDevice("D2", "3560-24PS", 300, 100); addDevice("A1", "2960-24TT", 200, 300);',
-    "routing-labs.md": 'addDevice("EDGE", "2911", 500, 500);',
-    "edge-router.md": 'addDevice("EDGE", "2911", 100, 100);',
-    "servers.md": "",
-    "documenting.md": routers + 'addDevice("S1", "2960-24TT", 100, 250); addDevice("PC1", "PC-PT", 50, 400); addDevice("PC2", "PC-PT", 150, 400); addDevice("SRV", "Server-PT", 300, 400);'
+    "campus-switching": 'addDevice("D1", "3560-24PS", 100, 100); addDevice("D2", "3560-24PS", 300, 100); addDevice("A1", "2960-24TT", 200, 300);',
+    "routing-labs": 'addDevice("EDGE", "2911", 500, 500);',
+    "edge-router": 'addDevice("EDGE", "2911", 100, 100);',
+    "servers": "",
+    "documenting": routers + 'addDevice("S1", "2960-24TT", 100, 250); addDevice("PC1", "PC-PT", 50, 400); addDevice("PC2", "PC-PT", 150, 400); addDevice("SRV", "Server-PT", 300, 400);'
 };
 
 function blocks(file) {
@@ -43,8 +43,8 @@ Object.keys(setups).forEach((file) => {
 
 test("documenting recipe labels the serial link", () => {
     const { run } = loadExtension();
-    run(setups["documenting.md"]);
-    run(blocks("documenting.md")[0]);
+    run(setups["documenting"]);
+    run(blocks("documenting")[0]);
     const texts = JSON.parse(run("JSON.stringify(getNotes().map(function (n) { return n.text; }))"));
     assert.ok(texts.includes("WAN"));
 });

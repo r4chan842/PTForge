@@ -1,0 +1,36 @@
+CCNA topic map
+==============
+
+Every CCNA 200-301 lab topic with the PTForge functions and examples that cover it.
+
+    Exam area              Topic                           Functions                                           Example
+    ---------------------  ------------------------------  --------------------------------------------------  ------------------------------------
+    Network fundamentals   IPv4 addressing and subnetting  planSubnets, splitSubnet, hostRange, addressHosts   08-topology/vlsm-plan.js
+                           IPv6 addressing                 setInterfaceIpv6, configurePcIpv6                   03-routing/ipv6-ospfv3.js
+                           Cabling and interfaces          addLink, getPortInfo, setSpeedDuplex                01-basics/first-network.js
+    Network access         VLANs and access ports          createVlans, setAccessPort, assignPorts             02-switching/vlans-and-trunks.js
+                           Trunks and native VLAN          setTrunkPort, setDtpMode                            02-switching/vlans-and-trunks.js
+                           Inter VLAN routing              routerOnAStick, addSvi, enableIpRouting             10-ccna-labs/router-on-a-stick.js
+                           CDP and LLDP                    setCdp, setLldp, setPortCdp
+                           EtherChannel                    createEtherChannel                                  02-switching/etherchannel.js
+                           Rapid PVST+                     setStpMode, setStpRoot, enablePortfast, getStpInfo  02-switching/stp-root.js
+                           Wireless                        configureWireless                                   06-wireless/home-wireless.js
+    IP connectivity        Static and floating routes      addStaticRoute, addFloatingRoute, addDefaultRoute   03-routing/static-routing.js
+                           Single area OSPFv2              configureOspf, setOspfInterface, getOspfInfo        03-routing/ospf-multi-area.js
+                           First hop redundancy            configureHsrp, configureHsrpPair                    04-security/hsrp.js
+    IP services            NAT and PAT                     configurePat, addStaticNat, configureNatPool        04-security/nat-pat.js
+                           NTP                             setNtpServer
+                           DHCP and relay                  addRouterDhcpPool, setDhcpRelay, addDhcpPool        05-services/router-dhcp-relay.js
+                           DNS                             addDnsRecord, setNameServer                         05-services/server-dhcp-dns-web.js
+                           SNMP and syslog                 setSnmpCommunity, setSyslogServer
+                           SSH                             configureSsh                                        04-security/ssh-and-port-security.js
+                           TFTP and FTP                    setTftpService, addFtpUser                          05-services/ftp-email.js
+    Security fundamentals  Device passwords                basicSetup, setEnableSecret, setMinPasswordLength   01-basics/secure-baseline.js
+                           ACLs                            createStandardAcl, createExtendedAcl, applyAcl      04-security/acl-web-only.js
+                           Port security                   configurePortSecurity, getPortSecurityStatus        04-security/ssh-and-port-security.js
+                           DHCP snooping and DAI           enableDhcpSnooping, enableArpInspection
+                           AAA                             configureAaa
+                           WPA2                            configureWireless                                   06-wireless/home-wireless.js
+    Automation             Scripting a network             Everything above                                    10-ccna-labs/full-enterprise.js
+
+See also the lab checklist (https://github.com/r4chan842/PTForge/blob/main/docs/ccna/lab-checklist).

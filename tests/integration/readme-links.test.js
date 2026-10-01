@@ -6,7 +6,7 @@ const { execSync } = require("child_process");
 
 const root = path.join(__dirname, "..", "..");
 const base = /https:\/\/github\.com\/r4chan842\/PTForge\/(?:blob|tree)\/main\/([\w./-]*[\w/])/g;
-const files = ["README"].concat(execSync("git ls-files \"*.md\"", { cwd: root }).toString().split("\n").filter(Boolean));
+const files = execSync("git ls-files", { cwd: root }).toString().split("\n").filter((f) => f && !f.includes(".") && !f.startsWith("tools/") || f.endsWith(".md"));
 
 test("README exists as plain text", () => {
     assert.ok(fs.existsSync(path.join(root, "README")));
