@@ -1,8 +1,10 @@
-# Contributing
+Contributing
+============
 
 Thanks for helping improve PTForge.
 
-## Setup
+Setup
+-----
 
 You need Node.js 18 or newer for the tests. Packet Tracer is only needed to try changes for real.
 
@@ -12,26 +14,26 @@ cd PTForge
 npm test
 ```
 
-## Layout
+Layout
+------
 
-| Path | Content |
-|------|---------|
-| `src/data` | Model, module, link and type tables |
-| `src/lib` | Pure helpers: IPv4 math, colors, text |
-| `src/core` | Runtime context, layers, runner, window, entry point |
-| `src/api` | Public functions, one folder per area |
-| `src/ui` | Editor window, `catalog.js` is generated from `docs/api` |
-| `release` | Single file bundle built from `src` |
-| `tests/unit` | Pure function tests |
-| `tests/integration` | Full extension against a mock Packet Tracer |
-| `tests/helpers` | Loader and the Packet Tracer mock |
-| `tools` | Load order, bundler, reference generator |
-| `examples` | Complete labs, run by the test suite |
-| `templates` | Starting points for new labs, run by the test suite |
-| `assets` | Logo, banner, screenshots |
-| `docs` | Guides, API reference, recipes, tables |
+* `src/data`: Model, module, link and type tables
+* `src/lib`: Pure helpers: IPv4 math, colors, text
+* `src/core`: Runtime context, layers, runner, window, entry point
+* `src/api`: Public functions, one folder per area
+* `src/ui`: Editor window, `catalog.js` is generated from `docs/api`
+* `release`: Single file bundle built from `src`
+* `tests/unit`: Pure function tests
+* `tests/integration`: Full extension against a mock Packet Tracer
+* `tests/helpers`: Loader and the Packet Tracer mock
+* `tools`: Load order, bundler, reference generator
+* `examples`: Complete labs, run by the test suite
+* `templates`: Starting points for new labs, run by the test suite
+* `assets`: Application icon and Codicons
+* `docs`: Guides, API reference, recipes, tables
 
-## Rules
+Rules
+-----
 
 The test suite enforces most of these.
 
@@ -44,11 +46,13 @@ The test suite enforces most of these.
 - Packet Tracer API calls must match the official IPC documentation. Link the class page in your pull request
 - Wrong names, ports and options throw. Commands rejected by IOS are returned
 
-## Commit messages
+Commit messages
+---------------
 
 Use [Conventional Commits](https://www.conventionalcommits.org): `feat:`, `fix:`, `docs:`, `test:`, `refactor:`, `chore:`. Every release gets a `vX.Y.Z` tag.
 
-## Before opening a pull request
+Before opening a pull request
+-----------------------------
 
 ```
 npm run check
@@ -56,7 +60,8 @@ npm run check
 
 That regenerates `src/ui/catalog.js`, rebuilds `release/ptforge.js`, checks its syntax and runs every test. Commit the rebuilt bundle.
 
-## Adding a function
+Adding a function
+-----------------
 
 1. Write it in the right file in `src/api`
 2. Add tests in `tests/integration`
@@ -64,6 +69,7 @@ That regenerates `src/ui/catalog.js`, rebuilds `release/ptforge.js`, checks its 
 4. Optionally add an example in `examples`
 5. Add an entry under `Unreleased` in `CHANGELOG.md`
 
-## Continuous integration
+Continuous integration
+----------------------
 
 `tools/ci/ci.yml` is a GitHub Actions workflow that runs `npm run check` on Node 18, 20 and 22 and checks that generated files are committed. To enable it, copy it to `.github/workflows/ci.yml` (the maintainer adds it from the GitHub web interface). Browser tests of the editor run with `npm run ui-test` after installing `playwright`.

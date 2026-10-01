@@ -1,15 +1,16 @@
-# Campus switching
+Campus switching
+================
 
-← [Recipes](README.md)
-
-## Same VLANs on every switch
+Same VLANs on every switch
+--------------------------
 
 ```js
 var vlans = { 10: "USERS", 20: "VOICE", 99: "MGMT", 999: "PARKING" };
 applyToDevices(getDevices(["switch", "multilayerswitch"]), buildVlans(vlans));
 ```
 
-## Uplinks as trunks with a native VLAN
+Uplinks as trunks with a native VLAN
+------------------------------------
 
 ```js
 getDevices(["switch", "multilayerswitch"]).forEach(function (sw) {
@@ -17,7 +18,8 @@ getDevices(["switch", "multilayerswitch"]).forEach(function (sw) {
 });
 ```
 
-## LACP between two distribution switches
+LACP between two distribution switches
+--------------------------------------
 
 ```js
 ["D1", "D2"].forEach(function (sw, i) {
@@ -29,7 +31,8 @@ getDevices(["switch", "multilayerswitch"]).forEach(function (sw) {
 });
 ```
 
-## Root bridge per VLAN
+Root bridge per VLAN
+--------------------
 
 ```js
 setStpMode("D1");
@@ -40,7 +43,8 @@ setStpRoot("D2", 20, "primary");
 setStpRoot("D2", 10, "secondary");
 ```
 
-## Secure access ports
+Secure access ports
+-------------------
 
 ```js
 var access = [];

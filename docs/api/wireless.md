@@ -1,8 +1,7 @@
-# Wireless
+Wireless
+========
 
 Works on `AccessPoint-PT` variants and `Linksys-WRT300N`.
-
-← [API index](README.md)
 
 | Function | Description |
 |----------|-------------|

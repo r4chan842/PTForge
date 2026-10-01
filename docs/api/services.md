@@ -1,10 +1,10 @@
-# Server services
+Server services
+===============
 
 Configure `Server-PT` services directly through the Packet Tracer API, without clicking through the Services tab.
 
-← [API index](README.md)
-
-## DHCP
+DHCP
+----
 
 | Function | Description |
 |----------|-------------|
@@ -27,7 +27,8 @@ addDhcpPool("SRV", {
 });
 ```
 
-## DNS
+DNS
+---
 
 | Function | Description |
 |----------|-------------|
@@ -39,7 +40,8 @@ addDhcpPool("SRV", {
 | `setDnsService(name, enabled)` | Turn DNS on or off |
 | `getDnsRecordCount(name)` | Number of records |
 
-## HTTP and HTTPS
+HTTP and HTTPS
+--------------
 
 | Function | Description |
 |----------|-------------|
@@ -48,7 +50,8 @@ addDhcpPool("SRV", {
 | `setWebPage(name, file, html)` | Create or replace a page |
 | `getWebPage(name, file)` | Read a page |
 
-## FTP
+FTP
+---
 
 | Function | Description |
 |----------|-------------|
@@ -58,7 +61,8 @@ addDhcpPool("SRV", {
 
 Permissions are letters: `R` read, `W` write, `N` rename, `L` list, `D` delete. Default `RWNLD`.
 
-## Email
+Email
+-----
 
 | Function | Description |
 |----------|-------------|
@@ -67,7 +71,8 @@ Permissions are letters: `R` read, `W` write, `N` rename, `L` list, `D` delete. 
 | `removeEmailUser(name, username)` | Delete a mailbox |
 | `setEmailPassword(name, username, password)` | Change a password |
 
-## Other services
+Other services
+--------------
 
 | Function | Description |
 |----------|-------------|

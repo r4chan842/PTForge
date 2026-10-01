@@ -1,8 +1,7 @@
-# Lab checklist
+Lab checklist
+=============
 
 A script order that avoids most problems in CCNA labs.
-
-← [CCNA topic map](README.md)
 
 1. **Plan**: `planSubnets` and `pointToPointLinks` give every network before any device exists
 2. **Devices**: `addDevices` with final positions

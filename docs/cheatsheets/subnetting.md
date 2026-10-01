@@ -1,6 +1,5 @@
-# Subnetting cheat sheet
-
-← [Documentation](../README.md)
+Subnetting cheat sheet
+======================
 
 | Prefix | Mask | Wildcard | Addresses | Hosts |
 |--------|------|----------|-----------|-------|

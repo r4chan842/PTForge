@@ -1,6 +1,5 @@
-# Documenting a topology
-
-← [Recipes](README.md)
+Documenting a topology
+======================
 
 ```js
 newLayer();

@@ -1,6 +1,5 @@
-# Servers
-
-← [Recipes](README.md)
+Servers
+=======
 
 ```js
 addDevice("SRV", "Server-PT", 500, 300);

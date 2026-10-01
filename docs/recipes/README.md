@@ -1,8 +1,7 @@
-# Recipes
+Recipes
+=======
 
 Short answers to common lab tasks. Full labs live in `examples/`.
-
-← [Documentation](../README.md)
 
 - [Campus switching](campus-switching.md): VLANs, trunks, EtherChannel, STP root, security
 - [Routing labs](routing-labs.md): multi site OSPF, EIGRP, static backup

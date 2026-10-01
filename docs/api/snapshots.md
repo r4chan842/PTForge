@@ -1,10 +1,10 @@
-# Snapshots
+Snapshots
+=========
 
 Take a picture of the whole network, change something, then see exactly what changed: devices, cables, addresses, port states and running-config lines.
 
-← [API index](README.md)
-
-## Functions
+Functions
+---------
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -18,23 +18,23 @@ Take a picture of the whole network, change something, then see exactly what cha
 | `captureState()` | object | The raw state a snapshot stores: `{ devices, links }` |
 | `diffLines(before, after)` | object[] | Line diff of two arrays: `{ op, text }` with `op` as `" "`, `"+"` or `"-"` |
 
-## What is compared
+What is compared
+----------------
 
-| Field | Content |
-|-------|---------|
-| `devicesAdded`, `devicesRemoved` | Device names |
-| `linksAdded`, `linksRemoved` | `"R1 GigabitEthernet0/0 <-> S1 GigabitEthernet0/1"` |
-| `powerChanges` | `{ device, before, after }` |
-| `addressChanges` | `{ device, port, before, after }` with addresses as `10.0.0.1/24` |
-| `portChanges` | `{ device, port, before, after }` with `up` or `down` |
-| `configChanges` | `{ device, added, removed, diff }` for routers and switches |
-| `changes` | Total number of changes |
+* `devicesAdded`, `devicesRemoved`: Device names
+* `linksAdded`, `linksRemoved`: `"R1 GigabitEthernet0/0 <-> S1 GigabitEthernet0/1"`
+* `powerChanges`: `{ device, before, after }`
+* `addressChanges`: `{ device, port, before, after }` with addresses as `10.0.0.1/24`
+* `portChanges`: `{ device, port, before, after }` with `up` or `down`
+* `configChanges`: `{ device, added, removed, diff }` for routers and switches
+* `changes`: Total number of changes
 
 Header lines such as `Building configuration...`, `Current configuration : 1234 bytes` and `!` separators are ignored, so only real configuration lines count.
 
 Snapshots live in memory while Packet Tracer is open. Use `saveSnapshot` to keep one.
 
-## Example
+Example
+-------
 
 ```js
 takeSnapshot("before");

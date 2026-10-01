@@ -1,10 +1,10 @@
-# Topology and addressing
+Topology and addressing
+=======================
 
 Generate whole topologies, lay devices out and plan subnets.
 
-← [API index](README.md)
-
-## Generators
+Generators
+----------
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -16,12 +16,10 @@ Generate whole topologies, lay devices out and plan subnets.
 
 Common options: `count`, `prefix`, `start`, `model`, `x`, `y`, `radius`, `linkType`.
 
-| Generator | Extra options |
-|-----------|---------------|
-| `buildStar` | `center`, `centerModel`, `leafModel`, `centerPort(i)`, `leafPort(i)` |
-| `buildRing` / `buildLine` | `portA`, `portB`, `gap` |
-| `buildFullMesh` | `ports` array, each device needs `count - 1` ports |
-| `buildLan` | `switchName`, `switchModel`, `hosts`, `hostPrefix`, `hostModel`, `network`, `gateway`, `dns`, `startAt` |
+* `buildStar`: `center`, `centerModel`, `leafModel`, `centerPort(i)`, `leafPort(i)`
+* `buildRing` / `buildLine`: `portA`, `portB`, `gap`
+* `buildFullMesh`: `ports` array, each device needs `count - 1` ports
+* `buildLan`: `switchName`, `switchModel`, `hosts`, `hostPrefix`, `hostModel`, `network`, `gateway`, `dns`, `startAt`
 
 ```js
 buildLan({ switchName: "S1", hosts: 5, network: "192.168.1.0/24" });
@@ -29,7 +27,8 @@ buildRing({ count: 5, prefix: "R", model: "2911" });
 buildFullMesh({ count: 4, prefix: "CORE" });
 ```
 
-## Layout
+Layout
+------
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -39,7 +38,8 @@ buildFullMesh({ count: 4, prefix: "CORE" });
 | `arrangeGrid(names, options)` | number | Move devices into a grid |
 | `arrangeCircle(names, cx, cy, radius)` | number | Move devices onto a circle |
 
-## Addressing
+Addressing
+----------
 
 | Function | Returns | Description |
 |----------|---------|-------------|

@@ -1,10 +1,10 @@
-# Lab Check
+Lab Check
+=========
 
 Write the expected result of a lab as a list of checks, run it, and get a graded report. The report opens in the **Lab Check** panel of the editor, and a plain text version goes to the console. Instructors can use it to grade a lab, and students can use it to check their own work.
 
-← [API index](README.md)
-
-## How it works
+How it works
+------------
 
 1. `beginChecks(title)` starts a new report
 2. Every `check...` call adds one line, passed or failed, with a number of points (1 by default)
@@ -12,7 +12,8 @@ Write the expected result of a lab as a list of checks, run it, and get a graded
 
 A check never stops the script. If the condition throws (a device is missing, for example), the check fails and the error message becomes the hint.
 
-## Functions
+Functions
+---------
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -29,7 +30,8 @@ A check never stops the script. If the condition throws (a device is missing, fo
 | `endChecks()` | object | `{ title, total, passed, failed, score, maxScore, percent, items }` |
 | `runChecks(title, list)` | object | Everything above in one call. `list` is `[{ name, test, hint, points }]` |
 
-## Example
+Example
+-------
 
 ```js
 beginChecks("VLAN lab");

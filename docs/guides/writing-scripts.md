@@ -1,12 +1,13 @@
-# Writing scripts
+Writing scripts
+===============
 
-← [Documentation](../README.md)
-
-## Language
+Language
+--------
 
 Packet Tracer runs scripts with the Qt JavaScript engine, which supports ES5. Use `var`, `function` and `forEach`. Arrow functions, `let`, `const`, template strings and classes may fail depending on the Packet Tracer version.
 
-## Structure that scales
+Structure that scales
+---------------------
 
 Keep data at the top and logic below. Changing a lab then only means changing the data.
 
@@ -25,7 +26,8 @@ sites.forEach(function (site, i) {
 });
 ```
 
-## Order of operations
+Order of operations
+-------------------
 
 1. Create devices
 2. Install modules (devices power cycle, so do this before configuration)
@@ -34,21 +36,21 @@ sites.forEach(function (site, i) {
 5. Configure hosts and servers
 6. Draw labels and zones last, when positions are final
 
-## Checking results
+Checking results
+----------------
 
-| Need | Use |
-|------|-----|
-| Fail fast | `applyConfig` throws on the first rejected line |
-| Collect problems | `configureIosDevice` returns them |
-| Many devices | `applyToDevices` returns `{ device: [rejected] }` |
-| See a value | `showResult(value)` |
+* Fail fast: `applyConfig` throws on the first rejected line
+* Collect problems: `configureIosDevice` returns them
+* Many devices: `applyToDevices` returns `{ device: [rejected] }`
+* See a value: `showResult(value)`
 
 ```js
 var problems = applyToDevices(["S1", "S2"], buildVlans({ 10: "A", 20: "B" }));
 showResult(problems);
 ```
 
-## Preview with builders
+Preview with builders
+---------------------
 
 Every IOS helper has a `build...` function that returns the lines instead of sending them. Use it to review a config, or to combine several helpers into one push:
 
@@ -59,11 +61,13 @@ var config = []
 showResult(config.join("\n"));
 ```
 
-## Speed
+Speed
+-----
 
 - `save` is `true` by default and runs `write memory` after every call. Pass `false` while building and call `saveAllConfigs()` once at the end
 - Build one array of lines per device and push once instead of calling many small helpers
 
-## Reusing scripts
+Reusing scripts
+---------------
 
 Scripts are plain text. Keep your lab scripts in a folder, copy one, and use the `Paste` button in the editor.

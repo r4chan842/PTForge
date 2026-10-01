@@ -10,7 +10,7 @@ const seen = new Set();
 
 fs.readdirSync(apiDir).filter((f) => f.endsWith(".md") && f !== "README.md").sort().forEach((file) => {
     const text = fs.readFileSync(path.join(apiDir, file), "utf8");
-    const area = text.match(/^# (.+)$/m)[1];
+    const area = (text.match(/^# (.+)$/m) || text.match(/^(.+)\n=+$/m))[1];
     text.split("\n").forEach((line) => {
         const match = line.match(/^\| `(\w+)\(([^`]*)\)` \|(.*)\|\s*$/);
         if (!match || seen.has(match[1])) {

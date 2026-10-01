@@ -1,10 +1,10 @@
-# Security and redundancy
+Security and redundancy
+=======================
 
 Access lists, NAT, SSH, AAA and HSRP.
 
-← [API index](README.md)
-
-## Access control lists
+Access control lists
+--------------------
 
 | Function | Description |
 |----------|-------------|
@@ -46,7 +46,8 @@ createExtendedAcl("R1", "INBOUND", [
 applyAcl("R1", "GigabitEthernet0/1", "INBOUND", "in");
 ```
 
-## NAT
+NAT
+---
 
 | Function | Description |
 |----------|-------------|
@@ -71,7 +72,8 @@ configurePat("EDGE", {
 addStaticNat("EDGE", "192.168.50.10", "203.0.113.10", { protocol: "tcp", localPort: 80, globalPort: 80 });
 ```
 
-## SSH and login hardening
+SSH and login hardening
+-----------------------
 
 | Function | Description |
 |----------|-------------|
@@ -81,7 +83,8 @@ addStaticNat("EDGE", "192.168.50.10", "203.0.113.10", { protocol: "tcp", localPo
 
 SSH options: `domain` (required), `username`, `password`, `privilege` (15), `modulus` (1024), `version` (2), `timeout`, `retries`, `lines` (`"0 15"`), `allowTelnet`, `execTimeout`, `hostname`. When the device still has the default hostname, the device name is used because RSA keys need a hostname.
 
-## AAA
+AAA
+---
 
 | Function | Description |
 |----------|-------------|
@@ -89,7 +92,8 @@ SSH options: `domain` (required), `username`, `password`, `privilege` (15), `mod
 
 Options: `radius: { host, key }`, `tacacs: { host, key }`, `users: [{ name, password }]`, `localFallback` (true).
 
-## HSRP
+HSRP
+----
 
 | Function | Description |
 |----------|-------------|
@@ -98,7 +102,8 @@ Options: `radius: { host, key }`, `tacacs: { host, key }`, `users: [{ name, pass
 
 Options: `group` (1), `virtualIp` (required), `priority`, `preempt` (true), `version`, `track`, `decrement`.
 
-## Command builders
+Command builders
+----------------
 
 | Function | Returns |
 |----------|---------|

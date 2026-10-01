@@ -1,6 +1,5 @@
-# Architecture overview
-
-← [Documentation](../README.md)
+Architecture overview
+=====================
 
 PTForge is a Packet Tracer Script Module. Packet Tracer loads its scripts into one JavaScript engine, calls `main()`, and shows the editor window when the menu entry is clicked.
 
@@ -28,7 +27,8 @@ PTForge is a Packet Tracer Script Module. Packet Tracer loads its scripts into o
 └───────────────────────────────────────────────┘
 ```
 
-## Layers
+Layers
+------
 
 | Layer | Folder | Rule |
 |-------|--------|------|
@@ -40,7 +40,8 @@ PTForge is a Packet Tracer Script Module. Packet Tracer loads its scripts into o
 
 Lower layers never call higher ones. The load order in `tools/load-order.json` follows the same direction.
 
-## How a script runs
+How a script runs
+-----------------
 
 1. The editor encodes the script with `encodeURIComponent` so new lines and quotes survive the bridge
 2. `$se("runCode", ...)` calls `runCode` in the script engine
@@ -51,23 +52,23 @@ Lower layers never call higher ones. The load order in `tools/load-order.json` f
 
 See [runtime](runtime.md) and [testing](testing.md).
 
-## Editor files
+Editor files
+------------
 
-| File | Role |
-|------|------|
-| `highlight.js` | Tokenizer shared by the highlighter and the linter |
-| `lint.js` | Syntax check with `Function`, bracket scan, unknown names |
-| `netcalc.js` | IPv4 and IPv6 math for the calculator and the terminal |
-| `acorn.js` | Acorn parser, used to instrument scripts for the debugger |
-| `instrument.js` | Adds step hooks to every statement, maps steps to lines and scopes, walks a recorded trace |
-| `terminal.js` | Terminal tabs, history, completion, dot commands, device CLI mode |
-| `debugview.js` | Breakpoints, debug sessions, Variables, Watch, Call Stack, Debug Console, hover |
-| `views.js` | Editor tabs for the calculator, the reachability matrix and snapshot diffs |
-| `editor.js` | Textarea over a highlighted layer, undo, suggest, find |
-| `interface.js` | Workbench, workspace store, file dialogs through `$se`, reports |
-| `catalog.js`, `snippets.js` | Data for IntelliSense and snippets |
+* `highlight.js`: Tokenizer shared by the highlighter and the linter
+* `lint.js`: Syntax check with `Function`, bracket scan, unknown names
+* `netcalc.js`: IPv4 and IPv6 math for the calculator and the terminal
+* `acorn.js`: Acorn parser, used to instrument scripts for the debugger
+* `instrument.js`: Adds step hooks to every statement, maps steps to lines and scopes, walks a recorded trace
+* `terminal.js`: Terminal tabs, history, completion, dot commands, device CLI mode
+* `debugview.js`: Breakpoints, debug sessions, Variables, Watch, Call Stack, Debug Console, hover
+* `views.js`: Editor tabs for the calculator, the reachability matrix and snapshot diffs
+* `editor.js`: Textarea over a highlighted layer, undo, suggest, find
+* `interface.js`: Workbench, workspace store, file dialogs through `$se`, reports
+* `catalog.js`, `snippets.js`: Data for IntelliSense and snippets
 
-## Debugger
+Debugger
+--------
 
 The debugger records instead of pausing the engine. Packet Tracer runs scripts synchronously, so a script cannot be stopped halfway and resumed later.
 
@@ -78,7 +79,8 @@ The debugger records instead of pausing the engine. Packet Tracer runs scripts s
 
 Device changes happen for real during step 3. Stepping back shows earlier values but does not undo changes in Packet Tracer.
 
-## Terminal
+Terminal
+--------
 
 Each terminal line goes to `core/shell.js` with `$se("shellEval", id, code)`. Declarations are moved to the global scope so later lines can use them, the value is turned into a readable preview, and the result comes back with `evaluateJavaScriptAsync`.
 

@@ -1,24 +1,22 @@
-# Getting started
+Getting started
+===============
 
-A ten minute tour. Install first: [installation](installation.md).
+This guide walks through a first script. PTForge must be installed first, see [installation.md](installation.md).
 
-← [Documentation](../README.md)
-
-## Open the editor
+Open the editor
+---------------
 
 `Extensions` → `PTForge Editor`.
 
-![PTForge editor](../../assets/editor.png)
+The window is laid out like Visual Studio Code. The activity bar on the left
+opens the Explorer, the function reference, Run and Debug, snippets, devices,
+network tools and plugins. Scripts open in tabs. The panel at the bottom holds
+Problems, Output, the Debug Console, the Terminal and Lab Check reports.
 
-| Area | What it does |
-|------|--------------|
-| Script 1, 2, 3 | Three scripts, saved automatically |
-| Functions | Search every function and click to insert it |
-| Snippets | Ready blocks for common lab tasks |
-| Run | Runs the script, `Ctrl+Enter`. `Ctrl+Shift+Enter` runs the selection |
-| Output | Results, `log` lines, errors with line numbers and run time |
+`Ctrl+F5` runs the active script and `F5` runs it under the debugger.
 
-## Your first network
+Your first network
+------------------
 
 ```js
 addDevice("R1", "2911", 300, 100);
@@ -48,7 +46,8 @@ log(getVlans("S1"));
 
 `showResult` and `log` print to the Output panel. `log` never interrupts the script, so use it for progress messages.
 
-## Everything is a function call
+Everything is a function call
+-----------------------------
 
 - Devices are referred to by name
 - Ports are full names like `GigabitEthernet0/0`
@@ -60,7 +59,8 @@ var failed = setInterfaceIp("R1", "GigabitEthernet0/5", "10.0.0.1/24");
 showResult(failed);
 ```
 
-## Raw IOS when you need it
+Raw IOS when you need it
+------------------------
 
 Anything the helpers do not cover can be sent directly:
 
@@ -72,7 +72,8 @@ configureIosDevice("R1", [
 ]);
 ```
 
-## Mix loops and data
+Mix loops and data
+------------------
 
 It is plain JavaScript:
 
@@ -84,7 +85,8 @@ var vlans = { 10: "SALES", 20: "HR", 30: "IT" };
 });
 ```
 
-## Next
+Next
+----
 
 - [Writing scripts](writing-scripts.md)
 - [API reference](../api/README.md)

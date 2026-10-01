@@ -1,8 +1,8 @@
-# Simulation and testing
+Simulation and testing
+======================
 
-← [API index](README.md)
-
-## Simulation mode
+Simulation mode
+---------------
 
 | Function | Description |
 |----------|-------------|
@@ -17,7 +17,8 @@
 | `getSimulationTime()` | Simulation time |
 | `getSimulationEventCount()` | Number of captured events |
 
-## PDUs
+PDUs
+----
 
 | Function | Description |
 |----------|-------------|
@@ -25,7 +26,8 @@
 | `firePdu(index)` | Fire a PDU from the list |
 | `deletePdu(index)` | Remove a PDU |
 
-## Connectivity
+Connectivity
+------------
 
 | Function | Description |
 |----------|-------------|
@@ -33,7 +35,8 @@
 | `traceroute(device, target, onDone)` | `traceroute` on IOS, `tracert` on hosts. Runs in the background; `onDone(row)` gets `{ source, target, state, output, hops }`. In the terminal the output is printed when it finishes |
 | `pingAll(device, targets)` | `reachability()` for the whole network, or only from `device` to `targets` |
 
-## Reachability
+Reachability
+------------
 
 A ping matrix from every router and switch to every address in the topology, with a colored grid in the editor.
 

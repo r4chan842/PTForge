@@ -1,8 +1,8 @@
-# Network tools
+Network tools
+=============
 
-← [Documentation](../README.md)
-
-## Network calculator
+Network calculator
+------------------
 
 `Network` → `Open Network Calculator` opens a calculator tab. Results update while you type, and any value can be copied with a click.
 
@@ -20,7 +20,8 @@
 
 The same math is available in the terminal with `.calc`, and in scripts with the functions in [utilities](../api/utilities.md).
 
-## Reachability matrix
+Reachability matrix
+-------------------
 
 `Network` → `Reachability Matrix (Ping All)`, or `pingAll()` in a script, pings every address from every router and switch. Hosts are used as sources when no router or switch has an address.
 
@@ -40,16 +41,15 @@ pingMatrix(["PC1", "PC2"], ["10.0.0.1", "SRV"], 2, function (report) {
 
 See [reachability](../api/simulation.md#reachability) for every option.
 
-## Snapshots
+Snapshots
+---------
 
 A snapshot records devices, links, addresses, port state, power and running configurations.
 
-| Action | How |
-|--------|-----|
-| Take | `Network` → `Take Snapshot...`, the Snapshots section of the Devices view, `.snap` or `takeSnapshot("name")` |
-| Compare | `Network` → `Compare Snapshots...`, a snapshot in the Devices view, `.diff` or `showSnapshotDiff("name")` |
-| Save to disk | `saveSnapshot("name", "file.json")` |
-| Load | `loadSnapshot("file.json", "name")` |
+* Take: `Network` → `Take Snapshot...`, the Snapshots section of the Devices view, `.snap` or `takeSnapshot("name")`
+* Compare: `Network` → `Compare Snapshots...`, a snapshot in the Devices view, `.diff` or `showSnapshotDiff("name")`
+* Save to disk: `saveSnapshot("name", "file.json")`
+* Load: `loadSnapshot("file.json", "name")`
 
 The compare tab shows counters for devices, links, addresses, ports, power and configs, then a table of every change and a line diff of each running config with added lines in green and removed lines in red.
 

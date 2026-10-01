@@ -1,6 +1,5 @@
-# Links
-
-← [API index](README.md)
+Links
+=====
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -27,22 +26,21 @@ getNeighbors("R1").forEach(function (n) {
 });
 ```
 
-## Cable types
+Cable types
+-----------
 
-| Name | Use |
-|------|-----|
-| `straight` | Different device types: PC to switch, switch to router |
-| `cross` | Same device types: switch to switch, router to router, PC to router |
-| `roll` | Rollover |
-| `console` | Console cable to a PC RS232 port |
-| `serial` | DCE/DTE serial |
-| `fiber` | Fiber ports |
-| `phone` | Phone lines |
-| `cable` | Coaxial cable modem |
-| `coaxial` | Coaxial |
-| `octal` | Octal cable |
-| `cellular` | Cellular |
-| `usb` | USB |
-| `wireless` | Wireless |
-| `custom_io` | IoT custom I/O |
-| `auto` | Let Packet Tracer choose |
+* `straight`: Different device types: PC to switch, switch to router
+* `cross`: Same device types: switch to switch, router to router, PC to router
+* `roll`: Rollover
+* `console`: Console cable to a PC RS232 port
+* `serial`: DCE/DTE serial
+* `fiber`: Fiber ports
+* `phone`: Phone lines
+* `cable`: Coaxial cable modem
+* `coaxial`: Coaxial
+* `octal`: Octal cable
+* `cellular`: Cellular
+* `usb`: USB
+* `wireless`: Wireless
+* `custom_io`: IoT custom I/O
+* `auto`: Let Packet Tracer choose

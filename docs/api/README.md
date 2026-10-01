@@ -1,4 +1,5 @@
-# API reference
+API reference
+=============
 
 PTForge has more than 375 functions. They are all global, so you call them directly in the editor.
 
@@ -25,7 +26,8 @@ PTForge has more than 375 functions. They are all global, so you call them direc
 | Plugins | [plugins.md](plugins.md) | Load `.pf` plugins, consent, commands, rules and checks |
 | Utilities | [utilities.md](utilities.md) | IPv4 math, output helpers |
 
-## Conventions
+Conventions
+-----------
 
 - The first argument is almost always a device name
 - Arguments that take interfaces, VLANs or servers accept one value or an array

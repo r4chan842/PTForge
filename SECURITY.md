@@ -1,12 +1,13 @@
-# Security policy
+Security policy
+===============
 
-## Supported versions
+Supported versions
+------------------
 
-| Version | Supported |
-|---------|-----------|
-| 1.x | ✅ |
+Only the latest 1.x release receives security fixes.
 
-## Reporting a vulnerability
+Reporting a vulnerability
+-------------------------
 
 Please do not open a public issue for security problems.
 
@@ -16,7 +17,8 @@ Please do not open a public issue for security problems.
 
 You will get an answer within seven days. Once a fix is released, the report is published with credit to the reporter unless you prefer to stay anonymous.
 
-## Scope
+Scope
+-----
 
 PTForge runs inside Cisco Packet Tracer with the permissions of a Script Module. Relevant reports include:
 

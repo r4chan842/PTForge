@@ -1,10 +1,10 @@
-# Inspection
+Inspection
+==========
 
 Read the live state of devices straight from the Packet Tracer API. The results are real data rather than show command text, so scripts can check them and make decisions.
 
-← [API index](README.md)
-
-## Switch ports
+Switch ports
+------------
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -22,7 +22,8 @@ getSwitchportTable("S1").forEach(function (p) {
 });
 ```
 
-## Switching protocols
+Switching protocols
+-------------------
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -42,7 +43,8 @@ if (!hasVlan("S1", 10)) {
 log("Root for VLAN 1: " + findRootBridge());
 ```
 
-## Routing protocols
+Routing protocols
+-----------------
 
 | Function | Returns | Description |
 |----------|---------|-------------|

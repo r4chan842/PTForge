@@ -1,8 +1,10 @@
-# Third party notices
+Third party notices
+===================
 
 PTForge includes the following third party software.
 
-## Acorn
+Acorn
+-----
 
 - File: `src/ui/acorn.js`, minified and unchanged in behavior
 - Version: 8.18.0
@@ -33,7 +35,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-## Codicons
+Codicons
+--------
 
 The interface icons are Codicons 0.0.36 from https://github.com/microsoft/vscode-codicons
 

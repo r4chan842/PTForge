@@ -1,8 +1,7 @@
-# Events
+Events
+======
 
 Run code when something changes on the workspace.
-
-← [API index](README.md)
 
 | Function | Returns | Description |
 |----------|---------|-------------|

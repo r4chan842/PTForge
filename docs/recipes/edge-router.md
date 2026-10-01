@@ -1,6 +1,5 @@
-# Edge router
-
-← [Recipes](README.md)
+Edge router
+===========
 
 ```js
 basicSetup("EDGE", { secret: "Cl4ss!", consolePassword: "C0ns0le!", banner: "Authorized access only" });

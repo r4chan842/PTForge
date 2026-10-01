@@ -1,14 +1,14 @@
-# Canvas
+Canvas
+======
 
 Notes, shapes, zones and labels on the logical workspace.
-
-← [API index](README.md)
 
 Colors accept a name, `"#rrggbb"`, `"#rgb"` or `[r, g, b]`. Names: `black`, `white`, `gray`, `red`, `green`, `blue`, `yellow`, `orange`, `purple`, `cyan`, `pink`, `teal`, `navy`, `brown`.
 
 Every drawing goes on the current layer. Pass `layer` to override it.
 
-## Notes
+Notes
+-----
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -21,7 +21,8 @@ Every drawing goes on the current layer. Pass `layer` to override it.
 | `addTextPopup(x, y, text, width, layer)` | id | Popup box |
 | `removeTextPopup(id)` | bool | Remove a popup |
 
-## Shapes
+Shapes
+------
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -42,7 +43,8 @@ drawDashedLine(50, 400, 750, 400, "gray");
 
 > The Packet Tracer API has no filled rectangle. `drawRect` and `drawZone` build outlines from lines.
 
-## Labels
+Labels
+------
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -59,7 +61,8 @@ labelLink("R1", "R2", "10.0.0.0/30");
 labelAllDevices(function (name) { return name + " (" + getDeviceModel(name) + ")"; });
 ```
 
-## Managing items
+Managing items
+--------------
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -75,7 +78,8 @@ labelAllDevices(function (name) { return name + " (" + getDeviceModel(name) + ")
 | `clearLayer(layer)` | bool | Clear a layer, the current one by default |
 | `clearCanvas()` | number | Delete every drawing and note |
 
-## Layers
+Layers
+------
 
 | Function | Returns | Description |
 |----------|---------|-------------|

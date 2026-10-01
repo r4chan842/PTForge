@@ -1,12 +1,12 @@
-# Routing
+Routing
+=======
 
 Static routes, OSPF, EIGRP, RIP, BGP, IPv6 routing and redistribution.
 
-← [API index](README.md)
-
 Networks can be written as `10.0.0.0/24`. Wildcard masks are calculated for you.
 
-## Static
+Static
+------
 
 | Function | Description |
 |----------|-------------|
@@ -27,7 +27,8 @@ addStaticRoute("R1", "10.3.0.0/16", "Serial0/1/0", 5);
 addDefaultRoute("R1", "203.0.113.1");
 ```
 
-## OSPF
+OSPF
+----
 
 | Function | Description |
 |----------|-------------|
@@ -61,7 +62,8 @@ configureOspf("R1", {
 setOspfInterface("R1", "GigabitEthernet0/0", { cost: 10, priority: 255 });
 ```
 
-## EIGRP
+EIGRP
+-----
 
 | Function | Description |
 |----------|-------------|
@@ -74,7 +76,8 @@ setOspfInterface("R1", "GigabitEthernet0/0", { cost: 10, priority: 255 });
 
 `configureEigrpv6` options: `as`, `routerId` (required), `interfaces`, `passive`.
 
-## RIP
+RIP
+---
 
 | Function | Description |
 |----------|-------------|
@@ -84,7 +87,8 @@ setOspfInterface("R1", "GigabitEthernet0/0", { cost: 10, priority: 255 });
 
 RIP options: `version`, `networks`, `passive`, `autoSummary`, `defaultOriginate`. Networks are converted to their classful form and duplicates are dropped.
 
-## BGP
+BGP
+---
 
 | Function | Description |
 |----------|-------------|
@@ -93,7 +97,8 @@ RIP options: `version`, `networks`, `passive`, `autoSummary`, `defaultOriginate`
 
 Options: `as`, `routerId`, `neighbors` as `[{ ip, remoteAs, description }]`, `networks` in CIDR form.
 
-## Redistribution
+Redistribution
+--------------
 
 | Function | Description |
 |----------|-------------|
@@ -106,7 +111,8 @@ redistribute("R2", { protocol: "eigrp", id: 100 }, "ospf 1", { metric: "10000 10
 
 `subnets` is added automatically when redistributing into OSPF.
 
-## Command builders
+Command builders
+----------------
 
 | Function | Returns |
 |----------|---------|

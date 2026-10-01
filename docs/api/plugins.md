@@ -1,10 +1,10 @@
-# Plugins
+Plugins
+=======
 
 Load `.pf` plugin files, enable and disable them, and run the commands, rules and checks they add. The format and a walkthrough are in the [plugin guide](../guides/plugins.md).
 
-← [API index](README.md)
-
-## Functions
+Functions
+---------
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -20,7 +20,8 @@ Load `.pf` plugin files, enable and disable them, and run the commands, rules an
 | `runPluginChecks(title)` | object | Run every plugin check as a Lab Check report |
 | `createPlugin(id, name)` | string | Write a starter `.pf` file into the plugin folder and return its path |
 
-## Example
+Example
+-------
 
 ```js
 showResult(listPlugins().map(function (p) { return p.id + " " + (p.enabled ? "on" : "off"); }));

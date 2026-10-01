@@ -1,8 +1,7 @@
-# CCNA topic map
+CCNA topic map
+==============
 
 Every CCNA 200-301 lab topic with the PTForge functions and examples that cover it.
-
-← [Documentation](../README.md)
 
 | Exam area | Topic | Functions | Example |
 |-----------|-------|-----------|---------|

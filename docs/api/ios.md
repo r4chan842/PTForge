@@ -1,10 +1,10 @@
-# Cisco IOS
+Cisco IOS
+=========
 
 Everything that talks to the CLI of routers, switches and multilayer switches.
 
-← [API index](README.md)
-
-## How configuration works
+How configuration works
+-----------------------
 
 Every configuration function ends up in `configureIosDevice`, which:
 
@@ -25,7 +25,8 @@ if (failed.length) {
 
 `applyConfig` does the same thing but throws on the first problem, which stops the script with a clear message.
 
-## Core
+Core
+----
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -40,7 +41,8 @@ if (failed.length) {
 
 `status` is one of `ok`, `ambiguous`, `invalid`, `incomplete`, `notImplemented`.
 
-## Batch commands
+Batch commands
+--------------
 
 Run the same command on many devices at once and collect every answer. Handy for quick health checks across a whole lab.
 
@@ -59,7 +61,8 @@ setCommandLogging(true);
 commandsToScript("R1");
 ```
 
-## Show commands
+Show commands
+-------------
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -72,7 +75,8 @@ commandsToScript("R1");
 
 > The text returned by show commands comes from the Packet Tracer API. Some Packet Tracer versions return an empty string. See [limitations](../guides/limitations.md).
 
-## Device basics
+Device basics
+-------------
 
 | Function | Description |
 |----------|-------------|
@@ -101,7 +105,8 @@ commandsToScript("R1");
 | `noDomainLookup` | `true` | `no ip domain-lookup` |
 | `encryptPasswords` | `true` | `service password-encryption` when a password is set |
 
-## Interfaces
+Interfaces
+----------
 
 | Function | Description |
 |----------|-------------|
@@ -130,7 +135,8 @@ routerOnAStick("R1", "GigabitEthernet0/1", {
 });
 ```
 
-## DHCP on IOS
+DHCP on IOS
+-----------
 
 | Function | Description |
 |----------|-------------|
@@ -151,7 +157,8 @@ addRouterDhcpPool("R1", {
 });
 ```
 
-## Management
+Management
+----------
 
 | Function | Description |
 |----------|-------------|
@@ -164,7 +171,8 @@ addRouterDhcpPool("R1", {
 | `enableIpRouting(name)` | `ip routing` for multilayer switches |
 | `enableIpv6Routing(name)` | `ipv6 unicast-routing` |
 
-## Command builders
+Command builders
+----------------
 
 Builders return the command lines without sending them. Use them to preview or combine configuration.
 

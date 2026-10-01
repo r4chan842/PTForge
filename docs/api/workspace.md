@@ -1,8 +1,8 @@
-# Workspace and project
+Workspace and project
+=====================
 
-← [API index](README.md)
-
-## View
+View
+----
 
 | Function | Description |
 |----------|-------------|
@@ -16,7 +16,8 @@
 | `getPacketTracerVersion()` | Packet Tracer version string |
 | `clearTopology()` | Delete every device and drawing |
 
-## Multiuser
+Multiuser
+---------
 
 | Function | Description |
 |----------|-------------|
@@ -24,7 +25,8 @@
 | `moveRemoteNetwork(name, x, y)` | Move it |
 | `removeRemoteNetwork(name)` | Delete it |
 
-## Files
+Files
+-----
 
 | Function | Description |
 |----------|-------------|
@@ -40,7 +42,8 @@ buildLan({ hosts: 4, network: "10.0.0.0/24" });
 saveProjectAs(getDefaultSaveFolder() + "/generated-lan.pkt");
 ```
 
-## Text files
+Text files
+----------
 
 Read and write files on the computer running Packet Tracer.
 
@@ -63,7 +66,8 @@ exportTopology(folder + "/topology.json");
 runScriptFile("C:/labs/campus.js");
 ```
 
-## Command log
+Command log
+-----------
 
 Packet Tracer can record every command typed in any CLI.
 

@@ -1,8 +1,8 @@
-# Routing labs
+Routing labs
+============
 
-← [Recipes](README.md)
-
-## Three routers in a chain with OSPF
+Three routers in a chain with OSPF
+----------------------------------
 
 ```js
 buildLine({ count: 3, prefix: "R", model: "2911", portA: "GigabitEthernet0/1", portB: "GigabitEthernet0/0", linkType: "cross" });
@@ -21,20 +21,23 @@ setInterfaceIp("R3", "GigabitEthernet0/0", links[1].b, links[1].mask);
 
 > Check the port names of `buildLine` for your model with `getPorts`.
 
-## EIGRP with passive LAN
+EIGRP with passive LAN
+----------------------
 
 ```js
 configureEigrp("R1", { as: 100, networks: ["10.0.0.0/30", "192.168.1.0/24"], passive: "GigabitEthernet0/1" });
 ```
 
-## Static route with a floating backup
+Static route with a floating backup
+-----------------------------------
 
 ```js
 addStaticRoute("R1", "10.20.0.0/16", "10.0.0.2");
 addFloatingRoute("R1", "10.20.0.0/16", "10.9.0.2", 200);
 ```
 
-## Default route shared through OSPF
+Default route shared through OSPF
+---------------------------------
 
 ```js
 addDefaultRoute("EDGE", "203.0.113.1");

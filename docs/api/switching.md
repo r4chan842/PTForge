@@ -1,12 +1,12 @@
-# Switching
+Switching
+=========
 
 VLANs, trunks, EtherChannel, spanning tree, VTP and layer 2 security.
 
-← [API index](README.md)
-
 Arguments named `interfaces` accept a single name or an array. VLAN lists accept a number, an array or a string such as `"10-20"`.
 
-## VLANs and access ports
+VLANs and access ports
+----------------------
 
 | Function | Description |
 |----------|-------------|
@@ -31,7 +31,8 @@ setManagementIp("S1", 99, "192.168.99.2/24", null, "192.168.99.1");
 parkUnusedPorts("S1", ["FastEthernet0/20", "FastEthernet0/21"], 999);
 ```
 
-## Trunks
+Trunks
+------
 
 | Function | Description |
 |----------|-------------|
@@ -40,7 +41,8 @@ parkUnusedPorts("S1", ["FastEthernet0/20", "FastEthernet0/21"], 999);
 
 Options: `encapsulation`, `nonegotiate`. On multilayer switches `switchport trunk encapsulation dot1q` is added automatically. Some Packet Tracer versions reject it on a 3650; the rejected line is reported in the return value and the rest of the config still applies.
 
-## EtherChannel
+EtherChannel
+------------
 
 | Function | Description |
 |----------|-------------|
@@ -56,7 +58,8 @@ createEtherChannel("S1", 1, ["FastEthernet0/23", "FastEthernet0/24"], "active", 
 createEtherChannel("S2", 1, ["FastEthernet0/23", "FastEthernet0/24"], "passive", { trunk: true });
 ```
 
-## Spanning tree
+Spanning tree
+-------------
 
 | Function | Description |
 |----------|-------------|
@@ -67,13 +70,15 @@ createEtherChannel("S2", 1, ["FastEthernet0/23", "FastEthernet0/24"], "passive",
 | `enablePortfast(name, interfaces, bpduguard)` | PortFast, BPDU guard on by default |
 | `enablePortfastDefault(name, bpduguard)` | PortFast on every access port |
 
-## VTP
+VTP
+---
 
 | Function | Description |
 |----------|-------------|
 | `configureVtp(name, options)` | `domain`, `mode` (`server`, `client`, `transparent`), `password`, `version`, `pruning` |
 
-## Port security and DHCP snooping
+Port security and DHCP snooping
+-------------------------------
 
 | Function | Description |
 |----------|-------------|
@@ -91,7 +96,8 @@ configurePortSecurity("S1", ["FastEthernet0/1", "FastEthernet0/2"], { maximum: 2
 enableDhcpSnooping("S1", [10, 20], "GigabitEthernet0/1", { untrusted: ["FastEthernet0/1"], rateLimit: 10 });
 ```
 
-## Command builders
+Command builders
+----------------
 
 | Function | Returns |
 |----------|---------|

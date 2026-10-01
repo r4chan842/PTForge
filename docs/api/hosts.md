@@ -1,10 +1,10 @@
-# End devices
+End devices
+===========
 
 IP configuration for PC, Laptop, Server, Printer and other hosts. The default port is `FastEthernet0`. Laptops and tablets can use `Wireless0`.
 
-← [API index](README.md)
-
-## IPv4
+IPv4
+----
 
 | Function | Description |
 |----------|-------------|
@@ -29,7 +29,8 @@ runHostCommand("PC1", "ipconfig /all");
 
 > Calling `list.forEach(setPcDhcp)` passes the array index as the port name. Use `list.forEach(function (pc) { setPcDhcp(pc); })` instead.
 
-## IPv6
+IPv6
+----
 
 | Function | Description |
 |----------|-------------|

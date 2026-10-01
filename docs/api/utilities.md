@@ -1,10 +1,10 @@
-# Utilities
+Utilities
+=========
 
 Helpers available in every script.
 
-← [API index](README.md)
-
-## IPv4
+IPv4
+----
 
 | Function | Example | Result |
 |----------|---------|--------|
@@ -27,7 +27,8 @@ Helpers available in every script.
 | `networkAndMask(address)` | `networkAndMask("10.0.0.1/30")` | `"10.0.0.0 255.255.255.252"` |
 | `aclAddress(value)` | `aclAddress("10.0.0.0/8")` | `"10.0.0.0 0.255.255.255"` |
 
-## Output
+Output
+------
 
 | Function | Description |
 |----------|-------------|
@@ -35,7 +36,8 @@ Helpers available in every script.
 | `log(value)` | Write a line to the output panel without interrupting the script |
 | `showMessage(text)` | Show a message box |
 
-## Lists and colors
+Lists and colors
+----------------
 
 | Function | Description |
 |----------|-------------|

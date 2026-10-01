@@ -1,10 +1,10 @@
-# Devices
+Devices
+=======
 
 Create, find, move and inspect devices on the logical workspace.
 
-← [API index](README.md)
-
-## Lifecycle
+Lifecycle
+---------
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -28,7 +28,8 @@ removeDevice(["PC1", "PC2"]);
 
 > `addDevice` throws when the model is unknown or the name already exists, so a typo never goes unnoticed.
 
-## Position
+Position
+--------
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -38,7 +39,8 @@ removeDevice(["PC1", "PC2"]);
 | `movePhysical(name, x, y)` | bool | Move inside the physical workspace |
 | `movePhysicalBy(name, dx, dy)` | bool | Relative move in the physical workspace |
 
-## Queries
+Queries
+-------
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -60,7 +62,8 @@ var info = getDeviceInfo("R1");
 showResult(info.ports);
 ```
 
-## Power and time
+Power and time
+--------------
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -68,7 +71,8 @@ showResult(info.ports);
 | `getPower(name)` | bool | Current power state |
 | `setDeviceTime(name, year, month, day, hour, minute, second)` | bool | Set the device clock |
 
-## Modules
+Modules
+-------
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -84,7 +88,8 @@ addModules("R1", { "0/0": "HWIC-2T", "0/1": "HWIC-2T" });
 
 Slot `0/1` on a 2911 creates `Serial0/1/0` and `Serial0/1/1`. The full module list is in [modules](../reference/modules.md).
 
-## Ports
+Ports
+-----
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -102,7 +107,8 @@ var next = getFreePorts("S1", "FastEthernet")[0];
 addLink("S1", next, "PC9", "FastEthernet0", "straight");
 ```
 
-## Custom data
+Custom data
+-----------
 
 | Function | Returns | Description |
 |----------|---------|-------------|

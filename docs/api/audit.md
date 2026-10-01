@@ -1,10 +1,10 @@
-# Audit
+Audit
+=====
 
 Find common mistakes in a topology in one call. These functions only read state, so they are safe to run at any time. `auditNetwork()` also shows its findings in the **Problems** style list of the editor.
 
-← [API index](README.md)
-
-## Network audit
+Network audit
+-------------
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -23,7 +23,8 @@ Each finding is `{ severity, rule, device, port, message }`.
 | `no-port-security` | info | A cabled access port without port security |
 | `unused-enabled` | info | A switch port with no cable that is not shut down |
 
-## Inventory
+Inventory
+---------
 
 | Function | Returns | Description |
 |----------|---------|-------------|
@@ -35,7 +36,8 @@ Each finding is `{ severity, rule, device, port, message }`.
 | `findUnaddressedHosts()` | object[] | `{ device, port }` |
 | `getTopologySummary()` | object | `{ devices, links, byType, linkTypes, addresses, subnets }` |
 
-## Example
+Example
+-------
 
 ```js
 var result = auditNetwork();
