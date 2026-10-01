@@ -9,14 +9,12 @@ const order = ["fa", "de", "es", "fr", "pt-BR", "ru", "tr", "ar", "zh-CN", "ja"]
 const repo = "https://github.com/r4chan842/PTForge";
 
 const banner = [
-    "```",
     " ____ _____ _____",
     "|  _ \\_   _|  ___|__  _ __ __ _  ___",
     "| |_) || | | |_ / _ \\| '__/ _` |/ _ \\",
     "|  __/ | | |  _| (_) | | | (_| |  __/",
     "|_|    |_| |_|  \\___/|_|  \\__, |\\___|",
     "                          |___/",
-    "```"
 ];
 
 function underline(text, mark) {
@@ -29,20 +27,19 @@ function load(lang) {
 }
 
 function languages(current) {
-    return order.map((lang) => lang === current ? load(lang).lang : "[" + load(lang).lang + "](README." + lang + ".md)")
-        .concat(["[English](../README.md)"]).join(", ");
+    return order.map((lang) => lang === current ? load(lang).lang : load(lang).lang + " i18n/README." + lang + ".md")
+        .concat(["English README.md"]).join(", ");
 }
 
 function page(lang) {
     const s = load(lang);
-    const body = banner.concat([
+    const body = banner.map((line) => "    " + line).concat([
         "",
         underline("PTForge", "="),
         "",
         s.intro,
         "",
-        "> [!WARNING]",
-        "> " + s.warning,
+        s.warning,
         "",
         s.note,
         "",
@@ -52,8 +49,8 @@ function page(lang) {
         underline(s.quick, "-"),
         "",
         "* " + s.latest + ": " + repo + "/releases/latest",
-        "* " + s.install + ": [docs/guides/installation.md](../docs/guides/installation.md)",
-        "* " + s.first + ": [docs/guides/getting-started.md](../docs/guides/getting-started.md)",
+        "* " + s.install + ": docs/guides/installation.md",
+        "* " + s.first + ": docs/guides/getting-started.md",
         "* " + s.report + ": " + repo + "/issues",
         "",
         "",
@@ -70,7 +67,7 @@ function page(lang) {
         "",
         underline(s.license, "-"),
         "",
-        s.licenseText + " [LICENSE](../LICENSE)",
+        s.licenseText + " LICENSE",
         "",
         s.tm,
         ""

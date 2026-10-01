@@ -3,7 +3,7 @@ Switching
 
 VLANs, trunks, EtherChannel, spanning tree, VTP and layer 2 security.
 
-Arguments named `interfaces` accept a single name or an array. VLAN lists accept a number, an array or a string such as `"10-20"`.
+Arguments named interfaces accept a single name or an array. VLAN lists accept a number, an array or a string such as "10-20".
 
 VLANs and access ports
 ----------------------
@@ -19,17 +19,15 @@ VLANs and access ports
 | `addSvi(name, vlan, address, mask, description)` | `interface VlanX` with an address |
 | `setManagementIp(name, vlan, address, mask, gateway)` | SVI plus `ip default-gateway` |
 
-Access port options: `voiceVlan`, `portfast`, `bpduguard`, `description`.
+Access port options: voiceVlan, portfast, bpduguard, description.
 
-```js
-createVlans("S1", { 10: "SALES", 20: "IT", 99: "MGMT", 999: "PARKING" });
-assignPorts("S1", {
-    10: ["FastEthernet0/1", "FastEthernet0/2"],
-    20: ["FastEthernet0/3", "FastEthernet0/4"]
-}, { portfast: true, bpduguard: true });
-setManagementIp("S1", 99, "192.168.99.2/24", null, "192.168.99.1");
-parkUnusedPorts("S1", ["FastEthernet0/20", "FastEthernet0/21"], 999);
-```
+    createVlans("S1", { 10: "SALES", 20: "IT", 99: "MGMT", 999: "PARKING" });
+    assignPorts("S1", {
+        10: ["FastEthernet0/1", "FastEthernet0/2"],
+        20: ["FastEthernet0/3", "FastEthernet0/4"]
+    }, { portfast: true, bpduguard: true });
+    setManagementIp("S1", 99, "192.168.99.2/24", null, "192.168.99.1");
+    parkUnusedPorts("S1", ["FastEthernet0/20", "FastEthernet0/21"], 999);
 
 Trunks
 ------
@@ -39,7 +37,7 @@ Trunks
 | `setTrunkPort(name, interfaces, allowed, native, options)` | Trunk mode with allowed and native VLAN |
 | `setDtpMode(name, interfaces, mode)` | `switchport mode dynamic desirable` and friends |
 
-Options: `encapsulation`, `nonegotiate`. On multilayer switches `switchport trunk encapsulation dot1q` is added automatically. Some Packet Tracer versions reject it on a 3650; the rejected line is reported in the return value and the rest of the config still applies.
+Options: encapsulation, nonegotiate. On multilayer switches switchport trunk encapsulation dot1q is added automatically. Some Packet Tracer versions reject it on a 3650; the rejected line is reported in the return value and the rest of the config still applies.
 
 EtherChannel
 ------------
@@ -49,14 +47,12 @@ EtherChannel
 | `createEtherChannel(name, group, interfaces, mode, options)` | Bundle ports into `Port-channelN` |
 | `setEtherChannelLoadBalance(name, method)` | `port-channel load-balance` |
 
-Modes: `active`, `passive` (LACP), `desirable`, `auto` (PAgP), `on`.
+Modes: active, passive (LACP), desirable, auto (PAgP), on.
 
-Options: `trunk`, `allowedVlans`, `nativeVlan`, `encapsulation`, `accessVlan`, `address` and `mask` for a layer 3 channel.
+Options: trunk, allowedVlans, nativeVlan, encapsulation, accessVlan, address and mask for a layer 3 channel.
 
-```js
-createEtherChannel("S1", 1, ["FastEthernet0/23", "FastEthernet0/24"], "active", { trunk: true });
-createEtherChannel("S2", 1, ["FastEthernet0/23", "FastEthernet0/24"], "passive", { trunk: true });
-```
+    createEtherChannel("S1", 1, ["FastEthernet0/23", "FastEthernet0/24"], "active", { trunk: true });
+    createEtherChannel("S2", 1, ["FastEthernet0/23", "FastEthernet0/24"], "passive", { trunk: true });
 
 Spanning tree
 -------------
@@ -87,14 +83,12 @@ Port security and DHCP snooping
 | `enableDhcpSnooping(name, vlans, trusted, options)` | DHCP snooping with trusted ports |
 | `enableArpInspection(name, vlans, trusted)` | Dynamic ARP inspection |
 
-Port security options: `maximum` (1), `violation` (`shutdown`, `restrict`, `protect`), `sticky` (true), `macs`, `agingTime`.
+Port security options: maximum (1), violation (shutdown, restrict, protect), sticky (true), macs, agingTime.
 
-DHCP snooping options: `untrusted` ports, `rateLimit` (15), `option82`.
+DHCP snooping options: untrusted ports, rateLimit (15), option82.
 
-```js
-configurePortSecurity("S1", ["FastEthernet0/1", "FastEthernet0/2"], { maximum: 2, violation: "restrict" });
-enableDhcpSnooping("S1", [10, 20], "GigabitEthernet0/1", { untrusted: ["FastEthernet0/1"], rateLimit: 10 });
-```
+    configurePortSecurity("S1", ["FastEthernet0/1", "FastEthernet0/2"], { maximum: 2, violation: "restrict" });
+    enableDhcpSnooping("S1", [10, 20], "GigabitEthernet0/1", { untrusted: ["FastEthernet0/1"], rateLimit: 10 });
 
 Command builders
 ----------------

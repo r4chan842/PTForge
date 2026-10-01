@@ -1,10 +1,13 @@
-# Code of conduct
+Code of conduct
+===============
 
-## Our pledge
+Our pledge
+----------
 
 We as members, contributors and maintainers pledge to make participation in the PTForge community a harassment free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
-## Our standards
+Our standards
+-------------
 
 Examples of behavior that contributes to a positive environment:
 
@@ -23,25 +26,27 @@ Examples of unacceptable behavior:
 - Sharing graded lab or exam answers in a way that breaks course rules
 - Other conduct that could reasonably be considered inappropriate
 
-## Enforcement responsibilities
+Enforcement responsibilities
+----------------------------
 
 Maintainers clarify and enforce these standards and may remove, edit or reject comments, commits, code, issues and other contributions that do not follow them.
 
-## Scope
+Scope
+-----
 
 This code applies in every project space, including issues, pull requests and discussions, and when someone officially represents the project elsewhere.
 
-## Enforcement
+Enforcement
+-----------
 
-Report unacceptable behavior privately through the repository **Security** tab or to the maintainer's GitHub profile. Every report is reviewed promptly and fairly, and the reporter's privacy is respected.
+Report unacceptable behavior privately through the repository Security tab or to the maintainer's GitHub profile. Every report is reviewed promptly and fairly, and the reporter's privacy is respected.
 
-| Impact | Consequence |
-|--------|-------------|
-| Correction | A private written warning explaining the problem |
-| Warning | A warning with consequences for continued behavior |
-| Temporary ban | A temporary ban from all interaction with the community |
-| Permanent ban | A permanent ban from all interaction with the community |
+* Correction: A private written warning explaining the problem
+* Warning: A warning with consequences for continued behavior
+* Temporary ban: A temporary ban from all interaction with the community
+* Permanent ban: A permanent ban from all interaction with the community
 
-## Attribution
+Attribution
+-----------
 
-This code of conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org), version 2.1.
+This code of conduct is adapted from the Contributor Covenant (https://www.contributor-covenant.org), version 2.1.

@@ -17,7 +17,7 @@ const setups = {
 
 function blocks(file) {
     const md = fs.readFileSync(path.join(root, "docs", "recipes", file), "utf8");
-    return [...md.matchAll(/```js\n([\s\S]*?)```/g)].map((m) => m[1]);
+    return [...md.matchAll(/(?:^|\n\n)((?: {4}.*\n|\n(?= {4}))+)/g)].map((m) => m[1].replace(/^ {4}/gm, ""));
 }
 
 function allAccepted(result) {

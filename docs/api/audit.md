@@ -1,7 +1,7 @@
 Audit
 =====
 
-Find common mistakes in a topology in one call. These functions only read state, so they are safe to run at any time. `auditNetwork()` also shows its findings in the **Problems** style list of the editor.
+Find common mistakes in a topology in one call. These functions only read state, so they are safe to run at any time. auditNetwork() also shows its findings in the Problems style list of the editor.
 
 Network audit
 -------------
@@ -11,17 +11,17 @@ Network audit
 | `auditNetwork()` | object | Runs every rule below. Returns `{ errors, warnings, infos, findings }` |
 | `auditSwitch(name)` | object[] | Switch rules for one switch |
 
-Each finding is `{ severity, rule, device, port, message }`.
+Each finding is { severity, rule, device, port, message }.
 
-| Rule | Severity | Meaning |
-|------|----------|---------|
-| `duplicate-ip` | error | The same IPv4 address on more than one port |
-| `subnet-mismatch` | error | Both ends of a cable have an address, but not in the same subnet |
-| `link-down` | warning | A cable whose port is down on one side |
-| `no-address` | warning | A cabled end device port without an address or DHCP |
-| `vlan1-access` | warning | An active access port left in VLAN 1 |
-| `no-port-security` | info | A cabled access port without port security |
-| `unused-enabled` | info | A switch port with no cable that is not shut down |
+    Rule              Severity  Meaning
+    ----------------  --------  ----------------------------------------------------------------
+    duplicate-ip      error     The same IPv4 address on more than one port
+    subnet-mismatch   error     Both ends of a cable have an address, but not in the same subnet
+    link-down         warning   A cable whose port is down on one side
+    no-address        warning   A cabled end device port without an address or DHCP
+    vlan1-access      warning   An active access port left in VLAN 1
+    no-port-security  info      A cabled access port without port security
+    unused-enabled    info      A switch port with no cable that is not shut down
 
 Inventory
 ---------
@@ -39,11 +39,9 @@ Inventory
 Example
 -------
 
-```js
-var result = auditNetwork();
-if (result.errors) {
-    log(result.findings.filter(function (f) { return f.severity === "error"; }));
-}
+    var result = auditNetwork();
+    if (result.errors) {
+        log(result.findings.filter(function (f) { return f.severity === "error"; }));
+    }
 
-showResult(getSubnets());
-```
+    showResult(getSubnets());

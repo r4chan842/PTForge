@@ -48,29 +48,23 @@ A ping matrix from every router and switch to every address in the topology, wit
 | `pingTest(source, target, count)` | One immediate ping with a parsed result: `{ source, target, ip, state, percent, sent, received, rtt, output }` |
 | `parsePingOutput(text)` | Read IOS or host ping output: `{ sent, received, percent, rtt }` |
 
-A ping takes simulated time. Packet Tracer only moves time forward after the script returns, so a ping read inside the same call always looks like `0 percent`. `reachability` and `pingMatrix` send each ping through the device's command line and listen for the `outputWritten` and `commandEnded` events of `TerminalLine`. The returned report starts with every row `pending` (`{ rows, total, pending, done: false, ok, partial, failed, unknown, sources, targets }`) and the same object is filled in as replies arrive. The final report is sent to the Reachability view, to the terminal that started it, and to `onDone`.
+A ping takes simulated time. Packet Tracer only moves time forward after the script returns, so a ping read inside the same call always looks like 0 percent. reachability and pingMatrix send each ping through the device's command line and listen for the outputWritten and commandEnded events of TerminalLine. The returned report starts with every row pending ({ rows, total, pending, done: false, ok, partial, failed, unknown, sources, targets }) and the same object is filled in as replies arrive. The final report is sent to the Reachability view, to the terminal that started it, and to onDone.
 
-`state` is `pending`, `ok` (every reply came back), `partial` (some replies, usually the first ping while ARP resolves), `failed`, `unknown` (output could not be read) or `error` (bad target). Each device runs its pings one after another, and all devices run in parallel.
+state is pending, ok (every reply came back), partial (some replies, usually the first ping while ARP resolves), failed, unknown (output could not be read) or error (bad target). Each device runs its pings one after another, and all devices run in parallel.
 
-```js
-pingAll();
-```
+    pingAll();
 
-```js
-reachability({
-    sources: ["R1", "R2"],
-    count: 2,
-    onDone: function (report) {
-        report.rows.filter(function (r) { return r.state !== "ok"; }).forEach(function (r) {
-            log(r.source + " -> " + r.target + " " + r.state);
-        });
-    }
-});
-```
+    reachability({
+        sources: ["R1", "R2"],
+        count: 2,
+        onDone: function (report) {
+            report.rows.filter(function (r) { return r.state !== "ok"; }).forEach(function (r) {
+                log(r.source + " -> " + r.target + " " + r.state);
+            });
+        }
+    });
 
-```js
-setSimulationMode(true);
-setSimulationFilter("ICMP");
-addSimplePdu("PC1", "SRV");
-stepForward(5);
-```
+    setSimulationMode(true);
+    setSimulationFilter("ICMP");
+    addSimplePdu("PC1", "SRV");
+    stepForward(5);

@@ -3,9 +3,9 @@ Canvas
 
 Notes, shapes, zones and labels on the logical workspace.
 
-Colors accept a name, `"#rrggbb"`, `"#rgb"` or `[r, g, b]`. Names: `black`, `white`, `gray`, `red`, `green`, `blue`, `yellow`, `orange`, `purple`, `cyan`, `pink`, `teal`, `navy`, `brown`.
+Colors accept a name, "#rrggbb", "#rgb" or [r, g, b]. Names: black, white, gray, red, green, blue, yellow, orange, purple, cyan, pink, teal, navy, brown.
 
-Every drawing goes on the current layer. Pass `layer` to override it.
+Every drawing goes on the current layer. Pass layer to override it.
 
 Notes
 -----
@@ -35,13 +35,11 @@ Shapes
 | `drawZone(x, y, width, height, label, color, lineWidth)` | ids | Rectangle with a label in the corner |
 | `drawZoneAround(devices, label, color, padding)` | ids | Zone that fits around devices |
 
-```js
-drawZoneAround(["S1", "PC1", "PC2"], "VLAN 10 - Sales", "green");
-drawArrow(600, 100, 480, 100, "red", 3);
-drawDashedLine(50, 400, 750, 400, "gray");
-```
+    drawZoneAround(["S1", "PC1", "PC2"], "VLAN 10 - Sales", "green");
+    drawArrow(600, 100, 480, 100, "red", 3);
+    drawDashedLine(50, 400, 750, 400, "gray");
 
-> The Packet Tracer API has no filled rectangle. `drawRect` and `drawZone` build outlines from lines.
+The Packet Tracer API has no filled rectangle. drawRect and drawZone build outlines from lines.
 
 Labels
 ------
@@ -54,12 +52,10 @@ Labels
 | `labelWithIp(name, port, offsetY)` | id | Device name plus the port address |
 | `labelLink(dev1, dev2, text)` | id | Note in the middle between two devices |
 
-```js
-labelAllDevices();
-labelWithIp("PC1", "FastEthernet0", 60);
-labelLink("R1", "R2", "10.0.0.0/30");
-labelAllDevices(function (name) { return name + " (" + getDeviceModel(name) + ")"; });
-```
+    labelAllDevices();
+    labelWithIp("PC1", "FastEthernet0", 60);
+    labelLink("R1", "R2", "10.0.0.0/30");
+    labelAllDevices(function (name) { return name + " (" + getDeviceModel(name) + ")"; });
 
 Managing items
 --------------
@@ -87,10 +83,8 @@ Layers
 | `useLayer(layer)` | number | Switch to a layer |
 | `currentLayer()` | number | Layer in use |
 
-```js
-var background = newLayer();
-drawZone(20, 20, 800, 500, "Campus", "navy");
-newLayer();
-labelAllDevices();
-clearLayer(background);
-```
+    var background = newLayer();
+    drawZone(20, 20, 800, 500, "Campus", "navy");
+    newLayer();
+    labelAllDevices();
+    clearLayer(background);

@@ -14,13 +14,11 @@ Switch ports
 | `findSecurityViolations(name)` | object[] | Ports with at least one violation |
 | `setPortCdp(name, port, enabled)` | bool | Turn CDP on or off on a port |
 
-```js
-getSwitchportTable("S1").forEach(function (p) {
-    if (p.access && p.accessVlan === 1 && p.up) {
-        log(p.port + " is still in VLAN 1");
-    }
-});
-```
+    getSwitchportTable("S1").forEach(function (p) {
+        if (p.access && p.accessVlan === 1 && p.up) {
+            log(p.port + " is still in VLAN 1");
+        }
+    });
 
 Switching protocols
 -------------------
@@ -35,13 +33,11 @@ Switching protocols
 | `addStaticMac(name, mac, vlan, port)` | bool | Static MAC address table entry |
 | `removeStaticMac(name, mac, vlan, port)` | bool | Remove a static entry |
 
-```js
-createVlans("S1", { 10: "SALES" });
-if (!hasVlan("S1", 10)) {
-    showResult("VLAN 10 was not created");
-}
-log("Root for VLAN 1: " + findRootBridge());
-```
+    createVlans("S1", { 10: "SALES" });
+    if (!hasVlan("S1", 10)) {
+        showResult("VLAN 10 was not created");
+    }
+    log("Root for VLAN 1: " + findRootBridge());
 
 Routing protocols
 -----------------
@@ -51,4 +47,4 @@ Routing protocols
 | `getOspfInfo(name)` | object[] | `{ processId, routerId, areas, networks, distance }` for every OSPF process |
 | `getEigrpInfo(name)` | object[] | `{ as }` for every EIGRP process |
 
-> `modeCode` values are the raw Packet Tracer enum numbers. The Cisco documentation does not publish their names.
+modeCode values are the raw Packet Tracer enum numbers. The Cisco documentation does not publish their names.

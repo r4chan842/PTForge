@@ -14,19 +14,17 @@ Lifecycle
 | `renameDevice(oldName, newName)` | bool | Rename. Throws if the new name is taken |
 | `restartDevice(name)` | bool | Power cycle |
 
-```js
-addDevice("R1", "2911", 100, 100);
+    addDevice("R1", "2911", 100, 100);
 
-addDevices([
-    ["S1", "2960-24TT", 100, 250],
-    ["PC1", "PC-PT", 50, 400],
-    ["PC2", "PC-PT", 150, 400]
-]);
+    addDevices([
+        ["S1", "2960-24TT", 100, 250],
+        ["PC1", "PC-PT", 50, 400],
+        ["PC2", "PC-PT", 150, 400]
+    ]);
 
-removeDevice(["PC1", "PC2"]);
-```
+    removeDevice(["PC1", "PC2"]);
 
-> `addDevice` throws when the model is unknown or the name already exists, so a typo never goes unnoticed.
+addDevice throws when the model is unknown or the name already exists, so a typo never goes unnoticed.
 
 Position
 --------
@@ -50,17 +48,15 @@ Queries
 | `getDeviceType(name)` | number | Numeric device type |
 | `getDeviceInfo(name)` | object | Model, type, power, serial, position and every port in the same shape as `getPortInfo` |
 
-`filter` accepts a type name, a type number or an array of both. See [device types](../reference/device-types.md).
+filter accepts a type name, a type number or an array of both. See device types (../reference/device-types.md).
 
-```js
-getDevices();
-getDevices("switch");
-getDevices(["router", "multilayerswitch"]);
-getDevices(null, "LAB-");
+    getDevices();
+    getDevices("switch");
+    getDevices(["router", "multilayerswitch"]);
+    getDevices(null, "LAB-");
 
-var info = getDeviceInfo("R1");
-showResult(info.ports);
-```
+    var info = getDeviceInfo("R1");
+    showResult(info.ports);
 
 Power and time
 --------------
@@ -81,12 +77,10 @@ Modules
 | `removeModule(name, slot)` | bool | Remove a module |
 | `getSupportedModules(name)` | string[] | Modules the device accepts |
 
-```js
-addDevice("R1", "2911", 100, 100);
-addModules("R1", { "0/0": "HWIC-2T", "0/1": "HWIC-2T" });
-```
+    addDevice("R1", "2911", 100, 100);
+    addModules("R1", { "0/0": "HWIC-2T", "0/1": "HWIC-2T" });
 
-Slot `0/1` on a 2911 creates `Serial0/1/0` and `Serial0/1/1`. The full module list is in [modules](../reference/modules.md).
+Slot 0/1 on a 2911 creates Serial0/1/0 and Serial0/1/1. The full module list is in ../reference/modules.md.
 
 Ports
 -----
@@ -102,10 +96,8 @@ Ports
 | `setPortMac(name, port, mac)` | bool | Override the MAC address |
 | `setPortClockRate(name, port, rate)` | bool | Serial clock rate through the API |
 
-```js
-var next = getFreePorts("S1", "FastEthernet")[0];
-addLink("S1", next, "PC9", "FastEthernet0", "straight");
-```
+    var next = getFreePorts("S1", "FastEthernet")[0];
+    addLink("S1", next, "PC9", "FastEthernet0", "straight");
 
 Custom data
 -----------

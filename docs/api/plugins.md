@@ -1,14 +1,14 @@
 Plugins
 =======
 
-Load `.pf` plugin files, enable and disable them, and run the commands, rules and checks they add. The format and a walkthrough are in the [plugin guide](../guides/plugins.md).
+Load .pf plugin files, enable and disable them, and run the commands, rules and checks they add. The format and a walkthrough are in the plugin guide (../guides/plugins.md).
 
 Functions
 ---------
 
 | Function | Returns | Description |
 |----------|---------|-------------|
-| `getPluginFolder()` | string | Folder scanned for `.pf` files, `<Documents>/PTForge/plugins` by default |
+| `getPluginFolder()` | string | Folder scanned for `.pf` files, `Documents/PTForge/plugins` by default |
 | `setPluginFolder(path)` | string | Use another folder. Active plugins are unloaded and the choice is remembered |
 | `listPlugins()` | object[] | `{ id, name, version, description, author, permissions, file, checksum, enabled, consent, error, commands, functions, rules, checks }`. `consent` is `none`, `granted` or `changed` |
 | `enablePlugin(id, grant)` | boolean | Load a plugin. The first time, and after the file or its permissions change, `grant` must be `true` |
@@ -23,10 +23,8 @@ Functions
 Example
 -------
 
-```js
-showResult(listPlugins().map(function (p) { return p.id + " " + (p.enabled ? "on" : "off"); }));
-enablePlugin("host-audit", true);
-runPluginCommand("hosts", "");
-auditNetwork();
-runPluginChecks();
-```
+    showResult(listPlugins().map(function (p) { return p.id + " " + (p.enabled ? "on" : "off"); }));
+    enablePlugin("host-audit", true);
+    runPluginCommand("hosts", "");
+    auditNetwork();
+    runPluginChecks();

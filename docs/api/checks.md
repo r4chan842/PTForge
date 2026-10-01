@@ -1,14 +1,14 @@
 Lab Check
 =========
 
-Write the expected result of a lab as a list of checks, run it, and get a graded report. The report opens in the **Lab Check** panel of the editor, and a plain text version goes to the console. Instructors can use it to grade a lab, and students can use it to check their own work.
+Write the expected result of a lab as a list of checks, run it, and get a graded report. The report opens in the Lab Check panel of the editor, and a plain text version goes to the console. Instructors can use it to grade a lab, and students can use it to check their own work.
 
 How it works
 ------------
 
-1. `beginChecks(title)` starts a new report
-2. Every `check...` call adds one line, passed or failed, with a number of points (1 by default)
-3. `endChecks()` scores the report, shows it and returns it
+1. beginChecks(title) starts a new report
+2. Every check... call adds one line, passed or failed, with a number of points (1 by default)
+3. endChecks() scores the report, shows it and returns it
 
 A check never stops the script. If the condition throws (a device is missing, for example), the check fails and the error message becomes the hint.
 
@@ -33,25 +33,21 @@ Functions
 Example
 -------
 
-```js
-beginChecks("VLAN lab");
-checkDeviceExists("S1");
-checkLinked("S1", "PC1");
-checkVlan("S1", 10, 2);
-checkIpAddress("PC1", "FastEthernet0", "192.168.10.11", 24);
-checkConfigContains("S1", "switchport mode trunk");
-check("Two VLANs besides default", function () {
-    return getVlans("S1").filter(function (v) { return v.id > 1 && v.id < 1002; }).length >= 2;
-}, "create VLAN 10 and 20");
-var report = endChecks();
-log(report.percent + "%");
-```
+    beginChecks("VLAN lab");
+    checkDeviceExists("S1");
+    checkLinked("S1", "PC1");
+    checkVlan("S1", 10, 2);
+    checkIpAddress("PC1", "FastEthernet0", "192.168.10.11", 24);
+    checkConfigContains("S1", "switchport mode trunk");
+    check("Two VLANs besides default", function () {
+        return getVlans("S1").filter(function (v) { return v.id > 1 && v.id < 1002; }).length >= 2;
+    }, "create VLAN 10 and 20");
+    var report = endChecks();
+    log(report.percent + "%");
 
-The same lab with `runChecks`:
+The same lab with runChecks:
 
-```js
-runChecks("Quick check", [
-    { name: "R1 is up", test: function () { return getPortInfo("R1", "GigabitEthernet0/0").up; } },
-    { name: "OSPF router id", test: function () { return getOspfInfo("R1")[0].routerId === "1.1.1.1"; }, points: 2 }
-]);
-```
+    runChecks("Quick check", [
+        { name: "R1 is up", test: function () { return getPortInfo("R1", "GigabitEthernet0/0").up; } },
+        { name: "OSPF router id", test: function () { return getOspfInfo("R1")[0].routerId === "1.1.1.1"; }, points: 2 }
+    ]);

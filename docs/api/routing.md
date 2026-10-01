@@ -3,7 +3,7 @@ Routing
 
 Static routes, OSPF, EIGRP, RIP, BGP, IPv6 routing and redistribution.
 
-Networks can be written as `10.0.0.0/24`. Wildcard masks are calculated for you.
+Networks can be written as 10.0.0.0/24. Wildcard masks are calculated for you.
 
 Static
 ------
@@ -20,12 +20,10 @@ Static
 
 Both styles work:
 
-```js
-addStaticRoute("R1", "10.2.0.0/16", "10.0.0.2");
-addStaticRoute("R1", "10.2.0.0", "255.255.0.0", "10.0.0.2");
-addStaticRoute("R1", "10.3.0.0/16", "Serial0/1/0", 5);
-addDefaultRoute("R1", "203.0.113.1");
-```
+    addStaticRoute("R1", "10.2.0.0/16", "10.0.0.2");
+    addStaticRoute("R1", "10.2.0.0", "255.255.0.0", "10.0.0.2");
+    addStaticRoute("R1", "10.3.0.0/16", "Serial0/1/0", 5);
+    addDefaultRoute("R1", "203.0.113.1");
 
 OSPF
 ----
@@ -37,30 +35,28 @@ OSPF
 | `configureOspfv3(name, options)` | OSPFv3 for IPv6 |
 | `removeOspf(name, processId)` | `no router ospf` |
 
-`configureOspf` options:
+configureOspf options:
 
-| Option | Example | Result |
-|--------|---------|--------|
-| `processId` | `1` | Default 1 |
-| `routerId` | `"1.1.1.1"` | `router-id` |
-| `area` | `0` | Default area for plain networks |
-| `networks` | `["10.0.0.0/30", { network: "10.1.0.0/24", area: 1 }]` | `network ... area ...` |
-| `passive` | `["GigabitEthernet0/1"]` | `passive-interface` |
-| `defaultOriginate` | `true` | `default-information originate` |
-| `referenceBandwidth` | `1000` | `auto-cost reference-bandwidth` |
+    Option              Example                                               Result
+    ------------------  ----------------------------------------------------  -------------------------------
+    processId           1                                                     Default 1
+    routerId            "1.1.1.1"                                             router-id
+    area                0                                                     Default area for plain networks
+    networks            ["10.0.0.0/30", { network: "10.1.0.0/24", area: 1 }]  network ... area ...
+    passive             ["GigabitEthernet0/1"]                                passive-interface
+    defaultOriginate    true                                                  default-information originate
+    referenceBandwidth  1000                                                  auto-cost reference-bandwidth
 
-`setOspfInterface` options: `cost`, `priority`, `hello`, `dead`, `processId` with `area`, `md5Key` with `keyId`, `networkType`.
+setOspfInterface options: cost, priority, hello, dead, processId with area, md5Key with keyId, networkType.
 
-`configureOspfv3` options: `processId`, `routerId` (required), `interfaces` as an array or `{ interface: area }`, `area`, `passive`, `defaultOriginate`.
+configureOspfv3 options: processId, routerId (required), interfaces as an array or { interface: area }, area, passive, defaultOriginate.
 
-```js
-configureOspf("R1", {
-    routerId: "1.1.1.1",
-    networks: ["10.0.12.0/30", "192.168.1.0/24"],
-    passive: "GigabitEthernet0/1"
-});
-setOspfInterface("R1", "GigabitEthernet0/0", { cost: 10, priority: 255 });
-```
+    configureOspf("R1", {
+        routerId: "1.1.1.1",
+        networks: ["10.0.12.0/30", "192.168.1.0/24"],
+        passive: "GigabitEthernet0/1"
+    });
+    setOspfInterface("R1", "GigabitEthernet0/0", { cost: 10, priority: 255 });
 
 EIGRP
 -----
@@ -72,9 +68,9 @@ EIGRP
 | `setEigrpSummary(name, interface, as, network, mask)` | Manual summary |
 | `removeEigrp(name, as)` | `no router eigrp` |
 
-`configureEigrp` options: `as` (required), `routerId`, `networks`, `passive`, `autoSummary` (off by default), `redistribute`.
+configureEigrp options: as (required), routerId, networks, passive, autoSummary (off by default), redistribute.
 
-`configureEigrpv6` options: `as`, `routerId` (required), `interfaces`, `passive`.
+configureEigrpv6 options: as, routerId (required), interfaces, passive.
 
 RIP
 ---
@@ -85,7 +81,7 @@ RIP
 | `configureRipng(name, processName, interfaces)` | RIPng for IPv6 |
 | `removeRip(name)` | `no router rip` |
 
-RIP options: `version`, `networks`, `passive`, `autoSummary`, `defaultOriginate`. Networks are converted to their classful form and duplicates are dropped.
+RIP options: version, networks, passive, autoSummary, defaultOriginate. Networks are converted to their classful form and duplicates are dropped.
 
 BGP
 ---
@@ -95,7 +91,7 @@ BGP
 | `configureBgp(name, options)` | eBGP or iBGP |
 | `removeBgp(name, as)` | `no router bgp` |
 
-Options: `as`, `routerId`, `neighbors` as `[{ ip, remoteAs, description }]`, `networks` in CIDR form.
+Options: as, routerId, neighbors as [{ ip, remoteAs, description }], networks in CIDR form.
 
 Redistribution
 --------------
@@ -104,12 +100,10 @@ Redistribution
 |----------|-------------|
 | `redistribute(name, into, source, options)` | `redistribute` under a routing process |
 
-```js
-redistribute("R1", { protocol: "ospf", id: 1 }, "static");
-redistribute("R2", { protocol: "eigrp", id: 100 }, "ospf 1", { metric: "10000 100 255 1 1500" });
-```
+    redistribute("R1", { protocol: "ospf", id: 1 }, "static");
+    redistribute("R2", { protocol: "eigrp", id: 100 }, "ospf 1", { metric: "10000 100 255 1 1500" });
 
-`subnets` is added automatically when redistributing into OSPF.
+subnets is added automatically when redistributing into OSPF.
 
 Command builders
 ----------------

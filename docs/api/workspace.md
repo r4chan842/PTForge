@@ -36,11 +36,9 @@ Files
 | `openProject(path)` | Open a .pkt file |
 | `getDefaultSaveFolder()` | Default save folder |
 
-```js
-clearTopology();
-buildLan({ hosts: 4, network: "10.0.0.0/24" });
-saveProjectAs(getDefaultSaveFolder() + "/generated-lan.pkt");
-```
+    clearTopology();
+    buildLan({ hosts: 4, network: "10.0.0.0/24" });
+    saveProjectAs(getDefaultSaveFolder() + "/generated-lan.pkt");
 
 Text files
 ----------
@@ -59,12 +57,10 @@ Read and write files on the computer running Packet Tracer.
 | `exportTopology(path)` | Save devices, positions and links as JSON |
 | `exportConfigs(folder, names)` | Save the running config of every router and switch, one file each |
 
-```js
-var folder = getDefaultSaveFolder() + "/lab-backup";
-exportConfigs(folder);
-exportTopology(folder + "/topology.json");
-runScriptFile("C:/labs/campus.js");
-```
+    var folder = getDefaultSaveFolder() + "/lab-backup";
+    exportConfigs(folder);
+    exportTopology(folder + "/topology.json");
+    runScriptFile("C:/labs/campus.js");
 
 Command log
 -----------
