@@ -23,93 +23,18 @@ Quick Start
 -----------
 
 * Get the latest release: https://github.com/r4chan842/PTForge/releases/latest
-* Install it: https://github.com/r4chan842/PTForge/blob/main/docs/guides/installation
-* Write a first script: https://github.com/r4chan842/PTForge/blob/main/docs/guides/getting-started
+* Install it: See https://r4chan842.github.io/PTForge/guides/installation.html
 * Report a bug: https://github.com/r4chan842/PTForge/issues
 
-A short script looks like this:
-
-    addDevice("R1", "2911", 300, 80);
-    addDevice("S1", "2960-24TT", 300, 220);
-    addLink("R1", "GigabitEthernet0/0", "S1", "GigabitEthernet0/1", "straight");
-    setInterfaceIp("R1", "GigabitEthernet0/0", "192.168.10.1/24");
-    createVlans("S1", { 10: "USERS" });
-    pingAll();
-
-
-Essential Documentation
------------------------
-
-All users should be familiar with:
-
-* Requirements and installation: https://github.com/r4chan842/PTForge/blob/main/docs/guides/installation
-* Known limitations: https://github.com/r4chan842/PTForge/blob/main/docs/guides/limitations
-* Function reference: https://github.com/r4chan842/PTForge/blob/main/docs/api/README
-* Cisco Packet Tracer API: https://tutorials.ptnetacad.net/help/default/IpcAPI/annotated.html
-* License: https://github.com/r4chan842/PTForge/blob/main/LICENSE
-
-A complete list of documents is kept in https://github.com/r4chan842/PTForge/blob/main/docs/README.
-
-The documentation can be viewed online at:
-https://r4chan842.github.io/PTForge/
-
-
-Who Are You?
-============
-
-Find your role below:
-
-* Student: Building and checking CCNA labs
-* Instructor: Preparing labs and grading them
-* Network Engineer: Automating topologies and configurations
-* Plugin Author: Extending PTForge with .pf plugins
-* Contributor: Working on PTForge itself
-
-
-For Specific Users
-==================
-
-Student
--------
-
-* Getting Started: https://github.com/r4chan842/PTForge/blob/main/docs/guides/getting-started
-* CCNA Topics: https://github.com/r4chan842/PTForge/blob/main/docs/ccna/README
-* Examples: https://github.com/r4chan842/PTForge/blob/main/examples/README
-* Subnetting Cheat Sheet: https://github.com/r4chan842/PTForge/blob/main/docs/cheatsheets/subnetting
-* Terminal: https://github.com/r4chan842/PTForge/blob/main/docs/guides/terminal
-
-Instructor
-----------
-
-* Lab Check: https://github.com/r4chan842/PTForge/blob/main/docs/api/checks
-* Audit: https://github.com/r4chan842/PTForge/blob/main/docs/api/audit
-* Lab Templates: https://github.com/r4chan842/PTForge/blob/main/templates/README
-* Lab Checklist: https://github.com/r4chan842/PTForge/blob/main/docs/ccna/lab-checklist
-
-Network Engineer
-----------------
-
-* Writing Scripts: https://github.com/r4chan842/PTForge/blob/main/docs/guides/writing-scripts
-* Cisco IOS Functions: https://github.com/r4chan842/PTForge/blob/main/docs/api/ios
-* Network Tools: https://github.com/r4chan842/PTForge/blob/main/docs/guides/network-tools
-* Recipes: https://github.com/r4chan842/PTForge/blob/main/docs/recipes/README
-* Debugger: https://github.com/r4chan842/PTForge/blob/main/docs/guides/debugger
-
-Plugin Author
+Documentation
 -------------
 
-* Plugin Guide: https://github.com/r4chan842/PTForge/blob/main/docs/guides/plugins
-* Plugin Functions: https://github.com/r4chan842/PTForge/blob/main/docs/api/plugins
-* Sample Plugins: https://github.com/r4chan842/PTForge/tree/main/plugins (plugins)
+The documentation, including the function reference, guides and
+translations, can be viewed online at:
+https://r4chan842.github.io/PTForge/
 
-Contributor
------------
-
-* Contributing: https://github.com/r4chan842/PTForge/blob/main/CONTRIBUTING
-* Architecture: https://github.com/r4chan842/PTForge/blob/main/docs/architecture/overview
-* Testing: https://github.com/r4chan842/PTForge/blob/main/docs/architecture/testing
-* Code of Conduct: https://github.com/r4chan842/PTForge/blob/main/CODE_OF_CONDUCT
-* Security Policy: https://github.com/r4chan842/PTForge/blob/main/SECURITY
+The Cisco Packet Tracer API that PTForge is built on is documented at:
+https://tutorials.ptnetacad.net/help/default/IpcAPI/annotated.html
 
 
 Communication and Support
@@ -117,15 +42,12 @@ Communication and Support
 
 * Issues: https://github.com/r4chan842/PTForge/issues
 * Discussions: https://github.com/r4chan842/PTForge/discussions
-* Changes between releases: https://github.com/r4chan842/PTForge/blob/main/CHANGELOG
-* Support: https://github.com/r4chan842/PTForge/blob/main/SUPPORT
 
 
 License
 =======
 
-PTForge is distributed under the MIT License. Third-party components are
-listed in https://github.com/r4chan842/PTForge/blob/main/THIRD_PARTY_NOTICES.
+PTForge is distributed under the MIT License. See LICENSE.
 
 Cisco and Packet Tracer are trademarks of Cisco Systems, Inc. PTForge is not
 affiliated with or endorsed by Cisco Systems, Inc.

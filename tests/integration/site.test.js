@@ -34,6 +34,20 @@ test("every local link and asset in the site resolves", () => {
     assert.deepStrictEqual(missing, []);
 });
 
+test("every anchor in the site points to an existing id", () => {
+    const ids = {};
+    html.forEach((f) => { ids[f] = new Set([...fs.readFileSync(f, "utf8").matchAll(/id="([^"]+)"/g)].map((m) => m[1])); });
+    const missing = [];
+    html.forEach((file) => {
+        for (const m of fs.readFileSync(file, "utf8").matchAll(/href="([^"]*)#([^"]+)"/g)) {
+            if (/^https?:/.test(m[1])) continue;
+            const target = m[1] ? path.join(path.dirname(file), m[1]) : file;
+            if (ids[target] && !ids[target].has(m[2])) missing.push(path.relative(out, file) + " -> " + m[1] + "#" + m[2]);
+        }
+    });
+    assert.deepStrictEqual(missing, []);
+});
+
 test("every documented function has an entry", () => {
     const text = fs.readFileSync(path.join(out, "api", "links.html"), "utf8");
     assert.match(text, /id="fn-addlink"/);

@@ -61,10 +61,11 @@ function resolveUrl(url, from) {
     if (local === null) {
         return { href: url, title: null };
     }
-    const clean = local.replace(/\/$/, "");
+    const [file, hash] = local.split("#");
+    const clean = file.replace(/\/$/, "");
     const target = pages[clean] || pages[clean + "/README"];
     if (target) {
-        return { href: relative(from, target.page), title: target.title };
+        return { href: relative(from, target.page) + (hash ? "#" + hash : ""), title: target.title };
     }
     return { href: url, title: null };
 }
@@ -389,6 +390,7 @@ body { margin: 0; color: var(--ink); background: #fff; font-family: Georgia, "Ti
 .search button { padding: 3px 10px; border: 1px solid #b9c3cc; border-left: 0; background: var(--side); font: inherit; cursor: pointer; }
 .search.wide { max-width: 520px; }
 .body { flex: 1; min-width: 0; padding-bottom: 40px; }
+.body::after { content: ""; display: block; height: 70vh; }
 .topbar { display: flex; justify-content: flex-end; }
 .language { font: inherit; font-size: 0.85rem; padding: 3px 6px; background: var(--side); border: 1px solid var(--rule); color: var(--ink); }
 h1, h2, h3 { font-weight: normal; color: var(--accent); line-height: 1.25; }
