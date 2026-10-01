@@ -7,7 +7,8 @@ const { labSetup } = require("./ui-lab");
 
 const root = path.join(__dirname, "..");
 const page = "file://" + path.join(root, "src", "ui", "index.html");
-const shots = path.join(root, "assets", "screenshots");
+const shots = path.join(require("os").tmpdir(), "ptforge-shots");
+require("fs").mkdirSync(shots, { recursive: true });
 
 const debugSample = [
     "var routers = [\"R1\", \"R2\"];",

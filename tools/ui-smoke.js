@@ -6,7 +6,8 @@ const { chromium } = require(process.env.PLAYWRIGHT_PATH || "playwright");
 
 const root = path.join(__dirname, "..");
 const page = "file://" + path.join(root, "src", "ui", "index.html");
-const shots = path.join(root, "assets", "screenshots");
+const shots = path.join(require("os").tmpdir(), "ptforge-shots");
+require("fs").mkdirSync(shots, { recursive: true });
 
 const fakePacketTracer = () => {
     window.__calls = [];
