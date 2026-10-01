@@ -18,11 +18,11 @@ Several features have only been tested outside Packet Tracer. Check the
 results of your scripts, keep backups of your .pkt files, and report problems
 in the issue tracker (https://github.com/r4chan842/PTForge/issues).
 
-Translations: فارسی (i18n/README.fa.md), Deutsch (i18n/README.de.md),
-Español (i18n/README.es.md), Français (i18n/README.fr.md),
-Português (i18n/README.pt-BR.md), Русский (i18n/README.ru.md),
-Türkçe (i18n/README.tr.md), العربية (i18n/README.ar.md),
-中文 (i18n/README.zh-CN.md), 日本語 (i18n/README.ja.md)
+Translations: فارسی (i18n/README.fa), Deutsch (i18n/README.de),
+Español (i18n/README.es), Français (i18n/README.fr),
+Português (i18n/README.pt-BR), Русский (i18n/README.ru),
+Türkçe (i18n/README.tr), العربية (i18n/README.ar),
+中文 (i18n/README.zh-CN), 日本語 (i18n/README.ja)
 
 
 Quick Start

@@ -12,9 +12,9 @@ PTForge, Cisco Packet Tracer için bir JavaScript betik eklentisidir. Packet Tra
 
 Geliştirme aşamasında. PTForge'da hâlâ bilinen hatalar var ve bazı özellikler yalnızca Packet Tracer dışında test edildi. Sonuçları kontrol edin, .pkt dosyalarınızı yedekleyin ve lütfen bulduğunuz sorunları bildirin (https://github.com/r4chan842/PTForge/issues).
 
-Bu sayfa bir çeviridir. Esas metin İngilizce README (README.md) dosyasıdır; tüm belgeler İngilizce yazılmıştır.
+Bu sayfa bir çeviridir. Esas metin İngilizce README (README) dosyasıdır; tüm belgeler İngilizce yazılmıştır.
 
-فارسی i18n/README.fa.md, Deutsch i18n/README.de.md, Español i18n/README.es.md, Français i18n/README.fr.md, Português i18n/README.pt-BR.md, Русский i18n/README.ru.md, Türkçe, العربية i18n/README.ar.md, 中文 i18n/README.zh-CN.md, 日本語 i18n/README.ja.md, English README.md
+فارسی i18n/README.fa, Deutsch i18n/README.de, Español i18n/README.es, Français i18n/README.fr, Português i18n/README.pt-BR, Русский i18n/README.ru, Türkçe, العربية i18n/README.ar, 中文 i18n/README.zh-CN, 日本語 i18n/README.ja, English README
 
 
 Hızlı başlangıç

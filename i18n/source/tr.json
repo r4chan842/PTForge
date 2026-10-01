@@ -1,7 +1,7 @@
 {
   "lang": "Türkçe",
   "intro": "PTForge, Cisco Packet Tracer için bir JavaScript betik eklentisidir. Packet Tracer'a bir düzenleyici, bir terminal ve bir hata ayıklayıcı ekler; topoloji kurmak, Cisco IOS cihazlarını, sunucuları ve istemcileri yapılandırmak ve sonucu doğrulamak için 380'den fazla fonksiyon içeren bir kütüphane sunar.",
-  "note": "Bu sayfa bir çeviridir. Esas metin İngilizce README (README.md) dosyasıdır; tüm belgeler İngilizce yazılmıştır.",
+  "note": "Bu sayfa bir çeviridir. Esas metin İngilizce README (README) dosyasıdır; tüm belgeler İngilizce yazılmıştır.",
   "quick": "Hızlı başlangıç",
   "latest": "Son sürüm",
   "install": "Kurulum",

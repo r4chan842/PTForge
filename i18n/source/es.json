@@ -1,7 +1,7 @@
 {
   "lang": "Español",
   "intro": "PTForge es una extensión de scripts en JavaScript para Cisco Packet Tracer. Añade a Packet Tracer un editor, una terminal y un depurador, junto con una biblioteca de más de 380 funciones para construir topologías, configurar dispositivos Cisco IOS, servidores y hosts, y verificar el resultado.",
-  "note": "Esta página es una traducción. El texto de referencia es el README en inglés (README.md); toda la documentación está escrita en inglés.",
+  "note": "Esta página es una traducción. El texto de referencia es el README en inglés (README); toda la documentación está escrita en inglés.",
   "quick": "Inicio rápido",
   "latest": "Última versión",
   "install": "Instalación",

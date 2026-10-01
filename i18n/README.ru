@@ -12,9 +12,9 @@ PTForge — расширение для написания скриптов на
 
 Ранняя стадия разработки. В PTForge ещё есть известные ошибки, а некоторые функции проверены только вне Packet Tracer. Проверяйте результаты, делайте резервные копии файлов .pkt и сообщайте о любых проблемах (https://github.com/r4chan842/PTForge/issues).
 
-Эта страница является переводом. Основным текстом считается README на английском языке (README.md); вся документация написана на английском.
+Эта страница является переводом. Основным текстом считается README на английском языке (README); вся документация написана на английском.
 
-فارسی i18n/README.fa.md, Deutsch i18n/README.de.md, Español i18n/README.es.md, Français i18n/README.fr.md, Português i18n/README.pt-BR.md, Русский, Türkçe i18n/README.tr.md, العربية i18n/README.ar.md, 中文 i18n/README.zh-CN.md, 日本語 i18n/README.ja.md, English README.md
+فارسی i18n/README.fa, Deutsch i18n/README.de, Español i18n/README.es, Français i18n/README.fr, Português i18n/README.pt-BR, Русский, Türkçe i18n/README.tr, العربية i18n/README.ar, 中文 i18n/README.zh-CN, 日本語 i18n/README.ja, English README
 
 
 Быстрый старт

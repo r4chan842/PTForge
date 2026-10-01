@@ -27,8 +27,8 @@ function load(lang) {
 }
 
 function languages(current) {
-    return order.map((lang) => lang === current ? load(lang).lang : load(lang).lang + " i18n/README." + lang + ".md")
-        .concat(["English README.md"]).join(", ");
+    return order.map((lang) => lang === current ? load(lang).lang : load(lang).lang + " i18n/README." + lang)
+        .concat(["English README"]).join(", ");
 }
 
 function page(lang) {
@@ -72,8 +72,8 @@ function page(lang) {
         s.tm,
         ""
     ]).join("\n");
-    return s.dir === "rtl" ? "<div dir=\"rtl\">\n\n" + body + "\n</div>\n" : body;
+    return body;
 }
 
-order.forEach((lang) => fs.writeFileSync(path.join(root, "i18n", "README." + lang + ".md"), page(lang)));
+order.forEach((lang) => fs.writeFileSync(path.join(root, "i18n", "README." + lang), page(lang)));
 console.log("wrote " + order.length + " translations");

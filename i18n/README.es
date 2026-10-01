@@ -12,9 +12,9 @@ PTForge es una extensión de scripts en JavaScript para Cisco Packet Tracer. Añ
 
 En desarrollo. PTForge todavía tiene errores conocidos y algunas funciones solo se han probado fuera de Packet Tracer. Revisa los resultados, guarda copias de tus archivos .pkt y por favor informa de cualquier problema (https://github.com/r4chan842/PTForge/issues).
 
-Esta página es una traducción. El texto de referencia es el README en inglés (README.md); toda la documentación está escrita en inglés.
+Esta página es una traducción. El texto de referencia es el README en inglés (README); toda la documentación está escrita en inglés.
 
-فارسی i18n/README.fa.md, Deutsch i18n/README.de.md, Español, Français i18n/README.fr.md, Português i18n/README.pt-BR.md, Русский i18n/README.ru.md, Türkçe i18n/README.tr.md, العربية i18n/README.ar.md, 中文 i18n/README.zh-CN.md, 日本語 i18n/README.ja.md, English README.md
+فارسی i18n/README.fa, Deutsch i18n/README.de, Español, Français i18n/README.fr, Português i18n/README.pt-BR, Русский i18n/README.ru, Türkçe i18n/README.tr, العربية i18n/README.ar, 中文 i18n/README.zh-CN, 日本語 i18n/README.ja, English README
 
 
 Inicio rápido
