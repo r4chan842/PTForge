@@ -1,0 +1,37 @@
+PTForge
+=======
+
+PTForge est une extension de scripts JavaScript pour Cisco Packet Tracer. Elle ajoute à Packet Tracer un éditeur, un terminal et un débogueur, ainsi qu'une bibliothèque de plus de 380 fonctions pour construire des topologies, configurer des équipements Cisco IOS, des serveurs et des hôtes, et vérifier le résultat.
+
+En cours de développement. PTForge contient encore des bugs connus et certaines fonctions n'ont été testées qu'en dehors de Packet Tracer. Vérifiez les résultats, sauvegardez vos fichiers .pkt et signalez tout problème: https://github.com/r4chan842/PTForge/issues.
+
+
+
+Démarrage rapide
+----------------
+
+* Dernière version: https://github.com/r4chan842/PTForge/releases/latest
+* Installation: https://github.com/r4chan842/PTForge/blob/main/docs/guides/installation
+* Premier script: https://github.com/r4chan842/PTForge/blob/main/docs/guides/getting-started
+* Signaler un bogue: https://github.com/r4chan842/PTForge/issues
+
+
+Documentation
+-------------
+
+La liste complète des documents se trouve dans https://github.com/r4chan842/PTForge/blob/main/docs/README.
+
+
+Communication et assistance
+---------------------------
+
+* Tickets: https://github.com/r4chan842/PTForge/issues
+* Discussions: https://github.com/r4chan842/PTForge/discussions
+
+
+Licence
+-------
+
+PTForge est distribué sous licence MIT. https://github.com/r4chan842/PTForge/blob/main/LICENSE
+
+Cisco et Packet Tracer sont des marques de Cisco Systems, Inc. PTForge n'est ni affilié à Cisco Systems, Inc. ni approuvé par cette société.

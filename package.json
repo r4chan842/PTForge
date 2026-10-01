@@ -12,7 +12,8 @@
         "catalog": "node tools/generate-catalog.js",
         "permissions": "node tools/generate-permissions.js",
         "check": "node tools/generate-catalog.js && node tools/generate-permissions.js && node tools/bundle.js && node --check release/ptforge.js && node --test tests/",
-        "ui-test": "node tools/ui-smoke.js && node tools/ui-workbench.js"
+        "ui-test": "node tools/ui-smoke.js && node tools/ui-workbench.js",
+        "site": "node tools/build-site.js"
     },
     "engines": {
         "node": ">=18"

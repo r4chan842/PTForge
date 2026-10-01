@@ -1,0 +1,37 @@
+PTForge
+=======
+
+PTForge 是 Cisco Packet Tracer 的 JavaScript 脚本扩展。它为 Packet Tracer 增加了编辑器、终端和调试器，并提供 380 多个函数，用于构建拓扑、配置 Cisco IOS 设备、服务器和主机，以及验证配置结果。
+
+早期开发中。 PTForge 仍有已知错误，部分功能只在 Packet Tracer 之外测试过。请核对结果，备份 .pkt 文件，并报告你发现的任何问题: https://github.com/r4chan842/PTForge/issues。
+
+
+
+快速开始
+--------
+
+* 获取最新版本: https://github.com/r4chan842/PTForge/releases/latest
+* 安装: https://github.com/r4chan842/PTForge/blob/main/docs/guides/installation
+* 编写第一个脚本: https://github.com/r4chan842/PTForge/blob/main/docs/guides/getting-started
+* 报告错误: https://github.com/r4chan842/PTForge/issues
+
+
+文档
+----
+
+完整的文档列表见 https://github.com/r4chan842/PTForge/blob/main/docs/README。
+
+
+交流与支持
+----------
+
+* 问题跟踪: https://github.com/r4chan842/PTForge/issues
+* 讨论区: https://github.com/r4chan842/PTForge/discussions
+
+
+许可证
+------
+
+PTForge 以 MIT 许可证发布。 https://github.com/r4chan842/PTForge/blob/main/LICENSE
+
+Cisco 和 Packet Tracer 是 Cisco Systems, Inc. 的商标。PTForge 与 Cisco Systems, Inc. 无关联，也未获得其认可。

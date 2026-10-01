@@ -1,0 +1,37 @@
+PTForge
+=======
+
+PTForge إضافة لكتابة السكربتات بلغة JavaScript في Cisco Packet Tracer. تضيف إلى Packet Tracer محررًا وطرفية ومنقّح أخطاء، ومكتبة تضم أكثر من 380 دالة لبناء الطوبولوجيا وإعداد أجهزة Cisco IOS والخوادم والأجهزة الطرفية والتحقق من النتيجة.
+
+قيد التطوير. لا يزال PTForge يحتوي على أخطاء معروفة، وبعض الميزات لم تُختبر إلا خارج Packet Tracer. تحقق من النتائج واحتفظ بنسخة احتياطية من ملفات .pkt، ويرجى الإبلاغ عن أي مشكلة: https://github.com/r4chan842/PTForge/issues.
+
+
+
+البدء السريع
+------------
+
+* أحدث إصدار: https://github.com/r4chan842/PTForge/releases/latest
+* التثبيت: https://github.com/r4chan842/PTForge/blob/main/docs/guides/installation
+* أول سكربت: https://github.com/r4chan842/PTForge/blob/main/docs/guides/getting-started
+* الإبلاغ عن خطأ: https://github.com/r4chan842/PTForge/issues
+
+
+الوثائق
+-------
+
+توجد القائمة الكاملة للوثائق في https://github.com/r4chan842/PTForge/blob/main/docs/README.
+
+
+التواصل والدعم
+--------------
+
+* المشكلات: https://github.com/r4chan842/PTForge/issues
+* النقاشات: https://github.com/r4chan842/PTForge/discussions
+
+
+الترخيص
+-------
+
+يُوزَّع PTForge بموجب ترخيص MIT. https://github.com/r4chan842/PTForge/blob/main/LICENSE
+
+Cisco وPacket Tracer علامتان تجاريتان لشركة Cisco Systems, Inc. ولا يرتبط PTForge بشركة Cisco Systems, Inc. ولا يحظى بتأييدها.

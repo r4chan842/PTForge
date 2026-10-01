@@ -1,0 +1,37 @@
+PTForge
+=======
+
+PTForge یک افزونه اسکریپت‌نویسی جاوااسکریپت برای Cisco Packet Tracer است. این افزونه یک ویرایشگر، یک ترمینال و یک دیباگر به Packet Tracer اضافه می‌کند و بیش از ۳۸۰ تابع برای ساخت توپولوژی، پیکربندی دستگاه‌های Cisco IOS، سرورها و میزبان‌ها و بررسی نتیجه در اختیار می‌گذارد.
+
+در حال توسعه. PTForge هنوز باگ‌های شناخته‌شده دارد و بعضی امکانات فقط بیرون از Packet Tracer تست شده‌اند. نتیجه را بررسی کنید، از فایل‌های .pkt نسخه پشتیبان نگه دارید و لطفاً هر مشکلی دیدید گزارش دهید: https://github.com/r4chan842/PTForge/issues.
+
+
+
+شروع سریع
+---------
+
+* دریافت آخرین نسخه: https://github.com/r4chan842/PTForge/releases/latest
+* نصب: https://github.com/r4chan842/PTForge/blob/main/docs/guides/installation
+* نوشتن اولین اسکریپت: https://github.com/r4chan842/PTForge/blob/main/docs/guides/getting-started
+* گزارش باگ: https://github.com/r4chan842/PTForge/issues
+
+
+مستندات
+-------
+
+فهرست کامل مستندات در https://github.com/r4chan842/PTForge/blob/main/docs/README نگهداری می‌شود.
+
+
+ارتباط و پشتیبانی
+-----------------
+
+* گزارش مشکل: https://github.com/r4chan842/PTForge/issues
+* گفتگو: https://github.com/r4chan842/PTForge/discussions
+
+
+مجوز
+----
+
+PTForge تحت مجوز MIT منتشر می‌شود. https://github.com/r4chan842/PTForge/blob/main/LICENSE
+
+Cisco و Packet Tracer علامت‌های تجاری Cisco Systems, Inc. هستند. PTForge وابسته به Cisco Systems, Inc. نیست و مورد تأیید آن نیست.
