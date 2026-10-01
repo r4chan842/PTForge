@@ -19,7 +19,7 @@ Layout
 * src/lib: Pure helpers: IPv4 math, colors, text
 * src/core: Runtime context, layers, runner, window, entry point
 * src/api: Public functions, one folder per area
-* src/ui: Editor window, catalog.js is generated from docs/api
+* src/ui: Editor window, catalog.js is generated from https://github.com/r4chan842/PTForge/tree/main/docs/api
 * release: Single file bundle built from src
 * tests/unit: Pure function tests
 * tests/integration: Full extension against a mock Packet Tracer
@@ -37,7 +37,7 @@ The test suite enforces most of these.
 
 - ES5 only in src and examples, because that is what Packet Tracer runs
 - No comments in source files. Names should explain the code
-- Every public function is documented in docs/api as a table row starting with | `name(
+- Every public function is documented in https://github.com/r4chan842/PTForge/tree/main/docs/api as a line that starts with name(args)
 - Internal helpers are listed in https://github.com/r4chan842/PTForge/blob/main/tools/internal-functions.txt
 - New files go into https://github.com/r4chan842/PTForge/blob/main/tools/load-order.json before any file that uses them
 - IOS helpers come in pairs: buildX returns lines, x sends them with configureIosDevice
@@ -47,7 +47,8 @@ The test suite enforces most of these.
 Commit messages
 ---------------
 
-Use Conventional Commits (https://www.conventionalcommits.org): feat:, fix:, docs:, test:, refactor:, chore:. Every release gets a vX.Y.Z tag.
+Commit messages follow Conventional Commits, see https://www.conventionalcommits.org
+for details. Use the prefixes feat:, fix:, docs:, test:, refactor:, chore:. Every release gets a vX.Y.Z tag.
 
 Before opening a pull request
 -----------------------------
@@ -59,9 +60,9 @@ That regenerates https://github.com/r4chan842/PTForge/blob/main/src/ui/catalog.j
 Adding a function
 -----------------
 
-1. Write it in the right file in src/api
-2. Add tests in tests/integration
-3. Document it in docs/api
+1. Write it in the right file in https://github.com/r4chan842/PTForge/tree/main/src/api
+2. Add tests in https://github.com/r4chan842/PTForge/tree/main/tests/integration
+3. Document it in https://github.com/r4chan842/PTForge/tree/main/docs/api
 4. Optionally add an example in examples
 5. Add an entry under Unreleased in https://github.com/r4chan842/PTForge/blob/main/CHANGELOG
 

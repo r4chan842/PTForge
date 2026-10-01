@@ -6,10 +6,10 @@ Testing
 What is covered
 ---------------
 
-* tests/unit: IPv4 math, colors, text helpers, every command builder
-* tests/integration: Every public function against the Packet Tracer mock
+* https://github.com/r4chan842/PTForge/tree/main/tests/unit: IPv4 math, colors, text helpers, every command builder
+* https://github.com/r4chan842/PTForge/tree/main/tests/integration: Every public function against the Packet Tracer mock
 * examples.test.js: Every example runs without a failed link or rejected config
-* recipes.test.js: Every recipe in docs/recipes runs
+* recipes.test.js: Every recipe in https://github.com/r4chan842/PTForge/tree/main/docs/recipes runs
 * bundle.test.js: https://github.com/r4chan842/PTForge/blob/main/release/ptforge.js loads on its own and builds a lab
 * hygiene.test.js: Load order, no comments, ES5, no duplicate globals, docs match code, catalog up to date
 

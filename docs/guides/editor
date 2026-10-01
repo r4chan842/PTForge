@@ -66,12 +66,15 @@ Lists every device in the open Packet Tracer file with its model, and the ports 
 Network tools
 -------------
 
-The Network tools view has a quick subnet calculator, VLSM planner and wildcard converter next to your code. The full calculator with nine tools, the reachability matrix and snapshot compare open as editor tabs. See network tools (https://github.com/r4chan842/PTForge/blob/main/docs/guides/network-tools).
+The Network tools view has a quick subnet calculator, VLSM planner and wildcard converter next to your code. The full calculator with nine tools, the reachability matrix and snapshot compare open as editor tabs. See network tools: https://github.com/r4chan842/PTForge/blob/main/docs/guides/network-tools.
 
 Terminal and debugger
 ---------------------
 
-Ctrl+` opens the terminal (https://github.com/r4chan842/PTForge/blob/main/docs/guides/terminal). F5 starts the debugger (https://github.com/r4chan842/PTForge/blob/main/docs/guides/debugger).
+Ctrl+` opens the terminal and F5 starts the debugger.
+
+* Terminal: https://github.com/r4chan842/PTForge/blob/main/docs/guides/terminal
+* Debugger: https://github.com/r4chan842/PTForge/blob/main/docs/guides/debugger
 
 Settings kept between sessions
 ------------------------------

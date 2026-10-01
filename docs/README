@@ -75,7 +75,7 @@ Cheat Sheets
 Reference Tables
 ----------------
 
-These files are generated from src/data by node https://github.com/r4chan842/PTForge/blob/main/tools/generate-reference.js
+These files are generated from https://github.com/r4chan842/PTForge/tree/main/src/data by node https://github.com/r4chan842/PTForge/blob/main/tools/generate-reference.js
 and should not be edited by hand.
 
 * Device Models: https://github.com/r4chan842/PTForge/blob/main/docs/reference/device-models

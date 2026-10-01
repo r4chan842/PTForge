@@ -3,8 +3,13 @@ Recipes
 
 Short answers to common lab tasks. Full labs live in https://github.com/r4chan842/PTForge/tree/main/examples.
 
-- Campus switching (https://github.com/r4chan842/PTForge/blob/main/docs/recipes/campus-switching): VLANs, trunks, EtherChannel, STP root, security
-- Routing labs (https://github.com/r4chan842/PTForge/blob/main/docs/recipes/routing-labs): multi site OSPF, EIGRP, static backup
-- Edge router (https://github.com/r4chan842/PTForge/blob/main/docs/recipes/edge-router): NAT, ACL, SSH, DHCP
-- Servers (https://github.com/r4chan842/PTForge/blob/main/docs/recipes/servers): one call per service
-- Documenting a topology (https://github.com/r4chan842/PTForge/blob/main/docs/recipes/documenting): zones, labels, IP notes
+* Campus switching: VLANs, trunks, EtherChannel, STP root, security
+  https://github.com/r4chan842/PTForge/blob/main/docs/recipes/campus-switching
+* Routing labs: multi site OSPF, EIGRP, static backup
+  https://github.com/r4chan842/PTForge/blob/main/docs/recipes/routing-labs
+* Edge router: NAT, ACL, SSH, DHCP
+  https://github.com/r4chan842/PTForge/blob/main/docs/recipes/edge-router
+* Servers: one call per service
+  https://github.com/r4chan842/PTForge/blob/main/docs/recipes/servers
+* Documenting a topology: zones, labels, IP notes
+  https://github.com/r4chan842/PTForge/blob/main/docs/recipes/documenting

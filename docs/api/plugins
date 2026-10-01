@@ -1,7 +1,7 @@
 Plugins
 =======
 
-Load .pf plugin files, enable and disable them, and run the commands, rules and checks they add. The format and a walkthrough are in the plugin guide (https://github.com/r4chan842/PTForge/blob/main/docs/guides/plugins).
+Load .pf plugin files, enable and disable them, and run the commands, rules and checks they add. The format and a walkthrough are in the plugin guide: https://github.com/r4chan842/PTForge/blob/main/docs/guides/plugins.
 
 Functions
 ---------

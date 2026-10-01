@@ -78,7 +78,7 @@ It is plain JavaScript:
 Next
 ----
 
-- Writing scripts (https://github.com/r4chan842/PTForge/blob/main/docs/guides/writing-scripts)
-- API reference (https://github.com/r4chan842/PTForge/blob/main/docs/api/README)
-- Recipes (https://github.com/r4chan842/PTForge/blob/main/docs/recipes/README)
+* Writing scripts: https://github.com/r4chan842/PTForge/blob/main/docs/guides/writing-scripts
+* API reference: https://github.com/r4chan842/PTForge/blob/main/docs/api/README
+* Recipes: https://github.com/r4chan842/PTForge/blob/main/docs/recipes/README
 - The https://github.com/r4chan842/PTForge/tree/main/examples folder has 27 complete labs
