@@ -153,6 +153,7 @@ function build(code, name) {
         out.push("<div dir=\"rtl\">", "");
     }
     out.push(
+        "> [!WARNING]", "> " + L("warning"), "",
         "<div align=\"center\">", "",
         "<picture>",
         "  <source media=\"(prefers-color-scheme: dark)\" srcset=\"../assets/brand/logo-dark.svg\">",
@@ -167,7 +168,6 @@ function build(code, name) {
         nav.map((t, i) => "[" + t + "](" + (i === 0 ? "#" + slug(H("quick")) : navLinks[i]) + ")").join(" ·\n"), "",
         bar, "",
         "</div>", "", "---", "",
-        "> [!WARNING]", "> " + L("warning"), "",
         "> " + L("note"), "",
         "## " + H("why"), "",
         L("why1"), "", L("why2"), "",

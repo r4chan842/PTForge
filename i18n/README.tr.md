@@ -1,3 +1,6 @@
+> [!WARNING]
+> **Geliştirme aşamasında.** PTForge'da hâlâ bilinen hatalar var ve bazı özellikler yalnızca Packet Tracer dışında test edildi. Sonuçları kontrol edin, `.pkt` dosyalarınızı yedekleyin ve lütfen [bulduğunuz sorunları bildirin](https://github.com/r4chan842/PTForge/issues).
+
 <div align="center">
 
 <picture>
@@ -37,9 +40,6 @@
 </div>
 
 ---
-
-> [!WARNING]
-> **Geliştirme aşamasında.** PTForge'da hâlâ bilinen hatalar var ve bazı özellikler yalnızca Packet Tracer dışında test edildi. Sonuçları kontrol edin, `.pkt` dosyalarınızı yedekleyin ve lütfen [bulduğunuz sorunları bildirin](https://github.com/r4chan842/PTForge/issues).
 
 > Bu bir çeviridir. Esas sürüm [İngilizce README](../README.md) dosyasıdır.
 

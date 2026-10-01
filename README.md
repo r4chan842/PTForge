@@ -1,3 +1,6 @@
+> [!WARNING]
+> **Early development.** PTForge still has known bugs, and some features have only been tested outside Packet Tracer. Check your results, keep a backup of your `.pkt` files, and please [report any problem you find](https://github.com/r4chan842/PTForge/issues).
+
 <div align="center">
 
 <picture>
@@ -39,9 +42,6 @@
 </div>
 
 ---
-
-> [!WARNING]
-> **Early development.** PTForge still has known bugs, and some features have only been tested outside Packet Tracer. Check your results, keep a backup of your `.pkt` files, and please [report any problem you find](https://github.com/r4chan842/PTForge/issues).
 
 ## Why PTForge
 
