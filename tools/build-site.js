@@ -47,6 +47,28 @@ sources.forEach((file) => {
     pages[file] = { file, text, page: pageOf(file), title: titleOf(text, file) };
 });
 
+const codeFiles = execSync("git ls-files examples templates plugins CITATION.cff", { cwd: root }).toString().split("\n")
+    .filter((f) => /\.(js|pf|cff)$/.test(f));
+codeFiles.forEach((file) => {
+    const text = fs.readFileSync(path.join(root, file), "utf8").replace(/\r\n/g, "\n");
+    pages[file] = { file, text, page: "project/" + file + ".html", title: path.basename(file), code: true };
+});
+
+function fileList(dir) {
+    return codeFiles.filter((f) => f.startsWith(dir + "/")).map((f) => "* " + f.slice(dir.length + 1) + ": " + blob + f).join("\n");
+}
+
+["examples", "templates"].forEach((dir) => {
+    pages[dir + "/README"].text += "\n\nFiles\n-----\n\n" + fileList(dir) + "\n";
+});
+
+pages.plugins = {
+    file: "plugins",
+    page: "project/plugins/index.html",
+    title: "Sample plugins",
+    text: "Sample plugins\n==============\n\nThese plugins ship with PTForge. Copy a .pf file into the plugin folder and enable it in the\nPlugin Manager. The format is described in " + blob + "docs/guides/plugins\n\n" + fileList("plugins") + "\n"
+};
+
 function escape(s) {
     return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
@@ -113,6 +135,9 @@ function render(doc) {
     let first = true;
     let i = 0;
 
+    if (doc.code) {
+        return { html: "<h1>" + escape(doc.title) + "</h1>\n<pre>" + escape(doc.text) + "</pre>", toc };
+    }
     if (doc.file === "LICENSE" || doc.file.endsWith("/LICENSE")) {
         return { html: "<pre class=\"text\">" + escape(doc.text) + "</pre>", toc };
     }
@@ -227,7 +252,8 @@ const index = pages["docs/README"];
 const contents = sections(index);
 
 function sidebar(from) {
-    const groups = contents.map((s) => "<p class=\"caption\">" + escape(s.title) + "</p><ul>" +
+    const groups = "<p class=\"caption\">Start Here</p><ul><li><a href=\"" + relative(from, "introduction.html") + "\">Introduction</a></li><li><a href=\"" +
+        relative(from, "index.html") + "\">Documentation Index</a></li></ul>" + contents.map((s) => "<p class=\"caption\">" + escape(s.title) + "</p><ul>" +
         s.items.map((it) => {
             const link = resolveUrl(it.url, from);
             return "<li><a href=\"" + escape(link.href) + "\">" + escape(it.label) + "</a></li>";
@@ -250,7 +276,7 @@ function layout(doc, body, toc) {
     const dir = rtl.has(lang) ? " dir=\"rtl\"" : "";
     const local = toc.length > 2 ? "<div class=\"localtoc\"><p class=\"caption\">This Page</p><ul>" +
         toc.map((t) => "<li class=\"l" + t.level + "\"><a href=\"#" + t.id + "\">" + escape(t.text) + "</a></li>").join("") + "</ul></div>" : "";
-    const source = blob + doc.file;
+    const source = doc.file === "plugins" ? tree + "plugins" : blob + doc.file;
     return "<!DOCTYPE html>\n<html lang=\"" + lang + "\">\n<head>\n<meta charset=\"utf-8\">\n" +
         "<meta name=\"viewport\" content=\"width=1000\">\n" +
         "<title>" + escape(doc.title) + (doc.page === "index.html" ? "" : " — PTForge documentation") + "</title>\n" +

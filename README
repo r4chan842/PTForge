@@ -63,6 +63,48 @@ Features
 * Plugins: .pf files with permissions, consent and checksums
 
 
+How It Works
+------------
+
+PTForge is a Packet Tracer Script Module. Packet Tracer loads its scripts into
+its own JavaScript engine and opens the PTForge window from the Extensions
+menu. Code written in the editor or typed into the terminal is sent to that
+engine, where the PTForge functions talk to Packet Tracer through the
+official IPC API. Every device, cable and configuration line is created the
+same way a user would create it, so the result is an ordinary .pkt file that
+opens without PTForge.
+
+Commands sent to Cisco IOS devices are checked, and lines that IOS rejects
+are returned to the script instead of being silently ignored. Wrong device
+names, port names and options raise errors with a clear message.
+
+More detail is in the architecture overview:
+https://r4chan842.github.io/PTForge/architecture/overview.html
+
+
+Requirements
+------------
+
+* Cisco Packet Tracer 8.x or newer with the Extensions scripting menu
+* Windows, Linux or macOS, wherever Packet Tracer itself runs
+* Node.js 18 or newer, only for running the test suite and building releases
+
+Scripts use ES5 JavaScript, because that is the language level of the Packet
+Tracer engine. The editor warns about syntax that the engine cannot run.
+
+
+Project Status
+--------------
+
+PTForge is released under version numbers that follow Semantic Versioning.
+Public function names and arguments
+only change in major versions, and every change is listed in the changelog:
+https://r4chan842.github.io/PTForge/project/CHANGELOG.html
+
+Planned work is listed in the roadmap:
+https://r4chan842.github.io/PTForge/project/ROADMAP.html
+
+
 Essential Documentation
 -----------------------
 

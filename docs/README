@@ -106,7 +106,8 @@ These files are in the top-level directory.
 * Security Policy: https://github.com/r4chan842/PTForge/blob/main/SECURITY
 * Support: https://github.com/r4chan842/PTForge/blob/main/SUPPORT
 * Third-Party Notices: https://github.com/r4chan842/PTForge/blob/main/THIRD_PARTY_NOTICES
-* License: ../LICENSE
+* License: https://github.com/r4chan842/PTForge/blob/main/LICENSE
+* Citation: https://github.com/r4chan842/PTForge/blob/main/CITATION.cff
 * Examples: https://github.com/r4chan842/PTForge/blob/main/examples/README
 * Templates: https://github.com/r4chan842/PTForge/blob/main/templates/README
-* Sample Plugins: https://github.com/r4chan842/PTForge/tree/main/plugins (../plugins)
+* Sample Plugins: https://github.com/r4chan842/PTForge/tree/main/plugins
