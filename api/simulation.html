@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1000">
+<title>Simulation and testing — PTForge documentation</title>
+<link rel="icon" href="../_static/logo.svg">
+<link rel="stylesheet" href="../_static/style.css">
+</head>
+<body>
+<div class="document">
+<nav class="sidebar">
+<a class="brand" href="../index.html"><img src="../_static/logo.svg" alt="PTForge logo"></a>
+<h1 class="project"><a href="../index.html">PTForge</a></h1>
+<p class="version">1.3.0</p>
+<h3>Quick search</h3>
+<form class="search" action="../search.html" method="get"><input type="text" name="q" aria-label="Search"><button type="submit">Go</button></form>
+<h3>Contents</h3>
+<div class="contents"><p class="caption">Start Here</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../index.html">Documentation Index</a></li></ul><p class="caption">User Guides</p><ul><li><a href="../guides/installation.html">Installation</a></li><li><a href="../guides/getting-started.html">Getting Started</a></li><li><a href="../guides/writing-scripts.html">Writing Scripts</a></li><li><a href="../guides/editor.html">Editor</a></li><li><a href="../guides/terminal.html">Terminal</a></li><li><a href="../guides/debugger.html">Debugger</a></li><li><a href="../guides/network-tools.html">Network Tools</a></li><li><a href="../guides/plugins.html">Plugins</a></li><li><a href="../guides/troubleshooting.html">Troubleshooting</a></li><li><a href="../guides/limitations.html">Limitations</a></li><li><a href="../guides/faq.html">Frequently Asked Questions</a></li></ul><p class="caption">Function Reference</p><ul><li><a href="index.html">Index</a></li><li><a href="devices.html">Devices</a></li><li><a href="links.html">Links</a></li><li><a href="hosts.html">End Devices</a></li><li><a href="ios.html">Cisco IOS</a></li><li><a href="switching.html">Switching</a></li><li><a href="routing.html">Routing</a></li><li><a href="security.html">Security</a></li><li><a href="services.html">Server Services</a></li><li><a href="wireless.html">Wireless</a></li><li><a href="canvas.html">Canvas</a></li><li><a href="topology.html">Topology</a></li><li><a href="workspace.html">Workspace</a></li><li><a href="inspect.html">Inspection</a></li><li><a href="checks.html">Lab Check</a></li><li><a href="audit.html">Audit</a></li><li><a href="simulation.html">Simulation</a></li><li><a href="snapshots.html">Snapshots</a></li><li><a href="events.html">Events</a></li><li><a href="plugins.html">Plugins</a></li><li><a href="utilities.html">Utilities</a></li></ul><p class="caption">CCNA</p><ul><li><a href="../ccna/index.html">Topic Map</a></li><li><a href="../ccna/lab-checklist.html">Lab Checklist</a></li></ul><p class="caption">Recipes</p><ul><li><a href="../recipes/index.html">Index</a></li><li><a href="../recipes/campus-switching.html">Campus Switching</a></li><li><a href="../recipes/routing-labs.html">Routing Labs</a></li><li><a href="../recipes/edge-router.html">Edge Router</a></li><li><a href="../recipes/servers.html">Servers</a></li><li><a href="../recipes/documenting.html">Documenting a Topology</a></li></ul><p class="caption">Cheat Sheets</p><ul><li><a href="../cheatsheets/ios-to-ptforge.html">IOS Commands and PTForge Calls</a></li><li><a href="../cheatsheets/subnetting.html">Subnetting</a></li><li><a href="../cheatsheets/keyboard.html">Keyboard Shortcuts</a></li></ul><p class="caption">Reference Tables</p><ul><li><a href="../reference/device-models.html">Device Models</a></li><li><a href="../reference/device-types.html">Device Types</a></li><li><a href="../reference/modules.html">Modules</a></li><li><a href="../reference/link-types.html">Link Types</a></li><li><a href="../reference/port-names.html">Port Names</a></li></ul><p class="caption">Architecture</p><ul><li><a href="../architecture/overview.html">Overview</a></li><li><a href="../architecture/runtime.html">Runtime</a></li><li><a href="../architecture/testing.html">Testing</a></li></ul><p class="caption">Project Files</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../project/CHANGELOG.html">Changes</a></li><li><a href="../project/ROADMAP.html">Roadmap</a></li><li><a href="../project/CONTRIBUTING.html">Contributing</a></li><li><a href="../project/CODE_OF_CONDUCT.html">Code of Conduct</a></li><li><a href="../project/SECURITY.html">Security Policy</a></li><li><a href="../project/SUPPORT.html">Support</a></li><li><a href="../project/THIRD_PARTY_NOTICES.html">Third-Party Notices</a></li><li><a href="../project/LICENSE.html">License</a></li><li><a href="../project/CITATION.cff.html">Citation</a></li><li><a href="../project/examples/index.html">Examples</a></li><li><a href="../project/templates/index.html">Templates</a></li><li><a href="../project/plugins/index.html">Sample Plugins</a></li></ul><p class="caption">Translations</p><ul><li><a href="../index.html#translations">Translations</a></li></ul></div>
+<div class="localtoc"><p class="caption">This Page</p><ul><li class="l2"><a href="#simulation-mode">Simulation mode</a></li><li class="l2"><a href="#pdus">PDUs</a></li><li class="l2"><a href="#connectivity">Connectivity</a></li><li class="l2"><a href="#reachability">Reachability</a></li></ul></div><h3>This Page</h3>
+<ul class="plain"><li><a href="https://github.com/r4chan842/PTForge/blob/main/docs/api/simulation">Show Source</a></li></ul>
+</nav>
+<main class="body">
+<div class="topbar"><select class="language" aria-label="Language" onchange="location.href=this.value"><option value="../introduction.html" selected>English</option><option value="../translations/fa.html">فارسی</option><option value="../translations/de.html">Deutsch</option><option value="../translations/es.html">Español</option><option value="../translations/fr.html">Français</option><option value="../translations/pt-BR.html">Português</option><option value="../translations/ru.html">Русский</option><option value="../translations/tr.html">Türkçe</option><option value="../translations/ar.html">العربية</option><option value="../translations/zh-CN.html">中文</option><option value="../translations/ja.html">日本語</option></select></div>
+<h1>Simulation and testing</h1>
+<h2 id="simulation-mode">Simulation mode<a class="anchor" href="#simulation-mode">¶</a></h2>
+<dl class="function" id="fn-setsimulationmode"><dt><code><span class="name">setSimulationMode</span>(on)</code><a class="anchor" href="#fn-setsimulationmode">¶</a></dt><dd>Switch between realtime and simulation</dd></dl>
+<dl class="function" id="fn-issimulationmode"><dt><code><span class="name">isSimulationMode</span>()</code><a class="anchor" href="#fn-issimulationmode">¶</a></dt><dd>Current mode</dd></dl>
+<dl class="function" id="fn-resetsimulation"><dt><code><span class="name">resetSimulation</span>()</code><a class="anchor" href="#fn-resetsimulation">¶</a></dt><dd>Clear the event list</dd></dl>
+<dl class="function" id="fn-playsimulation"><dt><code><span class="name">playSimulation</span>()</code><a class="anchor" href="#fn-playsimulation">¶</a></dt><dd>Press Play</dd></dl>
+<dl class="function" id="fn-stepforward"><dt><code><span class="name">stepForward</span>(steps)</code><a class="anchor" href="#fn-stepforward">¶</a></dt><dd>Capture forward</dd></dl>
+<dl class="function" id="fn-stepback"><dt><code><span class="name">stepBack</span>(steps)</code><a class="anchor" href="#fn-stepback">¶</a></dt><dd>Step back</dd></dl>
+<dl class="function" id="fn-setsimulationfilter"><dt><code><span class="name">setSimulationFilter</span>(protocol, visible)</code><a class="anchor" href="#fn-setsimulationfilter">¶</a></dt><dd>Show or hide a protocol, for example ICMP</dd></dl>
+<dl class="function" id="fn-showallsimulationfilters"><dt><code><span class="name">showAllSimulationFilters</span>()</code><a class="anchor" href="#fn-showallsimulationfilters">¶</a></dt><dd>Show every protocol</dd></dl>
+<dl class="function" id="fn-getsimulationtime"><dt><code><span class="name">getSimulationTime</span>()</code><a class="anchor" href="#fn-getsimulationtime">¶</a></dt><dd>Simulation time</dd></dl>
+<dl class="function" id="fn-getsimulationeventcount"><dt><code><span class="name">getSimulationEventCount</span>()</code><a class="anchor" href="#fn-getsimulationeventcount">¶</a></dt><dd>Number of captured events</dd></dl>
+<h2 id="pdus">PDUs<a class="anchor" href="#pdus">¶</a></h2>
+<dl class="function" id="fn-addsimplepdu"><dt><code><span class="name">addSimplePdu</span>(source, destination)</code><a class="anchor" href="#fn-addsimplepdu">¶</a></dt><dd>Add a simple PDU between two devices</dd></dl>
+<dl class="function" id="fn-firepdu"><dt><code><span class="name">firePdu</span>(index)</code><a class="anchor" href="#fn-firepdu">¶</a></dt><dd>Fire a PDU from the list</dd></dl>
+<dl class="function" id="fn-deletepdu"><dt><code><span class="name">deletePdu</span>(index)</code><a class="anchor" href="#fn-deletepdu">¶</a></dt><dd>Remove a PDU</dd></dl>
+<h2 id="connectivity">Connectivity<a class="anchor" href="#connectivity">¶</a></h2>
+<dl class="function" id="fn-ping"><dt><code><span class="name">ping</span>(device, target, count, onDone)</code><a class="anchor" href="#fn-ping">¶</a></dt><dd>Ping from a router, switch or host in the background. onDone(row) gets { source, target, state, sent, received, percent, output }. In the terminal the output is printed when it finishes</dd></dl>
+<dl class="function" id="fn-traceroute"><dt><code><span class="name">traceroute</span>(device, target, onDone)</code><a class="anchor" href="#fn-traceroute">¶</a></dt><dd>traceroute on IOS, tracert on hosts. Runs in the background; onDone(row) gets { source, target, state, output, hops }. In the terminal the output is printed when it finishes</dd></dl>
+<dl class="function" id="fn-pingall"><dt><code><span class="name">pingAll</span>(device, targets)</code><a class="anchor" href="#fn-pingall">¶</a></dt><dd>reachability() for the whole network, or only from device to targets</dd></dl>
+<h2 id="reachability">Reachability<a class="anchor" href="#reachability">¶</a></h2>
+<p>A ping matrix from every router and switch to every address in the topology, with a colored grid in the editor.</p>
+<dl class="function" id="fn-reachability"><dt><code><span class="name">reachability</span>(options)</code><a class="anchor" href="#fn-reachability">¶</a></dt><dd>Ping every address from every router and switch that has one. When none has an address, hosts are used as sources. Options: sources, targets, count, onDone(report). Opens the Reachability view when every ping has finished</dd></dl>
+<dl class="function" id="fn-pingmatrix"><dt><code><span class="name">pingMatrix</span>(sources, targets, count, onDone)</code><a class="anchor" href="#fn-pingmatrix">¶</a></dt><dd>Ping each target from each source. Targets can be addresses or device names. onDone(report) runs when every ping has finished</dd></dl>
+<dl class="function" id="fn-stoppings"><dt><code><span class="name">stopPings</span>()</code><a class="anchor" href="#fn-stoppings">¶</a></dt><dd>Cancel a running reachability test. Returns the number of devices that were still pinging</dd></dl>
+<dl class="function" id="fn-pingtest"><dt><code><span class="name">pingTest</span>(source, target, count)</code><a class="anchor" href="#fn-pingtest">¶</a></dt><dd>One immediate ping with a parsed result: { source, target, ip, state, percent, sent, received, rtt, output }</dd></dl>
+<dl class="function" id="fn-parsepingoutput"><dt><code><span class="name">parsePingOutput</span>(text)</code><a class="anchor" href="#fn-parsepingoutput">¶</a></dt><dd>Read IOS or host ping output: { sent, received, percent, rtt }</dd></dl>
+<p>A ping takes simulated time. Packet Tracer only moves time forward after the script returns, so a ping read inside the same call always looks like 0 percent. reachability and pingMatrix send each ping through the device's command line and listen for the outputWritten and commandEnded events of TerminalLine. The returned report starts with every row pending ({ rows, total, pending, done: false, ok, partial, failed, unknown, sources, targets }) and the same object is filled in as replies arrive. The final report is sent to the Reachability view, to the terminal that started it, and to onDone.</p>
+<p>state is pending, ok (every reply came back), partial (some replies, usually the first ping while ARP resolves), failed, unknown (output could not be read) or error (bad target). Each device runs its pings one after another, and all devices run in parallel.</p>
+<pre>pingAll();
+
+reachability({
+    sources: [&quot;R1&quot;, &quot;R2&quot;],
+    count: 2,
+    onDone: function (report) {
+        report.rows.filter(function (r) { return r.state !== &quot;ok&quot;; }).forEach(function (r) {
+            log(r.source + &quot; -&gt; &quot; + r.target + &quot; &quot; + r.state);
+        });
+    }
+});
+
+setSimulationMode(true);
+setSimulationFilter(&quot;ICMP&quot;);
+addSimplePdu(&quot;PC1&quot;, &quot;SRV&quot;);
+stepForward(5);</pre>
+</main>
+</div>
+<footer>© PTForge contributors. Licensed under the MIT License. Cisco and Packet Tracer are trademarks of Cisco Systems, Inc.</footer>
+</body>
+</html>

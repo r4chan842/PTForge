@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1000">
+<title>Debugger — PTForge documentation</title>
+<link rel="icon" href="../_static/logo.svg">
+<link rel="stylesheet" href="../_static/style.css">
+</head>
+<body>
+<div class="document">
+<nav class="sidebar">
+<a class="brand" href="../index.html"><img src="../_static/logo.svg" alt="PTForge logo"></a>
+<h1 class="project"><a href="../index.html">PTForge</a></h1>
+<p class="version">1.3.0</p>
+<h3>Quick search</h3>
+<form class="search" action="../search.html" method="get"><input type="text" name="q" aria-label="Search"><button type="submit">Go</button></form>
+<h3>Contents</h3>
+<div class="contents"><p class="caption">Start Here</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../index.html">Documentation Index</a></li></ul><p class="caption">User Guides</p><ul><li><a href="installation.html">Installation</a></li><li><a href="getting-started.html">Getting Started</a></li><li><a href="writing-scripts.html">Writing Scripts</a></li><li><a href="editor.html">Editor</a></li><li><a href="terminal.html">Terminal</a></li><li><a href="debugger.html">Debugger</a></li><li><a href="network-tools.html">Network Tools</a></li><li><a href="plugins.html">Plugins</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="limitations.html">Limitations</a></li><li><a href="faq.html">Frequently Asked Questions</a></li></ul><p class="caption">Function Reference</p><ul><li><a href="../api/index.html">Index</a></li><li><a href="../api/devices.html">Devices</a></li><li><a href="../api/links.html">Links</a></li><li><a href="../api/hosts.html">End Devices</a></li><li><a href="../api/ios.html">Cisco IOS</a></li><li><a href="../api/switching.html">Switching</a></li><li><a href="../api/routing.html">Routing</a></li><li><a href="../api/security.html">Security</a></li><li><a href="../api/services.html">Server Services</a></li><li><a href="../api/wireless.html">Wireless</a></li><li><a href="../api/canvas.html">Canvas</a></li><li><a href="../api/topology.html">Topology</a></li><li><a href="../api/workspace.html">Workspace</a></li><li><a href="../api/inspect.html">Inspection</a></li><li><a href="../api/checks.html">Lab Check</a></li><li><a href="../api/audit.html">Audit</a></li><li><a href="../api/simulation.html">Simulation</a></li><li><a href="../api/snapshots.html">Snapshots</a></li><li><a href="../api/events.html">Events</a></li><li><a href="../api/plugins.html">Plugins</a></li><li><a href="../api/utilities.html">Utilities</a></li></ul><p class="caption">CCNA</p><ul><li><a href="../ccna/index.html">Topic Map</a></li><li><a href="../ccna/lab-checklist.html">Lab Checklist</a></li></ul><p class="caption">Recipes</p><ul><li><a href="../recipes/index.html">Index</a></li><li><a href="../recipes/campus-switching.html">Campus Switching</a></li><li><a href="../recipes/routing-labs.html">Routing Labs</a></li><li><a href="../recipes/edge-router.html">Edge Router</a></li><li><a href="../recipes/servers.html">Servers</a></li><li><a href="../recipes/documenting.html">Documenting a Topology</a></li></ul><p class="caption">Cheat Sheets</p><ul><li><a href="../cheatsheets/ios-to-ptforge.html">IOS Commands and PTForge Calls</a></li><li><a href="../cheatsheets/subnetting.html">Subnetting</a></li><li><a href="../cheatsheets/keyboard.html">Keyboard Shortcuts</a></li></ul><p class="caption">Reference Tables</p><ul><li><a href="../reference/device-models.html">Device Models</a></li><li><a href="../reference/device-types.html">Device Types</a></li><li><a href="../reference/modules.html">Modules</a></li><li><a href="../reference/link-types.html">Link Types</a></li><li><a href="../reference/port-names.html">Port Names</a></li></ul><p class="caption">Architecture</p><ul><li><a href="../architecture/overview.html">Overview</a></li><li><a href="../architecture/runtime.html">Runtime</a></li><li><a href="../architecture/testing.html">Testing</a></li></ul><p class="caption">Project Files</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../project/CHANGELOG.html">Changes</a></li><li><a href="../project/ROADMAP.html">Roadmap</a></li><li><a href="../project/CONTRIBUTING.html">Contributing</a></li><li><a href="../project/CODE_OF_CONDUCT.html">Code of Conduct</a></li><li><a href="../project/SECURITY.html">Security Policy</a></li><li><a href="../project/SUPPORT.html">Support</a></li><li><a href="../project/THIRD_PARTY_NOTICES.html">Third-Party Notices</a></li><li><a href="../project/LICENSE.html">License</a></li><li><a href="../project/CITATION.cff.html">Citation</a></li><li><a href="../project/examples/index.html">Examples</a></li><li><a href="../project/templates/index.html">Templates</a></li><li><a href="../project/plugins/index.html">Sample Plugins</a></li></ul><p class="caption">Translations</p><ul><li><a href="../index.html#translations">Translations</a></li></ul></div>
+<div class="localtoc"><p class="caption">This Page</p><ul><li class="l2"><a href="#how-it-works">How it works</a></li><li class="l2"><a href="#start-and-stop">Start and stop</a></li><li class="l2"><a href="#breakpoints">Breakpoints</a></li><li class="l2"><a href="#run-and-debug-view">Run and Debug view</a></li><li class="l2"><a href="#debug-console">Debug Console</a></li><li class="l2"><a href="#hover">Hover</a></li><li class="l2"><a href="#limits">Limits</a></li></ul></div><h3>This Page</h3>
+<ul class="plain"><li><a href="https://github.com/r4chan842/PTForge/blob/main/docs/guides/debugger">Show Source</a></li></ul>
+</nav>
+<main class="body">
+<div class="topbar"><select class="language" aria-label="Language" onchange="location.href=this.value"><option value="../introduction.html" selected>English</option><option value="../translations/fa.html">فارسی</option><option value="../translations/de.html">Deutsch</option><option value="../translations/es.html">Español</option><option value="../translations/fr.html">Français</option><option value="../translations/pt-BR.html">Português</option><option value="../translations/ru.html">Русский</option><option value="../translations/tr.html">Türkçe</option><option value="../translations/ar.html">العربية</option><option value="../translations/zh-CN.html">中文</option><option value="../translations/ja.html">日本語</option></select></div>
+<h1>Debugger</h1>
+<p>PTForge has a JavaScript debugger modeled on VS Code: breakpoints, stepping, variables, watch expressions, call stack and a debug console.</p>
+<h2 id="how-it-works">How it works<a class="anchor" href="#how-it-works">¶</a></h2>
+<p>Packet Tracer runs a script from start to end without stopping, so a script cannot be paused halfway. The debugger records instead:</p>
+<ol><li>F5 instruments the script and runs it once inside Packet Tracer</li><li>Every statement records its line, the call stack, the variables in scope and the watch values</li><li>The editor then pauses on the first breakpoint, and every step moves through the recording</li></ol>
+<p>Stepping is instant and works in both directions. Device changes happen during the recorded run, so stepping back shows earlier values but does not undo changes in Packet Tracer.</p>
+<h2 id="start-and-stop">Start and stop<a class="anchor" href="#start-and-stop">¶</a></h2>
+<ul><li>Start debugging, or continue: F5</li><li>Run without debugging: Ctrl+F5 or Ctrl+Enter</li><li>Stop: Shift+F5</li><li>Restart: Ctrl+Shift+F5</li><li>Step over: F10</li><li>Step into: F11</li><li>Step out: Shift+F11</li><li>Step back: Shift+F10</li><li>Reverse continue: Command palette → Reverse Continue</li></ul>
+<p>While paused, the status bar turns blue, a floating toolbar appears over the editor and the current line is highlighted in yellow with an arrow in the gutter.</p>
+<h2 id="breakpoints">Breakpoints<a class="anchor" href="#breakpoints">¶</a></h2>
+<ul><li>Toggle: Click the gutter left of a line number, or F9</li><li>Conditional: Right click the gutter → Add Conditional Breakpoint.... Pause only when the expression is true</li><li>Hit count: Right click → Edit Breakpoint... → hit count. Pause on the given hit, for example 3 or &gt;= 5</li><li>Logpoint: Right click → Add Logpoint.... Print a message with {expressions} instead of pausing</li><li>Disable one: Uncheck it in the Breakpoints section</li><li>Disable all: The toggle in the Breakpoints section title</li><li>Remove all: The remove icon in the Breakpoints section title</li><li>Uncaught exceptions: Checkbox in the Breakpoints section. Pauses on the line that threw</li></ul>
+<p>Breakpoints are saved with the workspace and move with their lines while you edit.</p>
+<h2 id="run-and-debug-view">Run and Debug view<a class="anchor" href="#run-and-debug-view">¶</a></h2>
+<ul><li>Variables: Local, Closure and Script scopes. Objects and arrays expand. Collapse all from the section title</li><li>Watch: Expressions you add with +. Each one is evaluated at every recorded step</li><li>Call Stack: Every frame with file and line. Click a frame to see its variables</li><li>Breakpoints: All breakpoints with their line and state</li></ul>
+<p>Before starting you can choose Stop on entry, which pauses on the first statement, and the recorded steps limit: 1,000, 3,000, 10,000 or 20,000. A larger limit records longer loops and uses more memory.</p>
+<h2 id="debug-console">Debug Console<a class="anchor" href="#debug-console">¶</a></h2>
+<p>While paused, type an expression in the Debug Console and press Enter. It is evaluated against the recorded values of the paused frame:</p>
+<pre>› routers.join(&quot; + &quot;)
+'R1 + R2'
+› total * 2
+8</pre>
+<p>Recorded values are plain data. Functions and Packet Tracer objects cannot be called from a recording. To get the live value of any expression at every step, add it to Watch and restart.</p>
+<p>When no session is running, the Debug Console runs expressions in Packet Tracer like the terminal.</p>
+<h2 id="hover">Hover<a class="anchor" href="#hover">¶</a></h2>
+<p>Point at a variable in the editor while paused to see its value in a tooltip.</p>
+<h2 id="limits">Limits<a class="anchor" href="#limits">¶</a></h2>
+<ul><li>Only the first steps up to the limit keep variables. The script still runs to the end, breakpoints later in the run still stop, and the Debug Console tells you when the limit was reached</li><li>Only the active file is debugged. Code loaded with .run or runScriptFile is run but not recorded</li><li>Timers do not exist in the Packet Tracer engine, so everything runs in order</li></ul>
+</main>
+</div>
+<footer>© PTForge contributors. Licensed under the MIT License. Cisco and Packet Tracer are trademarks of Cisco Systems, Inc.</footer>
+</body>
+</html>

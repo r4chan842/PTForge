@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1000">
+<title>Getting started — PTForge documentation</title>
+<link rel="icon" href="../_static/logo.svg">
+<link rel="stylesheet" href="../_static/style.css">
+</head>
+<body>
+<div class="document">
+<nav class="sidebar">
+<a class="brand" href="../index.html"><img src="../_static/logo.svg" alt="PTForge logo"></a>
+<h1 class="project"><a href="../index.html">PTForge</a></h1>
+<p class="version">1.3.0</p>
+<h3>Quick search</h3>
+<form class="search" action="../search.html" method="get"><input type="text" name="q" aria-label="Search"><button type="submit">Go</button></form>
+<h3>Contents</h3>
+<div class="contents"><p class="caption">Start Here</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../index.html">Documentation Index</a></li></ul><p class="caption">User Guides</p><ul><li><a href="installation.html">Installation</a></li><li><a href="getting-started.html">Getting Started</a></li><li><a href="writing-scripts.html">Writing Scripts</a></li><li><a href="editor.html">Editor</a></li><li><a href="terminal.html">Terminal</a></li><li><a href="debugger.html">Debugger</a></li><li><a href="network-tools.html">Network Tools</a></li><li><a href="plugins.html">Plugins</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="limitations.html">Limitations</a></li><li><a href="faq.html">Frequently Asked Questions</a></li></ul><p class="caption">Function Reference</p><ul><li><a href="../api/index.html">Index</a></li><li><a href="../api/devices.html">Devices</a></li><li><a href="../api/links.html">Links</a></li><li><a href="../api/hosts.html">End Devices</a></li><li><a href="../api/ios.html">Cisco IOS</a></li><li><a href="../api/switching.html">Switching</a></li><li><a href="../api/routing.html">Routing</a></li><li><a href="../api/security.html">Security</a></li><li><a href="../api/services.html">Server Services</a></li><li><a href="../api/wireless.html">Wireless</a></li><li><a href="../api/canvas.html">Canvas</a></li><li><a href="../api/topology.html">Topology</a></li><li><a href="../api/workspace.html">Workspace</a></li><li><a href="../api/inspect.html">Inspection</a></li><li><a href="../api/checks.html">Lab Check</a></li><li><a href="../api/audit.html">Audit</a></li><li><a href="../api/simulation.html">Simulation</a></li><li><a href="../api/snapshots.html">Snapshots</a></li><li><a href="../api/events.html">Events</a></li><li><a href="../api/plugins.html">Plugins</a></li><li><a href="../api/utilities.html">Utilities</a></li></ul><p class="caption">CCNA</p><ul><li><a href="../ccna/index.html">Topic Map</a></li><li><a href="../ccna/lab-checklist.html">Lab Checklist</a></li></ul><p class="caption">Recipes</p><ul><li><a href="../recipes/index.html">Index</a></li><li><a href="../recipes/campus-switching.html">Campus Switching</a></li><li><a href="../recipes/routing-labs.html">Routing Labs</a></li><li><a href="../recipes/edge-router.html">Edge Router</a></li><li><a href="../recipes/servers.html">Servers</a></li><li><a href="../recipes/documenting.html">Documenting a Topology</a></li></ul><p class="caption">Cheat Sheets</p><ul><li><a href="../cheatsheets/ios-to-ptforge.html">IOS Commands and PTForge Calls</a></li><li><a href="../cheatsheets/subnetting.html">Subnetting</a></li><li><a href="../cheatsheets/keyboard.html">Keyboard Shortcuts</a></li></ul><p class="caption">Reference Tables</p><ul><li><a href="../reference/device-models.html">Device Models</a></li><li><a href="../reference/device-types.html">Device Types</a></li><li><a href="../reference/modules.html">Modules</a></li><li><a href="../reference/link-types.html">Link Types</a></li><li><a href="../reference/port-names.html">Port Names</a></li></ul><p class="caption">Architecture</p><ul><li><a href="../architecture/overview.html">Overview</a></li><li><a href="../architecture/runtime.html">Runtime</a></li><li><a href="../architecture/testing.html">Testing</a></li></ul><p class="caption">Project Files</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../project/CHANGELOG.html">Changes</a></li><li><a href="../project/ROADMAP.html">Roadmap</a></li><li><a href="../project/CONTRIBUTING.html">Contributing</a></li><li><a href="../project/CODE_OF_CONDUCT.html">Code of Conduct</a></li><li><a href="../project/SECURITY.html">Security Policy</a></li><li><a href="../project/SUPPORT.html">Support</a></li><li><a href="../project/THIRD_PARTY_NOTICES.html">Third-Party Notices</a></li><li><a href="../project/LICENSE.html">License</a></li><li><a href="../project/CITATION.cff.html">Citation</a></li><li><a href="../project/examples/index.html">Examples</a></li><li><a href="../project/templates/index.html">Templates</a></li><li><a href="../project/plugins/index.html">Sample Plugins</a></li></ul><p class="caption">Translations</p><ul><li><a href="../index.html#translations">Translations</a></li></ul></div>
+<div class="localtoc"><p class="caption">This Page</p><ul><li class="l2"><a href="#open-the-editor">Open the editor</a></li><li class="l2"><a href="#your-first-network">Your first network</a></li><li class="l2"><a href="#everything-is-a-function-call">Everything is a function call</a></li><li class="l2"><a href="#raw-ios-when-you-need-it">Raw IOS when you need it</a></li><li class="l2"><a href="#mix-loops-and-data">Mix loops and data</a></li><li class="l2"><a href="#next">Next</a></li></ul></div><h3>This Page</h3>
+<ul class="plain"><li><a href="https://github.com/r4chan842/PTForge/blob/main/docs/guides/getting-started">Show Source</a></li></ul>
+</nav>
+<main class="body">
+<div class="topbar"><select class="language" aria-label="Language" onchange="location.href=this.value"><option value="../introduction.html" selected>English</option><option value="../translations/fa.html">فارسی</option><option value="../translations/de.html">Deutsch</option><option value="../translations/es.html">Español</option><option value="../translations/fr.html">Français</option><option value="../translations/pt-BR.html">Português</option><option value="../translations/ru.html">Русский</option><option value="../translations/tr.html">Türkçe</option><option value="../translations/ar.html">العربية</option><option value="../translations/zh-CN.html">中文</option><option value="../translations/ja.html">日本語</option></select></div>
+<h1>Getting started</h1>
+<p>This guide walks through a first script. PTForge must be installed first, see <a href="installation.html">Installation</a>.</p>
+<h2 id="open-the-editor">Open the editor<a class="anchor" href="#open-the-editor">¶</a></h2>
+<p>Extensions → PTForge Editor.</p>
+<p>The window is laid out like Visual Studio Code. The activity bar on the left opens the Explorer, the function reference, Run and Debug, snippets, devices, network tools and plugins. Scripts open in tabs. The panel at the bottom holds Problems, Output, the Debug Console, the Terminal and Lab Check reports.</p>
+<p>Ctrl+F5 runs the active script and F5 runs it under the debugger.</p>
+<h2 id="your-first-network">Your first network<a class="anchor" href="#your-first-network">¶</a></h2>
+<pre>addDevice(&quot;R1&quot;, &quot;2911&quot;, 300, 100);
+addDevice(&quot;S1&quot;, &quot;2960-24TT&quot;, 300, 250);
+addDevice(&quot;PC1&quot;, &quot;PC-PT&quot;, 200, 400);
+addDevice(&quot;PC2&quot;, &quot;PC-PT&quot;, 400, 400);
+
+addLink(&quot;R1&quot;, &quot;GigabitEthernet0/0&quot;, &quot;S1&quot;, &quot;GigabitEthernet0/1&quot;, &quot;straight&quot;);
+addLink(&quot;S1&quot;, &quot;FastEthernet0/1&quot;, &quot;PC1&quot;, &quot;FastEthernet0&quot;, &quot;straight&quot;);
+addLink(&quot;S1&quot;, &quot;FastEthernet0/2&quot;, &quot;PC2&quot;, &quot;FastEthernet0&quot;, &quot;straight&quot;);
+
+basicSetup(&quot;R1&quot;, { secret: &quot;class&quot;, consolePassword: &quot;cisco&quot;, banner: &quot;Authorized access only&quot; });
+setInterfaceIp(&quot;R1&quot;, &quot;GigabitEthernet0/0&quot;, &quot;192.168.1.1/24&quot;);
+
+setPcStatic(&quot;PC1&quot;, &quot;192.168.1.10/24&quot;, &quot;192.168.1.1&quot;);
+setPcStatic(&quot;PC2&quot;, &quot;192.168.1.11/24&quot;, &quot;192.168.1.1&quot;);
+
+labelAllDevices();</pre>
+<p>Wait a few seconds for the link lights to turn green, then:</p>
+<pre>ping(&quot;PC1&quot;, &quot;192.168.1.1&quot;, 4, function (row) { showResult(row); });
+log(getVlans(&quot;S1&quot;));</pre>
+<p>showResult and log print to the Output panel. log never interrupts the script, so use it for progress messages.</p>
+<h2 id="everything-is-a-function-call">Everything is a function call<a class="anchor" href="#everything-is-a-function-call">¶</a></h2>
+<ul><li>Devices are referred to by name</li><li>Ports are full names like GigabitEthernet0/0</li><li>IOS functions send commands through the CLI, exactly like typing them</li><li>IOS functions return an array of rejected lines. Empty means success</li></ul>
+<pre>var failed = setInterfaceIp(&quot;R1&quot;, &quot;GigabitEthernet0/5&quot;, &quot;10.0.0.1/24&quot;);
+showResult(failed);</pre>
+<h2 id="raw-ios-when-you-need-it">Raw IOS when you need it<a class="anchor" href="#raw-ios-when-you-need-it">¶</a></h2>
+<p>Anything the helpers do not cover can be sent directly:</p>
+<pre>configureIosDevice(&quot;R1&quot;, [
+    &quot;ip dhcp pool LAN&quot;,
+    &quot; network 192.168.1.0 255.255.255.0&quot;,
+    &quot; default-router 192.168.1.1&quot;
+]);</pre>
+<h2 id="mix-loops-and-data">Mix loops and data<a class="anchor" href="#mix-loops-and-data">¶</a></h2>
+<p>It is plain JavaScript:</p>
+<pre>var vlans = { 10: &quot;SALES&quot;, 20: &quot;HR&quot;, 30: &quot;IT&quot; };
+[&quot;S1&quot;, &quot;S2&quot;, &quot;S3&quot;].forEach(function (sw) {
+    createVlans(sw, vlans);
+    setTrunkPort(sw, &quot;GigabitEthernet0/1&quot;, [10, 20, 30]);
+});</pre>
+<h2 id="next">Next<a class="anchor" href="#next">¶</a></h2>
+<ul><li><a href="writing-scripts.html">Writing scripts</a></li><li><a href="../api/index.html">API reference</a></li><li><a href="../recipes/index.html">Recipes</a></li><li>The <a href="../project/examples/index.html">Examples</a> folder has 27 complete labs</li></ul>
+</main>
+</div>
+<footer>© PTForge contributors. Licensed under the MIT License. Cisco and Packet Tracer are trademarks of Cisco Systems, Inc.</footer>
+</body>
+</html>

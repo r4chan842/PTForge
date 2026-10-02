@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1000">
+<title>Devices — PTForge documentation</title>
+<link rel="icon" href="../_static/logo.svg">
+<link rel="stylesheet" href="../_static/style.css">
+</head>
+<body>
+<div class="document">
+<nav class="sidebar">
+<a class="brand" href="../index.html"><img src="../_static/logo.svg" alt="PTForge logo"></a>
+<h1 class="project"><a href="../index.html">PTForge</a></h1>
+<p class="version">1.3.0</p>
+<h3>Quick search</h3>
+<form class="search" action="../search.html" method="get"><input type="text" name="q" aria-label="Search"><button type="submit">Go</button></form>
+<h3>Contents</h3>
+<div class="contents"><p class="caption">Start Here</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../index.html">Documentation Index</a></li></ul><p class="caption">User Guides</p><ul><li><a href="../guides/installation.html">Installation</a></li><li><a href="../guides/getting-started.html">Getting Started</a></li><li><a href="../guides/writing-scripts.html">Writing Scripts</a></li><li><a href="../guides/editor.html">Editor</a></li><li><a href="../guides/terminal.html">Terminal</a></li><li><a href="../guides/debugger.html">Debugger</a></li><li><a href="../guides/network-tools.html">Network Tools</a></li><li><a href="../guides/plugins.html">Plugins</a></li><li><a href="../guides/troubleshooting.html">Troubleshooting</a></li><li><a href="../guides/limitations.html">Limitations</a></li><li><a href="../guides/faq.html">Frequently Asked Questions</a></li></ul><p class="caption">Function Reference</p><ul><li><a href="index.html">Index</a></li><li><a href="devices.html">Devices</a></li><li><a href="links.html">Links</a></li><li><a href="hosts.html">End Devices</a></li><li><a href="ios.html">Cisco IOS</a></li><li><a href="switching.html">Switching</a></li><li><a href="routing.html">Routing</a></li><li><a href="security.html">Security</a></li><li><a href="services.html">Server Services</a></li><li><a href="wireless.html">Wireless</a></li><li><a href="canvas.html">Canvas</a></li><li><a href="topology.html">Topology</a></li><li><a href="workspace.html">Workspace</a></li><li><a href="inspect.html">Inspection</a></li><li><a href="checks.html">Lab Check</a></li><li><a href="audit.html">Audit</a></li><li><a href="simulation.html">Simulation</a></li><li><a href="snapshots.html">Snapshots</a></li><li><a href="events.html">Events</a></li><li><a href="plugins.html">Plugins</a></li><li><a href="utilities.html">Utilities</a></li></ul><p class="caption">CCNA</p><ul><li><a href="../ccna/index.html">Topic Map</a></li><li><a href="../ccna/lab-checklist.html">Lab Checklist</a></li></ul><p class="caption">Recipes</p><ul><li><a href="../recipes/index.html">Index</a></li><li><a href="../recipes/campus-switching.html">Campus Switching</a></li><li><a href="../recipes/routing-labs.html">Routing Labs</a></li><li><a href="../recipes/edge-router.html">Edge Router</a></li><li><a href="../recipes/servers.html">Servers</a></li><li><a href="../recipes/documenting.html">Documenting a Topology</a></li></ul><p class="caption">Cheat Sheets</p><ul><li><a href="../cheatsheets/ios-to-ptforge.html">IOS Commands and PTForge Calls</a></li><li><a href="../cheatsheets/subnetting.html">Subnetting</a></li><li><a href="../cheatsheets/keyboard.html">Keyboard Shortcuts</a></li></ul><p class="caption">Reference Tables</p><ul><li><a href="../reference/device-models.html">Device Models</a></li><li><a href="../reference/device-types.html">Device Types</a></li><li><a href="../reference/modules.html">Modules</a></li><li><a href="../reference/link-types.html">Link Types</a></li><li><a href="../reference/port-names.html">Port Names</a></li></ul><p class="caption">Architecture</p><ul><li><a href="../architecture/overview.html">Overview</a></li><li><a href="../architecture/runtime.html">Runtime</a></li><li><a href="../architecture/testing.html">Testing</a></li></ul><p class="caption">Project Files</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../project/CHANGELOG.html">Changes</a></li><li><a href="../project/ROADMAP.html">Roadmap</a></li><li><a href="../project/CONTRIBUTING.html">Contributing</a></li><li><a href="../project/CODE_OF_CONDUCT.html">Code of Conduct</a></li><li><a href="../project/SECURITY.html">Security Policy</a></li><li><a href="../project/SUPPORT.html">Support</a></li><li><a href="../project/THIRD_PARTY_NOTICES.html">Third-Party Notices</a></li><li><a href="../project/LICENSE.html">License</a></li><li><a href="../project/CITATION.cff.html">Citation</a></li><li><a href="../project/examples/index.html">Examples</a></li><li><a href="../project/templates/index.html">Templates</a></li><li><a href="../project/plugins/index.html">Sample Plugins</a></li></ul><p class="caption">Translations</p><ul><li><a href="../index.html#translations">Translations</a></li></ul></div>
+<div class="localtoc"><p class="caption">This Page</p><ul><li class="l2"><a href="#lifecycle">Lifecycle</a></li><li class="l2"><a href="#position">Position</a></li><li class="l2"><a href="#queries">Queries</a></li><li class="l2"><a href="#power-and-time">Power and time</a></li><li class="l2"><a href="#modules">Modules</a></li><li class="l2"><a href="#ports">Ports</a></li><li class="l2"><a href="#custom-data">Custom data</a></li></ul></div><h3>This Page</h3>
+<ul class="plain"><li><a href="https://github.com/r4chan842/PTForge/blob/main/docs/api/devices">Show Source</a></li></ul>
+</nav>
+<main class="body">
+<div class="topbar"><select class="language" aria-label="Language" onchange="location.href=this.value"><option value="../introduction.html" selected>English</option><option value="../translations/fa.html">فارسی</option><option value="../translations/de.html">Deutsch</option><option value="../translations/es.html">Español</option><option value="../translations/fr.html">Français</option><option value="../translations/pt-BR.html">Português</option><option value="../translations/ru.html">Русский</option><option value="../translations/tr.html">Türkçe</option><option value="../translations/ar.html">العربية</option><option value="../translations/zh-CN.html">中文</option><option value="../translations/ja.html">日本語</option></select></div>
+<h1>Devices</h1>
+<p>Create, find, move and inspect devices on the logical workspace.</p>
+<h2 id="lifecycle">Lifecycle<a class="anchor" href="#lifecycle">¶</a></h2>
+<dl class="function" id="fn-adddevice"><dt><code><span class="name">addDevice</span>(name, model, x, y) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-adddevice">¶</a></dt><dd>Add a device and rename it. Routers and switches skip the boot sequence</dd></dl>
+<dl class="function" id="fn-adddevices"><dt><code><span class="name">addDevices</span>(list) <span class="returns">→ bool[]</span></code><a class="anchor" href="#fn-adddevices">¶</a></dt><dd>Add many devices from [[name, model, x, y], ...]</dd></dl>
+<dl class="function" id="fn-removedevice"><dt><code><span class="name">removeDevice</span>(name) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-removedevice">¶</a></dt><dd>Delete one device or an array of names</dd></dl>
+<dl class="function" id="fn-renamedevice"><dt><code><span class="name">renameDevice</span>(oldName, newName) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-renamedevice">¶</a></dt><dd>Rename. Throws if the new name is taken</dd></dl>
+<dl class="function" id="fn-restartdevice"><dt><code><span class="name">restartDevice</span>(name) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-restartdevice">¶</a></dt><dd>Power cycle</dd></dl>
+<pre>addDevice(&quot;R1&quot;, &quot;2911&quot;, 100, 100);
+
+addDevices([
+    [&quot;S1&quot;, &quot;2960-24TT&quot;, 100, 250],
+    [&quot;PC1&quot;, &quot;PC-PT&quot;, 50, 400],
+    [&quot;PC2&quot;, &quot;PC-PT&quot;, 150, 400]
+]);
+
+removeDevice([&quot;PC1&quot;, &quot;PC2&quot;]);</pre>
+<p>addDevice throws when the model is unknown or the name already exists, so a typo never goes unnoticed.</p>
+<h2 id="position">Position<a class="anchor" href="#position">¶</a></h2>
+<dl class="function" id="fn-movedevice"><dt><code><span class="name">moveDevice</span>(name, x, y, centered) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-movedevice">¶</a></dt><dd>Move to a position. centered: true places the icon center at x, y</dd></dl>
+<dl class="function" id="fn-movedeviceby"><dt><code><span class="name">moveDeviceBy</span>(name, dx, dy) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-movedeviceby">¶</a></dt><dd>Move relative to the current position</dd></dl>
+<dl class="function" id="fn-getdeviceposition"><dt><code><span class="name">getDevicePosition</span>(name) <span class="returns">→ object</span></code><a class="anchor" href="#fn-getdeviceposition">¶</a></dt><dd>{ x, y, centerX, centerY }</dd></dl>
+<dl class="function" id="fn-movephysical"><dt><code><span class="name">movePhysical</span>(name, x, y) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-movephysical">¶</a></dt><dd>Move inside the physical workspace</dd></dl>
+<dl class="function" id="fn-movephysicalby"><dt><code><span class="name">movePhysicalBy</span>(name, dx, dy) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-movephysicalby">¶</a></dt><dd>Relative move in the physical workspace</dd></dl>
+<h2 id="queries">Queries<a class="anchor" href="#queries">¶</a></h2>
+<dl class="function" id="fn-getdevices"><dt><code><span class="name">getDevices</span>(filter, startsWith) <span class="returns">→ string[]</span></code><a class="anchor" href="#fn-getdevices">¶</a></dt><dd>Names filtered by type and name prefix</dd></dl>
+<dl class="function" id="fn-getdevicecount"><dt><code><span class="name">getDeviceCount</span>() <span class="returns">→ number</span></code><a class="anchor" href="#fn-getdevicecount">¶</a></dt><dd>Number of devices</dd></dl>
+<dl class="function" id="fn-getdevicemodel"><dt><code><span class="name">getDeviceModel</span>(name) <span class="returns">→ string</span></code><a class="anchor" href="#fn-getdevicemodel">¶</a></dt><dd>Model string, for example 2911</dd></dl>
+<dl class="function" id="fn-getdevicetype"><dt><code><span class="name">getDeviceType</span>(name) <span class="returns">→ number</span></code><a class="anchor" href="#fn-getdevicetype">¶</a></dt><dd>Numeric device type</dd></dl>
+<dl class="function" id="fn-getdeviceinfo"><dt><code><span class="name">getDeviceInfo</span>(name) <span class="returns">→ object</span></code><a class="anchor" href="#fn-getdeviceinfo">¶</a></dt><dd>Model, type, power, serial, position and every port in the same shape as getPortInfo</dd></dl>
+<p>filter accepts a type name, a type number or an array of both. See device types: <a href="../reference/device-types.html">Device types</a>.</p>
+<pre>getDevices();
+getDevices(&quot;switch&quot;);
+getDevices([&quot;router&quot;, &quot;multilayerswitch&quot;]);
+getDevices(null, &quot;LAB-&quot;);
+
+var info = getDeviceInfo(&quot;R1&quot;);
+showResult(info.ports);</pre>
+<h2 id="power-and-time">Power and time<a class="anchor" href="#power-and-time">¶</a></h2>
+<dl class="function" id="fn-setpower"><dt><code><span class="name">setPower</span>(name, on) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-setpower">¶</a></dt><dd>true or false, default on</dd></dl>
+<dl class="function" id="fn-getpower"><dt><code><span class="name">getPower</span>(name) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-getpower">¶</a></dt><dd>Current power state</dd></dl>
+<dl class="function" id="fn-setdevicetime"><dt><code><span class="name">setDeviceTime</span>(name, year, month, day, hour, minute, second) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-setdevicetime">¶</a></dt><dd>Set the device clock</dd></dl>
+<h2 id="modules">Modules<a class="anchor" href="#modules">¶</a></h2>
+<dl class="function" id="fn-addmodule"><dt><code><span class="name">addModule</span>(name, slot, model) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-addmodule">¶</a></dt><dd>Install a module. The device is powered off and on automatically</dd></dl>
+<dl class="function" id="fn-addmodules"><dt><code><span class="name">addModules</span>(name, { slot: model }) <span class="returns">→ bool[]</span></code><a class="anchor" href="#fn-addmodules">¶</a></dt><dd>Install several modules</dd></dl>
+<dl class="function" id="fn-removemodule"><dt><code><span class="name">removeModule</span>(name, slot) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-removemodule">¶</a></dt><dd>Remove a module</dd></dl>
+<dl class="function" id="fn-getsupportedmodules"><dt><code><span class="name">getSupportedModules</span>(name) <span class="returns">→ string[]</span></code><a class="anchor" href="#fn-getsupportedmodules">¶</a></dt><dd>Modules the device accepts</dd></dl>
+<pre>addDevice(&quot;R1&quot;, &quot;2911&quot;, 100, 100);
+addModules(&quot;R1&quot;, { &quot;0/0&quot;: &quot;HWIC-2T&quot;, &quot;0/1&quot;: &quot;HWIC-2T&quot; });</pre>
+<p>Slot 0/1 on a 2911 creates Serial0/1/0 and Serial0/1/1. The full module list is in <a href="../reference/modules.html">Modules</a>.</p>
+<h2 id="ports">Ports<a class="anchor" href="#ports">¶</a></h2>
+<dl class="function" id="fn-getports"><dt><code><span class="name">getPorts</span>(name) <span class="returns">→ string[]</span></code><a class="anchor" href="#fn-getports">¶</a></dt><dd>Every port name</dd></dl>
+<dl class="function" id="fn-getfreeports"><dt><code><span class="name">getFreePorts</span>(name, startsWith) <span class="returns">→ string[]</span></code><a class="anchor" href="#fn-getfreeports">¶</a></dt><dd>Ports without a cable, Vlan and Loopback excluded</dd></dl>
+<dl class="function" id="fn-getportinfo"><dt><code><span class="name">getPortInfo</span>(name, port) <span class="returns">→ object</span></code><a class="anchor" href="#fn-getportinfo">¶</a></dt><dd>{ name, ip, mask, mac, up, protocolUp, connectedTo, connectedDevice, linkType, description, bandwidth, fullDuplex, ipv6 }. connectedTo is the remote port name, connectedDevice the remote device</dd></dl>
+<dl class="function" id="fn-setportpower"><dt><code><span class="name">setPortPower</span>(name, port, on) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-setportpower">¶</a></dt><dd>Administrative state through the API</dd></dl>
+<dl class="function" id="fn-setportdescription"><dt><code><span class="name">setPortDescription</span>(name, port, text) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-setportdescription">¶</a></dt><dd>Port description</dd></dl>
+<dl class="function" id="fn-setportspeed"><dt><code><span class="name">setPortSpeed</span>(name, port, bandwidth, fullDuplex) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-setportspeed">¶</a></dt><dd>Use &quot;auto&quot; for either value to enable negotiation</dd></dl>
+<dl class="function" id="fn-setportmac"><dt><code><span class="name">setPortMac</span>(name, port, mac) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-setportmac">¶</a></dt><dd>Override the MAC address</dd></dl>
+<dl class="function" id="fn-setportclockrate"><dt><code><span class="name">setPortClockRate</span>(name, port, rate) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-setportclockrate">¶</a></dt><dd>Serial clock rate through the API</dd></dl>
+<pre>var next = getFreePorts(&quot;S1&quot;, &quot;FastEthernet&quot;)[0];
+addLink(&quot;S1&quot;, next, &quot;PC9&quot;, &quot;FastEthernet0&quot;, &quot;straight&quot;);</pre>
+<h2 id="custom-data">Custom data<a class="anchor" href="#custom-data">¶</a></h2>
+<dl class="function" id="fn-setcustomvar"><dt><code><span class="name">setCustomVar</span>(name, key, value) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-setcustomvar">¶</a></dt><dd>Store a value on the device. It is saved in the .pkt file</dd></dl>
+<dl class="function" id="fn-getcustomvar"><dt><code><span class="name">getCustomVar</span>(name, key) <span class="returns">→ string</span></code><a class="anchor" href="#fn-getcustomvar">¶</a></dt><dd>Stored value, null when missing</dd></dl>
+<dl class="function" id="fn-getcustomvars"><dt><code><span class="name">getCustomVars</span>(name) <span class="returns">→ object</span></code><a class="anchor" href="#fn-getcustomvars">¶</a></dt><dd>Every stored value</dd></dl>
+<dl class="function" id="fn-removecustomvar"><dt><code><span class="name">removeCustomVar</span>(name, key) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-removecustomvar">¶</a></dt><dd>Delete a value</dd></dl>
+<dl class="function" id="fn-setdeviceimage"><dt><code><span class="name">setDeviceImage</span>(name, logicalPath, physicalPath) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-setdeviceimage">¶</a></dt><dd>Custom icon for either workspace</dd></dl>
+</main>
+</div>
+<footer>© PTForge contributors. Licensed under the MIT License. Cisco and Packet Tracer are trademarks of Cisco Systems, Inc.</footer>
+</body>
+</html>

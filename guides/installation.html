@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1000">
+<title>Installation — PTForge documentation</title>
+<link rel="icon" href="../_static/logo.svg">
+<link rel="stylesheet" href="../_static/style.css">
+</head>
+<body>
+<div class="document">
+<nav class="sidebar">
+<a class="brand" href="../index.html"><img src="../_static/logo.svg" alt="PTForge logo"></a>
+<h1 class="project"><a href="../index.html">PTForge</a></h1>
+<p class="version">1.3.0</p>
+<h3>Quick search</h3>
+<form class="search" action="../search.html" method="get"><input type="text" name="q" aria-label="Search"><button type="submit">Go</button></form>
+<h3>Contents</h3>
+<div class="contents"><p class="caption">Start Here</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../index.html">Documentation Index</a></li></ul><p class="caption">User Guides</p><ul><li><a href="installation.html">Installation</a></li><li><a href="getting-started.html">Getting Started</a></li><li><a href="writing-scripts.html">Writing Scripts</a></li><li><a href="editor.html">Editor</a></li><li><a href="terminal.html">Terminal</a></li><li><a href="debugger.html">Debugger</a></li><li><a href="network-tools.html">Network Tools</a></li><li><a href="plugins.html">Plugins</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="limitations.html">Limitations</a></li><li><a href="faq.html">Frequently Asked Questions</a></li></ul><p class="caption">Function Reference</p><ul><li><a href="../api/index.html">Index</a></li><li><a href="../api/devices.html">Devices</a></li><li><a href="../api/links.html">Links</a></li><li><a href="../api/hosts.html">End Devices</a></li><li><a href="../api/ios.html">Cisco IOS</a></li><li><a href="../api/switching.html">Switching</a></li><li><a href="../api/routing.html">Routing</a></li><li><a href="../api/security.html">Security</a></li><li><a href="../api/services.html">Server Services</a></li><li><a href="../api/wireless.html">Wireless</a></li><li><a href="../api/canvas.html">Canvas</a></li><li><a href="../api/topology.html">Topology</a></li><li><a href="../api/workspace.html">Workspace</a></li><li><a href="../api/inspect.html">Inspection</a></li><li><a href="../api/checks.html">Lab Check</a></li><li><a href="../api/audit.html">Audit</a></li><li><a href="../api/simulation.html">Simulation</a></li><li><a href="../api/snapshots.html">Snapshots</a></li><li><a href="../api/events.html">Events</a></li><li><a href="../api/plugins.html">Plugins</a></li><li><a href="../api/utilities.html">Utilities</a></li></ul><p class="caption">CCNA</p><ul><li><a href="../ccna/index.html">Topic Map</a></li><li><a href="../ccna/lab-checklist.html">Lab Checklist</a></li></ul><p class="caption">Recipes</p><ul><li><a href="../recipes/index.html">Index</a></li><li><a href="../recipes/campus-switching.html">Campus Switching</a></li><li><a href="../recipes/routing-labs.html">Routing Labs</a></li><li><a href="../recipes/edge-router.html">Edge Router</a></li><li><a href="../recipes/servers.html">Servers</a></li><li><a href="../recipes/documenting.html">Documenting a Topology</a></li></ul><p class="caption">Cheat Sheets</p><ul><li><a href="../cheatsheets/ios-to-ptforge.html">IOS Commands and PTForge Calls</a></li><li><a href="../cheatsheets/subnetting.html">Subnetting</a></li><li><a href="../cheatsheets/keyboard.html">Keyboard Shortcuts</a></li></ul><p class="caption">Reference Tables</p><ul><li><a href="../reference/device-models.html">Device Models</a></li><li><a href="../reference/device-types.html">Device Types</a></li><li><a href="../reference/modules.html">Modules</a></li><li><a href="../reference/link-types.html">Link Types</a></li><li><a href="../reference/port-names.html">Port Names</a></li></ul><p class="caption">Architecture</p><ul><li><a href="../architecture/overview.html">Overview</a></li><li><a href="../architecture/runtime.html">Runtime</a></li><li><a href="../architecture/testing.html">Testing</a></li></ul><p class="caption">Project Files</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../project/CHANGELOG.html">Changes</a></li><li><a href="../project/ROADMAP.html">Roadmap</a></li><li><a href="../project/CONTRIBUTING.html">Contributing</a></li><li><a href="../project/CODE_OF_CONDUCT.html">Code of Conduct</a></li><li><a href="../project/SECURITY.html">Security Policy</a></li><li><a href="../project/SUPPORT.html">Support</a></li><li><a href="../project/THIRD_PARTY_NOTICES.html">Third-Party Notices</a></li><li><a href="../project/LICENSE.html">License</a></li><li><a href="../project/CITATION.cff.html">Citation</a></li><li><a href="../project/examples/index.html">Examples</a></li><li><a href="../project/templates/index.html">Templates</a></li><li><a href="../project/plugins/index.html">Sample Plugins</a></li></ul><p class="caption">Translations</p><ul><li><a href="../index.html#translations">Translations</a></li></ul></div>
+<div class="localtoc"><p class="caption">This Page</p><ul><li class="l2"><a href="#requirements">Requirements</a></li><li class="l2"><a href="#step-1-get-the-files">Step 1: get the files</a></li><li class="l2"><a href="#step-2-create-the-script-module">Step 2: create the Script Module</a></li><li class="l2"><a href="#step-3-add-the-scripts">Step 3: add the scripts</a></li><li class="l2"><a href="#step-4-add-the-interface">Step 4: add the interface</a></li><li class="l2"><a href="#step-5-save-and-start">Step 5: save and start</a></li><li class="l2"><a href="#updating">Updating</a></li><li class="l2"><a href="#uninstalling">Uninstalling</a></li></ul></div><h3>This Page</h3>
+<ul class="plain"><li><a href="https://github.com/r4chan842/PTForge/blob/main/docs/guides/installation">Show Source</a></li></ul>
+</nav>
+<main class="body">
+<div class="topbar"><select class="language" aria-label="Language" onchange="location.href=this.value"><option value="../introduction.html" selected>English</option><option value="../translations/fa.html">فارسی</option><option value="../translations/de.html">Deutsch</option><option value="../translations/es.html">Español</option><option value="../translations/fr.html">Français</option><option value="../translations/pt-BR.html">Português</option><option value="../translations/ru.html">Русский</option><option value="../translations/tr.html">Türkçe</option><option value="../translations/ar.html">العربية</option><option value="../translations/zh-CN.html">中文</option><option value="../translations/ja.html">日本語</option></select></div>
+<h1>Installation</h1>
+<p>PTForge runs inside Packet Tracer as a Script Module. Packet Tracer packages (.pts) are encrypted and can only be created inside Packet Tracer, so the repository ships the source and you build the module once in Packet Tracer.</p>
+<h2 id="requirements">Requirements<a class="anchor" href="#requirements">¶</a></h2>
+<ul><li>Cisco Packet Tracer 8.x or newer with the Extensions menu</li><li>Nothing else. There is no installer and no network access is needed at runtime</li></ul>
+<h2 id="step-1-get-the-files">Step 1: get the files<a class="anchor" href="#step-1-get-the-files">¶</a></h2>
+<pre>git clone https://github.com/r4chan842/PTForge.git</pre>
+<p>or download the ZIP from GitHub and extract it.</p>
+<h2 id="step-2-create-the-script-module">Step 2: create the Script Module<a class="anchor" href="#step-2-create-the-script-module">¶</a></h2>
+<ol><li>Open Packet Tracer</li><li>Extensions → Scripting → Configure PT Script Modules</li><li>Create a new module named PTForge and open it in the Script Module editor</li></ol>
+<p>Button names in this dialog differ slightly between Packet Tracer versions. Look for the option that creates a new module, then open it in the Script Module editor.</p>
+<h2 id="step-3-add-the-scripts">Step 3: add the scripts<a class="anchor" href="#step-3-add-the-scripts">¶</a></h2>
+<p>Option A: one file (recommended)</p>
+<p>Add a single script file and paste <a href="https://github.com/r4chan842/PTForge/blob/main/release/ptforge.js">https://github.com/r4chan842/PTForge/blob/main/release/ptforge.js</a>. It contains every source file already in the right order. Rebuild it after editing the sources with:</p>
+<pre>node tools/bundle.js</pre>
+<p>Option B: separate files</p>
+<p>Useful when you want to change parts of the code inside Packet Tracer.</p>
+<p>Packet Tracer loads script files top to bottom, so the order matters. Add a script file for each entry below and paste the matching file from <a href="https://github.com/r4chan842/PTForge/tree/main/src">https://github.com/r4chan842/PTForge/tree/main/src</a>. The same list is in <a href="https://github.com/r4chan842/PTForge/blob/main/tools/load-order.json">https://github.com/r4chan842/PTForge/blob/main/tools/load-order.json</a> and the test suite fails if the two ever differ.</p>
+<ol><li><a href="https://github.com/r4chan842/PTForge/blob/main/src/data/devices.js">https://github.com/r4chan842/PTForge/blob/main/src/data/devices.js</a>, links.js, modules.js, types.js</li><li><a href="https://github.com/r4chan842/PTForge/blob/main/src/lib/text.js">https://github.com/r4chan842/PTForge/blob/main/src/lib/text.js</a>, colors.js, ipv4.js</li><li><a href="https://github.com/r4chan842/PTForge/blob/main/src/core/context.js">https://github.com/r4chan842/PTForge/blob/main/src/core/context.js</a>, layers.js</li><li>Every file in <a href="https://github.com/r4chan842/PTForge/tree/main/src/api">https://github.com/r4chan842/PTForge/tree/main/src/api</a>, in the order listed in load-order.json</li><li><a href="https://github.com/r4chan842/PTForge/blob/main/src/core/runner.js">https://github.com/r4chan842/PTForge/blob/main/src/core/runner.js</a>, window.js</li><li><a href="https://github.com/r4chan842/PTForge/blob/main/src/core/main.js">https://github.com/r4chan842/PTForge/blob/main/src/core/main.js</a> last</li></ol>
+<p>main.js must be the last script because it opens the menu entry after every function exists.</p>
+<h2 id="step-4-add-the-interface">Step 4: add the interface<a class="anchor" href="#step-4-add-the-interface">¶</a></h2>
+<p>Add the fourteen files in <a href="https://github.com/r4chan842/PTForge/tree/main/src/ui">https://github.com/r4chan842/PTForge/tree/main/src/ui</a> as the module's interface files, keeping the names:</p>
+<ul><li>index.html: Page layout</li><li>style.css: VS Code Dark Modern theme</li><li>catalog.js: Function list, generated from <a href="../api/index.html">API reference</a></li><li>snippets.js: Snippet library</li><li>highlight.js: Syntax highlighter</li><li>lint.js: Problems: syntax and unknown functions</li><li>netcalc.js: IPv4 and IPv6 network calculator</li><li>editor.js: The code editor component, breakpoints and execution line</li><li>acorn.js: JavaScript parser used by the debugger (MIT)</li><li>instrument.js: Prepares a script for step recording</li><li>terminal.js: The JavaScript terminal</li><li>debugview.js: Run and Debug view, Debug Console, breakpoints</li><li>views.js: Calculator, reachability and snapshot diff tabs</li><li>interface.js: Workbench, files, commands, Packet Tracer bridge</li></ul>
+<p>They load nothing from the network. The list order matches the script tags in index.html.</p>
+<p>Updating from 1.1</p>
+<p>Replace the script file and every interface file, and add the five new ones: acorn.js, instrument.js, terminal.js, debugview.js and views.js. Your workspace, open tabs and settings are kept.</p>
+<p>Updating from 1.0</p>
+<p>Replace the script file and every interface file, and add the five new ones. Scripts stored in the three old slots are moved into the new workspace as script-1.js, script-2.js and script-3.js the first time the editor opens.</p>
+<h2 id="step-5-save-and-start">Step 5: save and start<a class="anchor" href="#step-5-save-and-start">¶</a></h2>
+<ol><li>Save the module as PTForge.pts</li><li>Back in Configure PT Script Modules, select it and press Start</li><li>A new menu entry Extensions → PTForge Editor appears</li></ol>
+<p>If your version offers an option to load the module at startup, enable it so the menu entry is always there.</p>
+<h2 id="updating">Updating<a class="anchor" href="#updating">¶</a></h2>
+<p>Pull the new version, open the module in Edit, replace the changed files and save. <a href="../project/CHANGELOG.html">Changelog</a> lists which files changed in each release.</p>
+<h2 id="uninstalling">Uninstalling<a class="anchor" href="#uninstalling">¶</a></h2>
+<p>Configure PT Script Modules → select PTForge → Remove.</p>
+</main>
+</div>
+<footer>© PTForge contributors. Licensed under the MIT License. Cisco and Packet Tracer are trademarks of Cisco Systems, Inc.</footer>
+</body>
+</html>

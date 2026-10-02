@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1000">
+<title>Server services — PTForge documentation</title>
+<link rel="icon" href="../_static/logo.svg">
+<link rel="stylesheet" href="../_static/style.css">
+</head>
+<body>
+<div class="document">
+<nav class="sidebar">
+<a class="brand" href="../index.html"><img src="../_static/logo.svg" alt="PTForge logo"></a>
+<h1 class="project"><a href="../index.html">PTForge</a></h1>
+<p class="version">1.3.0</p>
+<h3>Quick search</h3>
+<form class="search" action="../search.html" method="get"><input type="text" name="q" aria-label="Search"><button type="submit">Go</button></form>
+<h3>Contents</h3>
+<div class="contents"><p class="caption">Start Here</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../index.html">Documentation Index</a></li></ul><p class="caption">User Guides</p><ul><li><a href="../guides/installation.html">Installation</a></li><li><a href="../guides/getting-started.html">Getting Started</a></li><li><a href="../guides/writing-scripts.html">Writing Scripts</a></li><li><a href="../guides/editor.html">Editor</a></li><li><a href="../guides/terminal.html">Terminal</a></li><li><a href="../guides/debugger.html">Debugger</a></li><li><a href="../guides/network-tools.html">Network Tools</a></li><li><a href="../guides/plugins.html">Plugins</a></li><li><a href="../guides/troubleshooting.html">Troubleshooting</a></li><li><a href="../guides/limitations.html">Limitations</a></li><li><a href="../guides/faq.html">Frequently Asked Questions</a></li></ul><p class="caption">Function Reference</p><ul><li><a href="index.html">Index</a></li><li><a href="devices.html">Devices</a></li><li><a href="links.html">Links</a></li><li><a href="hosts.html">End Devices</a></li><li><a href="ios.html">Cisco IOS</a></li><li><a href="switching.html">Switching</a></li><li><a href="routing.html">Routing</a></li><li><a href="security.html">Security</a></li><li><a href="services.html">Server Services</a></li><li><a href="wireless.html">Wireless</a></li><li><a href="canvas.html">Canvas</a></li><li><a href="topology.html">Topology</a></li><li><a href="workspace.html">Workspace</a></li><li><a href="inspect.html">Inspection</a></li><li><a href="checks.html">Lab Check</a></li><li><a href="audit.html">Audit</a></li><li><a href="simulation.html">Simulation</a></li><li><a href="snapshots.html">Snapshots</a></li><li><a href="events.html">Events</a></li><li><a href="plugins.html">Plugins</a></li><li><a href="utilities.html">Utilities</a></li></ul><p class="caption">CCNA</p><ul><li><a href="../ccna/index.html">Topic Map</a></li><li><a href="../ccna/lab-checklist.html">Lab Checklist</a></li></ul><p class="caption">Recipes</p><ul><li><a href="../recipes/index.html">Index</a></li><li><a href="../recipes/campus-switching.html">Campus Switching</a></li><li><a href="../recipes/routing-labs.html">Routing Labs</a></li><li><a href="../recipes/edge-router.html">Edge Router</a></li><li><a href="../recipes/servers.html">Servers</a></li><li><a href="../recipes/documenting.html">Documenting a Topology</a></li></ul><p class="caption">Cheat Sheets</p><ul><li><a href="../cheatsheets/ios-to-ptforge.html">IOS Commands and PTForge Calls</a></li><li><a href="../cheatsheets/subnetting.html">Subnetting</a></li><li><a href="../cheatsheets/keyboard.html">Keyboard Shortcuts</a></li></ul><p class="caption">Reference Tables</p><ul><li><a href="../reference/device-models.html">Device Models</a></li><li><a href="../reference/device-types.html">Device Types</a></li><li><a href="../reference/modules.html">Modules</a></li><li><a href="../reference/link-types.html">Link Types</a></li><li><a href="../reference/port-names.html">Port Names</a></li></ul><p class="caption">Architecture</p><ul><li><a href="../architecture/overview.html">Overview</a></li><li><a href="../architecture/runtime.html">Runtime</a></li><li><a href="../architecture/testing.html">Testing</a></li></ul><p class="caption">Project Files</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../project/CHANGELOG.html">Changes</a></li><li><a href="../project/ROADMAP.html">Roadmap</a></li><li><a href="../project/CONTRIBUTING.html">Contributing</a></li><li><a href="../project/CODE_OF_CONDUCT.html">Code of Conduct</a></li><li><a href="../project/SECURITY.html">Security Policy</a></li><li><a href="../project/SUPPORT.html">Support</a></li><li><a href="../project/THIRD_PARTY_NOTICES.html">Third-Party Notices</a></li><li><a href="../project/LICENSE.html">License</a></li><li><a href="../project/CITATION.cff.html">Citation</a></li><li><a href="../project/examples/index.html">Examples</a></li><li><a href="../project/templates/index.html">Templates</a></li><li><a href="../project/plugins/index.html">Sample Plugins</a></li></ul><p class="caption">Translations</p><ul><li><a href="../index.html#translations">Translations</a></li></ul></div>
+<div class="localtoc"><p class="caption">This Page</p><ul><li class="l2"><a href="#dhcp">DHCP</a></li><li class="l2"><a href="#dns">DNS</a></li><li class="l2"><a href="#http-and-https">HTTP and HTTPS</a></li><li class="l2"><a href="#ftp">FTP</a></li><li class="l2"><a href="#email">Email</a></li><li class="l2"><a href="#other-services">Other services</a></li></ul></div><h3>This Page</h3>
+<ul class="plain"><li><a href="https://github.com/r4chan842/PTForge/blob/main/docs/api/services">Show Source</a></li></ul>
+</nav>
+<main class="body">
+<div class="topbar"><select class="language" aria-label="Language" onchange="location.href=this.value"><option value="../introduction.html" selected>English</option><option value="../translations/fa.html">فارسی</option><option value="../translations/de.html">Deutsch</option><option value="../translations/es.html">Español</option><option value="../translations/fr.html">Français</option><option value="../translations/pt-BR.html">Português</option><option value="../translations/ru.html">Русский</option><option value="../translations/tr.html">Türkçe</option><option value="../translations/ar.html">العربية</option><option value="../translations/zh-CN.html">中文</option><option value="../translations/ja.html">日本語</option></select></div>
+<h1>Server services</h1>
+<p>Configure Server-PT services directly through the Packet Tracer API, without clicking through the Services tab.</p>
+<h2 id="dhcp">DHCP<a class="anchor" href="#dhcp">¶</a></h2>
+<dl class="function" id="fn-adddhcppool"><dt><code><span class="name">addDhcpPool</span>(name, pool, port)</code><a class="anchor" href="#fn-adddhcppool">¶</a></dt><dd>Add a pool and turn the service on</dd></dl>
+<dl class="function" id="fn-removedhcppool"><dt><code><span class="name">removeDhcpPool</span>(name, poolName, port)</code><a class="anchor" href="#fn-removedhcppool">¶</a></dt><dd>Delete a pool</dd></dl>
+<dl class="function" id="fn-excludedhcprange"><dt><code><span class="name">excludeDhcpRange</span>(name, start, end, port)</code><a class="anchor" href="#fn-excludedhcprange">¶</a></dt><dd>Exclude addresses</dd></dl>
+<dl class="function" id="fn-setdhcpservice"><dt><code><span class="name">setDhcpService</span>(name, enabled, port)</code><a class="anchor" href="#fn-setdhcpservice">¶</a></dt><dd>Turn the service on or off</dd></dl>
+<dl class="function" id="fn-getdhcppools"><dt><code><span class="name">getDhcpPools</span>(name, port)</code><a class="anchor" href="#fn-getdhcppools">¶</a></dt><dd>Every pool with its settings</dd></dl>
+<p>Pool fields: name, start, mask (24 or 255.255.255.0), gateway, dns, maxUsers (256), tftp, wlc. port defaults to FastEthernet0.</p>
+<pre>addDhcpPool(&quot;SRV&quot;, {
+    name: &quot;VLAN10&quot;,
+    start: &quot;192.168.10.100&quot;,
+    mask: 24,
+    gateway: &quot;192.168.10.1&quot;,
+    dns: &quot;192.168.50.10&quot;,
+    maxUsers: 100
+});</pre>
+<h2 id="dns">DNS<a class="anchor" href="#dns">¶</a></h2>
+<dl class="function" id="fn-adddnsrecord"><dt><code><span class="name">addDnsRecord</span>(name, hostname, ip)</code><a class="anchor" href="#fn-adddnsrecord">¶</a></dt><dd>A record, turns DNS on</dd></dl>
+<dl class="function" id="fn-adddnsrecords"><dt><code><span class="name">addDnsRecords</span>(name, { hostname: ip })</code><a class="anchor" href="#fn-adddnsrecords">¶</a></dt><dd>Many A records</dd></dl>
+<dl class="function" id="fn-adddnscname"><dt><code><span class="name">addDnsCname</span>(name, alias, hostname)</code><a class="anchor" href="#fn-adddnscname">¶</a></dt><dd>CNAME record</dd></dl>
+<dl class="function" id="fn-adddnsns"><dt><code><span class="name">addDnsNs</span>(name, domain, server)</code><a class="anchor" href="#fn-adddnsns">¶</a></dt><dd>NS record</dd></dl>
+<dl class="function" id="fn-removednsrecord"><dt><code><span class="name">removeDnsRecord</span>(name, hostname, ip)</code><a class="anchor" href="#fn-removednsrecord">¶</a></dt><dd>Delete an A record</dd></dl>
+<dl class="function" id="fn-setdnsservice"><dt><code><span class="name">setDnsService</span>(name, enabled)</code><a class="anchor" href="#fn-setdnsservice">¶</a></dt><dd>Turn DNS on or off</dd></dl>
+<dl class="function" id="fn-getdnsrecordcount"><dt><code><span class="name">getDnsRecordCount</span>(name)</code><a class="anchor" href="#fn-getdnsrecordcount">¶</a></dt><dd>Number of records</dd></dl>
+<h2 id="http-and-https">HTTP and HTTPS<a class="anchor" href="#http-and-https">¶</a></h2>
+<dl class="function" id="fn-sethttpservice"><dt><code><span class="name">setHttpService</span>(name, enabled)</code><a class="anchor" href="#fn-sethttpservice">¶</a></dt><dd>HTTP on or off</dd></dl>
+<dl class="function" id="fn-sethttpsservice"><dt><code><span class="name">setHttpsService</span>(name, enabled)</code><a class="anchor" href="#fn-sethttpsservice">¶</a></dt><dd>HTTPS on or off</dd></dl>
+<dl class="function" id="fn-setwebpage"><dt><code><span class="name">setWebPage</span>(name, file, html)</code><a class="anchor" href="#fn-setwebpage">¶</a></dt><dd>Create or replace a page</dd></dl>
+<dl class="function" id="fn-getwebpage"><dt><code><span class="name">getWebPage</span>(name, file)</code><a class="anchor" href="#fn-getwebpage">¶</a></dt><dd>Read a page</dd></dl>
+<h2 id="ftp">FTP<a class="anchor" href="#ftp">¶</a></h2>
+<dl class="function" id="fn-addftpuser"><dt><code><span class="name">addFtpUser</span>(name, username, password, permissions)</code><a class="anchor" href="#fn-addftpuser">¶</a></dt><dd>Add or replace a user</dd></dl>
+<dl class="function" id="fn-removeftpuser"><dt><code><span class="name">removeFtpUser</span>(name, username)</code><a class="anchor" href="#fn-removeftpuser">¶</a></dt><dd>Delete a user</dd></dl>
+<dl class="function" id="fn-getftpusers"><dt><code><span class="name">getFtpUsers</span>(name)</code><a class="anchor" href="#fn-getftpusers">¶</a></dt><dd>{ username, permissions } list</dd></dl>
+<p>Permissions are letters: R read, W write, N rename, L list, D delete. Default RWNLD.</p>
+<h2 id="email">Email<a class="anchor" href="#email">¶</a></h2>
+<dl class="function" id="fn-addemailuser"><dt><code><span class="name">addEmailUser</span>(name, username, password)</code><a class="anchor" href="#fn-addemailuser">¶</a></dt><dd>Add a mailbox</dd></dl>
+<dl class="function" id="fn-addemailusers"><dt><code><span class="name">addEmailUsers</span>(name, { username: password })</code><a class="anchor" href="#fn-addemailusers">¶</a></dt><dd>Add or update many mailboxes</dd></dl>
+<dl class="function" id="fn-removeemailuser"><dt><code><span class="name">removeEmailUser</span>(name, username)</code><a class="anchor" href="#fn-removeemailuser">¶</a></dt><dd>Delete a mailbox</dd></dl>
+<dl class="function" id="fn-setemailpassword"><dt><code><span class="name">setEmailPassword</span>(name, username, password)</code><a class="anchor" href="#fn-setemailpassword">¶</a></dt><dd>Change a password</dd></dl>
+<h2 id="other-services">Other services<a class="anchor" href="#other-services">¶</a></h2>
+<dl class="function" id="fn-settftpservice"><dt><code><span class="name">setTftpService</span>(name, enabled)</code><a class="anchor" href="#fn-settftpservice">¶</a></dt><dd>TFTP on or off</dd></dl>
+<dl class="function" id="fn-setsyslogservice"><dt><code><span class="name">setSyslogService</span>(name, enabled)</code><a class="anchor" href="#fn-setsyslogservice">¶</a></dt><dd>Syslog on or off</dd></dl>
+<dl class="function" id="fn-clearsyslog"><dt><code><span class="name">clearSyslog</span>(name)</code><a class="anchor" href="#fn-clearsyslog">¶</a></dt><dd>Clear received logs</dd></dl>
+<dl class="function" id="fn-setradiusport"><dt><code><span class="name">setRadiusPort</span>(name, port)</code><a class="anchor" href="#fn-setradiusport">¶</a></dt><dd>RADIUS server port</dd></dl>
+</main>
+</div>
+<footer>© PTForge contributors. Licensed under the MIT License. Cisco and Packet Tracer are trademarks of Cisco Systems, Inc.</footer>
+</body>
+</html>

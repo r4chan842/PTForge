@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1000">
+<title>Troubleshooting — PTForge documentation</title>
+<link rel="icon" href="../_static/logo.svg">
+<link rel="stylesheet" href="../_static/style.css">
+</head>
+<body>
+<div class="document">
+<nav class="sidebar">
+<a class="brand" href="../index.html"><img src="../_static/logo.svg" alt="PTForge logo"></a>
+<h1 class="project"><a href="../index.html">PTForge</a></h1>
+<p class="version">1.3.0</p>
+<h3>Quick search</h3>
+<form class="search" action="../search.html" method="get"><input type="text" name="q" aria-label="Search"><button type="submit">Go</button></form>
+<h3>Contents</h3>
+<div class="contents"><p class="caption">Start Here</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../index.html">Documentation Index</a></li></ul><p class="caption">User Guides</p><ul><li><a href="installation.html">Installation</a></li><li><a href="getting-started.html">Getting Started</a></li><li><a href="writing-scripts.html">Writing Scripts</a></li><li><a href="editor.html">Editor</a></li><li><a href="terminal.html">Terminal</a></li><li><a href="debugger.html">Debugger</a></li><li><a href="network-tools.html">Network Tools</a></li><li><a href="plugins.html">Plugins</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="limitations.html">Limitations</a></li><li><a href="faq.html">Frequently Asked Questions</a></li></ul><p class="caption">Function Reference</p><ul><li><a href="../api/index.html">Index</a></li><li><a href="../api/devices.html">Devices</a></li><li><a href="../api/links.html">Links</a></li><li><a href="../api/hosts.html">End Devices</a></li><li><a href="../api/ios.html">Cisco IOS</a></li><li><a href="../api/switching.html">Switching</a></li><li><a href="../api/routing.html">Routing</a></li><li><a href="../api/security.html">Security</a></li><li><a href="../api/services.html">Server Services</a></li><li><a href="../api/wireless.html">Wireless</a></li><li><a href="../api/canvas.html">Canvas</a></li><li><a href="../api/topology.html">Topology</a></li><li><a href="../api/workspace.html">Workspace</a></li><li><a href="../api/inspect.html">Inspection</a></li><li><a href="../api/checks.html">Lab Check</a></li><li><a href="../api/audit.html">Audit</a></li><li><a href="../api/simulation.html">Simulation</a></li><li><a href="../api/snapshots.html">Snapshots</a></li><li><a href="../api/events.html">Events</a></li><li><a href="../api/plugins.html">Plugins</a></li><li><a href="../api/utilities.html">Utilities</a></li></ul><p class="caption">CCNA</p><ul><li><a href="../ccna/index.html">Topic Map</a></li><li><a href="../ccna/lab-checklist.html">Lab Checklist</a></li></ul><p class="caption">Recipes</p><ul><li><a href="../recipes/index.html">Index</a></li><li><a href="../recipes/campus-switching.html">Campus Switching</a></li><li><a href="../recipes/routing-labs.html">Routing Labs</a></li><li><a href="../recipes/edge-router.html">Edge Router</a></li><li><a href="../recipes/servers.html">Servers</a></li><li><a href="../recipes/documenting.html">Documenting a Topology</a></li></ul><p class="caption">Cheat Sheets</p><ul><li><a href="../cheatsheets/ios-to-ptforge.html">IOS Commands and PTForge Calls</a></li><li><a href="../cheatsheets/subnetting.html">Subnetting</a></li><li><a href="../cheatsheets/keyboard.html">Keyboard Shortcuts</a></li></ul><p class="caption">Reference Tables</p><ul><li><a href="../reference/device-models.html">Device Models</a></li><li><a href="../reference/device-types.html">Device Types</a></li><li><a href="../reference/modules.html">Modules</a></li><li><a href="../reference/link-types.html">Link Types</a></li><li><a href="../reference/port-names.html">Port Names</a></li></ul><p class="caption">Architecture</p><ul><li><a href="../architecture/overview.html">Overview</a></li><li><a href="../architecture/runtime.html">Runtime</a></li><li><a href="../architecture/testing.html">Testing</a></li></ul><p class="caption">Project Files</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../project/CHANGELOG.html">Changes</a></li><li><a href="../project/ROADMAP.html">Roadmap</a></li><li><a href="../project/CONTRIBUTING.html">Contributing</a></li><li><a href="../project/CODE_OF_CONDUCT.html">Code of Conduct</a></li><li><a href="../project/SECURITY.html">Security Policy</a></li><li><a href="../project/SUPPORT.html">Support</a></li><li><a href="../project/THIRD_PARTY_NOTICES.html">Third-Party Notices</a></li><li><a href="../project/LICENSE.html">License</a></li><li><a href="../project/CITATION.cff.html">Citation</a></li><li><a href="../project/examples/index.html">Examples</a></li><li><a href="../project/templates/index.html">Templates</a></li><li><a href="../project/plugins/index.html">Sample Plugins</a></li></ul><p class="caption">Translations</p><ul><li><a href="../index.html#translations">Translations</a></li></ul></div>
+<div class="localtoc"><p class="caption">This Page</p><ul><li class="l2"><a href="#the-menu-entry-does-not-appear">The menu entry does not appear</a></li><li class="l2"><a href="#unknown-device-model">Unknown device model</a></li><li class="l2"><a href="#device-name-already-exists">Device name already exists</a></li><li class="l2"><a href="#addlink-returns-false">addLink returns false</a></li><li class="l2"><a href="#ios-commands-are-rejected">IOS commands are rejected</a></li><li class="l2"><a href="#show-commands-return-empty-text">Show commands return empty text</a></li><li class="l2"><a href="#hosts-have-no-address-after-setpcdhcp">Hosts have no address after setPcDhcp</a></li><li class="l2"><a href="#server-services-do-not-change">Server services do not change</a></li><li class="l2"><a href="#list-foreach-setpcdhcp-fails-with-port-not-found">list.forEach(setPcDhcp) fails with Port not found</a></li><li class="l2"><a href="#scripts-with-let-or-template-strings-fail">Scripts with let, =&gt; or template strings fail</a></li><li class="l2"><a href="#reporting-a-bug">Reporting a bug</a></li></ul></div><h3>This Page</h3>
+<ul class="plain"><li><a href="https://github.com/r4chan842/PTForge/blob/main/docs/guides/troubleshooting">Show Source</a></li></ul>
+</nav>
+<main class="body">
+<div class="topbar"><select class="language" aria-label="Language" onchange="location.href=this.value"><option value="../introduction.html" selected>English</option><option value="../translations/fa.html">فارسی</option><option value="../translations/de.html">Deutsch</option><option value="../translations/es.html">Español</option><option value="../translations/fr.html">Français</option><option value="../translations/pt-BR.html">Português</option><option value="../translations/ru.html">Русский</option><option value="../translations/tr.html">Türkçe</option><option value="../translations/ar.html">العربية</option><option value="../translations/zh-CN.html">中文</option><option value="../translations/ja.html">日本語</option></select></div>
+<h1>Troubleshooting</h1>
+<h2 id="the-menu-entry-does-not-appear">The menu entry does not appear<a class="anchor" href="#the-menu-entry-does-not-appear">¶</a></h2>
+<ul><li>Check that the module is started in Configure PT Script Modules</li><li>main.js must be the last script (already true in <a href="https://github.com/r4chan842/PTForge/blob/main/release/ptforge.js">https://github.com/r4chan842/PTForge/blob/main/release/ptforge.js</a>)</li><li>Open Extensions → Scripting → the script console to see load errors</li></ul>
+<h2 id="unknown-device-model">Unknown device model<a class="anchor" href="#unknown-device-model">¶</a></h2>
+<p>Model names are case sensitive and must match device models: <a href="../reference/device-models.html">Device models</a>. 2960 is wrong, 2960-24TT is right.</p>
+<h2 id="device-name-already-exists">Device name already exists<a class="anchor" href="#device-name-already-exists">¶</a></h2>
+<p>Names are unique. Remove the old device or pick another name. clearTopology() removes everything.</p>
+<h2 id="addlink-returns-false">addLink returns false<a class="anchor" href="#addlink-returns-false">¶</a></h2>
+<ul><li>The port name is not written in full. Use GigabitEthernet0/0, not Gi0/0</li><li>The port is already used. Check with getNeighbors(device)</li><li>The port does not exist yet because a module is missing. Check with getPorts(device)</li><li>The cable does not fit the port, for example straight into a serial port</li></ul>
+<h2 id="ios-commands-are-rejected">IOS commands are rejected<a class="anchor" href="#ios-commands-are-rejected">¶</a></h2>
+<p>Every IOS function returns the rejected lines:</p>
+<pre>showResult(configureIosDevice(&quot;S1&quot;, &quot;spanning-tree mode rapid-pvst&quot;));</pre>
+<p>Common causes:</p>
+<ul><li>switchport trunk encapsulation rejected: Layer 2 switches only support dot1q. On 3650 some versions reject the command</li><li>ip routing rejected: The device is a layer 2 switch</li><li>crypto key generate rsa rejected: Hostname or domain missing. configureSsh sets both</li><li>ipv6 ... rejected on a switch: 2960 needs sdm prefer dual-ipv4-and-ipv6 default and a reload</li><li>Anything under router bgp rejected: Not every router IOS in Packet Tracer supports BGP. Use a 2911 or ISR4331</li></ul>
+<h2 id="show-commands-return-empty-text">Show commands return empty text<a class="anchor" href="#show-commands-return-empty-text">¶</a></h2>
+<p>Some Packet Tracer versions do not return CLI output through the API. The command still runs. Open the CLI tab to see the output.</p>
+<h2 id="hosts-have-no-address-after-setpcdhcp">Hosts have no address after setPcDhcp<a class="anchor" href="#hosts-have-no-address-after-setpcdhcp">¶</a></h2>
+<p>The DHCP server needs a link and a few seconds. Switch ports also need about 30 seconds to reach forwarding state unless PortFast is on.</p>
+<h2 id="server-services-do-not-change">Server services do not change<a class="anchor" href="#server-services-do-not-change">¶</a></h2>
+<p>Service functions need a Server-PT. The DHCP functions use FastEthernet0 unless you pass another port.</p>
+<h2 id="list-foreach-setpcdhcp-fails-with-port-not-found">list.forEach(setPcDhcp) fails with Port not found<a class="anchor" href="#list-foreach-setpcdhcp-fails-with-port-not-found">¶</a></h2>
+<p>forEach passes the index as the second argument, which becomes the port name. Wrap the call:</p>
+<pre>[&quot;PC1&quot;, &quot;PC2&quot;].forEach(function (pc) {
+    setPcDhcp(pc);
+});</pre>
+<h2 id="scripts-with-let-or-template-strings-fail">Scripts with let, =&gt; or template strings fail<a class="anchor" href="#scripts-with-let-or-template-strings-fail">¶</a></h2>
+<p>The Packet Tracer engine is ES5. See writing scripts: <a href="writing-scripts.html">Writing scripts</a>.</p>
+<h2 id="reporting-a-bug">Reporting a bug<a class="anchor" href="#reporting-a-bug">¶</a></h2>
+<p>Open an issue with the Packet Tracer version, the smallest script that fails and the full error message.</p>
+</main>
+</div>
+<footer>© PTForge contributors. Licensed under the MIT License. Cisco and Packet Tracer are trademarks of Cisco Systems, Inc.</footer>
+</body>
+</html>

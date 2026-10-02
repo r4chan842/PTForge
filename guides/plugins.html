@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1000">
+<title>Plugins — PTForge documentation</title>
+<link rel="icon" href="../_static/logo.svg">
+<link rel="stylesheet" href="../_static/style.css">
+</head>
+<body>
+<div class="document">
+<nav class="sidebar">
+<a class="brand" href="../index.html"><img src="../_static/logo.svg" alt="PTForge logo"></a>
+<h1 class="project"><a href="../index.html">PTForge</a></h1>
+<p class="version">1.3.0</p>
+<h3>Quick search</h3>
+<form class="search" action="../search.html" method="get"><input type="text" name="q" aria-label="Search"><button type="submit">Go</button></form>
+<h3>Contents</h3>
+<div class="contents"><p class="caption">Start Here</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../index.html">Documentation Index</a></li></ul><p class="caption">User Guides</p><ul><li><a href="installation.html">Installation</a></li><li><a href="getting-started.html">Getting Started</a></li><li><a href="writing-scripts.html">Writing Scripts</a></li><li><a href="editor.html">Editor</a></li><li><a href="terminal.html">Terminal</a></li><li><a href="debugger.html">Debugger</a></li><li><a href="network-tools.html">Network Tools</a></li><li><a href="plugins.html">Plugins</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="limitations.html">Limitations</a></li><li><a href="faq.html">Frequently Asked Questions</a></li></ul><p class="caption">Function Reference</p><ul><li><a href="../api/index.html">Index</a></li><li><a href="../api/devices.html">Devices</a></li><li><a href="../api/links.html">Links</a></li><li><a href="../api/hosts.html">End Devices</a></li><li><a href="../api/ios.html">Cisco IOS</a></li><li><a href="../api/switching.html">Switching</a></li><li><a href="../api/routing.html">Routing</a></li><li><a href="../api/security.html">Security</a></li><li><a href="../api/services.html">Server Services</a></li><li><a href="../api/wireless.html">Wireless</a></li><li><a href="../api/canvas.html">Canvas</a></li><li><a href="../api/topology.html">Topology</a></li><li><a href="../api/workspace.html">Workspace</a></li><li><a href="../api/inspect.html">Inspection</a></li><li><a href="../api/checks.html">Lab Check</a></li><li><a href="../api/audit.html">Audit</a></li><li><a href="../api/simulation.html">Simulation</a></li><li><a href="../api/snapshots.html">Snapshots</a></li><li><a href="../api/events.html">Events</a></li><li><a href="../api/plugins.html">Plugins</a></li><li><a href="../api/utilities.html">Utilities</a></li></ul><p class="caption">CCNA</p><ul><li><a href="../ccna/index.html">Topic Map</a></li><li><a href="../ccna/lab-checklist.html">Lab Checklist</a></li></ul><p class="caption">Recipes</p><ul><li><a href="../recipes/index.html">Index</a></li><li><a href="../recipes/campus-switching.html">Campus Switching</a></li><li><a href="../recipes/routing-labs.html">Routing Labs</a></li><li><a href="../recipes/edge-router.html">Edge Router</a></li><li><a href="../recipes/servers.html">Servers</a></li><li><a href="../recipes/documenting.html">Documenting a Topology</a></li></ul><p class="caption">Cheat Sheets</p><ul><li><a href="../cheatsheets/ios-to-ptforge.html">IOS Commands and PTForge Calls</a></li><li><a href="../cheatsheets/subnetting.html">Subnetting</a></li><li><a href="../cheatsheets/keyboard.html">Keyboard Shortcuts</a></li></ul><p class="caption">Reference Tables</p><ul><li><a href="../reference/device-models.html">Device Models</a></li><li><a href="../reference/device-types.html">Device Types</a></li><li><a href="../reference/modules.html">Modules</a></li><li><a href="../reference/link-types.html">Link Types</a></li><li><a href="../reference/port-names.html">Port Names</a></li></ul><p class="caption">Architecture</p><ul><li><a href="../architecture/overview.html">Overview</a></li><li><a href="../architecture/runtime.html">Runtime</a></li><li><a href="../architecture/testing.html">Testing</a></li></ul><p class="caption">Project Files</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../project/CHANGELOG.html">Changes</a></li><li><a href="../project/ROADMAP.html">Roadmap</a></li><li><a href="../project/CONTRIBUTING.html">Contributing</a></li><li><a href="../project/CODE_OF_CONDUCT.html">Code of Conduct</a></li><li><a href="../project/SECURITY.html">Security Policy</a></li><li><a href="../project/SUPPORT.html">Support</a></li><li><a href="../project/THIRD_PARTY_NOTICES.html">Third-Party Notices</a></li><li><a href="../project/LICENSE.html">License</a></li><li><a href="../project/CITATION.cff.html">Citation</a></li><li><a href="../project/examples/index.html">Examples</a></li><li><a href="../project/templates/index.html">Templates</a></li><li><a href="../project/plugins/index.html">Sample Plugins</a></li></ul><p class="caption">Translations</p><ul><li><a href="../index.html#translations">Translations</a></li></ul></div>
+<div class="localtoc"><p class="caption">This Page</p><ul><li class="l2"><a href="#where-plugins-live">Where plugins live</a></li><li class="l2"><a href="#plugin-manager">Plugin Manager</a></li><li class="l2"><a href="#file-format">File format</a></li><li class="l2"><a href="#the-plugin-object">The plugin object</a></li><li class="l2"><a href="#permissions">Permissions</a></li><li class="l2"><a href="#consent">Consent</a></li><li class="l2"><a href="#errors">Errors</a></li></ul></div><h3>This Page</h3>
+<ul class="plain"><li><a href="https://github.com/r4chan842/PTForge/blob/main/docs/guides/plugins">Show Source</a></li></ul>
+</nav>
+<main class="body">
+<div class="topbar"><select class="language" aria-label="Language" onchange="location.href=this.value"><option value="../introduction.html" selected>English</option><option value="../translations/fa.html">فارسی</option><option value="../translations/de.html">Deutsch</option><option value="../translations/es.html">Español</option><option value="../translations/fr.html">Français</option><option value="../translations/pt-BR.html">Português</option><option value="../translations/ru.html">Русский</option><option value="../translations/tr.html">Türkçe</option><option value="../translations/ar.html">العربية</option><option value="../translations/zh-CN.html">中文</option><option value="../translations/ja.html">日本語</option></select></div>
+<h1>Plugins</h1>
+<p>A plugin is a single .pf file that adds features to PTForge without changing PTForge itself. It can add</p>
+<ul><li>dot-commands for the terminal, for example .hosts</li><li>functions that scripts and the terminal can call</li><li>audit rules whose findings show up in auditNetwork() and .audit</li><li>Lab Check checks that runPluginChecks() grades</li></ul>
+<h2 id="where-plugins-live">Where plugins live<a class="anchor" href="#where-plugins-live">¶</a></h2>
+<p>PTForge scans Documents/PTForge/plugins for .pf files. Change it with Plugins: Change Plugin Folder in the command palette, the folder button in the Plugins view, or setPluginFolder(path).</p>
+<p>Three ready plugins are in the ../../plugins folder of this repository:</p>
+<pre>File             Permissions  Adds
+---------------  -----------  ---------------------------------------------------------------------------------
+host-audit.pf    read only    .hosts, hostTable(), a rule for missing or wrong gateways and DNS, a graded check
+port-map.pf      read only    .ports R1, portMap(name), a rule for cabled ports that are down
+config-tools.pf  cli          .saveall, .motd &quot;text&quot;</pre>
+<h2 id="plugin-manager">Plugin Manager<a class="anchor" href="#plugin-manager">¶</a></h2>
+<p>Open it with the puzzle icon in the activity bar or Ctrl+Shift+X. Every plugin shows its name, version, description, permissions and what it adds. Enable asks for consent, Disable unloads it, the pencil opens the file in the editor.</p>
+<p>In the terminal, .plugins lists the plugins and .help lists plugin commands under their own heading.</p>
+<h2 id="file-format">File format<a class="anchor" href="#file-format">¶</a></h2>
+<p>A plugin starts with a JSON manifest between two --- lines. JavaScript follows.</p>
+<pre>---
+{
+  &quot;id&quot;: &quot;vlan-report&quot;,
+  &quot;name&quot;: &quot;VLAN Report&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;VLANs on every switch&quot;,
+  &quot;author&quot;: &quot;you&quot;,
+  &quot;permissions&quot;: []
+}
+---
+plugin.command(&quot;vlans&quot;, &quot;VLANs on every switch&quot;, function (args, out) {
+    return getDevices([&quot;switch&quot;]).map(function (name) {
+        return name + &quot;: &quot; + getVlans(name).map(function (v) { return v.id; }).join(&quot;, &quot;);
+    }).join(&quot;\n&quot;);
+});
+
+Field                Required  Rule
+-------------------  --------  -----------------------------------------------------------------
+id                   yes       1 to 41 lowercase letters, digits or dashes, unique in the folder
+name                 no        Shown in the manager, the id by default
+version              no        Free text, 0.0.0 by default
+description, author  no        Shown in the manager and the consent dialog
+permissions          no        Any of topology, cli, files, raw</pre>
+<h2 id="the-plugin-object">The plugin object<a class="anchor" href="#the-plugin-object">¶</a></h2>
+<ul><li>plugin.command(name, description, fn): Adds .name to the terminal. fn(args, out) gets the words after the command and an out(text) function that prints right away. The return value is printed as the result</li><li>plugin.fn(name, fn): Adds a global function. Fails if the name already exists</li><li>plugin.rule(name, fn): fn() returns strings or { severity, device, port, message } objects. They appear in auditNetwork() as rule id/name</li><li>plugin.check(name, fn, hint, points): A Lab Check item run by runPluginChecks()</li><li>plugin.onDisable(fn): Runs when the plugin is disabled or reloaded</li><li>plugin.log(value): Writes to the Output panel with the plugin id in front</li><li>plugin.id, plugin.name, plugin.version, plugin.permissions: From the manifest</li></ul>
+<p>All read functions of PTForge work without any permission: getDevices, getDeviceInfo, getPcIp, getLinks, getRunningConfig, ping, show... and the IPv4 utilities.</p>
+<h2 id="permissions">Permissions<a class="anchor" href="#permissions">¶</a></h2>
+<ul><li>none: Reading the topology, addresses and configs, ping, traceroute, show commands</li><li>topology: Adding, removing and moving devices and cables, canvas drawing, host addresses, server services</li><li>cli: IOS configuration commands, runCommand, simulation control</li><li>files: Reading, writing and deleting files, opening and saving projects</li><li>raw: Direct ipc, network(), appWindow(), Function and eval. This skips every other check</li></ul>
+<p>The list of functions behind each permission is generated from the source into <a href="https://github.com/r4chan842/PTForge/blob/main/src/data/permissions.js">https://github.com/r4chan842/PTForge/blob/main/src/data/permissions.js</a> by npm run permissions. A plugin that calls a function it has no permission for gets an error such as Plugin guard needs the &quot;cli&quot; permission to use setHostname. Plugins can never call enablePlugin, disablePlugin, reloadPlugins or setPluginFolder.</p>
+<h2 id="consent">Consent<a class="anchor" href="#consent">¶</a></h2>
+<p>Enabling a plugin for the first time opens a dialog with its permissions, the file path and the SHA-1 checksum Packet Tracer reports for the file. Allowing it stores the checksum and permissions in plugins.json in the plugin folder.</p>
+<p>When Packet Tracer starts, PTForge loads only plugins whose file and permissions match what you allowed. If a plugin file changes, it stays off and the manager marks it Changed since you allowed it until you review it again.</p>
+<p>Permissions protect against honest mistakes. They are not a sandbox: plugin code runs inside the Packet Tracer script engine like your own scripts. Only enable plugins whose code you have read or whose author you trust.</p>
+<h2 id="errors">Errors<a class="anchor" href="#errors">¶</a></h2>
+<p>A plugin that fails to load is left completely unloaded, with no half-registered commands or functions. The error is shown on its card, for example a syntax error, a command name that is taken (.help, .ping and the other built-in commands are reserved), a function name that already exists, or a duplicate id.</p>
+</main>
+</div>
+<footer>© PTForge contributors. Licensed under the MIT License. Cisco and Packet Tracer are trademarks of Cisco Systems, Inc.</footer>
+</body>
+</html>

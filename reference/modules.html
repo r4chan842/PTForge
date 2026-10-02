@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1000">
+<title>Modules — PTForge documentation</title>
+<link rel="icon" href="../_static/logo.svg">
+<link rel="stylesheet" href="../_static/style.css">
+</head>
+<body>
+<div class="document">
+<nav class="sidebar">
+<a class="brand" href="../index.html"><img src="../_static/logo.svg" alt="PTForge logo"></a>
+<h1 class="project"><a href="../index.html">PTForge</a></h1>
+<p class="version">1.3.0</p>
+<h3>Quick search</h3>
+<form class="search" action="../search.html" method="get"><input type="text" name="q" aria-label="Search"><button type="submit">Go</button></form>
+<h3>Contents</h3>
+<div class="contents"><p class="caption">Start Here</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../index.html">Documentation Index</a></li></ul><p class="caption">User Guides</p><ul><li><a href="../guides/installation.html">Installation</a></li><li><a href="../guides/getting-started.html">Getting Started</a></li><li><a href="../guides/writing-scripts.html">Writing Scripts</a></li><li><a href="../guides/editor.html">Editor</a></li><li><a href="../guides/terminal.html">Terminal</a></li><li><a href="../guides/debugger.html">Debugger</a></li><li><a href="../guides/network-tools.html">Network Tools</a></li><li><a href="../guides/plugins.html">Plugins</a></li><li><a href="../guides/troubleshooting.html">Troubleshooting</a></li><li><a href="../guides/limitations.html">Limitations</a></li><li><a href="../guides/faq.html">Frequently Asked Questions</a></li></ul><p class="caption">Function Reference</p><ul><li><a href="../api/index.html">Index</a></li><li><a href="../api/devices.html">Devices</a></li><li><a href="../api/links.html">Links</a></li><li><a href="../api/hosts.html">End Devices</a></li><li><a href="../api/ios.html">Cisco IOS</a></li><li><a href="../api/switching.html">Switching</a></li><li><a href="../api/routing.html">Routing</a></li><li><a href="../api/security.html">Security</a></li><li><a href="../api/services.html">Server Services</a></li><li><a href="../api/wireless.html">Wireless</a></li><li><a href="../api/canvas.html">Canvas</a></li><li><a href="../api/topology.html">Topology</a></li><li><a href="../api/workspace.html">Workspace</a></li><li><a href="../api/inspect.html">Inspection</a></li><li><a href="../api/checks.html">Lab Check</a></li><li><a href="../api/audit.html">Audit</a></li><li><a href="../api/simulation.html">Simulation</a></li><li><a href="../api/snapshots.html">Snapshots</a></li><li><a href="../api/events.html">Events</a></li><li><a href="../api/plugins.html">Plugins</a></li><li><a href="../api/utilities.html">Utilities</a></li></ul><p class="caption">CCNA</p><ul><li><a href="../ccna/index.html">Topic Map</a></li><li><a href="../ccna/lab-checklist.html">Lab Checklist</a></li></ul><p class="caption">Recipes</p><ul><li><a href="../recipes/index.html">Index</a></li><li><a href="../recipes/campus-switching.html">Campus Switching</a></li><li><a href="../recipes/routing-labs.html">Routing Labs</a></li><li><a href="../recipes/edge-router.html">Edge Router</a></li><li><a href="../recipes/servers.html">Servers</a></li><li><a href="../recipes/documenting.html">Documenting a Topology</a></li></ul><p class="caption">Cheat Sheets</p><ul><li><a href="../cheatsheets/ios-to-ptforge.html">IOS Commands and PTForge Calls</a></li><li><a href="../cheatsheets/subnetting.html">Subnetting</a></li><li><a href="../cheatsheets/keyboard.html">Keyboard Shortcuts</a></li></ul><p class="caption">Reference Tables</p><ul><li><a href="device-models.html">Device Models</a></li><li><a href="device-types.html">Device Types</a></li><li><a href="modules.html">Modules</a></li><li><a href="link-types.html">Link Types</a></li><li><a href="port-names.html">Port Names</a></li></ul><p class="caption">Architecture</p><ul><li><a href="../architecture/overview.html">Overview</a></li><li><a href="../architecture/runtime.html">Runtime</a></li><li><a href="../architecture/testing.html">Testing</a></li></ul><p class="caption">Project Files</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../project/CHANGELOG.html">Changes</a></li><li><a href="../project/ROADMAP.html">Roadmap</a></li><li><a href="../project/CONTRIBUTING.html">Contributing</a></li><li><a href="../project/CODE_OF_CONDUCT.html">Code of Conduct</a></li><li><a href="../project/SECURITY.html">Security Policy</a></li><li><a href="../project/SUPPORT.html">Support</a></li><li><a href="../project/THIRD_PARTY_NOTICES.html">Third-Party Notices</a></li><li><a href="../project/LICENSE.html">License</a></li><li><a href="../project/CITATION.cff.html">Citation</a></li><li><a href="../project/examples/index.html">Examples</a></li><li><a href="../project/templates/index.html">Templates</a></li><li><a href="../project/plugins/index.html">Sample Plugins</a></li></ul><p class="caption">Translations</p><ul><li><a href="../index.html#translations">Translations</a></li></ul></div>
+<h3>This Page</h3>
+<ul class="plain"><li><a href="https://github.com/r4chan842/PTForge/blob/main/docs/reference/modules">Show Source</a></li></ul>
+</nav>
+<main class="body">
+<div class="topbar"><select class="language" aria-label="Language" onchange="location.href=this.value"><option value="../introduction.html" selected>English</option><option value="../translations/fa.html">فارسی</option><option value="../translations/de.html">Deutsch</option><option value="../translations/es.html">Español</option><option value="../translations/fr.html">Français</option><option value="../translations/pt-BR.html">Português</option><option value="../translations/ru.html">Русский</option><option value="../translations/tr.html">Türkçe</option><option value="../translations/ar.html">العربية</option><option value="../translations/zh-CN.html">中文</option><option value="../translations/ja.html">日本語</option></select></div>
+<h1>Modules</h1>
+<p>Every module accepted by addModule. Whether a module fits depends on the device and slot, check with getSupportedModules(device).</p>
+<pre>Module                         Module type
+-----------------------------  -----------
+NM-1E                          1
+NM-1E2W                        1
+NM-1FE-FX                      1
+NM-1FE-TX                      1
+NM-1FE2W                       1
+NM-2E2W                        1
+NM-2FE2W                       1
+NM-2W                          1
+NM-4A/S                        1
+NM-4E                          1
+NM-8A/S                        1
+NM-8AM                         1
+NM-Cover                       1
+NM-ESW-161                     1
+1240-Cellular                  2
+1240-Cover                     2
+HWIC-1GE-SFP                   2
+HWIC-2T                        2
+HWIC-4ESW                      2
+HWIC-8A                        2
+HWIC-AP-AG-B                   2
+NIM-2T                         2
+NIM-Cover                      2
+NIM-ES2-4                      2
+WIC-1AM                        2
+WIC-1ENET                      2
+WIC-1T                         2
+WIC-2AM                        2
+WIC-2T                         2
+WIC-Cover                      2
+PT-ROUTER-NM-1AM               3
+PT-ROUTER-NM-1CE               3
+PT-ROUTER-NM-1CFE              3
+PT-ROUTER-NM-1CGE              3
+PT-ROUTER-NM-1FFE              3
+PT-ROUTER-NM-1FGE              3
+PT-ROUTER-NM-1S                3
+PT-ROUTER-NM-1SS               3
+PT-ROUTER-NM-COVER             3
+AC-POWER-SUPPLY                4
+POWER-COVER-PLATE              4
+PT-SWITCH-NM-1CE               4
+PT-SWITCH-NM-1CFE              4
+PT-SWITCH-NM-1CGE              4
+PT-SWITCH-NM-1FFE              4
+PT-SWITCH-NM-1FGE              4
+PT-SWITCH-NM-COVER             4
+PT-CLOUD-NM-1AM                5
+PT-CLOUD-NM-1CE                5
+PT-CLOUD-NM-1CFE               5
+PT-CLOUD-NM-1CGE               5
+PT-CLOUD-NM-1CX                10
+PT-CLOUD-NM-1FFE               5
+PT-CLOUD-NM-1FGE               5
+PT-CLOUD-NM-1S                 5
+PT-REPEATER-NM-1CE             6
+PT-REPEATER-NM-1CFE            6
+PT-REPEATER-NM-1CGE            6
+PT-REPEATER-NM-1FFE            6
+PT-REPEATER-NM-1FGE            6
+PT-REPEATER-NM-COVER           6
+Linksys-WMP300N                7
+PT-HOST-NM-1AM                 7
+PT-HOST-NM-1CE                 7
+PT-HOST-NM-1CFE                7
+PT-HOST-NM-1CGE                7
+PT-HOST-NM-1FFE                7
+PT-HOST-NM-1FGE                7
+PT-HOST-NM-1W                  7
+PT-HOST-NM-1W-A                7
+PT-HOST-NM-1W-AC               7
+PT-HOST-NM-3G/4G               7
+PT-HOST-NM-COVER               7
+PT-MODEM-NM-1CE                8
+PT-MODEM-NM-1CFE               8
+PT-MODEM-NM-1CGE               8
+Linksys-WPC300N                15
+PT-LAPTOP-NM-1AM               9
+PT-LAPTOP-NM-1CE               9
+PT-LAPTOP-NM-1CFE              9
+PT-LAPTOP-NM-1CGE              9
+PT-LAPTOP-NM-1FFE              9
+PT-LAPTOP-NM-1FGE              9
+PT-LAPTOP-NM-1W                9
+PT-LAPTOP-NM-1W-A              9
+PT-LAPTOP-NM-1W-AC             9
+PT-LAPTOP-NM-3G/4G             9
+IP_PHONE_POWER_ADAPTER         11
+PT-TABLETPC-NM-1AM             12
+PT-TABLETPC-NM-1CE             12
+PT-TABLETPC-NM-1CFE            12
+PT-TABLETPC-NM-1CGE            12
+PT-TABLETPC-NM-1FFE            12
+PT-TABLETPC-NM-1FGE            12
+PT-TABLETPC-NM-1W              12
+PT-TABLETPC-NM-1W-A            12
+PT-TABLETPC-NM-1W-AC           12
+PT-TABLETPC-NM-3G              12
+PT-PDA-NM-1AM                  13
+PT-PDA-NM-1CE                  13
+PT-PDA-NM-1CFE                 13
+PT-PDA-NM-1CGE                 13
+PT-PDA-NM-1FFE                 13
+PT-PDA-NM-1FGE                 13
+PT-PDA-NM-1W                   13
+PT-PDA-NM-1W-A                 13
+PT-PDA-NM-1W-AC                13
+PT-PDA-NM-3G/4G                13
+PT-WIRELESSENDDEVICE-NM-1AM    14
+PT-WIRELESSENDDEVICE-NM-1CE    14
+PT-WIRELESSENDDEVICE-NM-1CFE   14
+PT-WIRELESSENDDEVICE-NM-1CGE   14
+PT-WIRELESSENDDEVICE-NM-1FFE   14
+PT-WIRELESSENDDEVICE-NM-1FGE   14
+PT-WIRELESSENDDEVICE-NM-1W     14
+PT-WIRELESSENDDEVICE-NM-1W-A   14
+PT-WIRELESSENDDEVICE-NM-1W-AC  14
+PT-WIREDENDDEVICE-NM-1AM       15
+PT-WIREDENDDEVICE-NM-1CE       15
+PT-WIREDENDDEVICE-NM-1CFE      15
+PT-WIREDENDDEVICE-NM-1CGE      15
+PT-WIREDENDDEVICE-NM-1FFE      15
+PT-WIREDENDDEVICE-NM-1FGE      15
+PT-WIREDENDDEVICE-NM-1W        15
+PT-WIREDENDDEVICE-NM-1W-A      15
+PT-HEADPHONE                   16
+PT-MICROPHONE                  16
+ASA-Cover                      19
+PT-CELL-NM-1CX                 21
+PT-CELL-NM-3G/4G               21
+PT-IOT-NM-1CE                  23
+PT-IOT-NM-1CFE                 23
+PT-IOT-NM-1CGE                 23
+PT-IOT-NM-1W                   23
+PT-IOT-NM-1W-AC                23
+PT-IOT-NM-3G/4G                23
+PT-IOT-CUSTOM-IO               26
+PT-IOT-POWER-ADAPTER           27
+PT-UNV-PWR-ADAPTER             28
+ROUTER-ADAPTER                 29
+GLC-FE-100FX-RGD               30
+GLC-GE-100FX                   30
+GLC-LH-SMD                     30
+GLC-T                          30
+GLC-TE                         30
+ACCESS_POINT_POWER_ADAPTER     31
+C3650-BUILTIN                  32
+C3650-SFP-BUILTIN              32
+ISR4321-BUILTIN                32
+ISR4331-BUILTIN                32
+PT-CONTROLLER-BUILTIN          32
+MERAKI-POWER-ADAPTER           34</pre>
+</main>
+</div>
+<footer>© PTForge contributors. Licensed under the MIT License. Cisco and Packet Tracer are trademarks of Cisco Systems, Inc.</footer>
+</body>
+</html>

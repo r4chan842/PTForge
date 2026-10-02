@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1000">
+<title>Routing — PTForge documentation</title>
+<link rel="icon" href="../_static/logo.svg">
+<link rel="stylesheet" href="../_static/style.css">
+</head>
+<body>
+<div class="document">
+<nav class="sidebar">
+<a class="brand" href="../index.html"><img src="../_static/logo.svg" alt="PTForge logo"></a>
+<h1 class="project"><a href="../index.html">PTForge</a></h1>
+<p class="version">1.3.0</p>
+<h3>Quick search</h3>
+<form class="search" action="../search.html" method="get"><input type="text" name="q" aria-label="Search"><button type="submit">Go</button></form>
+<h3>Contents</h3>
+<div class="contents"><p class="caption">Start Here</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../index.html">Documentation Index</a></li></ul><p class="caption">User Guides</p><ul><li><a href="../guides/installation.html">Installation</a></li><li><a href="../guides/getting-started.html">Getting Started</a></li><li><a href="../guides/writing-scripts.html">Writing Scripts</a></li><li><a href="../guides/editor.html">Editor</a></li><li><a href="../guides/terminal.html">Terminal</a></li><li><a href="../guides/debugger.html">Debugger</a></li><li><a href="../guides/network-tools.html">Network Tools</a></li><li><a href="../guides/plugins.html">Plugins</a></li><li><a href="../guides/troubleshooting.html">Troubleshooting</a></li><li><a href="../guides/limitations.html">Limitations</a></li><li><a href="../guides/faq.html">Frequently Asked Questions</a></li></ul><p class="caption">Function Reference</p><ul><li><a href="index.html">Index</a></li><li><a href="devices.html">Devices</a></li><li><a href="links.html">Links</a></li><li><a href="hosts.html">End Devices</a></li><li><a href="ios.html">Cisco IOS</a></li><li><a href="switching.html">Switching</a></li><li><a href="routing.html">Routing</a></li><li><a href="security.html">Security</a></li><li><a href="services.html">Server Services</a></li><li><a href="wireless.html">Wireless</a></li><li><a href="canvas.html">Canvas</a></li><li><a href="topology.html">Topology</a></li><li><a href="workspace.html">Workspace</a></li><li><a href="inspect.html">Inspection</a></li><li><a href="checks.html">Lab Check</a></li><li><a href="audit.html">Audit</a></li><li><a href="simulation.html">Simulation</a></li><li><a href="snapshots.html">Snapshots</a></li><li><a href="events.html">Events</a></li><li><a href="plugins.html">Plugins</a></li><li><a href="utilities.html">Utilities</a></li></ul><p class="caption">CCNA</p><ul><li><a href="../ccna/index.html">Topic Map</a></li><li><a href="../ccna/lab-checklist.html">Lab Checklist</a></li></ul><p class="caption">Recipes</p><ul><li><a href="../recipes/index.html">Index</a></li><li><a href="../recipes/campus-switching.html">Campus Switching</a></li><li><a href="../recipes/routing-labs.html">Routing Labs</a></li><li><a href="../recipes/edge-router.html">Edge Router</a></li><li><a href="../recipes/servers.html">Servers</a></li><li><a href="../recipes/documenting.html">Documenting a Topology</a></li></ul><p class="caption">Cheat Sheets</p><ul><li><a href="../cheatsheets/ios-to-ptforge.html">IOS Commands and PTForge Calls</a></li><li><a href="../cheatsheets/subnetting.html">Subnetting</a></li><li><a href="../cheatsheets/keyboard.html">Keyboard Shortcuts</a></li></ul><p class="caption">Reference Tables</p><ul><li><a href="../reference/device-models.html">Device Models</a></li><li><a href="../reference/device-types.html">Device Types</a></li><li><a href="../reference/modules.html">Modules</a></li><li><a href="../reference/link-types.html">Link Types</a></li><li><a href="../reference/port-names.html">Port Names</a></li></ul><p class="caption">Architecture</p><ul><li><a href="../architecture/overview.html">Overview</a></li><li><a href="../architecture/runtime.html">Runtime</a></li><li><a href="../architecture/testing.html">Testing</a></li></ul><p class="caption">Project Files</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../project/CHANGELOG.html">Changes</a></li><li><a href="../project/ROADMAP.html">Roadmap</a></li><li><a href="../project/CONTRIBUTING.html">Contributing</a></li><li><a href="../project/CODE_OF_CONDUCT.html">Code of Conduct</a></li><li><a href="../project/SECURITY.html">Security Policy</a></li><li><a href="../project/SUPPORT.html">Support</a></li><li><a href="../project/THIRD_PARTY_NOTICES.html">Third-Party Notices</a></li><li><a href="../project/LICENSE.html">License</a></li><li><a href="../project/CITATION.cff.html">Citation</a></li><li><a href="../project/examples/index.html">Examples</a></li><li><a href="../project/templates/index.html">Templates</a></li><li><a href="../project/plugins/index.html">Sample Plugins</a></li></ul><p class="caption">Translations</p><ul><li><a href="../index.html#translations">Translations</a></li></ul></div>
+<div class="localtoc"><p class="caption">This Page</p><ul><li class="l2"><a href="#static">Static</a></li><li class="l2"><a href="#ospf">OSPF</a></li><li class="l2"><a href="#eigrp">EIGRP</a></li><li class="l2"><a href="#rip">RIP</a></li><li class="l2"><a href="#bgp">BGP</a></li><li class="l2"><a href="#redistribution">Redistribution</a></li><li class="l2"><a href="#command-builders">Command builders</a></li></ul></div><h3>This Page</h3>
+<ul class="plain"><li><a href="https://github.com/r4chan842/PTForge/blob/main/docs/api/routing">Show Source</a></li></ul>
+</nav>
+<main class="body">
+<div class="topbar"><select class="language" aria-label="Language" onchange="location.href=this.value"><option value="../introduction.html" selected>English</option><option value="../translations/fa.html">فارسی</option><option value="../translations/de.html">Deutsch</option><option value="../translations/es.html">Español</option><option value="../translations/fr.html">Français</option><option value="../translations/pt-BR.html">Português</option><option value="../translations/ru.html">Русский</option><option value="../translations/tr.html">Türkçe</option><option value="../translations/ar.html">العربية</option><option value="../translations/zh-CN.html">中文</option><option value="../translations/ja.html">日本語</option></select></div>
+<h1>Routing</h1>
+<p>Static routes, OSPF, EIGRP, RIP, BGP, IPv6 routing and redistribution.</p>
+<p>Networks can be written as 10.0.0.0/24. Wildcard masks are calculated for you.</p>
+<h2 id="static">Static<a class="anchor" href="#static">¶</a></h2>
+<dl class="function" id="fn-addstaticroute"><dt><code><span class="name">addStaticRoute</span>(name, destination, maskOrNextHop, nextHop, distance)</code><a class="anchor" href="#fn-addstaticroute">¶</a></dt><dd>Static route</dd></dl>
+<dl class="function" id="fn-addstaticroutes"><dt><code><span class="name">addStaticRoutes</span>(name, routes)</code><a class="anchor" href="#fn-addstaticroutes">¶</a></dt><dd>Array of route argument lists</dd></dl>
+<dl class="function" id="fn-removestaticroute"><dt><code><span class="name">removeStaticRoute</span>(name, destination, maskOrNextHop, nextHop)</code><a class="anchor" href="#fn-removestaticroute">¶</a></dt><dd>no ip route</dd></dl>
+<dl class="function" id="fn-adddefaultroute"><dt><code><span class="name">addDefaultRoute</span>(name, nextHop, distance)</code><a class="anchor" href="#fn-adddefaultroute">¶</a></dt><dd>ip route 0.0.0.0 0.0.0.0</dd></dl>
+<dl class="function" id="fn-addfloatingroute"><dt><code><span class="name">addFloatingRoute</span>(name, destination, nextHop, distance)</code><a class="anchor" href="#fn-addfloatingroute">¶</a></dt><dd>Backup route, distance 200 by default. Destination in CIDR form</dd></dl>
+<dl class="function" id="fn-addipv6staticroute"><dt><code><span class="name">addIpv6StaticRoute</span>(name, prefix, nextHop, distance)</code><a class="anchor" href="#fn-addipv6staticroute">¶</a></dt><dd>ipv6 route</dd></dl>
+<dl class="function" id="fn-addipv6defaultroute"><dt><code><span class="name">addIpv6DefaultRoute</span>(name, nextHop)</code><a class="anchor" href="#fn-addipv6defaultroute">¶</a></dt><dd>ipv6 route ::/0</dd></dl>
+<p>Both styles work:</p>
+<pre>addStaticRoute(&quot;R1&quot;, &quot;10.2.0.0/16&quot;, &quot;10.0.0.2&quot;);
+addStaticRoute(&quot;R1&quot;, &quot;10.2.0.0&quot;, &quot;255.255.0.0&quot;, &quot;10.0.0.2&quot;);
+addStaticRoute(&quot;R1&quot;, &quot;10.3.0.0/16&quot;, &quot;Serial0/1/0&quot;, 5);
+addDefaultRoute(&quot;R1&quot;, &quot;203.0.113.1&quot;);</pre>
+<h2 id="ospf">OSPF<a class="anchor" href="#ospf">¶</a></h2>
+<dl class="function" id="fn-configureospf"><dt><code><span class="name">configureOspf</span>(name, options)</code><a class="anchor" href="#fn-configureospf">¶</a></dt><dd>OSPFv2 process</dd></dl>
+<dl class="function" id="fn-setospfinterface"><dt><code><span class="name">setOspfInterface</span>(name, interface, options)</code><a class="anchor" href="#fn-setospfinterface">¶</a></dt><dd>Interface level OSPF settings</dd></dl>
+<dl class="function" id="fn-configureospfv3"><dt><code><span class="name">configureOspfv3</span>(name, options)</code><a class="anchor" href="#fn-configureospfv3">¶</a></dt><dd>OSPFv3 for IPv6</dd></dl>
+<dl class="function" id="fn-removeospf"><dt><code><span class="name">removeOspf</span>(name, processId)</code><a class="anchor" href="#fn-removeospf">¶</a></dt><dd>no router ospf</dd></dl>
+<p>configureOspf options:</p>
+<pre>Option              Example                                               Result
+------------------  ----------------------------------------------------  -------------------------------
+processId           1                                                     Default 1
+routerId            &quot;1.1.1.1&quot;                                             router-id
+area                0                                                     Default area for plain networks
+networks            [&quot;10.0.0.0/30&quot;, { network: &quot;10.1.0.0/24&quot;, area: 1 }]  network ... area ...
+passive             [&quot;GigabitEthernet0/1&quot;]                                passive-interface
+defaultOriginate    true                                                  default-information originate
+referenceBandwidth  1000                                                  auto-cost reference-bandwidth</pre>
+<p>setOspfInterface options: cost, priority, hello, dead, processId with area, md5Key with keyId, networkType.</p>
+<p>configureOspfv3 options: processId, routerId (required), interfaces as an array or { interface: area }, area, passive, defaultOriginate.</p>
+<pre>configureOspf(&quot;R1&quot;, {
+    routerId: &quot;1.1.1.1&quot;,
+    networks: [&quot;10.0.12.0/30&quot;, &quot;192.168.1.0/24&quot;],
+    passive: &quot;GigabitEthernet0/1&quot;
+});
+setOspfInterface(&quot;R1&quot;, &quot;GigabitEthernet0/0&quot;, { cost: 10, priority: 255 });</pre>
+<h2 id="eigrp">EIGRP<a class="anchor" href="#eigrp">¶</a></h2>
+<dl class="function" id="fn-configureeigrp"><dt><code><span class="name">configureEigrp</span>(name, options)</code><a class="anchor" href="#fn-configureeigrp">¶</a></dt><dd>EIGRP for IPv4</dd></dl>
+<dl class="function" id="fn-configureeigrpv6"><dt><code><span class="name">configureEigrpv6</span>(name, options)</code><a class="anchor" href="#fn-configureeigrpv6">¶</a></dt><dd>EIGRP for IPv6</dd></dl>
+<dl class="function" id="fn-seteigrpsummary"><dt><code><span class="name">setEigrpSummary</span>(name, interface, as, network, mask)</code><a class="anchor" href="#fn-seteigrpsummary">¶</a></dt><dd>Manual summary</dd></dl>
+<dl class="function" id="fn-removeeigrp"><dt><code><span class="name">removeEigrp</span>(name, as)</code><a class="anchor" href="#fn-removeeigrp">¶</a></dt><dd>no router eigrp</dd></dl>
+<p>configureEigrp options: as (required), routerId, networks, passive, autoSummary (off by default), redistribute.</p>
+<p>configureEigrpv6 options: as, routerId (required), interfaces, passive.</p>
+<h2 id="rip">RIP<a class="anchor" href="#rip">¶</a></h2>
+<dl class="function" id="fn-configurerip"><dt><code><span class="name">configureRip</span>(name, options)</code><a class="anchor" href="#fn-configurerip">¶</a></dt><dd>RIP version 2</dd></dl>
+<dl class="function" id="fn-configureripng"><dt><code><span class="name">configureRipng</span>(name, processName, interfaces)</code><a class="anchor" href="#fn-configureripng">¶</a></dt><dd>RIPng for IPv6</dd></dl>
+<dl class="function" id="fn-removerip"><dt><code><span class="name">removeRip</span>(name)</code><a class="anchor" href="#fn-removerip">¶</a></dt><dd>no router rip</dd></dl>
+<p>RIP options: version, networks, passive, autoSummary, defaultOriginate. Networks are converted to their classful form and duplicates are dropped.</p>
+<h2 id="bgp">BGP<a class="anchor" href="#bgp">¶</a></h2>
+<dl class="function" id="fn-configurebgp"><dt><code><span class="name">configureBgp</span>(name, options)</code><a class="anchor" href="#fn-configurebgp">¶</a></dt><dd>eBGP or iBGP</dd></dl>
+<dl class="function" id="fn-removebgp"><dt><code><span class="name">removeBgp</span>(name, as)</code><a class="anchor" href="#fn-removebgp">¶</a></dt><dd>no router bgp</dd></dl>
+<p>Options: as, routerId, neighbors as [{ ip, remoteAs, description }], networks in CIDR form.</p>
+<h2 id="redistribution">Redistribution<a class="anchor" href="#redistribution">¶</a></h2>
+<dl class="function" id="fn-redistribute"><dt><code><span class="name">redistribute</span>(name, into, source, options)</code><a class="anchor" href="#fn-redistribute">¶</a></dt><dd>redistribute under a routing process</dd></dl>
+<pre>redistribute(&quot;R1&quot;, { protocol: &quot;ospf&quot;, id: 1 }, &quot;static&quot;);
+redistribute(&quot;R2&quot;, { protocol: &quot;eigrp&quot;, id: 100 }, &quot;ospf 1&quot;, { metric: &quot;10000 100 255 1 1500&quot; });</pre>
+<p>subnets is added automatically when redistributing into OSPF.</p>
+<h2 id="command-builders">Command builders<a class="anchor" href="#command-builders">¶</a></h2>
+<dl class="function" id="fn-buildstaticroute"><dt><code><span class="name">buildStaticRoute</span>(destination, maskOrNextHop, nextHop, distance) <span class="returns">→ one route line</span></code><a class="anchor" href="#fn-buildstaticroute">¶</a></dt></dl>
+<dl class="function" id="fn-buildospf"><dt><code><span class="name">buildOspf</span>(options) <span class="returns">→ OSPF block</span></code><a class="anchor" href="#fn-buildospf">¶</a></dt></dl>
+<dl class="function" id="fn-buildospfinterface"><dt><code><span class="name">buildOspfInterface</span>(interface, options) <span class="returns">→ interface block</span></code><a class="anchor" href="#fn-buildospfinterface">¶</a></dt></dl>
+<dl class="function" id="fn-buildospfv3"><dt><code><span class="name">buildOspfv3</span>(options) <span class="returns">→ OSPFv3 lines</span></code><a class="anchor" href="#fn-buildospfv3">¶</a></dt></dl>
+<dl class="function" id="fn-buildeigrp"><dt><code><span class="name">buildEigrp</span>(options) <span class="returns">→ EIGRP block</span></code><a class="anchor" href="#fn-buildeigrp">¶</a></dt></dl>
+<dl class="function" id="fn-buildeigrpv6"><dt><code><span class="name">buildEigrpv6</span>(options) <span class="returns">→ EIGRP IPv6 lines</span></code><a class="anchor" href="#fn-buildeigrpv6">¶</a></dt></dl>
+<dl class="function" id="fn-buildrip"><dt><code><span class="name">buildRip</span>(options) <span class="returns">→ RIP block</span></code><a class="anchor" href="#fn-buildrip">¶</a></dt></dl>
+<dl class="function" id="fn-buildbgp"><dt><code><span class="name">buildBgp</span>(options) <span class="returns">→ BGP block</span></code><a class="anchor" href="#fn-buildbgp">¶</a></dt></dl>
+</main>
+</div>
+<footer>© PTForge contributors. Licensed under the MIT License. Cisco and Packet Tracer are trademarks of Cisco Systems, Inc.</footer>
+</body>
+</html>

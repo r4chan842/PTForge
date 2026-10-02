@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1000">
+<title>Editor guide — PTForge documentation</title>
+<link rel="icon" href="../_static/logo.svg">
+<link rel="stylesheet" href="../_static/style.css">
+</head>
+<body>
+<div class="document">
+<nav class="sidebar">
+<a class="brand" href="../index.html"><img src="../_static/logo.svg" alt="PTForge logo"></a>
+<h1 class="project"><a href="../index.html">PTForge</a></h1>
+<p class="version">1.3.0</p>
+<h3>Quick search</h3>
+<form class="search" action="../search.html" method="get"><input type="text" name="q" aria-label="Search"><button type="submit">Go</button></form>
+<h3>Contents</h3>
+<div class="contents"><p class="caption">Start Here</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../index.html">Documentation Index</a></li></ul><p class="caption">User Guides</p><ul><li><a href="installation.html">Installation</a></li><li><a href="getting-started.html">Getting Started</a></li><li><a href="writing-scripts.html">Writing Scripts</a></li><li><a href="editor.html">Editor</a></li><li><a href="terminal.html">Terminal</a></li><li><a href="debugger.html">Debugger</a></li><li><a href="network-tools.html">Network Tools</a></li><li><a href="plugins.html">Plugins</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="limitations.html">Limitations</a></li><li><a href="faq.html">Frequently Asked Questions</a></li></ul><p class="caption">Function Reference</p><ul><li><a href="../api/index.html">Index</a></li><li><a href="../api/devices.html">Devices</a></li><li><a href="../api/links.html">Links</a></li><li><a href="../api/hosts.html">End Devices</a></li><li><a href="../api/ios.html">Cisco IOS</a></li><li><a href="../api/switching.html">Switching</a></li><li><a href="../api/routing.html">Routing</a></li><li><a href="../api/security.html">Security</a></li><li><a href="../api/services.html">Server Services</a></li><li><a href="../api/wireless.html">Wireless</a></li><li><a href="../api/canvas.html">Canvas</a></li><li><a href="../api/topology.html">Topology</a></li><li><a href="../api/workspace.html">Workspace</a></li><li><a href="../api/inspect.html">Inspection</a></li><li><a href="../api/checks.html">Lab Check</a></li><li><a href="../api/audit.html">Audit</a></li><li><a href="../api/simulation.html">Simulation</a></li><li><a href="../api/snapshots.html">Snapshots</a></li><li><a href="../api/events.html">Events</a></li><li><a href="../api/plugins.html">Plugins</a></li><li><a href="../api/utilities.html">Utilities</a></li></ul><p class="caption">CCNA</p><ul><li><a href="../ccna/index.html">Topic Map</a></li><li><a href="../ccna/lab-checklist.html">Lab Checklist</a></li></ul><p class="caption">Recipes</p><ul><li><a href="../recipes/index.html">Index</a></li><li><a href="../recipes/campus-switching.html">Campus Switching</a></li><li><a href="../recipes/routing-labs.html">Routing Labs</a></li><li><a href="../recipes/edge-router.html">Edge Router</a></li><li><a href="../recipes/servers.html">Servers</a></li><li><a href="../recipes/documenting.html">Documenting a Topology</a></li></ul><p class="caption">Cheat Sheets</p><ul><li><a href="../cheatsheets/ios-to-ptforge.html">IOS Commands and PTForge Calls</a></li><li><a href="../cheatsheets/subnetting.html">Subnetting</a></li><li><a href="../cheatsheets/keyboard.html">Keyboard Shortcuts</a></li></ul><p class="caption">Reference Tables</p><ul><li><a href="../reference/device-models.html">Device Models</a></li><li><a href="../reference/device-types.html">Device Types</a></li><li><a href="../reference/modules.html">Modules</a></li><li><a href="../reference/link-types.html">Link Types</a></li><li><a href="../reference/port-names.html">Port Names</a></li></ul><p class="caption">Architecture</p><ul><li><a href="../architecture/overview.html">Overview</a></li><li><a href="../architecture/runtime.html">Runtime</a></li><li><a href="../architecture/testing.html">Testing</a></li></ul><p class="caption">Project Files</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../project/CHANGELOG.html">Changes</a></li><li><a href="../project/ROADMAP.html">Roadmap</a></li><li><a href="../project/CONTRIBUTING.html">Contributing</a></li><li><a href="../project/CODE_OF_CONDUCT.html">Code of Conduct</a></li><li><a href="../project/SECURITY.html">Security Policy</a></li><li><a href="../project/SUPPORT.html">Support</a></li><li><a href="../project/THIRD_PARTY_NOTICES.html">Third-Party Notices</a></li><li><a href="../project/LICENSE.html">License</a></li><li><a href="../project/CITATION.cff.html">Citation</a></li><li><a href="../project/examples/index.html">Examples</a></li><li><a href="../project/templates/index.html">Templates</a></li><li><a href="../project/plugins/index.html">Sample Plugins</a></li></ul><p class="caption">Translations</p><ul><li><a href="../index.html#translations">Translations</a></li></ul></div>
+<div class="localtoc"><p class="caption">This Page</p><ul><li class="l2"><a href="#layout">Layout</a></li><li class="l2"><a href="#workspace-and-files">Workspace and files</a></li><li class="l2"><a href="#writing-code">Writing code</a></li><li class="l2"><a href="#problems">Problems</a></li><li class="l2"><a href="#running">Running</a></li><li class="l2"><a href="#devices-view">Devices view</a></li><li class="l2"><a href="#network-tools">Network tools</a></li><li class="l2"><a href="#terminal-and-debugger">Terminal and debugger</a></li><li class="l2"><a href="#settings-kept-between-sessions">Settings kept between sessions</a></li></ul></div><h3>This Page</h3>
+<ul class="plain"><li><a href="https://github.com/r4chan842/PTForge/blob/main/docs/guides/editor">Show Source</a></li></ul>
+</nav>
+<main class="body">
+<div class="topbar"><select class="language" aria-label="Language" onchange="location.href=this.value"><option value="../introduction.html" selected>English</option><option value="../translations/fa.html">فارسی</option><option value="../translations/de.html">Deutsch</option><option value="../translations/es.html">Español</option><option value="../translations/fr.html">Français</option><option value="../translations/pt-BR.html">Português</option><option value="../translations/ru.html">Русский</option><option value="../translations/tr.html">Türkçe</option><option value="../translations/ar.html">العربية</option><option value="../translations/zh-CN.html">中文</option><option value="../translations/ja.html">日本語</option></select></div>
+<h1>Editor guide</h1>
+<p>The PTForge editor is a small VS Code written for the Packet Tracer web view. It has no dependencies and works offline.</p>
+<h2 id="layout">Layout<a class="anchor" href="#layout">¶</a></h2>
+<pre>Area            Where       Use
+--------------  ----------  ----------------------------------------------------------------------------------------
+Menu bar        top         Every command, grouped like VS Code
+Command center  top middle  Click to go to a file
+Activity bar    far left    Explorer, Function reference, Run and Debug, Snippets, Devices, Network tools, Lab Check
+Side bar        left        The selected view. Drag its edge to resize
+Editor          middle      Tabs, breadcrumbs, the code, find widget
+Panel           bottom      Problems, Output, Debug Console, Terminal, Lab Check. Drag its edge to resize
+Status bar      bottom      Connection, problems, run and debug state, cursor, zoom. Blue while debugging</pre>
+<h2 id="workspace-and-files">Workspace and files<a class="anchor" href="#workspace-and-files">¶</a></h2>
+<p>There are two kinds of files.</p>
+<p>Workspace files live inside Packet Tracer's data store for the extension. They survive restarts and need no path. Ctrl+S stores the current text. Create them with Ctrl+N, rename with F2 or a double click, delete from the explorer.</p>
+<p>Disk files come from File &gt; Open File or Open Folder. Packet Tracer shows its own file dialog. Ctrl+S writes the file back, Save As picks a new path. Closing a disk file with unsaved changes asks whether to save.</p>
+<p>Unsaved text is kept even when the window closes, so nothing is lost. A dot on the tab means the file differs from what was last saved.</p>
+<p>File &gt; Export downloads the current file, and Import from Clipboard opens the clipboard as a new file.</p>
+<p>When the page is opened in a normal browser (preview mode), Open uses the browser file picker and Save downloads the file. Scripts only run inside Packet Tracer.</p>
+<h2 id="writing-code">Writing code<a class="anchor" href="#writing-code">¶</a></h2>
+<ul><li>Suggestions appear as you type. They include every PTForge function with its arguments and description, JavaScript keywords and words already in the file. Ctrl+Space opens them on demand</li><li>Inside the brackets of a PTForge call, a hint shows the signature with the current argument in bold</li><li>Brackets and quotes close automatically. Typing the closing character steps over it, Backspace removes an empty pair</li><li>Enter keeps the indentation and opens a block after {, [ or (</li><li>The bracket next to the cursor and its partner are highlighted</li></ul>
+<h2 id="problems">Problems<a class="anchor" href="#problems">¶</a></h2>
+<p>The Problems panel updates while you type.</p>
+<ul><li>Syntax error: Unexpected token ')' on the line where it happens</li><li>Unclosed item: '{' is never closed, Unterminated string, Comment is never closed</li><li>Mismatched bracket: ')' does not match '[' on line 3</li><li>Unknown function: Unknown function 'addDevise'. Did you mean 'addDevice'?</li></ul>
+<p>Unknown functions are warnings: functions and variables declared in the script, parameters and JavaScript built ins are recognized. Click Change to ... to apply the suggestion, click a row to jump to the line, or press F8.</p>
+<h2 id="running">Running<a class="anchor" href="#running">¶</a></h2>
+<p>Ctrl+F5, Ctrl+Enter or the triangle in the editor title runs the whole file, Ctrl+Shift+Enter runs the selection. F5 starts the <a href="debugger.html">Debugger</a>. The Packet Tracer item in the status bar turns orange while Packet Tracer works and shows the run time when it finishes. log and showResult write to Output. Lab Check and audit reports open in the Lab Check panel.</p>
+<h2 id="devices-view">Devices view<a class="anchor" href="#devices-view">¶</a></h2>
+<p>Lists every device in the open Packet Tracer file with its model, and the ports that have a cable or an address, with a green or red LED. Click a device or port to insert its quoted name at the cursor. The buttons run an audit, a topology summary, a show command on every device, or turn the command log into a script.</p>
+<h2 id="network-tools">Network tools<a class="anchor" href="#network-tools">¶</a></h2>
+<p>The Network tools view has a quick subnet calculator, VLSM planner and wildcard converter next to your code. The full calculator with nine tools, the reachability matrix and snapshot compare open as editor tabs. See network tools: <a href="network-tools.html">Network tools</a>.</p>
+<h2 id="terminal-and-debugger">Terminal and debugger<a class="anchor" href="#terminal-and-debugger">¶</a></h2>
+<p>Ctrl+` opens the terminal and F5 starts the debugger.</p>
+<ul><li><a href="terminal.html">Terminal</a></li><li><a href="debugger.html">Debugger</a></li></ul>
+<h2 id="settings-kept-between-sessions">Settings kept between sessions<a class="anchor" href="#settings-kept-between-sessions">¶</a></h2>
+<p>Open files, the active tab, side bar and panel sizes and visibility, the selected view, the opened folder, the zoom level, breakpoints, watch expressions, debugger options and terminal history.</p>
+</main>
+</div>
+<footer>© PTForge contributors. Licensed under the MIT License. Cisco and Packet Tracer are trademarks of Cisco Systems, Inc.</footer>
+</body>
+</html>

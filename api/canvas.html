@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1000">
+<title>Canvas — PTForge documentation</title>
+<link rel="icon" href="../_static/logo.svg">
+<link rel="stylesheet" href="../_static/style.css">
+</head>
+<body>
+<div class="document">
+<nav class="sidebar">
+<a class="brand" href="../index.html"><img src="../_static/logo.svg" alt="PTForge logo"></a>
+<h1 class="project"><a href="../index.html">PTForge</a></h1>
+<p class="version">1.3.0</p>
+<h3>Quick search</h3>
+<form class="search" action="../search.html" method="get"><input type="text" name="q" aria-label="Search"><button type="submit">Go</button></form>
+<h3>Contents</h3>
+<div class="contents"><p class="caption">Start Here</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../index.html">Documentation Index</a></li></ul><p class="caption">User Guides</p><ul><li><a href="../guides/installation.html">Installation</a></li><li><a href="../guides/getting-started.html">Getting Started</a></li><li><a href="../guides/writing-scripts.html">Writing Scripts</a></li><li><a href="../guides/editor.html">Editor</a></li><li><a href="../guides/terminal.html">Terminal</a></li><li><a href="../guides/debugger.html">Debugger</a></li><li><a href="../guides/network-tools.html">Network Tools</a></li><li><a href="../guides/plugins.html">Plugins</a></li><li><a href="../guides/troubleshooting.html">Troubleshooting</a></li><li><a href="../guides/limitations.html">Limitations</a></li><li><a href="../guides/faq.html">Frequently Asked Questions</a></li></ul><p class="caption">Function Reference</p><ul><li><a href="index.html">Index</a></li><li><a href="devices.html">Devices</a></li><li><a href="links.html">Links</a></li><li><a href="hosts.html">End Devices</a></li><li><a href="ios.html">Cisco IOS</a></li><li><a href="switching.html">Switching</a></li><li><a href="routing.html">Routing</a></li><li><a href="security.html">Security</a></li><li><a href="services.html">Server Services</a></li><li><a href="wireless.html">Wireless</a></li><li><a href="canvas.html">Canvas</a></li><li><a href="topology.html">Topology</a></li><li><a href="workspace.html">Workspace</a></li><li><a href="inspect.html">Inspection</a></li><li><a href="checks.html">Lab Check</a></li><li><a href="audit.html">Audit</a></li><li><a href="simulation.html">Simulation</a></li><li><a href="snapshots.html">Snapshots</a></li><li><a href="events.html">Events</a></li><li><a href="plugins.html">Plugins</a></li><li><a href="utilities.html">Utilities</a></li></ul><p class="caption">CCNA</p><ul><li><a href="../ccna/index.html">Topic Map</a></li><li><a href="../ccna/lab-checklist.html">Lab Checklist</a></li></ul><p class="caption">Recipes</p><ul><li><a href="../recipes/index.html">Index</a></li><li><a href="../recipes/campus-switching.html">Campus Switching</a></li><li><a href="../recipes/routing-labs.html">Routing Labs</a></li><li><a href="../recipes/edge-router.html">Edge Router</a></li><li><a href="../recipes/servers.html">Servers</a></li><li><a href="../recipes/documenting.html">Documenting a Topology</a></li></ul><p class="caption">Cheat Sheets</p><ul><li><a href="../cheatsheets/ios-to-ptforge.html">IOS Commands and PTForge Calls</a></li><li><a href="../cheatsheets/subnetting.html">Subnetting</a></li><li><a href="../cheatsheets/keyboard.html">Keyboard Shortcuts</a></li></ul><p class="caption">Reference Tables</p><ul><li><a href="../reference/device-models.html">Device Models</a></li><li><a href="../reference/device-types.html">Device Types</a></li><li><a href="../reference/modules.html">Modules</a></li><li><a href="../reference/link-types.html">Link Types</a></li><li><a href="../reference/port-names.html">Port Names</a></li></ul><p class="caption">Architecture</p><ul><li><a href="../architecture/overview.html">Overview</a></li><li><a href="../architecture/runtime.html">Runtime</a></li><li><a href="../architecture/testing.html">Testing</a></li></ul><p class="caption">Project Files</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../project/CHANGELOG.html">Changes</a></li><li><a href="../project/ROADMAP.html">Roadmap</a></li><li><a href="../project/CONTRIBUTING.html">Contributing</a></li><li><a href="../project/CODE_OF_CONDUCT.html">Code of Conduct</a></li><li><a href="../project/SECURITY.html">Security Policy</a></li><li><a href="../project/SUPPORT.html">Support</a></li><li><a href="../project/THIRD_PARTY_NOTICES.html">Third-Party Notices</a></li><li><a href="../project/LICENSE.html">License</a></li><li><a href="../project/CITATION.cff.html">Citation</a></li><li><a href="../project/examples/index.html">Examples</a></li><li><a href="../project/templates/index.html">Templates</a></li><li><a href="../project/plugins/index.html">Sample Plugins</a></li></ul><p class="caption">Translations</p><ul><li><a href="../index.html#translations">Translations</a></li></ul></div>
+<div class="localtoc"><p class="caption">This Page</p><ul><li class="l2"><a href="#notes">Notes</a></li><li class="l2"><a href="#shapes">Shapes</a></li><li class="l2"><a href="#labels">Labels</a></li><li class="l2"><a href="#managing-items">Managing items</a></li><li class="l2"><a href="#layers">Layers</a></li></ul></div><h3>This Page</h3>
+<ul class="plain"><li><a href="https://github.com/r4chan842/PTForge/blob/main/docs/api/canvas">Show Source</a></li></ul>
+</nav>
+<main class="body">
+<div class="topbar"><select class="language" aria-label="Language" onchange="location.href=this.value"><option value="../introduction.html" selected>English</option><option value="../translations/fa.html">فارسی</option><option value="../translations/de.html">Deutsch</option><option value="../translations/es.html">Español</option><option value="../translations/fr.html">Français</option><option value="../translations/pt-BR.html">Português</option><option value="../translations/ru.html">Русский</option><option value="../translations/tr.html">Türkçe</option><option value="../translations/ar.html">العربية</option><option value="../translations/zh-CN.html">中文</option><option value="../translations/ja.html">日本語</option></select></div>
+<h1>Canvas</h1>
+<p>Notes, shapes, zones and labels on the logical workspace.</p>
+<p>Colors accept a name, &quot;#rrggbb&quot;, &quot;#rgb&quot; or [r, g, b]. Names: black, white, gray, red, green, blue, yellow, orange, purple, cyan, pink, teal, navy, brown.</p>
+<p>Every drawing goes on the current layer. Pass layer to override it.</p>
+<h2 id="notes">Notes<a class="anchor" href="#notes">¶</a></h2>
+<dl class="function" id="fn-addnote"><dt><code><span class="name">addNote</span>(x, y, text, layer) <span class="returns">→ id</span></code><a class="anchor" href="#fn-addnote">¶</a></dt><dd>Text note. \n makes a new line</dd></dl>
+<dl class="function" id="fn-setnotetext"><dt><code><span class="name">setNoteText</span>(id, text) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-setnotetext">¶</a></dt><dd>Change a note</dd></dl>
+<dl class="function" id="fn-getnotetext"><dt><code><span class="name">getNoteText</span>(id) <span class="returns">→ string</span></code><a class="anchor" href="#fn-getnotetext">¶</a></dt><dd>Read a note</dd></dl>
+<dl class="function" id="fn-getnotes"><dt><code><span class="name">getNotes</span>() <span class="returns">→ object[]</span></code><a class="anchor" href="#fn-getnotes">¶</a></dt><dd>{ id, text, x, y }</dd></dl>
+<dl class="function" id="fn-findnote"><dt><code><span class="name">findNote</span>(text) <span class="returns">→ id</span></code><a class="anchor" href="#fn-findnote">¶</a></dt><dd>First note with this exact text, or null</dd></dl>
+<dl class="function" id="fn-removenotes"><dt><code><span class="name">removeNotes</span>() <span class="returns">→ number</span></code><a class="anchor" href="#fn-removenotes">¶</a></dt><dd>Delete every note</dd></dl>
+<dl class="function" id="fn-addtextpopup"><dt><code><span class="name">addTextPopup</span>(x, y, text, width, layer) <span class="returns">→ id</span></code><a class="anchor" href="#fn-addtextpopup">¶</a></dt><dd>Popup box</dd></dl>
+<dl class="function" id="fn-removetextpopup"><dt><code><span class="name">removeTextPopup</span>(id) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-removetextpopup">¶</a></dt><dd>Remove a popup</dd></dl>
+<h2 id="shapes">Shapes<a class="anchor" href="#shapes">¶</a></h2>
+<dl class="function" id="fn-drawline"><dt><code><span class="name">drawLine</span>(x1, y1, x2, y2, color, width, layer) <span class="returns">→ id</span></code><a class="anchor" href="#fn-drawline">¶</a></dt><dd>Line, width 2 by default</dd></dl>
+<dl class="function" id="fn-drawcircle"><dt><code><span class="name">drawCircle</span>(cx, cy, radius, color, layer) <span class="returns">→ id</span></code><a class="anchor" href="#fn-drawcircle">¶</a></dt><dd>Circle</dd></dl>
+<dl class="function" id="fn-drawrect"><dt><code><span class="name">drawRect</span>(x, y, width, height, color, lineWidth, layer) <span class="returns">→ ids</span></code><a class="anchor" href="#fn-drawrect">¶</a></dt><dd>Rectangle outline from four lines</dd></dl>
+<dl class="function" id="fn-drawpolyline"><dt><code><span class="name">drawPolyline</span>(points, color, width, closed, layer) <span class="returns">→ ids</span></code><a class="anchor" href="#fn-drawpolyline">¶</a></dt><dd>Connected lines through [[x, y], ...]</dd></dl>
+<dl class="function" id="fn-drawdashedline"><dt><code><span class="name">drawDashedLine</span>(x1, y1, x2, y2, color, width, dash, layer) <span class="returns">→ ids</span></code><a class="anchor" href="#fn-drawdashedline">¶</a></dt><dd>Dashed line</dd></dl>
+<dl class="function" id="fn-drawarrow"><dt><code><span class="name">drawArrow</span>(x1, y1, x2, y2, color, width, layer) <span class="returns">→ ids</span></code><a class="anchor" href="#fn-drawarrow">¶</a></dt><dd>Line with an arrow head</dd></dl>
+<dl class="function" id="fn-drawzone"><dt><code><span class="name">drawZone</span>(x, y, width, height, label, color, lineWidth) <span class="returns">→ ids</span></code><a class="anchor" href="#fn-drawzone">¶</a></dt><dd>Rectangle with a label in the corner</dd></dl>
+<dl class="function" id="fn-drawzonearound"><dt><code><span class="name">drawZoneAround</span>(devices, label, color, padding) <span class="returns">→ ids</span></code><a class="anchor" href="#fn-drawzonearound">¶</a></dt><dd>Zone that fits around devices</dd></dl>
+<pre>drawZoneAround([&quot;S1&quot;, &quot;PC1&quot;, &quot;PC2&quot;], &quot;VLAN 10 - Sales&quot;, &quot;green&quot;);
+drawArrow(600, 100, 480, 100, &quot;red&quot;, 3);
+drawDashedLine(50, 400, 750, 400, &quot;gray&quot;);</pre>
+<p>The Packet Tracer API has no filled rectangle. drawRect and drawZone build outlines from lines.</p>
+<h2 id="labels">Labels<a class="anchor" href="#labels">¶</a></h2>
+<dl class="function" id="fn-labeldevice"><dt><code><span class="name">labelDevice</span>(name, text, offsetY) <span class="returns">→ id</span></code><a class="anchor" href="#fn-labeldevice">¶</a></dt><dd>Note above a device, the device name by default</dd></dl>
+<dl class="function" id="fn-labeldevices"><dt><code><span class="name">labelDevices</span>({ name: text }, offsetY) <span class="returns">→ object</span></code><a class="anchor" href="#fn-labeldevices">¶</a></dt><dd>Several labels</dd></dl>
+<dl class="function" id="fn-labelalldevices"><dt><code><span class="name">labelAllDevices</span>(formatter, offsetY) <span class="returns">→ object</span></code><a class="anchor" href="#fn-labelalldevices">¶</a></dt><dd>Label every device. formatter(name) returns the text</dd></dl>
+<dl class="function" id="fn-labelwithip"><dt><code><span class="name">labelWithIp</span>(name, port, offsetY) <span class="returns">→ id</span></code><a class="anchor" href="#fn-labelwithip">¶</a></dt><dd>Device name plus the port address</dd></dl>
+<dl class="function" id="fn-labellink"><dt><code><span class="name">labelLink</span>(dev1, dev2, text) <span class="returns">→ id</span></code><a class="anchor" href="#fn-labellink">¶</a></dt><dd>Note in the middle between two devices</dd></dl>
+<pre>labelAllDevices();
+labelWithIp(&quot;PC1&quot;, &quot;FastEthernet0&quot;, 60);
+labelLink(&quot;R1&quot;, &quot;R2&quot;, &quot;10.0.0.0/30&quot;);
+labelAllDevices(function (name) { return name + &quot; (&quot; + getDeviceModel(name) + &quot;)&quot;; });</pre>
+<h2 id="managing-items">Managing items<a class="anchor" href="#managing-items">¶</a></h2>
+<dl class="function" id="fn-removeitem"><dt><code><span class="name">removeItem</span>(id) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-removeitem">¶</a></dt><dd>Delete one item or an array of ids</dd></dl>
+<dl class="function" id="fn-moveitem"><dt><code><span class="name">moveItem</span>(id, dx, dy) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-moveitem">¶</a></dt><dd>Move one item or an array</dd></dl>
+<dl class="function" id="fn-setitemposition"><dt><code><span class="name">setItemPosition</span>(id, x, y) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-setitemposition">¶</a></dt><dd>Absolute position</dd></dl>
+<dl class="function" id="fn-getitemposition"><dt><code><span class="name">getItemPosition</span>(id) <span class="returns">→ object</span></code><a class="anchor" href="#fn-getitemposition">¶</a></dt><dd>{ x, y }</dd></dl>
+<dl class="function" id="fn-getcanvasitems"><dt><code><span class="name">getCanvasItems</span>() <span class="returns">→ object</span></code><a class="anchor" href="#fn-getcanvasitems">¶</a></dt><dd>Ids of notes, lines, rects, ellipses, polygons</dd></dl>
+<dl class="function" id="fn-getlinedata"><dt><code><span class="name">getLineData</span>(id) <span class="returns">→ object</span></code><a class="anchor" href="#fn-getlinedata">¶</a></dt><dd>Coordinates and color</dd></dl>
+<dl class="function" id="fn-getrectdata"><dt><code><span class="name">getRectData</span>(id) <span class="returns">→ object</span></code><a class="anchor" href="#fn-getrectdata">¶</a></dt><dd>Coordinates, fill, border and text of a rectangle drawn by hand</dd></dl>
+<dl class="function" id="fn-getellipsedata"><dt><code><span class="name">getEllipseData</span>(id) <span class="returns">→ string[]</span></code><a class="anchor" href="#fn-getellipsedata">¶</a></dt><dd>Raw ellipse data</dd></dl>
+<dl class="function" id="fn-getpolygondata"><dt><code><span class="name">getPolygonData</span>(id) <span class="returns">→ string[]</span></code><a class="anchor" href="#fn-getpolygondata">¶</a></dt><dd>Raw polygon data</dd></dl>
+<dl class="function" id="fn-clearlayer"><dt><code><span class="name">clearLayer</span>(layer) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-clearlayer">¶</a></dt><dd>Clear a layer, the current one by default</dd></dl>
+<dl class="function" id="fn-clearcanvas"><dt><code><span class="name">clearCanvas</span>() <span class="returns">→ number</span></code><a class="anchor" href="#fn-clearcanvas">¶</a></dt><dd>Delete every drawing and note</dd></dl>
+<h2 id="layers">Layers<a class="anchor" href="#layers">¶</a></h2>
+<dl class="function" id="fn-newlayer"><dt><code><span class="name">newLayer</span>() <span class="returns">→ number</span></code><a class="anchor" href="#fn-newlayer">¶</a></dt><dd>Start a new unused layer</dd></dl>
+<dl class="function" id="fn-uselayer"><dt><code><span class="name">useLayer</span>(layer) <span class="returns">→ number</span></code><a class="anchor" href="#fn-uselayer">¶</a></dt><dd>Switch to a layer</dd></dl>
+<dl class="function" id="fn-currentlayer"><dt><code><span class="name">currentLayer</span>() <span class="returns">→ number</span></code><a class="anchor" href="#fn-currentlayer">¶</a></dt><dd>Layer in use</dd></dl>
+<pre>var background = newLayer();
+drawZone(20, 20, 800, 500, &quot;Campus&quot;, &quot;navy&quot;);
+newLayer();
+labelAllDevices();
+clearLayer(background);</pre>
+</main>
+</div>
+<footer>© PTForge contributors. Licensed under the MIT License. Cisco and Packet Tracer are trademarks of Cisco Systems, Inc.</footer>
+</body>
+</html>

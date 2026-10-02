@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1000">
+<title>Topology and addressing — PTForge documentation</title>
+<link rel="icon" href="../_static/logo.svg">
+<link rel="stylesheet" href="../_static/style.css">
+</head>
+<body>
+<div class="document">
+<nav class="sidebar">
+<a class="brand" href="../index.html"><img src="../_static/logo.svg" alt="PTForge logo"></a>
+<h1 class="project"><a href="../index.html">PTForge</a></h1>
+<p class="version">1.3.0</p>
+<h3>Quick search</h3>
+<form class="search" action="../search.html" method="get"><input type="text" name="q" aria-label="Search"><button type="submit">Go</button></form>
+<h3>Contents</h3>
+<div class="contents"><p class="caption">Start Here</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../index.html">Documentation Index</a></li></ul><p class="caption">User Guides</p><ul><li><a href="../guides/installation.html">Installation</a></li><li><a href="../guides/getting-started.html">Getting Started</a></li><li><a href="../guides/writing-scripts.html">Writing Scripts</a></li><li><a href="../guides/editor.html">Editor</a></li><li><a href="../guides/terminal.html">Terminal</a></li><li><a href="../guides/debugger.html">Debugger</a></li><li><a href="../guides/network-tools.html">Network Tools</a></li><li><a href="../guides/plugins.html">Plugins</a></li><li><a href="../guides/troubleshooting.html">Troubleshooting</a></li><li><a href="../guides/limitations.html">Limitations</a></li><li><a href="../guides/faq.html">Frequently Asked Questions</a></li></ul><p class="caption">Function Reference</p><ul><li><a href="index.html">Index</a></li><li><a href="devices.html">Devices</a></li><li><a href="links.html">Links</a></li><li><a href="hosts.html">End Devices</a></li><li><a href="ios.html">Cisco IOS</a></li><li><a href="switching.html">Switching</a></li><li><a href="routing.html">Routing</a></li><li><a href="security.html">Security</a></li><li><a href="services.html">Server Services</a></li><li><a href="wireless.html">Wireless</a></li><li><a href="canvas.html">Canvas</a></li><li><a href="topology.html">Topology</a></li><li><a href="workspace.html">Workspace</a></li><li><a href="inspect.html">Inspection</a></li><li><a href="checks.html">Lab Check</a></li><li><a href="audit.html">Audit</a></li><li><a href="simulation.html">Simulation</a></li><li><a href="snapshots.html">Snapshots</a></li><li><a href="events.html">Events</a></li><li><a href="plugins.html">Plugins</a></li><li><a href="utilities.html">Utilities</a></li></ul><p class="caption">CCNA</p><ul><li><a href="../ccna/index.html">Topic Map</a></li><li><a href="../ccna/lab-checklist.html">Lab Checklist</a></li></ul><p class="caption">Recipes</p><ul><li><a href="../recipes/index.html">Index</a></li><li><a href="../recipes/campus-switching.html">Campus Switching</a></li><li><a href="../recipes/routing-labs.html">Routing Labs</a></li><li><a href="../recipes/edge-router.html">Edge Router</a></li><li><a href="../recipes/servers.html">Servers</a></li><li><a href="../recipes/documenting.html">Documenting a Topology</a></li></ul><p class="caption">Cheat Sheets</p><ul><li><a href="../cheatsheets/ios-to-ptforge.html">IOS Commands and PTForge Calls</a></li><li><a href="../cheatsheets/subnetting.html">Subnetting</a></li><li><a href="../cheatsheets/keyboard.html">Keyboard Shortcuts</a></li></ul><p class="caption">Reference Tables</p><ul><li><a href="../reference/device-models.html">Device Models</a></li><li><a href="../reference/device-types.html">Device Types</a></li><li><a href="../reference/modules.html">Modules</a></li><li><a href="../reference/link-types.html">Link Types</a></li><li><a href="../reference/port-names.html">Port Names</a></li></ul><p class="caption">Architecture</p><ul><li><a href="../architecture/overview.html">Overview</a></li><li><a href="../architecture/runtime.html">Runtime</a></li><li><a href="../architecture/testing.html">Testing</a></li></ul><p class="caption">Project Files</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../project/CHANGELOG.html">Changes</a></li><li><a href="../project/ROADMAP.html">Roadmap</a></li><li><a href="../project/CONTRIBUTING.html">Contributing</a></li><li><a href="../project/CODE_OF_CONDUCT.html">Code of Conduct</a></li><li><a href="../project/SECURITY.html">Security Policy</a></li><li><a href="../project/SUPPORT.html">Support</a></li><li><a href="../project/THIRD_PARTY_NOTICES.html">Third-Party Notices</a></li><li><a href="../project/LICENSE.html">License</a></li><li><a href="../project/CITATION.cff.html">Citation</a></li><li><a href="../project/examples/index.html">Examples</a></li><li><a href="../project/templates/index.html">Templates</a></li><li><a href="../project/plugins/index.html">Sample Plugins</a></li></ul><p class="caption">Translations</p><ul><li><a href="../index.html#translations">Translations</a></li></ul></div>
+<div class="localtoc"><p class="caption">This Page</p><ul><li class="l2"><a href="#generators">Generators</a></li><li class="l2"><a href="#layout">Layout</a></li><li class="l2"><a href="#addressing">Addressing</a></li></ul></div><h3>This Page</h3>
+<ul class="plain"><li><a href="https://github.com/r4chan842/PTForge/blob/main/docs/api/topology">Show Source</a></li></ul>
+</nav>
+<main class="body">
+<div class="topbar"><select class="language" aria-label="Language" onchange="location.href=this.value"><option value="../introduction.html" selected>English</option><option value="../translations/fa.html">فارسی</option><option value="../translations/de.html">Deutsch</option><option value="../translations/es.html">Español</option><option value="../translations/fr.html">Français</option><option value="../translations/pt-BR.html">Português</option><option value="../translations/ru.html">Русский</option><option value="../translations/tr.html">Türkçe</option><option value="../translations/ar.html">العربية</option><option value="../translations/zh-CN.html">中文</option><option value="../translations/ja.html">日本語</option></select></div>
+<h1>Topology and addressing</h1>
+<p>Generate whole topologies, lay devices out and plan subnets.</p>
+<h2 id="generators">Generators<a class="anchor" href="#generators">¶</a></h2>
+<dl class="function" id="fn-buildstar"><dt><code><span class="name">buildStar</span>(options) <span class="returns">→ object</span></code><a class="anchor" href="#fn-buildstar">¶</a></dt><dd>A center device with leaves around it</dd></dl>
+<dl class="function" id="fn-buildring"><dt><code><span class="name">buildRing</span>(options) <span class="returns">→ string[]</span></code><a class="anchor" href="#fn-buildring">¶</a></dt><dd>Devices in a closed ring</dd></dl>
+<dl class="function" id="fn-buildline"><dt><code><span class="name">buildLine</span>(options) <span class="returns">→ string[]</span></code><a class="anchor" href="#fn-buildline">¶</a></dt><dd>Devices in a chain</dd></dl>
+<dl class="function" id="fn-buildfullmesh"><dt><code><span class="name">buildFullMesh</span>(options) <span class="returns">→ string[]</span></code><a class="anchor" href="#fn-buildfullmesh">¶</a></dt><dd>Every device connected to every other device</dd></dl>
+<dl class="function" id="fn-buildlan"><dt><code><span class="name">buildLan</span>(options) <span class="returns">→ object</span></code><a class="anchor" href="#fn-buildlan">¶</a></dt><dd>Switch with hosts in a row, optional automatic addressing</dd></dl>
+<p>Common options: count, prefix, start, model, x, y, radius, linkType.</p>
+<ul><li>buildStar: center, centerModel, leafModel, centerPort(i), leafPort(i)</li><li>buildRing / buildLine: portA, portB, gap</li><li>buildFullMesh: ports array, each device needs count - 1 ports</li><li>buildLan: switchName, switchModel, hosts, hostPrefix, hostModel, network, gateway, dns, startAt</li></ul>
+<pre>buildLan({ switchName: &quot;S1&quot;, hosts: 5, network: &quot;192.168.1.0/24&quot; });
+buildRing({ count: 5, prefix: &quot;R&quot;, model: &quot;2911&quot; });
+buildFullMesh({ count: 4, prefix: &quot;CORE&quot; });</pre>
+<h2 id="layout">Layout<a class="anchor" href="#layout">¶</a></h2>
+<dl class="function" id="fn-gridpositions"><dt><code><span class="name">gridPositions</span>(count, options) <span class="returns">→ array</span></code><a class="anchor" href="#fn-gridpositions">¶</a></dt><dd>[[x, y], ...] in a grid. Options: columns, x, y, gapX, gapY</dd></dl>
+<dl class="function" id="fn-circlepositions"><dt><code><span class="name">circlePositions</span>(count, cx, cy, radius) <span class="returns">→ array</span></code><a class="anchor" href="#fn-circlepositions">¶</a></dt><dd>Points on a circle</dd></dl>
+<dl class="function" id="fn-rowpositions"><dt><code><span class="name">rowPositions</span>(count, y, startX, gap) <span class="returns">→ array</span></code><a class="anchor" href="#fn-rowpositions">¶</a></dt><dd>Points in a row</dd></dl>
+<dl class="function" id="fn-arrangegrid"><dt><code><span class="name">arrangeGrid</span>(names, options) <span class="returns">→ number</span></code><a class="anchor" href="#fn-arrangegrid">¶</a></dt><dd>Move devices into a grid</dd></dl>
+<dl class="function" id="fn-arrangecircle"><dt><code><span class="name">arrangeCircle</span>(names, cx, cy, radius) <span class="returns">→ number</span></code><a class="anchor" href="#fn-arrangecircle">¶</a></dt><dd>Move devices onto a circle</dd></dl>
+<h2 id="addressing">Addressing<a class="anchor" href="#addressing">¶</a></h2>
+<dl class="function" id="fn-addresshosts"><dt><code><span class="name">addressHosts</span>(names, network, options) <span class="returns">→ object</span></code><a class="anchor" href="#fn-addresshosts">¶</a></dt><dd>Give hosts consecutive static addresses</dd></dl>
+<dl class="function" id="fn-plansubnets"><dt><code><span class="name">planSubnets</span>(base, { name: hosts }) <span class="returns">→ object</span></code><a class="anchor" href="#fn-plansubnets">¶</a></dt><dd>VLSM plan, largest subnet first</dd></dl>
+<dl class="function" id="fn-pointtopointlinks"><dt><code><span class="name">pointToPointLinks</span>(base, count) <span class="returns">→ object[]</span></code><a class="anchor" href="#fn-pointtopointlinks">¶</a></dt><dd>/30 networks with both host addresses</dd></dl>
+<p>addressHosts options: gateway (first host by default), dns, startAt (10), port.</p>
+<pre>var plan = planSubnets(&quot;172.16.0.0/22&quot;, { USERS: 300, VOICE: 100, SERVERS: 30, MGMT: 10 });
+showResult(plan);
+
+var wan = pointToPointLinks(&quot;10.255.255.0/24&quot;, 3);
+setInterfaceIp(&quot;R1&quot;, &quot;Serial0/1/0&quot;, wan[0].a, wan[0].mask);
+setInterfaceIp(&quot;R2&quot;, &quot;Serial0/1/0&quot;, wan[0].b, wan[0].mask);</pre>
+<p>Each plan entry has network, mask, gateway, firstHost, lastHost, broadcast and usable.</p>
+</main>
+</div>
+<footer>© PTForge contributors. Licensed under the MIT License. Cisco and Packet Tracer are trademarks of Cisco Systems, Inc.</footer>
+</body>
+</html>

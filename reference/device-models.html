@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1000">
+<title>Device models — PTForge documentation</title>
+<link rel="icon" href="../_static/logo.svg">
+<link rel="stylesheet" href="../_static/style.css">
+</head>
+<body>
+<div class="document">
+<nav class="sidebar">
+<a class="brand" href="../index.html"><img src="../_static/logo.svg" alt="PTForge logo"></a>
+<h1 class="project"><a href="../index.html">PTForge</a></h1>
+<p class="version">1.3.0</p>
+<h3>Quick search</h3>
+<form class="search" action="../search.html" method="get"><input type="text" name="q" aria-label="Search"><button type="submit">Go</button></form>
+<h3>Contents</h3>
+<div class="contents"><p class="caption">Start Here</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../index.html">Documentation Index</a></li></ul><p class="caption">User Guides</p><ul><li><a href="../guides/installation.html">Installation</a></li><li><a href="../guides/getting-started.html">Getting Started</a></li><li><a href="../guides/writing-scripts.html">Writing Scripts</a></li><li><a href="../guides/editor.html">Editor</a></li><li><a href="../guides/terminal.html">Terminal</a></li><li><a href="../guides/debugger.html">Debugger</a></li><li><a href="../guides/network-tools.html">Network Tools</a></li><li><a href="../guides/plugins.html">Plugins</a></li><li><a href="../guides/troubleshooting.html">Troubleshooting</a></li><li><a href="../guides/limitations.html">Limitations</a></li><li><a href="../guides/faq.html">Frequently Asked Questions</a></li></ul><p class="caption">Function Reference</p><ul><li><a href="../api/index.html">Index</a></li><li><a href="../api/devices.html">Devices</a></li><li><a href="../api/links.html">Links</a></li><li><a href="../api/hosts.html">End Devices</a></li><li><a href="../api/ios.html">Cisco IOS</a></li><li><a href="../api/switching.html">Switching</a></li><li><a href="../api/routing.html">Routing</a></li><li><a href="../api/security.html">Security</a></li><li><a href="../api/services.html">Server Services</a></li><li><a href="../api/wireless.html">Wireless</a></li><li><a href="../api/canvas.html">Canvas</a></li><li><a href="../api/topology.html">Topology</a></li><li><a href="../api/workspace.html">Workspace</a></li><li><a href="../api/inspect.html">Inspection</a></li><li><a href="../api/checks.html">Lab Check</a></li><li><a href="../api/audit.html">Audit</a></li><li><a href="../api/simulation.html">Simulation</a></li><li><a href="../api/snapshots.html">Snapshots</a></li><li><a href="../api/events.html">Events</a></li><li><a href="../api/plugins.html">Plugins</a></li><li><a href="../api/utilities.html">Utilities</a></li></ul><p class="caption">CCNA</p><ul><li><a href="../ccna/index.html">Topic Map</a></li><li><a href="../ccna/lab-checklist.html">Lab Checklist</a></li></ul><p class="caption">Recipes</p><ul><li><a href="../recipes/index.html">Index</a></li><li><a href="../recipes/campus-switching.html">Campus Switching</a></li><li><a href="../recipes/routing-labs.html">Routing Labs</a></li><li><a href="../recipes/edge-router.html">Edge Router</a></li><li><a href="../recipes/servers.html">Servers</a></li><li><a href="../recipes/documenting.html">Documenting a Topology</a></li></ul><p class="caption">Cheat Sheets</p><ul><li><a href="../cheatsheets/ios-to-ptforge.html">IOS Commands and PTForge Calls</a></li><li><a href="../cheatsheets/subnetting.html">Subnetting</a></li><li><a href="../cheatsheets/keyboard.html">Keyboard Shortcuts</a></li></ul><p class="caption">Reference Tables</p><ul><li><a href="device-models.html">Device Models</a></li><li><a href="device-types.html">Device Types</a></li><li><a href="modules.html">Modules</a></li><li><a href="link-types.html">Link Types</a></li><li><a href="port-names.html">Port Names</a></li></ul><p class="caption">Architecture</p><ul><li><a href="../architecture/overview.html">Overview</a></li><li><a href="../architecture/runtime.html">Runtime</a></li><li><a href="../architecture/testing.html">Testing</a></li></ul><p class="caption">Project Files</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../project/CHANGELOG.html">Changes</a></li><li><a href="../project/ROADMAP.html">Roadmap</a></li><li><a href="../project/CONTRIBUTING.html">Contributing</a></li><li><a href="../project/CODE_OF_CONDUCT.html">Code of Conduct</a></li><li><a href="../project/SECURITY.html">Security Policy</a></li><li><a href="../project/SUPPORT.html">Support</a></li><li><a href="../project/THIRD_PARTY_NOTICES.html">Third-Party Notices</a></li><li><a href="../project/LICENSE.html">License</a></li><li><a href="../project/CITATION.cff.html">Citation</a></li><li><a href="../project/examples/index.html">Examples</a></li><li><a href="../project/templates/index.html">Templates</a></li><li><a href="../project/plugins/index.html">Sample Plugins</a></li></ul><p class="caption">Translations</p><ul><li><a href="../index.html#translations">Translations</a></li></ul></div>
+<div class="localtoc"><p class="caption">This Page</p><ul><li class="l2"><a href="#router">router</a></li><li class="l2"><a href="#switch">switch</a></li><li class="l2"><a href="#cloud">cloud</a></li><li class="l2"><a href="#bridge">bridge</a></li><li class="l2"><a href="#hub">hub</a></li><li class="l2"><a href="#repeater">repeater</a></li><li class="l2"><a href="#coaxialsplitter">coaxialsplitter</a></li><li class="l2"><a href="#accesspoint">accesspoint</a></li><li class="l2"><a href="#server">server</a></li><li class="l2"><a href="#printer">printer</a></li><li class="l2"><a href="#wirelessrouter">wirelessrouter</a></li><li class="l2"><a href="#ipphone">ipphone</a></li><li class="l2"><a href="#dslmodem">dslmodem</a></li><li class="l2"><a href="#cablemodem">cablemodem</a></li><li class="l2"><a href="#multilayerswitch">multilayerswitch</a></li><li class="l2"><a href="#laptop">laptop</a></li><li class="l2"><a href="#tabletpc">tabletpc</a></li><li class="l2"><a href="#pda">pda</a></li><li class="l2"><a href="#wirelessenddevice">wirelessenddevice</a></li><li class="l2"><a href="#wiredenddevice">wiredenddevice</a></li><li class="l2"><a href="#homevoip">homevoip</a></li><li class="l2"><a href="#analogphone">analogphone</a></li><li class="l2"><a href="#asa">asa</a></li><li class="l2"><a href="#homegateway">homegateway</a></li><li class="l2"><a href="#wirelessrouternewgeneration">wirelessrouternewgeneration</a></li><li class="l2"><a href="#celltower">celltower</a></li><li class="l2"><a href="#centralofficeserver">centralofficeserver</a></li><li class="l2"><a href="#embeddedciscoaccesspoint">embeddedciscoaccesspoint</a></li><li class="l2"><a href="#sniffer">sniffer</a></li><li class="l2"><a href="#mcu">mcu</a></li><li class="l2"><a href="#sbc">sbc</a></li><li class="l2"><a href="#mcucomponent">mcucomponent</a></li><li class="l2"><a href="#embeddedserver">embeddedserver</a></li><li class="l2"><a href="#wlc">wlc</a></li><li class="l2"><a href="#lightweightaccesspoint">lightweightaccesspoint</a></li></ul></div><h3>This Page</h3>
+<ul class="plain"><li><a href="https://github.com/r4chan842/PTForge/blob/main/docs/reference/device-models">Show Source</a></li></ul>
+</nav>
+<main class="body">
+<div class="topbar"><select class="language" aria-label="Language" onchange="location.href=this.value"><option value="../introduction.html" selected>English</option><option value="../translations/fa.html">فارسی</option><option value="../translations/de.html">Deutsch</option><option value="../translations/es.html">Español</option><option value="../translations/fr.html">Français</option><option value="../translations/pt-BR.html">Português</option><option value="../translations/ru.html">Русский</option><option value="../translations/tr.html">Türkçe</option><option value="../translations/ar.html">العربية</option><option value="../translations/zh-CN.html">中文</option><option value="../translations/ja.html">日本語</option></select></div>
+<h1>Device models</h1>
+<p>Every model accepted by addDevice. Model names are case sensitive.</p>
+<h2 id="router">router<a class="anchor" href="#router">¶</a></h2>
+<ul><li>829</li><li>1841</li><li>1941</li><li>2811</li><li>2901</li><li>2911</li><li>2620XM</li><li>2621XM</li><li>819HG-4G-IOX</li><li>819HGW</li><li>CGR1240</li><li>ISR4321</li><li>ISR4331</li><li>Router-PT</li><li>Router-PT-Empty</li></ul>
+<h2 id="switch">switch<a class="anchor" href="#switch">¶</a></h2>
+<ul><li>2950-24</li><li>2950T-24</li><li>2960-24TT</li><li>Switch-PT</li><li>Switch-PT-Empty</li></ul>
+<h2 id="cloud">cloud<a class="anchor" href="#cloud">¶</a></h2>
+<ul><li>Cloud-PT</li><li>Cloud-PT-Empty</li></ul>
+<h2 id="bridge">bridge<a class="anchor" href="#bridge">¶</a></h2>
+<ul><li>Bridge-PT</li></ul>
+<h2 id="hub">hub<a class="anchor" href="#hub">¶</a></h2>
+<ul><li>Hub-PT</li></ul>
+<h2 id="repeater">repeater<a class="anchor" href="#repeater">¶</a></h2>
+<ul><li>Repeater-PT</li></ul>
+<h2 id="coaxialsplitter">coaxialsplitter<a class="anchor" href="#coaxialsplitter">¶</a></h2>
+<ul><li>CoAxialSplitter-PT</li></ul>
+<h2 id="accesspoint">accesspoint<a class="anchor" href="#accesspoint">¶</a></h2>
+<ul><li>AccessPoint-PT</li><li>AccessPoint-PT-A</li><li>AccessPoint-PT-AC</li><li>AccessPoint-PT-N</li></ul>
+<p>pc</p>
+<p>--</p>
+<ul><li>PC-PT</li></ul>
+<h2 id="server">server<a class="anchor" href="#server">¶</a></h2>
+<ul><li>Server-PT</li></ul>
+<h2 id="printer">printer<a class="anchor" href="#printer">¶</a></h2>
+<ul><li>Printer-PT</li></ul>
+<h2 id="wirelessrouter">wirelessrouter<a class="anchor" href="#wirelessrouter">¶</a></h2>
+<ul><li>Linksys-WRT300N</li></ul>
+<h2 id="ipphone">ipphone<a class="anchor" href="#ipphone">¶</a></h2>
+<ul><li>7960</li></ul>
+<h2 id="dslmodem">dslmodem<a class="anchor" href="#dslmodem">¶</a></h2>
+<ul><li>DSL-Modem-PT</li></ul>
+<h2 id="cablemodem">cablemodem<a class="anchor" href="#cablemodem">¶</a></h2>
+<ul><li>Cable-Modem-PT</li></ul>
+<h2 id="multilayerswitch">multilayerswitch<a class="anchor" href="#multilayerswitch">¶</a></h2>
+<ul><li>3560-24PS</li><li>3650-24PS</li><li>IE-2000</li></ul>
+<h2 id="laptop">laptop<a class="anchor" href="#laptop">¶</a></h2>
+<ul><li>Laptop-PT</li></ul>
+<h2 id="tabletpc">tabletpc<a class="anchor" href="#tabletpc">¶</a></h2>
+<ul><li>TabletPC-PT</li></ul>
+<h2 id="pda">pda<a class="anchor" href="#pda">¶</a></h2>
+<ul><li>SMARTPHONE-PT</li></ul>
+<h2 id="wirelessenddevice">wirelessenddevice<a class="anchor" href="#wirelessenddevice">¶</a></h2>
+<ul><li>WirelessEndDevice-PT</li></ul>
+<h2 id="wiredenddevice">wiredenddevice<a class="anchor" href="#wiredenddevice">¶</a></h2>
+<ul><li>WiredEndDevice-PT</li></ul>
+<p>tv</p>
+<p>--</p>
+<ul><li>TV-PT</li></ul>
+<h2 id="homevoip">homevoip<a class="anchor" href="#homevoip">¶</a></h2>
+<ul><li>Home-VoIP-PT</li></ul>
+<h2 id="analogphone">analogphone<a class="anchor" href="#analogphone">¶</a></h2>
+<ul><li>Analog-Phone-PT</li></ul>
+<h2 id="asa">asa<a class="anchor" href="#asa">¶</a></h2>
+<ul><li>5505</li><li>5506-X</li></ul>
+<h2 id="homegateway">homegateway<a class="anchor" href="#homegateway">¶</a></h2>
+<ul><li>DLC100</li></ul>
+<h2 id="wirelessrouternewgeneration">wirelessrouternewgeneration<a class="anchor" href="#wirelessrouternewgeneration">¶</a></h2>
+<ul><li>HomeRouter-PT-AC</li></ul>
+<h2 id="celltower">celltower<a class="anchor" href="#celltower">¶</a></h2>
+<ul><li>Cell-Tower</li></ul>
+<h2 id="centralofficeserver">centralofficeserver<a class="anchor" href="#centralofficeserver">¶</a></h2>
+<ul><li>Central-Office-Server</li></ul>
+<h2 id="embeddedciscoaccesspoint">embeddedciscoaccesspoint<a class="anchor" href="#embeddedciscoaccesspoint">¶</a></h2>
+<ul><li>802</li><li>803</li></ul>
+<h2 id="sniffer">sniffer<a class="anchor" href="#sniffer">¶</a></h2>
+<ul><li>Sniffer</li></ul>
+<h2 id="mcu">mcu<a class="anchor" href="#mcu">¶</a></h2>
+<ul><li>MCU-PT</li></ul>
+<h2 id="sbc">sbc<a class="anchor" href="#sbc">¶</a></h2>
+<ul><li>SBC-PT</li></ul>
+<h2 id="mcucomponent">mcucomponent<a class="anchor" href="#mcucomponent">¶</a></h2>
+<ul><li>Air Conditioner</li><li>Air Cooler</li><li>Alarm</li><li>Appliance</li><li>Atm Pressure Monitor</li><li>Battery</li><li>Beacon</li><li>Blower</li><li>Bluetooth Speaker</li><li>Carbon Dioxide Detector</li><li>Carbon Monoxide Detector</li><li>Fan</li><li>Ceiling Sprinkler</li><li>Dimmable LED</li><li>Door</li><li>Fire Monitor</li><li>Fire Sprinkler</li><li>Flex Sensor</li><li>Floor Sprinkler</li><li>Furnace</li><li>Garage Door</li><li>Generic Environment Sensor</li><li>Generic Sensor</li><li>Heating Element</li><li>Home Speaker</li><li>Humidifier</li><li>Humidity Monitor</li><li>Humidity Sensor</li><li>Humiture Monitor</li><li>Humiture Sensor</li><li>LCD</li><li>LED</li><li>Lawn Sprinkler</li><li>Light</li><li>Membrane Potentiometer</li><li>Metal Sensor</li><li>Motion Detector</li><li>Motion Sensor</li><li>Motor</li><li>Old Car</li><li>Photo Sensor</li><li>Piezo Speaker</li><li>Portable Music Player</li><li>Potentiometer</li><li>Power Meter</li><li>Push Button</li><li>Push Button Toggle Switch</li><li>RFID Card</li><li>RFID Reader</li><li>RGB LED</li><li>Rocker Switch</li><li>Servo</li><li>Signal Generator</li><li>Siren</li><li>Smart LED</li><li>Smoke Detector</li><li>Smoke Sensor</li><li>Solar Panel</li><li>Sound Frequency Detector</li><li>Sound Sensor</li><li>Speaker</li><li>Street Lamp</li><li>Temperature Monitor</li><li>Temperature Sensor</li><li>Thermostat</li><li>Thing</li><li>Toggle Push Button</li><li>Trip Sensor</li><li>Trip Wire</li><li>Water Detector</li><li>Water Drain</li><li>Water Level Monitor</li><li>Water Sensor</li><li>Webcam</li><li>Wind Detector</li><li>Wind Sensor</li><li>Wind Turbine</li><li>Window</li></ul>
+<h2 id="embeddedserver">embeddedserver<a class="anchor" href="#embeddedserver">¶</a></h2>
+<ul><li>Embedded-Server-PT</li></ul>
+<h2 id="wlc">wlc<a class="anchor" href="#wlc">¶</a></h2>
+<ul><li>WLC-2504</li><li>WLC-3504</li><li>WLC-PT</li></ul>
+<h2 id="lightweightaccesspoint">lightweightaccesspoint<a class="anchor" href="#lightweightaccesspoint">¶</a></h2>
+<ul><li>3702i</li><li>LAP-PT</li></ul>
+<p>45</p>
+<p>--</p>
+<ul><li>Power Distribution Device</li></ul>
+<p>46</p>
+<p>--</p>
+<ul><li>Copper Patch Panel</li><li>Fiber Patch Panel</li></ul>
+<p>47</p>
+<p>--</p>
+<ul><li>Copper Wall Mount</li><li>Fiber Wall Mount</li></ul>
+<p>48</p>
+<p>--</p>
+<ul><li>Meraki-MX65W</li></ul>
+<p>49</p>
+<p>--</p>
+<ul><li>Meraki-Server</li></ul>
+<p>50</p>
+<p>--</p>
+<ul><li>NetworkController</li></ul>
+</main>
+</div>
+<footer>© PTForge contributors. Licensed under the MIT License. Cisco and Packet Tracer are trademarks of Cisco Systems, Inc.</footer>
+</body>
+</html>

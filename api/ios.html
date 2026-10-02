@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1000">
+<title>Cisco IOS — PTForge documentation</title>
+<link rel="icon" href="../_static/logo.svg">
+<link rel="stylesheet" href="../_static/style.css">
+</head>
+<body>
+<div class="document">
+<nav class="sidebar">
+<a class="brand" href="../index.html"><img src="../_static/logo.svg" alt="PTForge logo"></a>
+<h1 class="project"><a href="../index.html">PTForge</a></h1>
+<p class="version">1.3.0</p>
+<h3>Quick search</h3>
+<form class="search" action="../search.html" method="get"><input type="text" name="q" aria-label="Search"><button type="submit">Go</button></form>
+<h3>Contents</h3>
+<div class="contents"><p class="caption">Start Here</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../index.html">Documentation Index</a></li></ul><p class="caption">User Guides</p><ul><li><a href="../guides/installation.html">Installation</a></li><li><a href="../guides/getting-started.html">Getting Started</a></li><li><a href="../guides/writing-scripts.html">Writing Scripts</a></li><li><a href="../guides/editor.html">Editor</a></li><li><a href="../guides/terminal.html">Terminal</a></li><li><a href="../guides/debugger.html">Debugger</a></li><li><a href="../guides/network-tools.html">Network Tools</a></li><li><a href="../guides/plugins.html">Plugins</a></li><li><a href="../guides/troubleshooting.html">Troubleshooting</a></li><li><a href="../guides/limitations.html">Limitations</a></li><li><a href="../guides/faq.html">Frequently Asked Questions</a></li></ul><p class="caption">Function Reference</p><ul><li><a href="index.html">Index</a></li><li><a href="devices.html">Devices</a></li><li><a href="links.html">Links</a></li><li><a href="hosts.html">End Devices</a></li><li><a href="ios.html">Cisco IOS</a></li><li><a href="switching.html">Switching</a></li><li><a href="routing.html">Routing</a></li><li><a href="security.html">Security</a></li><li><a href="services.html">Server Services</a></li><li><a href="wireless.html">Wireless</a></li><li><a href="canvas.html">Canvas</a></li><li><a href="topology.html">Topology</a></li><li><a href="workspace.html">Workspace</a></li><li><a href="inspect.html">Inspection</a></li><li><a href="checks.html">Lab Check</a></li><li><a href="audit.html">Audit</a></li><li><a href="simulation.html">Simulation</a></li><li><a href="snapshots.html">Snapshots</a></li><li><a href="events.html">Events</a></li><li><a href="plugins.html">Plugins</a></li><li><a href="utilities.html">Utilities</a></li></ul><p class="caption">CCNA</p><ul><li><a href="../ccna/index.html">Topic Map</a></li><li><a href="../ccna/lab-checklist.html">Lab Checklist</a></li></ul><p class="caption">Recipes</p><ul><li><a href="../recipes/index.html">Index</a></li><li><a href="../recipes/campus-switching.html">Campus Switching</a></li><li><a href="../recipes/routing-labs.html">Routing Labs</a></li><li><a href="../recipes/edge-router.html">Edge Router</a></li><li><a href="../recipes/servers.html">Servers</a></li><li><a href="../recipes/documenting.html">Documenting a Topology</a></li></ul><p class="caption">Cheat Sheets</p><ul><li><a href="../cheatsheets/ios-to-ptforge.html">IOS Commands and PTForge Calls</a></li><li><a href="../cheatsheets/subnetting.html">Subnetting</a></li><li><a href="../cheatsheets/keyboard.html">Keyboard Shortcuts</a></li></ul><p class="caption">Reference Tables</p><ul><li><a href="../reference/device-models.html">Device Models</a></li><li><a href="../reference/device-types.html">Device Types</a></li><li><a href="../reference/modules.html">Modules</a></li><li><a href="../reference/link-types.html">Link Types</a></li><li><a href="../reference/port-names.html">Port Names</a></li></ul><p class="caption">Architecture</p><ul><li><a href="../architecture/overview.html">Overview</a></li><li><a href="../architecture/runtime.html">Runtime</a></li><li><a href="../architecture/testing.html">Testing</a></li></ul><p class="caption">Project Files</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../project/CHANGELOG.html">Changes</a></li><li><a href="../project/ROADMAP.html">Roadmap</a></li><li><a href="../project/CONTRIBUTING.html">Contributing</a></li><li><a href="../project/CODE_OF_CONDUCT.html">Code of Conduct</a></li><li><a href="../project/SECURITY.html">Security Policy</a></li><li><a href="../project/SUPPORT.html">Support</a></li><li><a href="../project/THIRD_PARTY_NOTICES.html">Third-Party Notices</a></li><li><a href="../project/LICENSE.html">License</a></li><li><a href="../project/CITATION.cff.html">Citation</a></li><li><a href="../project/examples/index.html">Examples</a></li><li><a href="../project/templates/index.html">Templates</a></li><li><a href="../project/plugins/index.html">Sample Plugins</a></li></ul><p class="caption">Translations</p><ul><li><a href="../index.html#translations">Translations</a></li></ul></div>
+<div class="localtoc"><p class="caption">This Page</p><ul><li class="l2"><a href="#how-configuration-works">How configuration works</a></li><li class="l2"><a href="#core">Core</a></li><li class="l2"><a href="#batch-commands">Batch commands</a></li><li class="l2"><a href="#show-commands">Show commands</a></li><li class="l2"><a href="#device-basics">Device basics</a></li><li class="l2"><a href="#interfaces">Interfaces</a></li><li class="l2"><a href="#dhcp-on-ios">DHCP on IOS</a></li><li class="l2"><a href="#management">Management</a></li><li class="l2"><a href="#command-builders">Command builders</a></li></ul></div><h3>This Page</h3>
+<ul class="plain"><li><a href="https://github.com/r4chan842/PTForge/blob/main/docs/api/ios">Show Source</a></li></ul>
+</nav>
+<main class="body">
+<div class="topbar"><select class="language" aria-label="Language" onchange="location.href=this.value"><option value="../introduction.html" selected>English</option><option value="../translations/fa.html">فارسی</option><option value="../translations/de.html">Deutsch</option><option value="../translations/es.html">Español</option><option value="../translations/fr.html">Français</option><option value="../translations/pt-BR.html">Português</option><option value="../translations/ru.html">Русский</option><option value="../translations/tr.html">Türkçe</option><option value="../translations/ar.html">العربية</option><option value="../translations/zh-CN.html">中文</option><option value="../translations/ja.html">日本語</option></select></div>
+<h1>Cisco IOS</h1>
+<p>Everything that talks to the CLI of routers, switches and multilayer switches.</p>
+<h2 id="how-configuration-works">How configuration works<a class="anchor" href="#how-configuration-works">¶</a></h2>
+<p>Every configuration function ends up in configureIosDevice, which:</p>
+<ol><li>Skips the boot sequence</li><li>Moves the CLI to global configuration mode, even if the device has passwords</li><li>Sends each line and records the ones IOS rejects</li><li>Returns to privileged mode with end</li><li>Runs write memory unless save is false</li></ol>
+<p>It returns an array of rejected commands, [] when everything was accepted:</p>
+<pre>var failed = configureIosDevice(&quot;R1&quot;, &quot;router ospf 1\n network 10.0.0.0 0.255.255.255 area 0&quot;);
+if (failed.length) {
+    showResult(failed);
+}</pre>
+<p>applyConfig does the same thing but throws on the first problem, which stops the script with a clear message.</p>
+<h2 id="core">Core<a class="anchor" href="#core">¶</a></h2>
+<dl class="function" id="fn-configureiosdevice"><dt><code><span class="name">configureIosDevice</span>(name, commands, save) <span class="returns">→ object[]</span></code><a class="anchor" href="#fn-configureiosdevice">¶</a></dt><dd>Send a string with new lines or an array of lines</dd></dl>
+<dl class="function" id="fn-applyconfig"><dt><code><span class="name">applyConfig</span>(name, commands, save) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-applyconfig">¶</a></dt><dd>Same as above, throws when a line is rejected</dd></dl>
+<dl class="function" id="fn-applytodevices"><dt><code><span class="name">applyToDevices</span>(names, commands, save) <span class="returns">→ object</span></code><a class="anchor" href="#fn-applytodevices">¶</a></dt><dd>Send the same config to many devices, returns rejected lines per device</dd></dl>
+<dl class="function" id="fn-runcommand"><dt><code><span class="name">runCommand</span>(name, command, mode) <span class="returns">→ object</span></code><a class="anchor" href="#fn-runcommand">¶</a></dt><dd>One command in user, enable, global or current mode &quot;&quot;. Returns { status, output }</dd></dl>
+<dl class="function" id="fn-saveconfig"><dt><code><span class="name">saveConfig</span>(name) <span class="returns">→ bool</span></code><a class="anchor" href="#fn-saveconfig">¶</a></dt><dd>write memory</dd></dl>
+<dl class="function" id="fn-saveallconfigs"><dt><code><span class="name">saveAllConfigs</span>() <span class="returns">→ string[]</span></code><a class="anchor" href="#fn-saveallconfigs">¶</a></dt><dd>Save every router and switch</dd></dl>
+<dl class="function" id="fn-getprompt"><dt><code><span class="name">getPrompt</span>(name) <span class="returns">→ string</span></code><a class="anchor" href="#fn-getprompt">¶</a></dt><dd>Current CLI prompt</dd></dl>
+<dl class="function" id="fn-getclimode"><dt><code><span class="name">getCliMode</span>(name) <span class="returns">→ string</span></code><a class="anchor" href="#fn-getclimode">¶</a></dt><dd>Current CLI mode</dd></dl>
+<p>status is one of ok, ambiguous, invalid, incomplete, notImplemented.</p>
+<h2 id="batch-commands">Batch commands<a class="anchor" href="#batch-commands">¶</a></h2>
+<p>Run the same command on many devices at once and collect every answer. Handy for quick health checks across a whole lab.</p>
+<dl class="function" id="fn-runondevices"><dt><code><span class="name">runOnDevices</span>(names, command, mode) <span class="returns">→ object[]</span></code><a class="anchor" href="#fn-runondevices">¶</a></dt><dd>[{ device, status, output }] for every device, errors are reported per device instead of stopping</dd></dl>
+<dl class="function" id="fn-runonall"><dt><code><span class="name">runOnAll</span>(command, mode) <span class="returns">→ object[]</span></code><a class="anchor" href="#fn-runonall">¶</a></dt><dd>Same, for every router and switch in the topology</dd></dl>
+<dl class="function" id="fn-commandstoscript"><dt><code><span class="name">commandsToScript</span>(name) <span class="returns">→ string</span></code><a class="anchor" href="#fn-commandstoscript">¶</a></dt><dd>Turn the Packet Tracer command log into a configureIosDevice script. Show, ping, exit and similar commands are dropped. Leave out name for all devices. The script also opens in a new editor tab</dd></dl>
+<pre>runOnAll(&quot;show ip interface brief&quot;).forEach(function (r) {
+    log(r.device + &quot;\n&quot; + r.output);
+});
+
+setCommandLogging(true);
+commandsToScript(&quot;R1&quot;);</pre>
+<h2 id="show-commands">Show commands<a class="anchor" href="#show-commands">¶</a></h2>
+<dl class="function" id="fn-showcommand"><dt><code><span class="name">showCommand</span>(name, command) <span class="returns">→ string</span></code><a class="anchor" href="#fn-showcommand">¶</a></dt><dd>Run a show command, the show prefix is optional</dd></dl>
+<dl class="function" id="fn-getrunningconfig"><dt><code><span class="name">getRunningConfig</span>(name) <span class="returns">→ string</span></code><a class="anchor" href="#fn-getrunningconfig">¶</a></dt><dd>show running-config</dd></dl>
+<dl class="function" id="fn-getroutingtable"><dt><code><span class="name">getRoutingTable</span>(name) <span class="returns">→ string</span></code><a class="anchor" href="#fn-getroutingtable">¶</a></dt><dd>show ip route</dd></dl>
+<dl class="function" id="fn-getinterfacesbrief"><dt><code><span class="name">getInterfacesBrief</span>(name) <span class="returns">→ string</span></code><a class="anchor" href="#fn-getinterfacesbrief">¶</a></dt><dd>show ip interface brief</dd></dl>
+<dl class="function" id="fn-getvlanbrief"><dt><code><span class="name">getVlanBrief</span>(name) <span class="returns">→ string</span></code><a class="anchor" href="#fn-getvlanbrief">¶</a></dt><dd>show vlan brief</dd></dl>
+<dl class="function" id="fn-gethostname"><dt><code><span class="name">getHostname</span>(name) <span class="returns">→ string</span></code><a class="anchor" href="#fn-gethostname">¶</a></dt><dd>Configured hostname</dd></dl>
+<p>The text returned by show commands comes from the Packet Tracer API. Some Packet Tracer versions return an empty string. See <a href="../guides/limitations.html">Limitations and assumptions</a>.</p>
+<h2 id="device-basics">Device basics<a class="anchor" href="#device-basics">¶</a></h2>
+<dl class="function" id="fn-basicsetup"><dt><code><span class="name">basicSetup</span>(name, options)</code><a class="anchor" href="#fn-basicsetup">¶</a></dt><dd>Hostname, secret, passwords, banner and more in one call</dd></dl>
+<dl class="function" id="fn-sethostname"><dt><code><span class="name">setHostname</span>(name, hostname)</code><a class="anchor" href="#fn-sethostname">¶</a></dt><dd>hostname</dd></dl>
+<dl class="function" id="fn-setbanner"><dt><code><span class="name">setBanner</span>(name, text)</code><a class="anchor" href="#fn-setbanner">¶</a></dt><dd>banner motd</dd></dl>
+<dl class="function" id="fn-setenablesecret"><dt><code><span class="name">setEnableSecret</span>(name, secret)</code><a class="anchor" href="#fn-setenablesecret">¶</a></dt><dd>enable secret</dd></dl>
+<dl class="function" id="fn-setconsolepassword"><dt><code><span class="name">setConsolePassword</span>(name, password)</code><a class="anchor" href="#fn-setconsolepassword">¶</a></dt><dd>Console password with login</dd></dl>
+<dl class="function" id="fn-setvtypassword"><dt><code><span class="name">setVtyPassword</span>(name, password)</code><a class="anchor" href="#fn-setvtypassword">¶</a></dt><dd>VTY 0 15 password with login</dd></dl>
+<dl class="function" id="fn-addlocaluser"><dt><code><span class="name">addLocalUser</span>(name, username, password, privilege)</code><a class="anchor" href="#fn-addlocaluser">¶</a></dt><dd>username ... secret</dd></dl>
+<dl class="function" id="fn-enablepasswordencryption"><dt><code><span class="name">enablePasswordEncryption</span>(name)</code><a class="anchor" href="#fn-enablepasswordencryption">¶</a></dt><dd>service password-encryption</dd></dl>
+<dl class="function" id="fn-setdomainname"><dt><code><span class="name">setDomainName</span>(name, domain)</code><a class="anchor" href="#fn-setdomainname">¶</a></dt><dd>ip domain-name</dd></dl>
+<dl class="function" id="fn-setnameserver"><dt><code><span class="name">setNameServer</span>(name, servers)</code><a class="anchor" href="#fn-setnameserver">¶</a></dt><dd>ip name-server</dd></dl>
+<dl class="function" id="fn-addhostentry"><dt><code><span class="name">addHostEntry</span>(name, hostname, ip)</code><a class="anchor" href="#fn-addhostentry">¶</a></dt><dd>ip host</dd></dl>
+<p>basicSetup options:</p>
+<pre>Option            Default      Result
+----------------  -----------  --------------------------------------------------
+hostname          device name  hostname
+secret                         enable secret
+consolePassword                console password, login, logging synchronous
+vtyPassword                    VTY password and login
+banner                         banner motd
+domain                         ip domain-name
+noDomainLookup    true         no ip domain-lookup
+encryptPasswords  true         service password-encryption when a password is set</pre>
+<h2 id="interfaces">Interfaces<a class="anchor" href="#interfaces">¶</a></h2>
+<dl class="function" id="fn-setinterfaceip"><dt><code><span class="name">setInterfaceIp</span>(name, interface, address, mask, description)</code><a class="anchor" href="#fn-setinterfaceip">¶</a></dt><dd>IPv4 address and no shutdown</dd></dl>
+<dl class="function" id="fn-setinterfacedhcp"><dt><code><span class="name">setInterfaceDhcp</span>(name, interface)</code><a class="anchor" href="#fn-setinterfacedhcp">¶</a></dt><dd>ip address dhcp</dd></dl>
+<dl class="function" id="fn-setinterfaceipv6"><dt><code><span class="name">setInterfaceIpv6</span>(name, interface, address, options)</code><a class="anchor" href="#fn-setinterfaceipv6">¶</a></dt><dd>IPv6 address. Options: eui64, linkLocal, enable</dd></dl>
+<dl class="function" id="fn-shutdowninterface"><dt><code><span class="name">shutdownInterface</span>(name, interfaces)</code><a class="anchor" href="#fn-shutdowninterface">¶</a></dt><dd>shutdown on one or many interfaces</dd></dl>
+<dl class="function" id="fn-enableinterface"><dt><code><span class="name">enableInterface</span>(name, interfaces)</code><a class="anchor" href="#fn-enableinterface">¶</a></dt><dd>no shutdown on one or many interfaces</dd></dl>
+<dl class="function" id="fn-setinterfacedescription"><dt><code><span class="name">setInterfaceDescription</span>(name, interface, text)</code><a class="anchor" href="#fn-setinterfacedescription">¶</a></dt><dd>description</dd></dl>
+<dl class="function" id="fn-setclockrate"><dt><code><span class="name">setClockRate</span>(name, interface, rate)</code><a class="anchor" href="#fn-setclockrate">¶</a></dt><dd>clock rate, default 64000</dd></dl>
+<dl class="function" id="fn-setbandwidth"><dt><code><span class="name">setBandwidth</span>(name, interface, kbps)</code><a class="anchor" href="#fn-setbandwidth">¶</a></dt><dd>bandwidth</dd></dl>
+<dl class="function" id="fn-setspeedduplex"><dt><code><span class="name">setSpeedDuplex</span>(name, interface, speed, duplex)</code><a class="anchor" href="#fn-setspeedduplex">¶</a></dt><dd>speed and duplex</dd></dl>
+<dl class="function" id="fn-addloopback"><dt><code><span class="name">addLoopback</span>(name, number, address, mask)</code><a class="anchor" href="#fn-addloopback">¶</a></dt><dd>Loopback interface, default mask /32</dd></dl>
+<dl class="function" id="fn-addsubinterface"><dt><code><span class="name">addSubinterface</span>(name, parent, vlan, address, mask, native)</code><a class="anchor" href="#fn-addsubinterface">¶</a></dt><dd>802.1Q subinterface</dd></dl>
+<dl class="function" id="fn-routeronastick"><dt><code><span class="name">routerOnAStick</span>(name, parent, { vlan: address })</code><a class="anchor" href="#fn-routeronastick">¶</a></dt><dd>Every subinterface at once</dd></dl>
+<pre>setInterfaceIp(&quot;R1&quot;, &quot;GigabitEthernet0/0&quot;, &quot;192.168.1.1/24&quot;);
+setInterfaceIp(&quot;R1&quot;, &quot;Serial0/1/0&quot;, &quot;10.0.0.1&quot;, &quot;255.255.255.252&quot;, &quot;Link to R2&quot;);
+addLoopback(&quot;R1&quot;, 0, &quot;1.1.1.1&quot;);
+
+routerOnAStick(&quot;R1&quot;, &quot;GigabitEthernet0/1&quot;, {
+    10: &quot;192.168.10.1/24&quot;,
+    20: &quot;192.168.20.1/24&quot;,
+    99: &quot;192.168.99.1/24&quot;
+});</pre>
+<h2 id="dhcp-on-ios">DHCP on IOS<a class="anchor" href="#dhcp-on-ios">¶</a></h2>
+<dl class="function" id="fn-addrouterdhcppool"><dt><code><span class="name">addRouterDhcpPool</span>(name, pool)</code><a class="anchor" href="#fn-addrouterdhcppool">¶</a></dt><dd>DHCP pool on the router itself</dd></dl>
+<dl class="function" id="fn-excluderouterdhcp"><dt><code><span class="name">excludeRouterDhcp</span>(name, start, end)</code><a class="anchor" href="#fn-excluderouterdhcp">¶</a></dt><dd>ip dhcp excluded-address</dd></dl>
+<dl class="function" id="fn-removerouterdhcppool"><dt><code><span class="name">removeRouterDhcpPool</span>(name, pool)</code><a class="anchor" href="#fn-removerouterdhcppool">¶</a></dt><dd>no ip dhcp pool</dd></dl>
+<dl class="function" id="fn-setdhcprelay"><dt><code><span class="name">setDhcpRelay</span>(name, interface, servers)</code><a class="anchor" href="#fn-setdhcprelay">¶</a></dt><dd>ip helper-address</dd></dl>
+<p>Pool fields: name, network, mask, gateway, dns (string or array), domain, tftp, excluded (array of [start, end]).</p>
+<pre>addRouterDhcpPool(&quot;R1&quot;, {
+    name: &quot;LAN&quot;,
+    network: &quot;192.168.1.0/24&quot;,
+    gateway: &quot;192.168.1.1&quot;,
+    dns: &quot;8.8.8.8&quot;,
+    excluded: [[&quot;192.168.1.1&quot;, &quot;192.168.1.20&quot;]]
+});</pre>
+<h2 id="management">Management<a class="anchor" href="#management">¶</a></h2>
+<dl class="function" id="fn-setntpserver"><dt><code><span class="name">setNtpServer</span>(name, servers)</code><a class="anchor" href="#fn-setntpserver">¶</a></dt><dd>ntp server</dd></dl>
+<dl class="function" id="fn-setsyslogserver"><dt><code><span class="name">setSyslogServer</span>(name, servers, trapLevel)</code><a class="anchor" href="#fn-setsyslogserver">¶</a></dt><dd>logging host, trap level and timestamps</dd></dl>
+<dl class="function" id="fn-setsnmpcommunity"><dt><code><span class="name">setSnmpCommunity</span>(name, community, access)</code><a class="anchor" href="#fn-setsnmpcommunity">¶</a></dt><dd>snmp-server community, access ro or rw</dd></dl>
+<dl class="function" id="fn-setcdp"><dt><code><span class="name">setCdp</span>(name, enabled)</code><a class="anchor" href="#fn-setcdp">¶</a></dt><dd>cdp run</dd></dl>
+<dl class="function" id="fn-setlldp"><dt><code><span class="name">setLldp</span>(name, enabled)</code><a class="anchor" href="#fn-setlldp">¶</a></dt><dd>lldp run</dd></dl>
+<dl class="function" id="fn-setdefaultgateway"><dt><code><span class="name">setDefaultGateway</span>(name, gateway)</code><a class="anchor" href="#fn-setdefaultgateway">¶</a></dt><dd>ip default-gateway for layer 2 switches</dd></dl>
+<dl class="function" id="fn-enableiprouting"><dt><code><span class="name">enableIpRouting</span>(name)</code><a class="anchor" href="#fn-enableiprouting">¶</a></dt><dd>ip routing for multilayer switches</dd></dl>
+<dl class="function" id="fn-enableipv6routing"><dt><code><span class="name">enableIpv6Routing</span>(name)</code><a class="anchor" href="#fn-enableipv6routing">¶</a></dt><dd>ipv6 unicast-routing</dd></dl>
+<h2 id="command-builders">Command builders<a class="anchor" href="#command-builders">¶</a></h2>
+<p>Builders return the command lines without sending them. Use them to preview or combine configuration.</p>
+<dl class="function" id="fn-buildbasicsetup"><dt><code><span class="name">buildBasicSetup</span>(options) <span class="returns">→ lines for basicSetup</span></code><a class="anchor" href="#fn-buildbasicsetup">¶</a></dt></dl>
+<dl class="function" id="fn-buildinterfaceip"><dt><code><span class="name">buildInterfaceIp</span>(interface, address, mask, description) <span class="returns">→ interface block</span></code><a class="anchor" href="#fn-buildinterfaceip">¶</a></dt></dl>
+<dl class="function" id="fn-buildsubinterface"><dt><code><span class="name">buildSubinterface</span>(parent, vlan, address, mask, native) <span class="returns">→ subinterface block</span></code><a class="anchor" href="#fn-buildsubinterface">¶</a></dt></dl>
+<dl class="function" id="fn-buildrouterdhcppool"><dt><code><span class="name">buildRouterDhcpPool</span>(pool) <span class="returns">→ DHCP pool block</span></code><a class="anchor" href="#fn-buildrouterdhcppool">¶</a></dt></dl>
+<pre>var lines = buildBasicSetup({ hostname: &quot;R9&quot;, secret: &quot;class&quot; })
+    .concat(buildInterfaceIp(&quot;GigabitEthernet0/0&quot;, &quot;10.0.0.1/24&quot;));
+showResult(lines);
+applyConfig(&quot;R1&quot;, lines);</pre>
+</main>
+</div>
+<footer>© PTForge contributors. Licensed under the MIT License. Cisco and Packet Tracer are trademarks of Cisco Systems, Inc.</footer>
+</body>
+</html>

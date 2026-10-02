@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1000">
+<title>Writing scripts — PTForge documentation</title>
+<link rel="icon" href="../_static/logo.svg">
+<link rel="stylesheet" href="../_static/style.css">
+</head>
+<body>
+<div class="document">
+<nav class="sidebar">
+<a class="brand" href="../index.html"><img src="../_static/logo.svg" alt="PTForge logo"></a>
+<h1 class="project"><a href="../index.html">PTForge</a></h1>
+<p class="version">1.3.0</p>
+<h3>Quick search</h3>
+<form class="search" action="../search.html" method="get"><input type="text" name="q" aria-label="Search"><button type="submit">Go</button></form>
+<h3>Contents</h3>
+<div class="contents"><p class="caption">Start Here</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../index.html">Documentation Index</a></li></ul><p class="caption">User Guides</p><ul><li><a href="installation.html">Installation</a></li><li><a href="getting-started.html">Getting Started</a></li><li><a href="writing-scripts.html">Writing Scripts</a></li><li><a href="editor.html">Editor</a></li><li><a href="terminal.html">Terminal</a></li><li><a href="debugger.html">Debugger</a></li><li><a href="network-tools.html">Network Tools</a></li><li><a href="plugins.html">Plugins</a></li><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="limitations.html">Limitations</a></li><li><a href="faq.html">Frequently Asked Questions</a></li></ul><p class="caption">Function Reference</p><ul><li><a href="../api/index.html">Index</a></li><li><a href="../api/devices.html">Devices</a></li><li><a href="../api/links.html">Links</a></li><li><a href="../api/hosts.html">End Devices</a></li><li><a href="../api/ios.html">Cisco IOS</a></li><li><a href="../api/switching.html">Switching</a></li><li><a href="../api/routing.html">Routing</a></li><li><a href="../api/security.html">Security</a></li><li><a href="../api/services.html">Server Services</a></li><li><a href="../api/wireless.html">Wireless</a></li><li><a href="../api/canvas.html">Canvas</a></li><li><a href="../api/topology.html">Topology</a></li><li><a href="../api/workspace.html">Workspace</a></li><li><a href="../api/inspect.html">Inspection</a></li><li><a href="../api/checks.html">Lab Check</a></li><li><a href="../api/audit.html">Audit</a></li><li><a href="../api/simulation.html">Simulation</a></li><li><a href="../api/snapshots.html">Snapshots</a></li><li><a href="../api/events.html">Events</a></li><li><a href="../api/plugins.html">Plugins</a></li><li><a href="../api/utilities.html">Utilities</a></li></ul><p class="caption">CCNA</p><ul><li><a href="../ccna/index.html">Topic Map</a></li><li><a href="../ccna/lab-checklist.html">Lab Checklist</a></li></ul><p class="caption">Recipes</p><ul><li><a href="../recipes/index.html">Index</a></li><li><a href="../recipes/campus-switching.html">Campus Switching</a></li><li><a href="../recipes/routing-labs.html">Routing Labs</a></li><li><a href="../recipes/edge-router.html">Edge Router</a></li><li><a href="../recipes/servers.html">Servers</a></li><li><a href="../recipes/documenting.html">Documenting a Topology</a></li></ul><p class="caption">Cheat Sheets</p><ul><li><a href="../cheatsheets/ios-to-ptforge.html">IOS Commands and PTForge Calls</a></li><li><a href="../cheatsheets/subnetting.html">Subnetting</a></li><li><a href="../cheatsheets/keyboard.html">Keyboard Shortcuts</a></li></ul><p class="caption">Reference Tables</p><ul><li><a href="../reference/device-models.html">Device Models</a></li><li><a href="../reference/device-types.html">Device Types</a></li><li><a href="../reference/modules.html">Modules</a></li><li><a href="../reference/link-types.html">Link Types</a></li><li><a href="../reference/port-names.html">Port Names</a></li></ul><p class="caption">Architecture</p><ul><li><a href="../architecture/overview.html">Overview</a></li><li><a href="../architecture/runtime.html">Runtime</a></li><li><a href="../architecture/testing.html">Testing</a></li></ul><p class="caption">Project Files</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../project/CHANGELOG.html">Changes</a></li><li><a href="../project/ROADMAP.html">Roadmap</a></li><li><a href="../project/CONTRIBUTING.html">Contributing</a></li><li><a href="../project/CODE_OF_CONDUCT.html">Code of Conduct</a></li><li><a href="../project/SECURITY.html">Security Policy</a></li><li><a href="../project/SUPPORT.html">Support</a></li><li><a href="../project/THIRD_PARTY_NOTICES.html">Third-Party Notices</a></li><li><a href="../project/LICENSE.html">License</a></li><li><a href="../project/CITATION.cff.html">Citation</a></li><li><a href="../project/examples/index.html">Examples</a></li><li><a href="../project/templates/index.html">Templates</a></li><li><a href="../project/plugins/index.html">Sample Plugins</a></li></ul><p class="caption">Translations</p><ul><li><a href="../index.html#translations">Translations</a></li></ul></div>
+<div class="localtoc"><p class="caption">This Page</p><ul><li class="l2"><a href="#language">Language</a></li><li class="l2"><a href="#structure-that-scales">Structure that scales</a></li><li class="l2"><a href="#order-of-operations">Order of operations</a></li><li class="l2"><a href="#checking-results">Checking results</a></li><li class="l2"><a href="#preview-with-builders">Preview with builders</a></li><li class="l2"><a href="#speed">Speed</a></li><li class="l2"><a href="#reusing-scripts">Reusing scripts</a></li></ul></div><h3>This Page</h3>
+<ul class="plain"><li><a href="https://github.com/r4chan842/PTForge/blob/main/docs/guides/writing-scripts">Show Source</a></li></ul>
+</nav>
+<main class="body">
+<div class="topbar"><select class="language" aria-label="Language" onchange="location.href=this.value"><option value="../introduction.html" selected>English</option><option value="../translations/fa.html">فارسی</option><option value="../translations/de.html">Deutsch</option><option value="../translations/es.html">Español</option><option value="../translations/fr.html">Français</option><option value="../translations/pt-BR.html">Português</option><option value="../translations/ru.html">Русский</option><option value="../translations/tr.html">Türkçe</option><option value="../translations/ar.html">العربية</option><option value="../translations/zh-CN.html">中文</option><option value="../translations/ja.html">日本語</option></select></div>
+<h1>Writing scripts</h1>
+<h2 id="language">Language<a class="anchor" href="#language">¶</a></h2>
+<p>Packet Tracer runs scripts with the Qt JavaScript engine, which supports ES5. Use var, function and forEach. Arrow functions, let, const, template strings and classes may fail depending on the Packet Tracer version.</p>
+<h2 id="structure-that-scales">Structure that scales<a class="anchor" href="#structure-that-scales">¶</a></h2>
+<p>Keep data at the top and logic below. Changing a lab then only means changing the data.</p>
+<pre>var sites = [
+    { name: &quot;HQ&quot;, lan: &quot;10.1.0.0/24&quot;, x: 150 },
+    { name: &quot;BR1&quot;, lan: &quot;10.2.0.0/24&quot;, x: 450 },
+    { name: &quot;BR2&quot;, lan: &quot;10.3.0.0/24&quot;, x: 750 }
+];
+var wan = pointToPointLinks(&quot;172.16.0.0/24&quot;, sites.length - 1);
+
+sites.forEach(function (site, i) {
+    addDevice(site.name, &quot;2911&quot;, site.x, 100);
+    addModule(site.name, &quot;0/0&quot;, &quot;HWIC-2T&quot;);
+    setInterfaceIp(site.name, &quot;GigabitEthernet0/0&quot;, nthHost(site.lan, 1), 24);
+});</pre>
+<h2 id="order-of-operations">Order of operations<a class="anchor" href="#order-of-operations">¶</a></h2>
+<ol><li>Create devices</li><li>Install modules (devices power cycle, so do this before configuration)</li><li>Create links</li><li>Configure IOS</li><li>Configure hosts and servers</li><li>Draw labels and zones last, when positions are final</li></ol>
+<h2 id="checking-results">Checking results<a class="anchor" href="#checking-results">¶</a></h2>
+<ul><li>Fail fast: applyConfig throws on the first rejected line</li><li>Collect problems: configureIosDevice returns them</li><li>Many devices: applyToDevices returns { device: [rejected] }</li><li>See a value: showResult(value)</li></ul>
+<pre>var problems = applyToDevices([&quot;S1&quot;, &quot;S2&quot;], buildVlans({ 10: &quot;A&quot;, 20: &quot;B&quot; }));
+showResult(problems);</pre>
+<h2 id="preview-with-builders">Preview with builders<a class="anchor" href="#preview-with-builders">¶</a></h2>
+<p>Every IOS helper has a build... function that returns the lines instead of sending them. Use it to review a config, or to combine several helpers into one push:</p>
+<pre>var config = []
+    .concat(buildOspf({ routerId: &quot;1.1.1.1&quot;, networks: [&quot;10.0.0.0/8&quot;] }))
+    .concat(buildSsh({ domain: &quot;lab.local&quot;, username: &quot;admin&quot;, password: &quot;Adm1n!&quot; }));
+showResult(config.join(&quot;\n&quot;));</pre>
+<h2 id="speed">Speed<a class="anchor" href="#speed">¶</a></h2>
+<ul><li>save is true by default and runs write memory after every call. Pass false while building and call saveAllConfigs() once at the end</li><li>Build one array of lines per device and push once instead of calling many small helpers</li></ul>
+<h2 id="reusing-scripts">Reusing scripts<a class="anchor" href="#reusing-scripts">¶</a></h2>
+<p>Scripts are plain text. Keep your lab scripts in a folder, copy one, and use the Paste button in the editor.</p>
+</main>
+</div>
+<footer>© PTForge contributors. Licensed under the MIT License. Cisco and Packet Tracer are trademarks of Cisco Systems, Inc.</footer>
+</body>
+</html>

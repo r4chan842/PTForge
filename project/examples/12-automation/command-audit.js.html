@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1000">
+<title>command-audit.js — PTForge documentation</title>
+<link rel="icon" href="../../../_static/logo.svg">
+<link rel="stylesheet" href="../../../_static/style.css">
+</head>
+<body>
+<div class="document">
+<nav class="sidebar">
+<a class="brand" href="../../../index.html"><img src="../../../_static/logo.svg" alt="PTForge logo"></a>
+<h1 class="project"><a href="../../../index.html">PTForge</a></h1>
+<p class="version">1.3.0</p>
+<h3>Quick search</h3>
+<form class="search" action="../../../search.html" method="get"><input type="text" name="q" aria-label="Search"><button type="submit">Go</button></form>
+<h3>Contents</h3>
+<div class="contents"><p class="caption">Start Here</p><ul><li><a href="../../../introduction.html">Introduction</a></li><li><a href="../../../index.html">Documentation Index</a></li></ul><p class="caption">User Guides</p><ul><li><a href="../../../guides/installation.html">Installation</a></li><li><a href="../../../guides/getting-started.html">Getting Started</a></li><li><a href="../../../guides/writing-scripts.html">Writing Scripts</a></li><li><a href="../../../guides/editor.html">Editor</a></li><li><a href="../../../guides/terminal.html">Terminal</a></li><li><a href="../../../guides/debugger.html">Debugger</a></li><li><a href="../../../guides/network-tools.html">Network Tools</a></li><li><a href="../../../guides/plugins.html">Plugins</a></li><li><a href="../../../guides/troubleshooting.html">Troubleshooting</a></li><li><a href="../../../guides/limitations.html">Limitations</a></li><li><a href="../../../guides/faq.html">Frequently Asked Questions</a></li></ul><p class="caption">Function Reference</p><ul><li><a href="../../../api/index.html">Index</a></li><li><a href="../../../api/devices.html">Devices</a></li><li><a href="../../../api/links.html">Links</a></li><li><a href="../../../api/hosts.html">End Devices</a></li><li><a href="../../../api/ios.html">Cisco IOS</a></li><li><a href="../../../api/switching.html">Switching</a></li><li><a href="../../../api/routing.html">Routing</a></li><li><a href="../../../api/security.html">Security</a></li><li><a href="../../../api/services.html">Server Services</a></li><li><a href="../../../api/wireless.html">Wireless</a></li><li><a href="../../../api/canvas.html">Canvas</a></li><li><a href="../../../api/topology.html">Topology</a></li><li><a href="../../../api/workspace.html">Workspace</a></li><li><a href="../../../api/inspect.html">Inspection</a></li><li><a href="../../../api/checks.html">Lab Check</a></li><li><a href="../../../api/audit.html">Audit</a></li><li><a href="../../../api/simulation.html">Simulation</a></li><li><a href="../../../api/snapshots.html">Snapshots</a></li><li><a href="../../../api/events.html">Events</a></li><li><a href="../../../api/plugins.html">Plugins</a></li><li><a href="../../../api/utilities.html">Utilities</a></li></ul><p class="caption">CCNA</p><ul><li><a href="../../../ccna/index.html">Topic Map</a></li><li><a href="../../../ccna/lab-checklist.html">Lab Checklist</a></li></ul><p class="caption">Recipes</p><ul><li><a href="../../../recipes/index.html">Index</a></li><li><a href="../../../recipes/campus-switching.html">Campus Switching</a></li><li><a href="../../../recipes/routing-labs.html">Routing Labs</a></li><li><a href="../../../recipes/edge-router.html">Edge Router</a></li><li><a href="../../../recipes/servers.html">Servers</a></li><li><a href="../../../recipes/documenting.html">Documenting a Topology</a></li></ul><p class="caption">Cheat Sheets</p><ul><li><a href="../../../cheatsheets/ios-to-ptforge.html">IOS Commands and PTForge Calls</a></li><li><a href="../../../cheatsheets/subnetting.html">Subnetting</a></li><li><a href="../../../cheatsheets/keyboard.html">Keyboard Shortcuts</a></li></ul><p class="caption">Reference Tables</p><ul><li><a href="../../../reference/device-models.html">Device Models</a></li><li><a href="../../../reference/device-types.html">Device Types</a></li><li><a href="../../../reference/modules.html">Modules</a></li><li><a href="../../../reference/link-types.html">Link Types</a></li><li><a href="../../../reference/port-names.html">Port Names</a></li></ul><p class="caption">Architecture</p><ul><li><a href="../../../architecture/overview.html">Overview</a></li><li><a href="../../../architecture/runtime.html">Runtime</a></li><li><a href="../../../architecture/testing.html">Testing</a></li></ul><p class="caption">Project Files</p><ul><li><a href="../../../introduction.html">Introduction</a></li><li><a href="../../CHANGELOG.html">Changes</a></li><li><a href="../../ROADMAP.html">Roadmap</a></li><li><a href="../../CONTRIBUTING.html">Contributing</a></li><li><a href="../../CODE_OF_CONDUCT.html">Code of Conduct</a></li><li><a href="../../SECURITY.html">Security Policy</a></li><li><a href="../../SUPPORT.html">Support</a></li><li><a href="../../THIRD_PARTY_NOTICES.html">Third-Party Notices</a></li><li><a href="../../LICENSE.html">License</a></li><li><a href="../../CITATION.cff.html">Citation</a></li><li><a href="../index.html">Examples</a></li><li><a href="../../templates/index.html">Templates</a></li><li><a href="../../plugins/index.html">Sample Plugins</a></li></ul><p class="caption">Translations</p><ul><li><a href="../../../index.html#translations">Translations</a></li></ul></div>
+<h3>This Page</h3>
+<ul class="plain"><li><a href="https://github.com/r4chan842/PTForge/blob/main/examples/12-automation/command-audit.js">Show Source</a></li></ul>
+</nav>
+<main class="body">
+<div class="topbar"><select class="language" aria-label="Language" onchange="location.href=this.value"><option value="../../../introduction.html" selected>English</option><option value="../../../translations/fa.html">فارسی</option><option value="../../../translations/de.html">Deutsch</option><option value="../../../translations/es.html">Español</option><option value="../../../translations/fr.html">Français</option><option value="../../../translations/pt-BR.html">Português</option><option value="../../../translations/ru.html">Русский</option><option value="../../../translations/tr.html">Türkçe</option><option value="../../../translations/ar.html">العربية</option><option value="../../../translations/zh-CN.html">中文</option><option value="../../../translations/ja.html">日本語</option></select></div>
+<h1>command-audit.js</h1>
+<pre>clearCommandLog();
+setCommandLogging(true);
+
+addDevice(&quot;R1&quot;, &quot;2911&quot;, 300, 150);
+setInterfaceIp(&quot;R1&quot;, &quot;GigabitEthernet0/0&quot;, &quot;10.0.0.1/24&quot;);
+
+var entries = getCommandLog(&quot;R1&quot;);
+log(entries.length + &quot; commands recorded on R1&quot;);
+entries.forEach(function (e) {
+    log(e.time + &quot;  &quot; + e.prompt + &quot; &quot; + e.command);
+});
+</pre>
+</main>
+</div>
+<footer>© PTForge contributors. Licensed under the MIT License. Cisco and Packet Tracer are trademarks of Cisco Systems, Inc.</footer>
+</body>
+</html>

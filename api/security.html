@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1000">
+<title>Security and redundancy — PTForge documentation</title>
+<link rel="icon" href="../_static/logo.svg">
+<link rel="stylesheet" href="../_static/style.css">
+</head>
+<body>
+<div class="document">
+<nav class="sidebar">
+<a class="brand" href="../index.html"><img src="../_static/logo.svg" alt="PTForge logo"></a>
+<h1 class="project"><a href="../index.html">PTForge</a></h1>
+<p class="version">1.3.0</p>
+<h3>Quick search</h3>
+<form class="search" action="../search.html" method="get"><input type="text" name="q" aria-label="Search"><button type="submit">Go</button></form>
+<h3>Contents</h3>
+<div class="contents"><p class="caption">Start Here</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../index.html">Documentation Index</a></li></ul><p class="caption">User Guides</p><ul><li><a href="../guides/installation.html">Installation</a></li><li><a href="../guides/getting-started.html">Getting Started</a></li><li><a href="../guides/writing-scripts.html">Writing Scripts</a></li><li><a href="../guides/editor.html">Editor</a></li><li><a href="../guides/terminal.html">Terminal</a></li><li><a href="../guides/debugger.html">Debugger</a></li><li><a href="../guides/network-tools.html">Network Tools</a></li><li><a href="../guides/plugins.html">Plugins</a></li><li><a href="../guides/troubleshooting.html">Troubleshooting</a></li><li><a href="../guides/limitations.html">Limitations</a></li><li><a href="../guides/faq.html">Frequently Asked Questions</a></li></ul><p class="caption">Function Reference</p><ul><li><a href="index.html">Index</a></li><li><a href="devices.html">Devices</a></li><li><a href="links.html">Links</a></li><li><a href="hosts.html">End Devices</a></li><li><a href="ios.html">Cisco IOS</a></li><li><a href="switching.html">Switching</a></li><li><a href="routing.html">Routing</a></li><li><a href="security.html">Security</a></li><li><a href="services.html">Server Services</a></li><li><a href="wireless.html">Wireless</a></li><li><a href="canvas.html">Canvas</a></li><li><a href="topology.html">Topology</a></li><li><a href="workspace.html">Workspace</a></li><li><a href="inspect.html">Inspection</a></li><li><a href="checks.html">Lab Check</a></li><li><a href="audit.html">Audit</a></li><li><a href="simulation.html">Simulation</a></li><li><a href="snapshots.html">Snapshots</a></li><li><a href="events.html">Events</a></li><li><a href="plugins.html">Plugins</a></li><li><a href="utilities.html">Utilities</a></li></ul><p class="caption">CCNA</p><ul><li><a href="../ccna/index.html">Topic Map</a></li><li><a href="../ccna/lab-checklist.html">Lab Checklist</a></li></ul><p class="caption">Recipes</p><ul><li><a href="../recipes/index.html">Index</a></li><li><a href="../recipes/campus-switching.html">Campus Switching</a></li><li><a href="../recipes/routing-labs.html">Routing Labs</a></li><li><a href="../recipes/edge-router.html">Edge Router</a></li><li><a href="../recipes/servers.html">Servers</a></li><li><a href="../recipes/documenting.html">Documenting a Topology</a></li></ul><p class="caption">Cheat Sheets</p><ul><li><a href="../cheatsheets/ios-to-ptforge.html">IOS Commands and PTForge Calls</a></li><li><a href="../cheatsheets/subnetting.html">Subnetting</a></li><li><a href="../cheatsheets/keyboard.html">Keyboard Shortcuts</a></li></ul><p class="caption">Reference Tables</p><ul><li><a href="../reference/device-models.html">Device Models</a></li><li><a href="../reference/device-types.html">Device Types</a></li><li><a href="../reference/modules.html">Modules</a></li><li><a href="../reference/link-types.html">Link Types</a></li><li><a href="../reference/port-names.html">Port Names</a></li></ul><p class="caption">Architecture</p><ul><li><a href="../architecture/overview.html">Overview</a></li><li><a href="../architecture/runtime.html">Runtime</a></li><li><a href="../architecture/testing.html">Testing</a></li></ul><p class="caption">Project Files</p><ul><li><a href="../introduction.html">Introduction</a></li><li><a href="../project/CHANGELOG.html">Changes</a></li><li><a href="../project/ROADMAP.html">Roadmap</a></li><li><a href="../project/CONTRIBUTING.html">Contributing</a></li><li><a href="../project/CODE_OF_CONDUCT.html">Code of Conduct</a></li><li><a href="../project/SECURITY.html">Security Policy</a></li><li><a href="../project/SUPPORT.html">Support</a></li><li><a href="../project/THIRD_PARTY_NOTICES.html">Third-Party Notices</a></li><li><a href="../project/LICENSE.html">License</a></li><li><a href="../project/CITATION.cff.html">Citation</a></li><li><a href="../project/examples/index.html">Examples</a></li><li><a href="../project/templates/index.html">Templates</a></li><li><a href="../project/plugins/index.html">Sample Plugins</a></li></ul><p class="caption">Translations</p><ul><li><a href="../index.html#translations">Translations</a></li></ul></div>
+<div class="localtoc"><p class="caption">This Page</p><ul><li class="l2"><a href="#access-control-lists">Access control lists</a></li><li class="l2"><a href="#nat">NAT</a></li><li class="l2"><a href="#ssh-and-login-hardening">SSH and login hardening</a></li><li class="l2"><a href="#aaa">AAA</a></li><li class="l2"><a href="#hsrp">HSRP</a></li><li class="l2"><a href="#command-builders">Command builders</a></li></ul></div><h3>This Page</h3>
+<ul class="plain"><li><a href="https://github.com/r4chan842/PTForge/blob/main/docs/api/security">Show Source</a></li></ul>
+</nav>
+<main class="body">
+<div class="topbar"><select class="language" aria-label="Language" onchange="location.href=this.value"><option value="../introduction.html" selected>English</option><option value="../translations/fa.html">فارسی</option><option value="../translations/de.html">Deutsch</option><option value="../translations/es.html">Español</option><option value="../translations/fr.html">Français</option><option value="../translations/pt-BR.html">Português</option><option value="../translations/ru.html">Русский</option><option value="../translations/tr.html">Türkçe</option><option value="../translations/ar.html">العربية</option><option value="../translations/zh-CN.html">中文</option><option value="../translations/ja.html">日本語</option></select></div>
+<h1>Security and redundancy</h1>
+<p>Access lists, NAT, SSH, AAA and HSRP.</p>
+<h2 id="access-control-lists">Access control lists<a class="anchor" href="#access-control-lists">¶</a></h2>
+<dl class="function" id="fn-createstandardacl"><dt><code><span class="name">createStandardAcl</span>(name, id, entries)</code><a class="anchor" href="#fn-createstandardacl">¶</a></dt><dd>Numbered 1-99, 1300-1999, or named</dd></dl>
+<dl class="function" id="fn-createextendedacl"><dt><code><span class="name">createExtendedAcl</span>(name, id, entries)</code><a class="anchor" href="#fn-createextendedacl">¶</a></dt><dd>Numbered 100-199, 2000-2699, or named</dd></dl>
+<dl class="function" id="fn-applyacl"><dt><code><span class="name">applyAcl</span>(name, interface, id, direction)</code><a class="anchor" href="#fn-applyacl">¶</a></dt><dd>ip access-group, direction in or out</dd></dl>
+<dl class="function" id="fn-removeaclfrominterface"><dt><code><span class="name">removeAclFromInterface</span>(name, interface, id, direction)</code><a class="anchor" href="#fn-removeaclfrominterface">¶</a></dt><dd>no ip access-group</dd></dl>
+<dl class="function" id="fn-applyacltovty"><dt><code><span class="name">applyAclToVty</span>(name, id, lines)</code><a class="anchor" href="#fn-applyacltovty">¶</a></dt><dd>access-class on VTY lines</dd></dl>
+<dl class="function" id="fn-deleteacl"><dt><code><span class="name">deleteAcl</span>(name, id, extended)</code><a class="anchor" href="#fn-deleteacl">¶</a></dt><dd>Remove a whole list</dd></dl>
+<dl class="function" id="fn-createipv6acl"><dt><code><span class="name">createIpv6Acl</span>(name, aclName, entries, interface, direction)</code><a class="anchor" href="#fn-createipv6acl">¶</a></dt><dd>IPv6 list, optionally applied with ipv6 traffic-filter</dd></dl>
+<p>Entries can be plain strings or objects:</p>
+<pre>Field        Example           Notes
+-----------  ----------------  -------------------------------------------------
+action       &quot;permit&quot;          permit, deny or remark
+text         &quot;web only&quot;        For remark
+protocol     &quot;tcp&quot;             Extended only, default ip
+source       &quot;192.168.1.0/24&quot;  CIDR, a single IP, any or host x
+sourcePort   1024              Number or &quot;range 1024 65535&quot;
+destination  &quot;10.0.0.10&quot;       Same forms as source
+port         80                Number gives eq 80. Also &quot;gt 1023&quot;, &quot;range 20 21&quot;
+icmpType     &quot;echo&quot;            ICMP message type
+established  true              TCP established
+log          true              Log matches
+
+createStandardAcl(&quot;R1&quot;, 10, [
+    { source: &quot;192.168.1.0/24&quot; },
+    { action: &quot;deny&quot;, source: &quot;any&quot; }
+]);
+applyAclToVty(&quot;R1&quot;, 10);
+
+createExtendedAcl(&quot;R1&quot;, &quot;INBOUND&quot;, [
+    { protocol: &quot;tcp&quot;, source: &quot;any&quot;, destination: &quot;10.0.0.10&quot;, port: 443 },
+    { protocol: &quot;icmp&quot;, source: &quot;any&quot;, destination: &quot;any&quot;, icmpType: &quot;echo-reply&quot; },
+    &quot;deny ip any any log&quot;
+]);
+applyAcl(&quot;R1&quot;, &quot;GigabitEthernet0/1&quot;, &quot;INBOUND&quot;, &quot;in&quot;);</pre>
+<h2 id="nat">NAT<a class="anchor" href="#nat">¶</a></h2>
+<dl class="function" id="fn-setnatinterfaces"><dt><code><span class="name">setNatInterfaces</span>(name, inside, outside)</code><a class="anchor" href="#fn-setnatinterfaces">¶</a></dt><dd>ip nat inside and ip nat outside</dd></dl>
+<dl class="function" id="fn-addstaticnat"><dt><code><span class="name">addStaticNat</span>(name, insideLocal, insideGlobal, options)</code><a class="anchor" href="#fn-addstaticnat">¶</a></dt><dd>One to one NAT or port forwarding</dd></dl>
+<dl class="function" id="fn-configurepat"><dt><code><span class="name">configurePat</span>(name, options)</code><a class="anchor" href="#fn-configurepat">¶</a></dt><dd>Overload on the outside interface</dd></dl>
+<dl class="function" id="fn-configurenatpool"><dt><code><span class="name">configureNatPool</span>(name, options)</code><a class="anchor" href="#fn-configurenatpool">¶</a></dt><dd>Dynamic NAT with a pool</dd></dl>
+<dl class="function" id="fn-clearnattranslations"><dt><code><span class="name">clearNatTranslations</span>(name)</code><a class="anchor" href="#fn-clearnattranslations">¶</a></dt><dd>clear ip nat translation *</dd></dl>
+<p>configurePat options: inside, outside (required), networks, acl (default 1).</p>
+<p>configureNatPool options: name, start, end, mask, networks, acl, inside, outside, overload.</p>
+<p>addStaticNat options: inside, outside, and protocol, localPort, globalPort for port forwarding.</p>
+<pre>configurePat(&quot;EDGE&quot;, {
+    inside: [&quot;GigabitEthernet0/0&quot;, &quot;GigabitEthernet0/2&quot;],
+    outside: &quot;GigabitEthernet0/1&quot;,
+    networks: [&quot;192.168.0.0/16&quot;]
+});
+addStaticNat(&quot;EDGE&quot;, &quot;192.168.50.10&quot;, &quot;203.0.113.10&quot;, { protocol: &quot;tcp&quot;, localPort: 80, globalPort: 80 });</pre>
+<h2 id="ssh-and-login-hardening">SSH and login hardening<a class="anchor" href="#ssh-and-login-hardening">¶</a></h2>
+<dl class="function" id="fn-configuressh"><dt><code><span class="name">configureSsh</span>(name, options)</code><a class="anchor" href="#fn-configuressh">¶</a></dt><dd>Domain, user, RSA keys, SSH v2, VTY with login local</dd></dl>
+<dl class="function" id="fn-setloginblock"><dt><code><span class="name">setLoginBlock</span>(name, seconds, attempts, within)</code><a class="anchor" href="#fn-setloginblock">¶</a></dt><dd>login block-for</dd></dl>
+<dl class="function" id="fn-setminpasswordlength"><dt><code><span class="name">setMinPasswordLength</span>(name, length)</code><a class="anchor" href="#fn-setminpasswordlength">¶</a></dt><dd>security passwords min-length</dd></dl>
+<p>SSH options: domain (required), username, password, privilege (15), modulus (1024), version (2), timeout, retries, lines (&quot;0 15&quot;), allowTelnet, execTimeout, hostname. When the device still has the default hostname, the device name is used because RSA keys need a hostname.</p>
+<h2 id="aaa">AAA<a class="anchor" href="#aaa">¶</a></h2>
+<dl class="function" id="fn-configureaaa"><dt><code><span class="name">configureAaa</span>(name, options)</code><a class="anchor" href="#fn-configureaaa">¶</a></dt><dd>aaa new-model with RADIUS, TACACS+ and local fallback</dd></dl>
+<p>Options: radius: { host, key }, tacacs: { host, key }, users: [{ name, password }], localFallback (true).</p>
+<h2 id="hsrp">HSRP<a class="anchor" href="#hsrp">¶</a></h2>
+<dl class="function" id="fn-configurehsrp"><dt><code><span class="name">configureHsrp</span>(name, interface, options)</code><a class="anchor" href="#fn-configurehsrp">¶</a></dt><dd>HSRP on one router</dd></dl>
+<dl class="function" id="fn-configurehsrppair"><dt><code><span class="name">configureHsrpPair</span>(active, standby, interface, virtualIp, group)</code><a class="anchor" href="#fn-configurehsrppair">¶</a></dt><dd>Two routers, priority 150 and 100 with preempt</dd></dl>
+<p>Options: group (1), virtualIp (required), priority, preempt (true), version, track, decrement.</p>
+<h2 id="command-builders">Command builders<a class="anchor" href="#command-builders">¶</a></h2>
+<dl class="function" id="fn-buildacl"><dt><code><span class="name">buildAcl</span>(id, entries, extended) <span class="returns">→ ACL lines</span></code><a class="anchor" href="#fn-buildacl">¶</a></dt></dl>
+<dl class="function" id="fn-buildssh"><dt><code><span class="name">buildSsh</span>(options) <span class="returns">→ SSH lines</span></code><a class="anchor" href="#fn-buildssh">¶</a></dt></dl>
+<dl class="function" id="fn-buildaaa"><dt><code><span class="name">buildAaa</span>(options) <span class="returns">→ AAA lines</span></code><a class="anchor" href="#fn-buildaaa">¶</a></dt></dl>
+<dl class="function" id="fn-buildhsrp"><dt><code><span class="name">buildHsrp</span>(interface, options) <span class="returns">→ HSRP block</span></code><a class="anchor" href="#fn-buildhsrp">¶</a></dt></dl>
+</main>
+</div>
+<footer>© PTForge contributors. Licensed under the MIT License. Cisco and Packet Tracer are trademarks of Cisco Systems, Inc.</footer>
+</body>
+</html>
