@@ -97,8 +97,8 @@ Project Status
 --------------
 
 PTForge is released under version numbers that follow Semantic Versioning.
-Public function names and arguments
-only change in major versions, and every change is listed in the changelog:
+Public function names and arguments only change in major versions, and
+every change is listed in the changelog:
 https://r4chan842.github.io/PTForge/project/CHANGELOG.html
 
 Planned work is listed in the roadmap:
