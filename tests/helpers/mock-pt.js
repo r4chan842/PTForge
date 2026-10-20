@@ -57,7 +57,7 @@ function portNamesFor(type) {
     if (type === 0) {
         return ["GigabitEthernet0/0", "GigabitEthernet0/1", "GigabitEthernet0/2", "Vlan1"];
     }
-    if (type === 1 || type === 16 || type === 17) {
+    if (type === 1 || type === 16) {
         const list = [];
         for (let i = 1; i <= 24; i++) list.push("FastEthernet0/" + i);
         list.push("GigabitEthernet0/1", "GigabitEthernet0/2", "Vlan1");
@@ -292,7 +292,7 @@ function createDevice(world, name, model, type, x, y) {
         const line = mockLine(world, device, "R#", (c) => device.lineCommands.push(c));
         device.getCommandLine = () => line;
     }
-    if ([8, 9, 18].includes(type)) {
+    if ([8, 9, 17].includes(type)) {
         device.setDhcpFlag = (v) => { device.dhcp = v; };
         device.getDhcpFlag = () => device.dhcp;
         const prompt = mockLine(world, device, "C:\\>", (c) => device.hostCommands.push(c));

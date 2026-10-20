@@ -25,7 +25,19 @@ getNeighbors(device) -> object[]
 isLinkUp(device, port) -> bool
     Physical and line protocol are both up
 
-addLink returns false when a port does not exist or is already used, and throws when a device name or cable type is wrong.
+addLink validates the call before Packet Tracer sees it. A device that does not
+exist, a port name the device does not have, a port that is already cabled or an
+unknown cable type all throw with a message that names the device and port, and
+packet tracer refusing the link raises an error with the CONNECT_TYPES value it
+was given. The API itself only returns bool for createLink and gives no reason,
+so this is the only way to tell a wrong port name from a wrong cable.
+
+deleteLink throws when the port has no cable, and autoConnect refuses to connect
+a device to itself.
+
+    addLink("R1", "GigabitEthernet0/0", "S1", "GigabitEthernet0/1", "straight");
+    addLink("R1", "GigabitEthernet0/0", "S1", "GigabitEthernet0/1", "cross");
+    Error: R1 GigabitEthernet0/0 is already cabled. Call deleteLink first
 
     addLinks([
         ["R1", "GigabitEthernet0/0", "S1", "GigabitEthernet0/1", "straight"],
@@ -42,6 +54,7 @@ Cable types
 
 * straight: Different device types: PC to switch, switch to router
 * cross: Same device types: switch to switch, router to router, PC to router
+* crossover: Same cable as cross, both names are accepted
 * roll: Rollover
 * console: Console cable to a PC RS232 port
 * serial: DCE/DTE serial
@@ -55,3 +68,13 @@ Cable types
 * wireless: Wireless
 * custom_io: IoT custom I/O
 * auto: Let Packet Tracer choose
+
+Names are matched without regard to case and the documented constants are used
+underneath: ETHERNET_STRAIGHT = 8100, ETHERNET_CROSS = 8101, ETHERNET_ROLL = 8102,
+FIBER = 8103, PHONE = 8104, CABLE = 8105, SERIAL = 8106, AUTO = 8107,
+CONSOLE = 8108, WIRELESS = 8109, COAXIAL = 8110, OCTAL = 8111, CELLULAR = 8112,
+USB = 8113, CUSTOM_IO = 8114.
+
+linkTypeName(code) -> string
+    The name for a constant from getLinks. It is a helper for reading link data,
+    not a validator; resolveLinkType is the one that rejects bad input

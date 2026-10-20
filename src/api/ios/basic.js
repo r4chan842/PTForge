@@ -41,7 +41,7 @@ function buildBasicSetup(options) {
 }
 
 function basicSetup(deviceName, options) {
-    var opts = Object.assign({ hostname: deviceName }, options || {});
+    var opts = mergeInto({ hostname: deviceName }, options);
     return configureIosDevice(deviceName, buildBasicSetup(opts));
 }
 

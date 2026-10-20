@@ -14,9 +14,9 @@ function setup() {
 
 test("configureIosDevice wraps commands and saves", () => {
     const { run, world } = setup();
-    const failed = j(run, 'configureIosDevice("R1", "hostname EDGE\\n\\n  !\\ninterface Gi0/0\\n no shutdown  ")');
+    const failed = j(run, 'configureIosDevice("R1", "hostname EDGE\\n\\n !\\ninterface Gi0/0\\nno shutdown  ")');
     assert.deepEqual(failed, []);
-    assert.deepEqual(commandsOf(world, "R1"), ["!", "hostname EDGE", "interface Gi0/0", " no shutdown", "end", "write memory"]);
+    assert.deepEqual(commandsOf(world, "R1"), ["!", "hostname EDGE", "interface Gi0/0", "no shutdown", "end", "write memory"]);
     assert.equal(world.devices.R1.commands[0].mode, "global");
     assert.equal(world.devices.R1.commands[5].mode, "enable");
 });
@@ -30,14 +30,14 @@ test("save can be skipped and arrays are accepted", () => {
 test("rejected commands are reported, applyConfig throws", () => {
     const { run, world } = setup();
     world.rejectCommands.push(/^bogus/);
-    assert.deepEqual(j(run, 'configureIosDevice("R1", "bogus command\\nhostname R1")'), [{ command: "bogus command", status: "invalid" }]);
-    assert.throws(() => run('applyConfig("R1", "bogus")'), /R1 rejected: bogus \(invalid\)/);
+    assert.deepEqual(j(run, 'configureIosDevice("R1", "bogus command\\nhostname R1")'), [{ command: "bogus command", status: "invalid", output: "" }]);
+    assert.throws(() => run('applyConfig("R1", "bogus")'), /R1 rejected 1 command:\n  bogus -> invalid/);
     assert.equal(run('applyConfig("R1", "hostname R1")'), true);
 });
 
 test("non IOS devices are refused", () => {
     const { run } = setup();
-    assert.throws(() => run('configureIosDevice("PC1", "hostname X")'), /Not a Cisco IOS device/);
+    assert.throws(() => run('configureIosDevice("PC1", "hostname X")'), /has no Cisco IOS command line/);
     assert.throws(() => run('runCommand("NOPE", "show version")'), /not found/);
 });
 
@@ -92,13 +92,13 @@ test("interfaces", () => {
     run('addLoopback("R1", 0, "1.1.1.1")');
     run('routerOnAStick("R1", "GigabitEthernet0/1", { 10: "192.168.10.1/24", 20: "192.168.20.1/24" })');
     const text = commandsOf(world, "R1").join("\n");
-    assert.match(text, /interface GigabitEthernet0\/0\n description to R2\n ip address 10\.0\.0\.1 255\.255\.255\.252/);
-    assert.match(text, / ip address dhcp/);
-    assert.match(text, / ipv6 address 2001:db8::1\/64\n ipv6 address fe80::1 link-local\n ipv6 enable/);
-    assert.match(text, / clock rate 64000/);
-    assert.match(text, /interface Loopback0\n ip address 1\.1\.1\.1 255\.255\.255\.255/);
-    assert.match(text, /interface GigabitEthernet0\/1\.20\n encapsulation dot1Q 20\n ip address 192\.168\.20\.1 255\.255\.255\.0/);
-    assert.match(text, / speed 100\n duplex full/);
+    assert.match(text, /interface GigabitEthernet0\/0\ndescription to R2\nip address 10\.0\.0\.1 255\.255\.255\.252/);
+    assert.match(text, /ip address dhcp/);
+    assert.match(text, /ipv6 address 2001:db8::1\/64\nipv6 address fe80::1 link-local\nipv6 enable/);
+    assert.match(text, /clock rate 64000/);
+    assert.match(text, /interface Loopback0\nip address 1\.1\.1\.1 255\.255\.255\.255/);
+    assert.match(text, /interface GigabitEthernet0\/1\.20\nencapsulation dot1Q 20\nip address 192\.168\.20\.1 255\.255\.255\.0/);
+    assert.match(text, /speed 100\nduplex full/);
 });
 
 test("router services", () => {
@@ -108,9 +108,9 @@ test("router services", () => {
     run('setNtpServer("R1", "10.0.0.1"); setSyslogServer("R1", "10.0.0.2", "warnings"); setSnmpCommunity("R1", "public"); setSnmpCommunity("R1", "private", "rw")');
     run('setCdp("R1", false); setLldp("R1"); setDefaultGateway("S1", "10.0.0.1"); enableIpRouting("ML1"); enableIpv6Routing("R1")');
     const text = commandsOf(world, "R1").join("\n");
-    assert.match(text, / option 150 ip 10\.0\.0\.9/);
+    assert.match(text, /option 150 ip 10\.0\.0\.9/);
     assert.match(text, /no ip dhcp pool OLD/);
-    assert.match(text, / ip helper-address 10\.0\.0\.5\n ip helper-address 10\.0\.0\.6/);
+    assert.match(text, /ip helper-address 10\.0\.0\.5\nip helper-address 10\.0\.0\.6/);
     assert.match(text, /logging 10\.0\.0\.2\nlogging trap warnings/);
     assert.match(text, /snmp-server community public RO/);
     assert.match(text, /snmp-server community private RW/);

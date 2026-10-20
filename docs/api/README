@@ -1,7 +1,7 @@
 API reference
 =============
 
-PTForge has more than 375 functions. They are all global, so you call them directly in the editor.
+PTForge has 411 functions. They are all global, so you call them directly in the editor.
 
 * Devices: https://github.com/r4chan842/PTForge/blob/main/docs/api/devices
   Add, remove, move, power, modules, ports, custom data

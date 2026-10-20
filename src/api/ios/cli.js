@@ -1,9 +1,15 @@
 function parseCommandResult(result) {
     if (Array.isArray(result)) {
-        return { status: commandStatusNames[result[0]] || String(result[0]), output: String(isDefined(result[1]) ? result[1] : "") };
+        return { status: statusNameOf(statusCodeOf(result[0])), output: String(isDefined(result[1]) ? result[1] : "") };
     }
     if (result && isDefined(result.first)) {
-        return { status: commandStatusNames[result.first] || String(result.first), output: String(isDefined(result.second) ? result.second : "") };
+        return { status: statusNameOf(statusCodeOf(result.first)), output: String(isDefined(result.second) ? result.second : "") };
+    }
+    if (result && isDefined(result.status)) {
+        return { status: String(result.status), output: String(isDefined(result.output) ? result.output : "") };
+    }
+    if (typeof result === "number") {
+        return { status: statusNameOf(result), output: "" };
     }
     return { status: "ok", output: isDefined(result) ? String(result) : "" };
 }
@@ -11,41 +17,44 @@ function parseCommandResult(result) {
 function iosDevice(deviceName) {
     var device = findDevice(deviceName);
     if (typeof device.enterCommand !== "function") {
-        throw new Error("Not a Cisco IOS device: " + deviceName);
+        throw new Error(deviceName + " is a " + String(device.getModel()) + " and has no Cisco IOS command line");
     }
     skipBootIfIos(device);
     return device;
 }
 
+function sendLine(device, line, mode, failures) {
+    var result = parseCommandResult(device.enterCommand(line, mode));
+    if (result.status !== "ok") {
+        failures.push({ command: line, status: result.status, output: result.output });
+    }
+    return result;
+}
+
 function configureIosDevice(deviceName, commands, save) {
     var device = iosDevice(deviceName);
-    var failed = [];
+    var failures = [];
 
     device.enterCommand("!", "global");
     toLines(commands).forEach(function (line) {
-        var command = line.replace(/\s+$/, "");
-        if (!command.trim() || command.trim() === "!") {
+        var command = oneLine(line);
+        if (!command || command === "!") {
             return;
         }
-        var result = parseCommandResult(device.enterCommand(command, ""));
-        if (result.status !== "ok") {
-            failed.push({ command: command.trim(), status: result.status });
-        }
+        sendLine(device, command, "", failures);
     });
     device.enterCommand("end", "");
 
     if (save !== false) {
-        device.enterCommand("write memory", "enable");
+        sendLine(device, "write memory", "enable", failures);
     }
-    return failed;
+    return failures;
 }
 
 function applyConfig(deviceName, commands, save) {
-    var failed = configureIosDevice(deviceName, commands, save);
-    if (failed.length) {
-        throw new Error(deviceName + " rejected: " + failed.map(function (item) {
-            return item.command + " (" + item.status + ")";
-        }).join(", "));
+    var failures = configureIosDevice(deviceName, commands, save);
+    if (failures.length) {
+        throw new Error(failureText(deviceName, failures));
     }
     return true;
 }
@@ -60,7 +69,24 @@ function applyToDevices(deviceNames, commands, save) {
 
 function runCommand(deviceName, command, mode) {
     var device = iosDevice(deviceName);
-    return parseCommandResult(device.enterCommand(String(command), isDefined(mode) ? mode : "enable"));
+    return parseCommandResult(device.enterCommand(oneLine(command), normalizeCliMode(isDefined(mode) ? mode : "enable")));
+}
+
+function runCommands(deviceName, commands, mode) {
+    var device = iosDevice(deviceName);
+    var chosen = normalizeCliMode(isDefined(mode) ? mode : "enable");
+    var failures = [];
+    var results = toLines(commands).map(function (line) {
+        var command = oneLine(line);
+        if (!command) {
+            return null;
+        }
+        var result = sendLine(device, command, chosen, failures);
+        return { command: command, status: result.status, output: result.output };
+    }).filter(function (item) {
+        return item !== null;
+    });
+    return { device: String(device.getName()), ok: failures.length === 0, commands: results, failed: failures };
 }
 
 function saveConfig(deviceName) {

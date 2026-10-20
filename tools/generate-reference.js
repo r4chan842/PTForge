@@ -7,7 +7,7 @@ const vm = require("vm");
 const root = path.join(__dirname, "..");
 const context = {};
 vm.createContext(context);
-["devices", "modules", "types", "links"].forEach((name) => {
+["device-types", "devices", "connect-types", "command-codes", "modules"].forEach((name) => {
     const code = fs.readFileSync(path.join(root, "src/data", name + ".js"), "utf8");
     vm.runInContext(code.replace(/^var /gm, "this."), context);
 });
@@ -39,13 +39,13 @@ Object.keys(context.allDeviceTypes).forEach((model) => {
     const t = context.allDeviceTypes[model];
     (byType[t] = byType[t] || []).push(model);
 });
-let out = title("Device models") + "Every model accepted by addDevice. Model names are case sensitive.\n";
+let out = title("Device models") + "Every model accepted by addDevice. The short names and numbers listed in\ndocs/api/devices are also accepted and map to these models.\n";
 Object.keys(byType).sort((a, b) => a - b).forEach((t) => {
     out += "\n" + (typeNames[t] || t) + "\n" + "-".repeat(String(typeNames[t] || t).length) + "\n\n" + byType[t].map((m) => "* " + m).join("\n") + "\n";
 });
 write("device-models", out);
 
-out = title("Device types") + "Names and numbers accepted by getDevices(filter).\n\n" +
+out = title("Device types") + "Names and numbers accepted by getDevices(filter). The numbers are the\nDeviceType enum of the Cisco Packet Tracer Extensions API 8.1.0.\n\n" +
     columns(["Name", "Number"], Object.keys(context.deviceTypes).map((n) => [n, context.deviceTypes[n]]));
 write("device-types", out);
 
@@ -53,7 +53,7 @@ out = title("Modules") + "Every module accepted by addModule. Whether a module f
     columns(["Module", "Module type"], Object.keys(context.allModuleTypes).map((n) => [n, context.allModuleTypes[n]]));
 write("modules", out);
 
-out = title("Link types") + "Names accepted by addLink.\n\n" +
+out = title("Link types") + "Names accepted by addLink. The numbers are the CONNECT_TYPES enum of the\nCisco Packet Tracer Extensions API 8.1.0.\n\n" +
     columns(["Name", "Packet Tracer constant"], Object.keys(context.allLinkTypes).map((n) => [n, context.allLinkTypes[n]]));
 write("link-types", out);
 

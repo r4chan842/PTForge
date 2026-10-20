@@ -23,7 +23,7 @@ function buildTrunkPorts(interfaces, allowedVlans, nativeVlan, options) {
 }
 
 function setTrunkPort(deviceName, interfaces, allowedVlans, nativeVlan, options) {
-    var opts = Object.assign({}, options || {});
+    var opts = mergeInto({}, options);
     if (!opts.encapsulation && findDevice(deviceName).getType() === deviceTypes.multilayerswitch) {
         opts.encapsulation = "dot1q";
     }

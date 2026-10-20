@@ -88,13 +88,3 @@ function deleteAcl(deviceName, id, extended) {
     }
     return configureIosDevice(deviceName, ["no ip access-list " + (extended ? "extended " : "standard ") + id]);
 }
-
-function createIpv6Acl(deviceName, name, entries, interfaceName, direction) {
-    var commands = ["ipv6 access-list " + name].concat(toList(entries).map(function (line) {
-        return " " + line;
-    })).concat(["exit"]);
-    if (interfaceName) {
-        commands = commands.concat(interfaceBlock(interfaceName, ["ipv6 traffic-filter " + name + " " + (direction || "in")]));
-    }
-    return configureIosDevice(deviceName, commands);
-}

@@ -28,12 +28,12 @@ test("acls and nat", () => {
     const text = commandsOf(world, "R1").join("\n");
     assert.match(text, /access-list 10 permit 192\.168\.1\.0 0\.0\.0\.255/);
     assert.match(text, /access-list 110 permit tcp any host 10\.0\.0\.10 eq 443/);
-    assert.match(text, /ip access-list extended BLOCK\n deny ip any any/);
-    assert.match(text, / ip access-group 110 in/);
-    assert.match(text, / no ip access-group 110 in/);
-    assert.match(text, /line vty 0 15\n access-class 10 in/);
+    assert.match(text, /ip access-list extended BLOCK\ndeny ip any any/);
+    assert.match(text, /ip access-group 110 in/);
+    assert.match(text, /no ip access-group 110 in/);
+    assert.match(text, /line vty 0 15\naccess-class 10 in/);
     assert.match(text, /no ip access-list extended BLOCK/);
-    assert.match(text, / ipv6 traffic-filter V6 out/);
+    assert.match(text, /ipv6 traffic-filter V6 out/);
     assert.match(text, /ip nat inside source static 192\.168\.1\.10 203\.0\.113\.10/);
     assert.match(text, /ip nat inside source static tcp 192\.168\.1\.20 80 203\.0\.113\.11 8080/);
     assert.match(text, /ip nat inside source list 1 interface GigabitEthernet0\/1 overload/);
@@ -55,8 +55,8 @@ test("ssh aaa hsrp", () => {
     assert.match(r1, /login block-for 60 attempts 3 within 30/);
     assert.match(r1, /security passwords min-length 8/);
     assert.match(r1, /aaa authentication login default group radius local/);
-    assert.match(r1, / standby 1 priority 150/);
-    assert.match(commandsOf(world, "R2").join("\n"), / standby 1 priority 100/);
+    assert.match(r1, /standby 1 priority 150/);
+    assert.match(commandsOf(world, "R2").join("\n"), /standby 1 priority 100/);
 });
 
 test("server services", () => {

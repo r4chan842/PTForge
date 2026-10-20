@@ -1,7 +1,8 @@
 Device models
 =============
 
-Every model accepted by addDevice. Model names are case sensitive.
+Every model accepted by addDevice. The short names and numbers listed in
+docs/api/devices are also accepted and map to these models.
 
 router
 ------
@@ -64,6 +65,8 @@ accesspoint
 * AccessPoint-PT-A
 * AccessPoint-PT-AC
 * AccessPoint-PT-N
+* 3702i
+* LAP-PT
 
 pc
 --
@@ -157,10 +160,6 @@ homegateway
 -----------
 
 * DLC100
-
-wirelessrouternewgeneration
----------------------------
-
 * HomeRouter-PT-AC
 
 celltower
@@ -173,8 +172,8 @@ centralofficeserver
 
 * Central-Office-Server
 
-embeddedciscoaccesspoint
-------------------------
+ciscoaccesspoint
+----------------
 
 * 802
 * 803
@@ -194,8 +193,8 @@ sbc
 
 * SBC-PT
 
-mcucomponent
-------------
+thing
+-----
 
 * Air Conditioner
 * Air Cooler
@@ -281,18 +280,12 @@ embeddedserver
 
 * Embedded-Server-PT
 
-wlc
----
+wirelesslancontroller
+---------------------
 
 * WLC-2504
 * WLC-3504
 * WLC-PT
-
-lightweightaccesspoint
-----------------------
-
-* 3702i
-* LAP-PT
 
 45
 --

@@ -98,7 +98,7 @@ test("every public api function is documented", () => {
 });
 
 test("ui sends encoded code", () => {
-    const text = fs.readFileSync(path.join(root, "src/ui/interface.js"), "utf8");
+    const text = fs.readFileSync(path.join(root, "src/ui/app-shell.js"), "utf8");
     assert.match(text, /\$se\("runCode", encodeURIComponent\(/);
 });
 
