@@ -64,7 +64,7 @@ Adding a function
 2. Add tests in https://github.com/r4chan842/PTForge/tree/main/tests/integration
 3. Document it in https://github.com/r4chan842/PTForge/tree/main/docs/api
 4. Optionally add an example in examples
-5. Add an entry under Unreleased in https://github.com/r4chan842/PTForge/blob/main/CHANGELOG
+5. Add an entry under Unreleased in https://github.com/r4chan842/PTForge/blob/main/project/CHANGELOG
 
 Continuous integration
 ----------------------

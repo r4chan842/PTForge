@@ -29,7 +29,7 @@ function pageOf(file) {
     if (file === "README") {
         return "introduction.html";
     }
-    const rel = file.startsWith("docs/") ? file.slice(5) : "project/" + file;
+    const rel = file.startsWith("docs/") ? file.slice(5) : file.startsWith("project/") ? file : "project/" + file;
     return rel.replace(/\/README$/, "/index") + ".html";
 }
 
@@ -47,11 +47,11 @@ sources.forEach((file) => {
     pages[file] = { file, text, page: pageOf(file), title: titleOf(text, file) };
 });
 
-const codeFiles = execSync("git ls-files examples templates plugins CITATION.cff", { cwd: root }).toString().split("\n")
+const codeFiles = execSync("git ls-files examples templates plugins project/CITATION.cff", { cwd: root }).toString().split("\n")
     .filter((f) => /\.(js|pf|cff)$/.test(f));
 codeFiles.forEach((file) => {
     const text = fs.readFileSync(path.join(root, file), "utf8").replace(/\r\n/g, "\n");
-    pages[file] = { file, text, page: "project/" + file + ".html", title: path.basename(file), code: true };
+    pages[file] = { file, text, page: "project/" + file.replace(/^project\//, "") + ".html", title: path.basename(file), code: true };
 });
 
 function fileList(dir) {
