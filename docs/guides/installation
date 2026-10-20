@@ -52,26 +52,9 @@ main.js must be the last script because it opens the menu entry after every func
 Step 4: add the interface
 -------------------------
 
-Interface files are case sensitive and Packet Tracer loads them in the order of
-the script tags in index.html. If one is missing or renamed, the window opens
-blank with no error, so most "blank window" reports are a file that did not
-arrive.
-
-Option A: one file (recommended)
-
-Add one interface file named index.html and paste
-https://github.com/r4chan842/PTForge/blob/main/release/index.html into it. That
-build has the stylesheet and all thirteen scripts inlined, so nothing else can go
-missing. Delete the other interface files and save the module.
-
-Rebuild it after editing anything in src/ui with:
-
-    node tools/build-ui.js
-
-Option B: separate files
-
-Add these fourteen files from https://github.com/r4chan842/PTForge/tree/main/src/ui
-and keep the names exactly:
+Add the fourteen files from https://github.com/r4chan842/PTForge/tree/main/src/ui and
+keep the names exactly. Packet Tracer loads them in the order of the script tags in
+index.html, and the test suite fails if a file in src/ui is not loaded there.
 
 * index.html: Page layout, loads everything below in this order
 * style.css: VS Code Dark Modern theme
@@ -88,13 +71,16 @@ and keep the names exactly:
 * side-views.js: Calculator, reachability and snapshot diff tabs
 * app-shell.js: Workbench, files, commands, Packet Tracer bridge
 
-They load nothing from the network. The list order matches the script tags in
-index.html, and the build check in the test suite fails if a file in src/ui is not
-loaded there.
+They load nothing from the network. Names are case sensitive, including style.css.
 
 Files that changed names in 1.4: interface.js is now app-shell.js, views.js is
-side-views.js, instrument.js is code-instrumenter.js. Replace the old ones, do not
+side-views.js, instrument.js is code-instrumenter.js. Remove the old ones, do not
 add both.
+
+If the window opens with no styling, a giant logo and text running down the left
+side, style.css did not reach the module. If it opens blank, one of the scripts is
+missing. Since 1.4 the page prints which file it could not find instead of showing
+an empty window.
 
 Step 5: save and start
 ----------------------

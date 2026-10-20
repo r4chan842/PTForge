@@ -26,6 +26,7 @@
     --info: #3794ff;
     --ok: #2ea043;
     --link: #4daafc;
+    --list-hover: #2a2d2e;
     --mono: Consolas, "Cascadia Mono", "Courier New", monospace;
     --ui: -apple-system, "Segoe UI", system-ui, Ubuntu, "Helvetica Neue", sans-serif;
 }
@@ -951,17 +952,17 @@ body.dragging-y {
 
 .ed {
     position: absolute;
-    inset: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     display: flex;
-    --ed-font: 14px;
-    --ed-line: 21px;
-    --ed-gutter: 6ch;
     font-family: var(--mono);
-    font-size: var(--ed-font);
+    font-size: 14px;
 }
 
 .ed-gutter {
-    width: calc(var(--ed-gutter) + 38px);
+    width: calc(6ch + 38px);
     flex: none;
     overflow: hidden;
     background: var(--bg);
@@ -974,8 +975,8 @@ body.dragging-y {
 }
 
 .ed-ln {
-    height: var(--ed-line);
-    line-height: var(--ed-line);
+    height: 21px;
+    line-height: 21px;
     display: flex;
     padding-right: 20px;
     color: var(--line-number);
@@ -1056,7 +1057,7 @@ body.dragging-y {
     position: absolute;
     left: 0;
     right: 0;
-    height: var(--ed-line);
+    height: 21px;
     background: rgba(255, 255, 0, .2);
     border: 1px solid rgba(255, 204, 0, .35);
     pointer-events: none;
@@ -1154,8 +1155,8 @@ body.dragging-y {
 .ed-input,
 .ed-probe {
     font-family: var(--mono);
-    font-size: var(--ed-font);
-    line-height: var(--ed-line);
+    font-size: inherit;
+    line-height: 21px;
     tab-size: 4;
     letter-spacing: 0;
     font-variant-ligatures: none;
@@ -1165,7 +1166,10 @@ body.dragging-y {
 
 .ed-layer {
     position: absolute;
-    inset: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     margin: 0;
     padding: 0 0 0 4px;
     pointer-events: none;
@@ -1190,7 +1194,10 @@ body.dragging-y {
 
 .ed-input {
     position: absolute;
-    inset: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     margin: 0;
@@ -1221,7 +1228,7 @@ body.dragging-y {
     position: absolute;
     left: 0;
     right: 0;
-    height: var(--ed-line);
+    height: 21px;
     border-top: 1px solid #282828;
     border-bottom: 1px solid #282828;
     pointer-events: none;
@@ -1590,7 +1597,10 @@ body.dragging-y {
 
 .welcome {
     position: absolute;
-    inset: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     overflow: auto;
     background: var(--bg);
     z-index: 3;
@@ -2055,7 +2065,10 @@ body.debugging .statusbar {
 
 .palette {
     position: fixed;
-    inset: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     z-index: 100;
 }
 
@@ -2135,7 +2148,10 @@ body.debugging .statusbar {
 
 .dialog {
     position: fixed;
-    inset: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     z-index: 120;
     background: rgba(0, 0, 0, .3);
     display: flex;
@@ -2843,12 +2859,18 @@ table.keys td:last-child {
 
 .term {
     position: absolute;
-    inset: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
 
 .term-scroll {
     position: absolute;
-    inset: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     overflow-y: auto;
     padding: 4px 20px 8px;
     font-family: var(--mono);
@@ -3020,7 +3042,10 @@ table.keys td:last-child {
 
 .vt {
     position: absolute;
-    inset: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     overflow: auto;
     background: var(--bg);
     user-select: text;
@@ -4086,24 +4111,9 @@ body {
     background: #1f1f1f;
 }
 
-.ed-inner,
 .ed-lines,
 .ed-scroll {
-    font-family: var(--code);
-    font-size: 13px;
-    line-height: var(--editor-line);
     font-variant-ligatures: contextual;
-}
-
-.ed-gutter,
-.ed-num {
-    color: var(--line-number);
-    font-size: 12px;
-}
-
-.ed-current {
-    background: rgba(255, 255, 255, 0.045);
-    box-shadow: inset 2px 0 0 rgba(255, 255, 255, 0.16);
 }
 
 .breadcrumbs {
@@ -4150,9 +4160,9 @@ body {
     background: #026ec1;
 }
 
-.btn:focus-visible,
-.fbtn:focus-visible,
-.ea:focus-visible {
+.btn:focus,
+.fbtn:focus,
+.ea:focus {
     outline: none;
     box-shadow: var(--focus-ring);
 }
@@ -4304,7 +4314,6 @@ body.debugging .sb-item {
 
 .palette {
     background: rgba(0, 0, 0, 0.36);
-    backdrop-filter: blur(1px);
 }
 
 .palette-box {

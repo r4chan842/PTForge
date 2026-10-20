@@ -97,15 +97,12 @@ test("every public api function is documented", () => {
     });
 });
 
-test("single file interface is up to date", () => {
-    const file = path.join(root, "release", "index.html");
-    assert.ok(fs.existsSync(file), "run node tools/build-ui.js");
-    const before = fs.readFileSync(file, "utf8");
-    assert.equal(before.match(/<link[^>]+stylesheet[^>]*>/), null, "no external stylesheet");
-    assert.equal(before.match(/<script[^>]+src=/), null, "no external script");
-    assert.ok(before.length > 400000, "style and scripts are inlined");
-    require("child_process").execFileSync(process.execPath, [path.join(root, "tools", "build-ui.js")]);
-    assert.equal(fs.readFileSync(file, "utf8"), before, "run node tools/build-ui.js");
+test("stylesheet stays inside what the packet tracer web view understands", () => {
+    const css = fs.readFileSync(path.join(root, "src", "ui", "style.css"), "utf8");
+    ["inset:", "backdrop-filter", ":focus-visible", "--ed-"].forEach((rule) => {
+        assert.equal(css.indexOf(rule), -1, rule + " in style.css");
+    });
+    assert.equal((css.match(/\{/g) || []).length, (css.match(/\}/g) || []).length, "unbalanced braces");
 });
 
 test("interface files are all referenced by the layout", () => {
