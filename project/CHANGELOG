@@ -25,6 +25,7 @@ Fixed
 - Object.assign replaced with a local helper, since the Packet Tracer engine is ES5 and has no Object.assign
 - A blank window when an interface file was missing or pasted under an old name. The page now checks that its stylesheet and its scripts arrived and prints which file did not load, instead of showing a bare logo on white
 - The editor font size was overridden by a later stylesheet rule, so the zoom buttons did move the status bar text but not the code
+- Menu rows printed the label and the shortcut on top of each other inside the Packet Tracer window, and icons came out a few pixels wide. Menu rows now keep their own height and never wrap, tall menus scroll inside the window, and every icon carries its own width and height
 
 Added
 

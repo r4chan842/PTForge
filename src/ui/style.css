@@ -4459,3 +4459,182 @@ body.debugging .sb-item {
         transition: none !important;
     }
 }
+
+.titlebar {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 2px;
+    padding-right: 6px;
+}
+
+.brand {
+    flex: none;
+}
+
+.menubar {
+    flex: 0 0 auto;
+    height: 100%;
+    align-items: center;
+    position: relative;
+}
+
+.menu {
+    flex: 0 0 auto;
+}
+
+.menu-title {
+    white-space: nowrap;
+    font-size: 13px;
+    padding: 0 9px;
+}
+
+.menu-drop {
+    position: absolute;
+    padding: 5px 0;
+    min-width: 300px;
+    width: max-content;
+    max-width: 92vw;
+    max-height: calc(100vh - 44px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .55);
+    z-index: 60;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    min-height: 24px;
+    padding: 3px 22px 3px 26px;
+    margin: 0 4px;
+    line-height: 18px;
+    white-space: nowrap;
+    font-size: 13px;
+}
+
+.menu-item > span:first-child {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.menu-key {
+    flex: 0 0 auto;
+    margin-left: auto;
+    padding-left: 32px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: .85;
+}
+
+.menu-sep {
+    margin: 5px 0;
+}
+
+.command-center {
+    position: static;
+    transform: none;
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 380px;
+    margin: 0 10px;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.command-center span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.title-grow {
+    flex: 0 0 0;
+    display: none;
+}
+
+svg {
+    display: block;
+    overflow: visible;
+}
+
+.ico {
+    width: 16px;
+    height: 16px;
+    flex: none;
+    fill: currentColor;
+}
+
+.act {
+    color: #a0a0a0;
+}
+
+.sec-act {
+    width: 24px;
+    height: 24px;
+}
+
+.act:hover {
+    color: #ffffff;
+}
+
+.act.active {
+    color: #ffffff;
+}
+
+.act .ico {
+    width: 24px;
+    height: 24px;
+}
+
+.sb-item .ico,
+.ea .ico,
+.fbtn .ico,
+.dt-btn .ico {
+    width: 18px;
+    height: 18px;
+}
+
+.menu-item .ico {
+    width: 16px;
+    height: 16px;
+}
+
+.editor-actions .ea {
+    color: #d4d4d4;
+}
+
+.editor-actions .ea:hover {
+    background: rgba(255, 255, 255, .09);
+}
+
+@media (max-width: 860px) {
+    .menu-title {
+        padding: 0 7px;
+        font-size: 12.5px;
+    }
+}
+
+
+.panel-head {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 32px;
+    flex: none;
+}
+
+.panel-tab {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    padding: 6px 0;
+    margin: 0 9px;
+    line-height: 16px;
+}
+
+.panel-tab span {
+    white-space: nowrap;
+}

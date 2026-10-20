@@ -89,7 +89,7 @@ var icons = {
 };
 
 function icon(name, css) {
-    return "<svg class=\"ico" + (css ? " " + css : "") + "\" viewBox=\"0 0 24 24\" aria-hidden=\"true\">" + (icons[name] || "") + "</svg>";
+    return "<svg class=\"ico" + (css ? " " + css : "") + "\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" aria-hidden=\"true\">" + (icons[name] || "") + "</svg>";
 }
 
 function byId(id) {

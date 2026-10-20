@@ -105,6 +105,35 @@ test("stylesheet stays inside what the packet tracer web view understands", () =
     assert.equal((css.match(/\{/g) || []).length, (css.match(/\}/g) || []).length, "unbalanced braces");
 });
 
+test("menu rows and icons keep their size in the packet tracer web view", () => {
+    const css = fs.readFileSync(path.join(root, "src", "ui", "style.css"), "utf8");
+    const block = (selector) => {
+        const start = css.lastIndexOf("\n" + selector + " {");
+        assert.ok(start !== -1, selector + " is missing from style.css");
+        return css.slice(start, css.indexOf("}", start));
+    };
+    assert.match(block(".menu-item"), /white-space: nowrap/, "menu labels can wrap over the shortcut");
+    assert.match(block(".menu-item"), /display: flex/, "menu rows need a flex layout");
+    assert.match(block(".menu-item"), /line-height:/, "menu rows need an explicit line height");
+    assert.match(block(".menu-key"), /white-space: nowrap/, "shortcuts can wrap");
+    assert.match(block(".menu-key"), /margin-left: auto/, "shortcuts can sit on top of the label");
+    assert.match(block(".menu-drop"), /max-height:/, "tall menus can run off the screen");
+    assert.match(block(".ico"), /flex: none/, "icons can be squeezed by long labels");
+});
+
+test("every icon carries its own size", () => {
+    const shell = fs.readFileSync(path.join(root, "src", "ui", "app-shell.js"), "utf8");
+    assert.match(shell, /<svg class=\\"ico[^>]*width=\\"16\\" height=\\"16\\"/, "icon() does not size its svg");
+    const layout = fs.readFileSync(path.join(root, "src", "ui", "index.html"), "utf8");
+    const tags = layout.match(/<svg class="ico[^>]*>/g) || [];
+    assert.ok(tags.length > 0, "no icons in index.html");
+    tags.forEach((tag) => {
+        assert.match(tag, /width="16"/, "icon without a width in index.html: " + tag);
+        assert.match(tag, /height="16"/, "icon without a height in index.html: " + tag);
+        assert.match(tag, /viewBox="/, "icon without a viewBox in index.html: " + tag);
+    });
+});
+
 test("interface files are all referenced by the layout", () => {
     const layout = fs.readFileSync(path.join(root, "src", "ui", "index.html"), "utf8");
     fs.readdirSync(path.join(root, "src", "ui")).filter((f) => f.endsWith(".js")).forEach((file) => {
