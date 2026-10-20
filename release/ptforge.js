@@ -1,3 +1,59 @@
+var deviceTypes = {
+    router: 0,
+    switch: 1,
+    cloud: 2,
+    bridge: 3,
+    hub: 4,
+    repeater: 5,
+    coaxialsplitter: 6,
+    accesspoint: 7,
+    pc: 8,
+    server: 9,
+    printer: 10,
+    wirelessrouter: 11,
+    ipphone: 12,
+    dslmodem: 13,
+    cablemodem: 14,
+    remotenetwork: 15,
+    multilayerswitch: 16,
+    laptop: 17,
+    tabletpc: 18,
+    pda: 19,
+    wirelessenddevice: 20,
+    wiredenddevice: 21,
+    tv: 22,
+    homevoip: 23,
+    analogphone: 24,
+    multiuser: 25,
+    asa: 26,
+    ioe: 27,
+    homegateway: 28,
+    celltower: 29,
+    centralofficeserver: 30,
+    ciscoaccesspoint: 31,
+    embeddedciscoaccesspoint: 32,
+    sniffer: 33,
+    mcu: 34,
+    sbc: 35,
+    thing: 36,
+    mcucomponent: 37,
+    embeddedserver: 38,
+    wirelesslancontroller: 39,
+    cluster: 40,
+    switch3650: 16,
+    wirelessrouternewgeneration: 11,
+    wlc: 39
+};
+
+var iosDeviceTypes = [0, 1, 16];
+
+var deviceTypeNames = {};
+Object.keys(deviceTypes).forEach(function (name) {
+    if (deviceTypeNames[deviceTypes[name]] === undefined) {
+        deviceTypeNames[deviceTypes[name]] = name;
+    }
+});
+
 var allDeviceTypes = {
     1841: 0,
     1941: 0,
@@ -39,109 +95,109 @@ var allDeviceTypes = {
     "3560-24PS": 16,
     "3650-24PS": 16,
     "IE-2000": 16,
-    "Laptop-PT": 18,
-    "TabletPC-PT": 19,
-    "SMARTPHONE-PT": 20,
-    "WirelessEndDevice-PT": 21,
-    "WiredEndDevice-PT": 22,
-    "TV-PT": 23,
-    "Home-VoIP-PT": 24,
-    "Analog-Phone-PT": 25,
-    5505: 27,
-    "5506-X": 27,
-    DLC100: 29,
-    "HomeRouter-PT-AC": 30,
-    "Cell-Tower": 31,
-    "Central-Office-Server": 32,
-    802: 34,
-    803: 34,
-    Sniffer: 35,
-    "MCU-PT": 36,
-    "SBC-PT": 37,
-    "Air Conditioner": 39,
-    "Air Cooler": 39,
-    Alarm: 39,
-    Appliance: 39,
-    "Atm Pressure Monitor": 39,
-    Battery: 39,
-    Beacon: 39,
-    Blower: 39,
-    "Bluetooth Speaker": 39,
-    "Carbon Dioxide Detector": 39,
-    "Carbon Monoxide Detector": 39,
-    Fan: 39,
-    "Ceiling Sprinkler": 39,
-    "Dimmable LED": 39,
-    Door: 39,
-    "Fire Monitor": 39,
-    "Fire Sprinkler": 39,
-    "Flex Sensor": 39,
-    "Floor Sprinkler": 39,
-    Furnace: 39,
-    "Garage Door": 39,
-    "Generic Environment Sensor": 39,
-    "Generic Sensor": 39,
-    "Heating Element": 39,
-    "Home Speaker": 39,
-    Humidifier: 39,
-    "Humidity Monitor": 39,
-    "Humidity Sensor": 39,
-    "Humiture Monitor": 39,
-    "Humiture Sensor": 39,
-    LCD: 39,
-    LED: 39,
-    "Lawn Sprinkler": 39,
-    Light: 39,
-    "Membrane Potentiometer": 39,
-    "Metal Sensor": 39,
-    "Motion Detector": 39,
-    "Motion Sensor": 39,
-    Motor: 39,
-    "Old Car": 39,
-    "Photo Sensor": 39,
-    "Piezo Speaker": 39,
-    "Portable Music Player": 39,
-    Potentiometer: 39,
-    "Power Meter": 39,
-    "Push Button": 39,
-    "Push Button Toggle Switch": 39,
-    "RFID Card": 39,
-    "RFID Reader": 39,
-    "RGB LED": 39,
-    "Rocker Switch": 39,
-    Servo: 39,
-    "Signal Generator": 39,
-    Siren: 39,
-    "Smart LED": 39,
-    "Smoke Detector": 39,
-    "Smoke Sensor": 39,
-    "Solar Panel": 39,
-    "Sound Frequency Detector": 39,
-    "Sound Sensor": 39,
-    Speaker: 39,
-    "Street Lamp": 39,
-    "Temperature Monitor": 39,
-    "Temperature Sensor": 39,
-    Thermostat: 39,
-    Thing: 39,
-    "Toggle Push Button": 39,
-    "Trip Sensor": 39,
-    "Trip Wire": 39,
-    "Water Detector": 39,
-    "Water Drain": 39,
-    "Water Level Monitor": 39,
-    "Water Sensor": 39,
-    Webcam: 39,
-    "Wind Detector": 39,
-    "Wind Sensor": 39,
-    "Wind Turbine": 39,
-    Window: 39,
-    "Embedded-Server-PT": 40,
-    "WLC-2504": 41,
-    "WLC-3504": 41,
-    "WLC-PT": 41,
-    "3702i": 44,
-    "LAP-PT": 44,
+    "Laptop-PT": 17,
+    "TabletPC-PT": 18,
+    "SMARTPHONE-PT": 19,
+    "WirelessEndDevice-PT": 20,
+    "WiredEndDevice-PT": 21,
+    "TV-PT": 22,
+    "Home-VoIP-PT": 23,
+    "Analog-Phone-PT": 24,
+    5505: 26,
+    "5506-X": 26,
+    DLC100: 28,
+    "HomeRouter-PT-AC": 28,
+    "Cell-Tower": 29,
+    "Central-Office-Server": 30,
+    802: 31,
+    803: 31,
+    Sniffer: 33,
+    "MCU-PT": 34,
+    "SBC-PT": 35,
+    "Air Conditioner": 36,
+    "Air Cooler": 36,
+    Alarm: 36,
+    Appliance: 36,
+    "Atm Pressure Monitor": 36,
+    Battery: 36,
+    Beacon: 36,
+    Blower: 36,
+    "Bluetooth Speaker": 36,
+    "Carbon Dioxide Detector": 36,
+    "Carbon Monoxide Detector": 36,
+    Fan: 36,
+    "Ceiling Sprinkler": 36,
+    "Dimmable LED": 36,
+    Door: 36,
+    "Fire Monitor": 36,
+    "Fire Sprinkler": 36,
+    "Flex Sensor": 36,
+    "Floor Sprinkler": 36,
+    Furnace: 36,
+    "Garage Door": 36,
+    "Generic Environment Sensor": 36,
+    "Generic Sensor": 36,
+    "Heating Element": 36,
+    "Home Speaker": 36,
+    Humidifier: 36,
+    "Humidity Monitor": 36,
+    "Humidity Sensor": 36,
+    "Humiture Monitor": 36,
+    "Humiture Sensor": 36,
+    LCD: 36,
+    LED: 36,
+    "Lawn Sprinkler": 36,
+    Light: 36,
+    "Membrane Potentiometer": 36,
+    "Metal Sensor": 36,
+    "Motion Detector": 36,
+    "Motion Sensor": 36,
+    Motor: 36,
+    "Old Car": 36,
+    "Photo Sensor": 36,
+    "Piezo Speaker": 36,
+    "Portable Music Player": 36,
+    Potentiometer: 36,
+    "Power Meter": 36,
+    "Push Button": 36,
+    "Push Button Toggle Switch": 36,
+    "RFID Card": 36,
+    "RFID Reader": 36,
+    "RGB LED": 36,
+    "Rocker Switch": 36,
+    Servo: 36,
+    "Signal Generator": 36,
+    Siren: 36,
+    "Smart LED": 36,
+    "Smoke Detector": 36,
+    "Smoke Sensor": 36,
+    "Solar Panel": 36,
+    "Sound Frequency Detector": 36,
+    "Sound Sensor": 36,
+    Speaker: 36,
+    "Street Lamp": 36,
+    "Temperature Monitor": 36,
+    "Temperature Sensor": 36,
+    Thermostat: 36,
+    Thing: 36,
+    "Toggle Push Button": 36,
+    "Trip Sensor": 36,
+    "Trip Wire": 36,
+    "Water Detector": 36,
+    "Water Drain": 36,
+    "Water Level Monitor": 36,
+    "Water Sensor": 36,
+    Webcam: 36,
+    "Wind Detector": 36,
+    "Wind Sensor": 36,
+    "Wind Turbine": 36,
+    Window: 36,
+    "Embedded-Server-PT": 38,
+    "WLC-2504": 39,
+    "WLC-3504": 39,
+    "WLC-PT": 39,
+    "3702i": 7,
+    "LAP-PT": 7,
     "Power Distribution Device": 45,
     "Copper Patch Panel": 46,
     "Fiber Patch Panel": 46,
@@ -149,15 +205,18 @@ var allDeviceTypes = {
     "Fiber Wall Mount": 47,
     "Meraki-MX65W": 48,
     "Meraki-Server": 49,
-    NetworkController: 50,
+    NetworkController: 50
 };
 
 var allLinkTypes = {
-    "ethernet-straight": 8100,
-    "ethernet-cross": 8101,
     straight: 8100,
+    "ethernet-straight": 8100,
     cross: 8101,
+    crossover: 8101,
+    "ethernet-cross": 8101,
+    "ethernet-crossover": 8101,
     roll: 8102,
+    "ethernet-roll": 8102,
     fiber: 8103,
     phone: 8104,
     cable: 8105,
@@ -170,6 +229,94 @@ var allLinkTypes = {
     cellular: 8112,
     usb: 8113,
     custom_io: 8114,
+    "custom-io": 8114
+};
+
+var connectTypeNames = {
+    8100: "ETHERNET_STRAIGHT",
+    8101: "ETHERNET_CROSS",
+    8102: "ETHERNET_ROLL",
+    8103: "FIBER",
+    8104: "PHONE",
+    8105: "CABLE",
+    8106: "SERIAL",
+    8107: "AUTO",
+    8108: "CONSOLE",
+    8109: "WIRELESS",
+    8110: "COAXIAL",
+    8111: "OCTAL",
+    8112: "CELLULAR",
+    8113: "USB",
+    8114: "CUSTOM_IO"
+};
+
+var linkTypeAliases = ["straight", "cross", "crossover", "roll", "fiber", "phone", "cable", "serial", "auto", "console", "wireless", "coaxial", "octal", "cellular", "usb", "custom_io"];
+
+var commandStatusNames = ["ok", "ambiguous", "invalid", "incomplete", "notImplemented"];
+
+var commandStatusCodes = {
+    ok: 0,
+    ambiguous: 1,
+    invalid: 2,
+    incomplete: 3,
+    notimplemented: 4
+};
+
+var commandStatusHints = {
+    ambiguous: "Packet Tracer needs a longer form of the command",
+    invalid: "Packet Tracer does not know this command",
+    incomplete: "the command is missing a keyword or a value",
+    notimplemented: "the command exists in IOS but Packet Tracer does not run it"
+};
+
+var cliModes = ["user", "enable", "global", ""];
+
+var cliModeAliases = {
+    "": "",
+    user: "user",
+    "user exec": "user",
+    exec: "user",
+    enable: "enable",
+    "privileged exec": "enable",
+    privileged: "enable",
+    global: "global",
+    configure: "global",
+    config: "global",
+    "global config": "global"
+};
+
+var ipv6AddressTypes = {
+    unicast: 0,
+    anycast: 1,
+    eui64: 2
+};
+
+var wirelessAuthTypes = {
+    none: 0,
+    wep: 1,
+    "wpa-psk": 2,
+    "wpa-eap": 3,
+    "wpa2-psk": 4,
+    "wpa2-eap": 5,
+    open: 6
+};
+
+var wirelessEncryptTypes = {
+    none: 0,
+    wep64: 1,
+    wep128: 2,
+    tkip: 3,
+    aes: 4
+};
+
+var wirelessNetworkModes = {
+    disabled: 0,
+    b: 1,
+    g: 2,
+    bg: 3,
+    n: 4,
+    a: 5,
+    mixed: 7
 };
 
 var allModuleTypes = {
@@ -327,91 +474,7 @@ var allModuleTypes = {
     "MERAKI-POWER-ADAPTER": 34,
 };
 
-var deviceTypes = {
-    router: 0,
-    switch: 1,
-    cloud: 2,
-    bridge: 3,
-    hub: 4,
-    repeater: 5,
-    coaxialsplitter: 6,
-    accesspoint: 7,
-    pc: 8,
-    server: 9,
-    printer: 10,
-    wirelessrouter: 11,
-    ipphone: 12,
-    dslmodem: 13,
-    cablemodem: 14,
-    remotenetwork: 15,
-    multilayerswitch: 16,
-    switch3650: 17,
-    laptop: 18,
-    tabletpc: 19,
-    pda: 20,
-    wirelessenddevice: 21,
-    wiredenddevice: 22,
-    tv: 23,
-    homevoip: 24,
-    analogphone: 25,
-    multiuser: 26,
-    asa: 27,
-    ioe: 28,
-    homegateway: 29,
-    wirelessrouternewgeneration: 30,
-    celltower: 31,
-    centralofficeserver: 32,
-    ciscoaccesspoint: 33,
-    embeddedciscoaccesspoint: 34,
-    sniffer: 35,
-    mcu: 36,
-    sbc: 37,
-    thing: 38,
-    mcucomponent: 39,
-    embeddedserver: 40,
-    wlc: 41,
-    lightweightaccesspoint: 44
-};
-
-var iosDeviceTypes = [0, 1, 16, 17];
-
-var ipv6AddressTypes = {
-    unicast: 0,
-    anycast: 1,
-    eui64: 2
-};
-
-var wirelessAuthTypes = {
-    none: 0,
-    wep: 1,
-    "wpa-psk": 2,
-    "wpa-eap": 3,
-    "wpa2-psk": 4,
-    "wpa2-eap": 5,
-    open: 6
-};
-
-var wirelessEncryptTypes = {
-    none: 0,
-    wep64: 1,
-    wep128: 2,
-    tkip: 3,
-    aes: 4
-};
-
-var wirelessNetworkModes = {
-    disabled: 0,
-    b: 1,
-    g: 2,
-    bg: 3,
-    n: 4,
-    a: 5,
-    mixed: 7
-};
-
-var commandStatusNames = ["ok", "ambiguous", "invalid", "incomplete", "notImplemented"];
-
-var pluginPermissionMap = {"cli":["addDefaultRoute","addFloatingRoute","addHostEntry","addIpv6DefaultRoute","addIpv6StaticRoute","addLocalUser","addLoopback","addRouterDhcpPool","addSimplePdu","addStaticMac","addStaticNat","addStaticRoute","addStaticRoutes","addSubinterface","addSvi","applyAcl","applyAclToVty","applyConfig","applyToDevices","assignPorts","basicSetup","captureState","clearCommandLog","clearNatTranslations","commandsToScript","configureAaa","configureBgp","configureEigrp","configureEigrpv6","configureHsrp","configureHsrpPair","configureIosDevice","configureNatPool","configureOspf","configureOspfv3","configurePat","configurePortSecurity","configureRip","configureRipng","configureSsh","configureVtp","createEtherChannel","createExtendedAcl","createIpv6Acl","createStandardAcl","createVlans","deleteAcl","deletePdu","deleteVlan","enableArpInspection","enableDhcpSnooping","enableInterface","enableIpRouting","enableIpv6Routing","enablePasswordEncryption","enablePortfast","enablePortfastDefault","excludeRouterDhcp","firePdu","parkUnusedPorts","playSimulation","recoverErrDisabled","redistribute","removeAclFromInterface","removeBgp","removeEigrp","removeOspf","removeRip","removeRouterDhcpPool","removeStaticMac","removeStaticRoute","resetSimulation","routerOnAStick","runCommand","runOnAll","runOnDevices","saveAllConfigs","saveConfig","setAccessPort","setBandwidth","setBanner","setCdp","setClockRate","setCommandLogging","setConsolePassword","setDefaultGateway","setDhcpRelay","setDomainName","setDtpMode","setEigrpSummary","setEnableSecret","setEtherChannelLoadBalance","setHostname","setInterfaceDescription","setInterfaceDhcp","setInterfaceIp","setInterfaceIpv6","setLldp","setLoginBlock","setManagementIp","setMinPasswordLength","setNameServer","setNatInterfaces","setNtpServer","setOspfInterface","setPortCdp","setSimulationFilter","setSimulationMode","setSnmpCommunity","setSpeedDuplex","setStpMode","setStpPortCost","setStpPriority","setStpRoot","setSyslogServer","setTrunkPort","setVoiceVlan","setVtyPassword","shutdownInterface","stepBack","stepForward"],"topology":["addDevice","addDevices","addDhcpPool","addDnsCname","addDnsNs","addDnsRecord","addDnsRecords","addEmailUser","addEmailUsers","addFtpUser","addLink","addLinks","addModule","addModules","addNote","addRemoteNetwork","addTextPopup","addressHosts","arrangeCircle","arrangeGrid","autoConnect","centerOn","clearCanvas","clearLayer","clearPcIpv6","clearSyslog","clearTopology","configurePcIp","configurePcIpv6","configureWireless","deleteLink","disablePcIpv6","drawArrow","drawCircle","drawDashedLine","drawLine","drawPolyline","drawRect","drawZone","drawZoneAround","excludeDhcpRange","labelAllDevices","labelDevice","labelDevices","labelLink","labelWithIp","moveDevice","moveDeviceBy","moveItem","movePhysical","movePhysicalBy","moveRemoteNetwork","offAllEvents","offWorkspaceEvent","onWorkspaceEvent","removeCustomVar","removeDevice","removeDhcpPool","removeDnsRecord","removeEmailUser","removeFtpUser","removeItem","removeModule","removeNotes","removeRemoteNetwork","removeTextPopup","renameDevice","restartDevice","runHostCommand","setBackground","setCustomVar","setDeviceImage","setDeviceTime","setDhcpService","setDnsService","setEmailPassword","setHostFirewall","setHttpService","setHttpsService","setItemPosition","setMacFilter","setNoteText","setPcDhcp","setPcStatic","setPortClockRate","setPortDescription","setPortMac","setPortPower","setPortSpeed","setPower","setRadiusPort","setSyslogService","setTftpService","setWebPage","zoomIn","zoomOut","zoomReset"],"files":["deleteFile","exportConfigs","exportTopology","fileExists","folderExists","getDefaultSaveFolder","loadSnapshot","makeFolder","newProject","openProject","readTextFile","runScriptFile","saveProject","saveProjectAs","saveSnapshot","writeTextFile"],"raw":["$se","Function","_ScriptModule","appWindow","eval","fileManager","ipc","network"]};
+var pluginPermissionMap = {"cli":["addDefaultRoute","addFloatingRoute","addHostEntry","addIpv6DefaultRoute","addIpv6StaticRoute","addLocalUser","addLoopback","addRouterDhcpPool","addSimplePdu","addStaticMac","addStaticNat","addStaticRoute","addStaticRoutes","addSubinterface","addSvi","applyAcl","applyAclToVty","applyConfig","applyIpv6Acl","applyToDevices","assignPorts","basicSetup","captureState","clearCommandLog","clearNatTranslations","commandsToScript","configureAaa","configureBgp","configureEigrp","configureEigrpv6","configureHsrp","configureHsrpPair","configureIosDevice","configureNatPool","configureOspf","configureOspfv3","configurePat","configurePortSecurity","configureRip","configureRipng","configureSsh","configureVtp","createEtherChannel","createExtendedAcl","createIpv6Acl","createStandardAcl","createVlans","deleteAcl","deleteIpv6Acl","deletePdu","deleteVlan","enableArpInspection","enableDhcpSnooping","enableInterface","enableIpRouting","enableIpv6Routing","enablePasswordEncryption","enablePortfast","enablePortfastDefault","excludeRouterDhcp","firePdu","parkUnusedPorts","playSimulation","recoverErrDisabled","redistribute","removeAclFromInterface","removeBgp","removeEigrp","removeIpv6AclFromInterface","removeOspf","removeRip","removeRouterDhcpPool","removeStaticMac","removeStaticRoute","resetSimulation","routerOnAStick","runCommand","runCommands","runOnAll","runOnDevices","saveAllConfigs","saveConfig","setAccessPort","setBandwidth","setBanner","setCdp","setClockRate","setCommandLogging","setConsolePassword","setDefaultGateway","setDhcpRelay","setDomainName","setDtpMode","setEigrpSummary","setEnableSecret","setEtherChannelLoadBalance","setHostname","setInterfaceDescription","setInterfaceDhcp","setInterfaceIp","setInterfaceIpv6","setLldp","setLoginBlock","setManagementIp","setMinPasswordLength","setNameServer","setNatInterfaces","setNtpServer","setOspfInterface","setPortCdp","setSimulationFilter","setSimulationMode","setSnmpCommunity","setSpeedDuplex","setStpMode","setStpPortCost","setStpPriority","setStpRoot","setSyslogServer","setTrunkPort","setVoiceVlan","setVtyPassword","shutdownInterface","stepBack","stepForward"],"topology":["addDevice","addDevices","addDhcpPool","addDnsCname","addDnsNs","addDnsRecord","addDnsRecords","addEmailUser","addEmailUsers","addFtpUser","addLink","addLinks","addModule","addModules","addNote","addRemoteNetwork","addTextPopup","addressHosts","arrangeCircle","arrangeGrid","autoConnect","centerOn","clearCanvas","clearLayer","clearPcIpv6","clearSyslog","clearTopology","configurePcIp","configurePcIpv6","configureWireless","deleteLink","disablePcIpv6","drawArrow","drawCircle","drawDashedLine","drawLine","drawPolyline","drawRect","drawZone","drawZoneAround","excludeDhcpRange","labelAllDevices","labelDevice","labelDevices","labelLink","labelWithIp","moveDevice","moveDeviceBy","moveItem","movePhysical","movePhysicalBy","moveRemoteNetwork","offAllEvents","offWorkspaceEvent","onWorkspaceEvent","removeCustomVar","removeDevice","removeDhcpPool","removeDnsRecord","removeEmailUser","removeFtpUser","removeItem","removeModule","removeNotes","removeRemoteNetwork","removeTextPopup","renameDevice","resolveDeviceModel","restartDevice","runHostCommand","setBackground","setCustomVar","setDeviceImage","setDeviceTime","setDhcpService","setDnsService","setEmailPassword","setHostFirewall","setHttpService","setHttpsService","setItemPosition","setMacFilter","setNoteText","setPcDhcp","setPcStatic","setPortClockRate","setPortDescription","setPortMac","setPortPower","setPortSpeed","setPower","setRadiusPort","setSyslogService","setTftpService","setWebPage","zoomIn","zoomOut","zoomReset"],"files":["deleteFile","exportConfigs","exportTopology","fileExists","folderExists","getDefaultSaveFolder","loadSnapshot","makeFolder","newProject","openProject","readTextFile","runScriptFile","saveProject","saveProjectAs","saveSnapshot","writeTextFile"],"raw":["$se","Function","_ScriptModule","appWindow","eval","fileManager","ipc","network"]};
 
 function toList(value) {
     if (value === undefined || value === null || value === "") {
@@ -461,6 +524,48 @@ function toArray(list) {
         result.push(list[i]);
     }
     return result;
+}
+
+function mergeInto(target, source) {
+    var out = target || {};
+    var extra = source || {};
+    for (var key in extra) {
+        if (Object.prototype.hasOwnProperty.call(extra, key)) {
+            out[key] = extra[key];
+        }
+    }
+    return out;
+}
+
+function oneLine(text) {
+    return String(text === undefined || text === null ? "" : text).replace(/^\s+|\s+$/g, "");
+}
+
+function joinNames(list) {
+    return toList(list).map(String).join(", ");
+}
+
+function pickFirst() {
+    for (var i = 0; i < arguments.length; i++) {
+        if (isDefined(arguments[i]) && arguments[i] !== "") {
+            return arguments[i];
+        }
+    }
+    return undefined;
+}
+
+function isWholeNumber(value) {
+    return typeof value === "number" && isFinite(value) && value % 1 === 0;
+}
+
+function requireWholeNumber(value, label, low, high) {
+    if (!isWholeNumber(value)) {
+        throw new Error(label + " must be a whole number, got " + value);
+    }
+    if (value < low || value > high) {
+        throw new Error(label + " must be between " + low + " and " + high + ", got " + value);
+    }
+    return value;
 }
 
 var namedColors = {
@@ -786,30 +891,129 @@ function layerOrCurrent(layer) {
     return layer === undefined || layer === null ? currentLayer() : layer;
 }
 
-function addDevice(deviceName, deviceModel, x, y) {
-    var deviceType = allDeviceTypes[deviceModel];
-    if (deviceType === undefined) {
-        throw new Error("Unknown device model: " + deviceModel);
+var modelAliases = {
+    "1841": "1841",
+    "1941": "1941",
+    "2811": "2811",
+    "2901": "2901",
+    "2911": "2911",
+    "4321": "ISR4321",
+    "4331": "ISR4331",
+    "5505": "5505",
+    "5506": "5506-X",
+    "5506x": "5506-X",
+    "7960": "7960",
+    "3650": "3650-24PS",
+    "2960": "2960-24TT",
+    "3560": "3560-24PS",
+    isr4321: "ISR4321",
+    isr4331: "ISR4331",
+    "router": "Router-PT",
+    "switch": "Switch-PT",
+    "pc": "PC-PT",
+    "server": "Server-PT",
+    laptop: "Laptop-PT",
+    "tablet": "TabletPC-PT",
+    "access point": "AccessPoint-PT",
+    "wlc": "WLC-PT",
+    "cloud": "Cloud-PT"
+};
+
+function modelNameOf(model) {
+    return String(model === undefined || model === null ? "" : model).replace(/^\s+|\s+$/g, "");
+}
+
+function knownModel(model) {
+    return Object.prototype.hasOwnProperty.call(allDeviceTypes, model);
+}
+
+function similarModels(model, limit) {
+    var needle = modelNameOf(model).toLowerCase();
+    var hits = [];
+    Object.keys(allDeviceTypes).forEach(function (name) {
+        var lower = name.toLowerCase();
+        if (hits.length < limit && (lower.indexOf(needle) === 0 || lower.indexOf(needle) !== -1 || needle.indexOf(lower) === 0)) {
+            hits.push(name);
+        }
+    });
+    return hits;
+}
+
+function resolveDeviceModel(model) {
+    var text = modelNameOf(model);
+    if (!text) {
+        throw new Error("addDevice needs a model, for example \"2911\" or \"2960-24TT\". Run getDeviceModels() for the full list");
     }
-    if (deviceExists(deviceName)) {
-        throw new Error("Device name already in use: " + deviceName);
+    if (knownModel(text)) {
+        return text;
+    }
+    var aliasKey = text.toLowerCase();
+    if (Object.prototype.hasOwnProperty.call(modelAliases, aliasKey)) {
+        return modelAliases[aliasKey];
+    }
+    var match = null;
+    Object.keys(allDeviceTypes).forEach(function (name) {
+        if (!match && name.toLowerCase() === aliasKey) {
+            match = name;
+        }
+    });
+    if (match) {
+        return match;
+    }
+    var guesses = similarModels(text, 5);
+    throw new Error("Unknown device model: " + text + (guesses.length ? ". Did you mean " + joinNames(guesses) + "?" : ". Run getDeviceModels() for the full list"));
+}
+
+function getDeviceModels(kind) {
+    var names = Object.keys(allDeviceTypes);
+    if (isDefined(kind) && kind !== "") {
+        var wanted = resolveDeviceType(kind);
+        names = names.filter(function (model) {
+            return allDeviceTypes[model] === wanted;
+        });
+    }
+    return names.sort();
+}
+
+function getDeviceModelType(model) {
+    return allDeviceTypes[resolveDeviceModel(model)];
+}
+
+function addDevice(deviceName, deviceModel, x, y) {
+    var name = oneLine(deviceName);
+    var model = resolveDeviceModel(deviceModel);
+    var left = isDefined(x) ? x : 0;
+    var top = isDefined(y) ? y : 0;
+
+    if (!name) {
+        throw new Error("addDevice needs a name, for example \"R1\"");
+    }
+    if (deviceExists(name)) {
+        throw new Error("Device name already in use: " + name + ". Call removeDevice or renameDevice first");
+    }
+    if (typeof left !== "number" || typeof top !== "number" || !isFinite(left) || !isFinite(top)) {
+        throw new Error("addDevice needs numeric x and y coordinates, got " + x + " and " + y);
     }
 
-    var createdName = logicalWorkspace().addDevice(deviceType, deviceModel, x, y);
+    var createdName = String(logicalWorkspace().addDevice(allDeviceTypes[model], model, left, top));
     if (!createdName) {
-        return false;
+        throw new Error("Packet Tracer refused to add " + model + ": the model may not exist in this version. Run getDeviceModels(\"" + (deviceTypeNames[allDeviceTypes[model]] || "") + "\") to see the models this build knows");
     }
 
     var device = network().getDevice(createdName);
-    device.setName(deviceName);
+    if (!device) {
+        throw new Error("Packet Tracer reported " + createdName + " but the device is not in the network");
+    }
+    device.setName(name);
     skipBootIfIos(device);
     return true;
 }
 
 function addDevices(list) {
-    return list.map(function (entry) {
-        return addDevice(entry[0], entry[1], entry[2], entry[3]);
+    toList(list).forEach(function (entry) {
+        addDevice(entry[0], entry[1], entry[2], entry[3]);
     });
+    return true;
 }
 
 function removeDevice(deviceName) {
@@ -820,10 +1024,14 @@ function removeDevice(deviceName) {
 }
 
 function renameDevice(oldName, newName) {
-    if (deviceExists(newName)) {
-        throw new Error("Device name already in use: " + newName);
+    var target = oneLine(newName);
+    if (!target) {
+        throw new Error("renameDevice needs a new name");
     }
-    findDevice(oldName).setName(newName);
+    if (deviceExists(target)) {
+        throw new Error("Device name already in use: " + target);
+    }
+    findDevice(oldName).setName(target);
     return true;
 }
 
@@ -946,37 +1154,74 @@ function withPowerOff(device, action) {
     return result;
 }
 
+function supportedModuleList(device) {
+    var list = callIfExists(device, "getSupportedModule", null);
+    if (!list) {
+        return [];
+    }
+    var names = [];
+    for (var i = 0; i < list.length; i++) {
+        names.push(String(list[i]));
+    }
+    return names;
+}
+
+function resolveModuleModel(deviceName, model) {
+    if (typeof model === "number") {
+        throw new Error("Module models are strings, not numbers: addModule(\"" + deviceName + "\", \"0/0\", \"HWIC-2T\"). Run getSupportedModules(\"" + deviceName + "\") for the list");
+    }
+    var text = oneLine(model);
+    if (!text) {
+        throw new Error("addModule needs a module model, for example \"HWIC-2T\"");
+    }
+    if (!Object.prototype.hasOwnProperty.call(allModuleTypes, text)) {
+        var known = Object.keys(allModuleTypes).filter(function (name) {
+            return name.toLowerCase().indexOf(text.toLowerCase()) !== -1;
+        }).slice(0, 5);
+        throw new Error("Unknown module: " + text + (known.length ? ". Did you mean " + joinNames(known) + "?" : ". Run getSupportedModules(\"" + deviceName + "\") for the list"));
+    }
+    return text;
+}
+
 function addModule(deviceName, slot, model) {
     var device = findDevice(deviceName);
-    var moduleType = allModuleTypes[model];
-    if (moduleType === undefined) {
-        throw new Error("Unknown module: " + model);
+    var name = isDefined(slot) ? String(slot) : "";
+    if (!name) {
+        throw new Error("addModule needs a slot name, for example \"0/0\"");
     }
-    return withPowerOff(device, function () {
-        return device.addModule(String(slot), moduleType, model) === true;
+    var moduleModel = resolveModuleModel(deviceName, model);
+    var installed = withPowerOff(device, function () {
+        return device.addModule(name, allModuleTypes[moduleModel], moduleModel) === true;
     });
+    if (!installed) {
+        var supported = supportedModuleList(device);
+        throw new Error(deviceName + " refused " + moduleModel + " in slot " + name + "." + (supported.length ? " Supported modules: " + joinNames(supported.slice(0, 12)) : "") + " Check that the slot is free and that the model fits the device");
+    }
+    return true;
 }
 
 function addModules(deviceName, modules) {
-    return Object.keys(modules).map(function (slot) {
-        return addModule(deviceName, slot, modules[slot]);
+    var results = [];
+    Object.keys(modules || {}).forEach(function (slot) {
+        results.push(addModule(deviceName, slot, modules[slot]));
     });
+    return results;
 }
 
 function removeModule(deviceName, slot) {
     var device = findDevice(deviceName);
-    return withPowerOff(device, function () {
-        return device.removeModule(String(slot)) === true;
+    var name = isDefined(slot) ? String(slot) : "";
+    var removed = withPowerOff(device, function () {
+        return device.removeModule(name) === true;
     });
+    if (!removed) {
+        throw new Error(deviceName + " has no module in slot " + name);
+    }
+    return true;
 }
 
 function getSupportedModules(deviceName) {
-    var list = findDevice(deviceName).getSupportedModule();
-    var result = [];
-    for (var i = 0; i < list.length; i++) {
-        result.push(String(list[i]));
-    }
-    return result;
+    return supportedModuleList(findDevice(deviceName));
 }
 
 function describePort(port) {
@@ -1115,42 +1360,83 @@ function setDeviceImage(deviceName, logicalPath, physicalPath) {
 }
 
 function resolveLinkType(linkType) {
-    var key = isDefined(linkType) ? String(linkType).toLowerCase() : "auto";
-    var type = allLinkTypes[key];
-    if (type === undefined) {
-        throw new Error("Unknown link type: " + linkType);
+    var key = isDefined(linkType) && linkType !== "" ? String(linkType).toLowerCase().replace(/^\s+|\s+$/g, "") : "auto";
+    if (!Object.prototype.hasOwnProperty.call(allLinkTypes, key)) {
+        throw new Error("Unknown link type: " + linkType + ". Valid types are " + joinNames(linkTypeAliases));
     }
-    return type;
+    return allLinkTypes[key];
+}
+
+function portForLink(deviceName, portName) {
+    var device = findDevice(deviceName);
+    var port = device.getPort(String(portName));
+    if (!port) {
+        var free = getFreePorts(deviceName);
+        throw new Error(deviceName + " has no port named " + portName + (free.length ? ". Free ports: " + joinNames(free.slice(0, 10)) : ""));
+    }
+    return port;
+}
+
+function describeLinkEnd(deviceName, portName) {
+    return deviceName + " " + portName;
 }
 
 function addLink(device1Name, device1Port, device2Name, device2Port, linkType) {
-    findDevice(device1Name);
-    findDevice(device2Name);
-    return logicalWorkspace().createLink(device1Name, device1Port, device2Name, device2Port, resolveLinkType(linkType)) === true;
+    var portA = portForLink(device1Name, device1Port);
+    var portB = portForLink(device2Name, device2Port);
+    if (String(device1Name) === String(device2Name) && String(device1Port) === String(device2Port)) {
+        throw new Error("A port cannot be cabled to itself: " + describeLinkEnd(device1Name, device1Port));
+    }
+
+    var type = resolveLinkType(linkType);
+    [[portA, device1Name, device1Port], [portB, device2Name, device2Port]].forEach(function (end) {
+        var existing = callIfExists(end[0], "getLink", null);
+        if (existing) {
+            throw new Error(describeLinkEnd(end[1], end[2]) + " is already cabled. Call deleteLink first");
+        }
+    });
+
+    var created = logicalWorkspace().createLink(String(device1Name), String(device1Port), String(device2Name), String(device2Port), type) === true;
+    if (!created) {
+        throw new Error("Packet Tracer refused the link " + describeLinkEnd(device1Name, device1Port) + " to " + describeLinkEnd(device2Name, device2Port) + " as " + linkType + " (" + connectTypeNames[type] + "). Check that both ports are of a matching kind and that the device is powered");
+    }
+    return true;
 }
 
 function addLinks(list) {
-    return list.map(function (entry) {
-        return addLink(entry[0], entry[1], entry[2], entry[3], entry[4]);
+    toList(list).forEach(function (entry) {
+        addLink(entry[0], entry[1], entry[2], entry[3], entry[4]);
     });
+    return true;
 }
 
 function deleteLink(deviceName, portName) {
-    return logicalWorkspace().deleteLink(deviceName, portName) === true;
+    var port = portForLink(deviceName, portName);
+    if (!callIfExists(port, "getLink", null)) {
+        throw new Error(describeLinkEnd(deviceName, portName) + " has no cable");
+    }
+    return logicalWorkspace().deleteLink(String(deviceName), String(portName)) === true;
 }
 
 function autoConnect(device1Name, device2Name) {
     findDevice(device1Name);
     findDevice(device2Name);
-    logicalWorkspace().autoConnectDevices(device1Name, device2Name);
+    if (String(device1Name) === String(device2Name)) {
+        throw new Error("autoConnect needs two different devices");
+    }
+    logicalWorkspace().autoConnectDevices(String(device1Name), String(device2Name));
     return true;
 }
 
 function linkTypeName(code) {
-    for (var name in allLinkTypes) {
-        if (allLinkTypes[name] === code && name.indexOf("ethernet-") !== 0) {
-            return name;
-        }
+    if (isDefined(connectTypeNames[code])) {
+        var name = null;
+        Object.keys(allLinkTypes).forEach(function (key) {
+            if (!name && allLinkTypes[key] === code && key.indexOf("ethernet-") !== 0) {
+                name = key;
+            }
+        });
+        return name || connectTypeNames[code];
     }
     return String(code);
 }
@@ -1191,7 +1477,7 @@ function getNeighbors(deviceName) {
 }
 
 function isLinkUp(deviceName, portName) {
-    var port = findDevice(deviceName).getPort(portName);
+    var port = findDevice(deviceName).getPort(String(portName));
     return !!port && port.isPortUp() === true && port.isProtocolUp() === true;
 }
 
@@ -1326,12 +1612,57 @@ function disablePcIpv6(deviceName, portName) {
     return true;
 }
 
+function statusCodeOf(value) {
+    if (typeof value === "number") {
+        return value;
+    }
+    var name = String(value === undefined || value === null ? "" : value).toLowerCase();
+    if (isDefined(commandStatusCodes[name])) {
+        return commandStatusCodes[name];
+    }
+    return -1;
+}
+
+function statusNameOf(code) {
+    var name = commandStatusNames[code];
+    return isDefined(name) ? name : String(code);
+}
+
+function statusHint(status) {
+    var hint = commandStatusHints[String(status).toLowerCase()];
+    return hint ? " (" + hint + ")" : "";
+}
+
+function failureText(deviceName, failures) {
+    var lines = failures.map(function (item) {
+        return "  " + item.command + " -> " + item.status + statusHint(item.status);
+    });
+    return deviceName + " rejected " + failures.length + (failures.length === 1 ? " command" : " commands") + ":\n" + lines.join("\n");
+}
+
+function normalizeCliMode(mode) {
+    if (!isDefined(mode)) {
+        return "";
+    }
+    var key = String(mode).toLowerCase().replace(/^\s+|\s+$/g, "");
+    if (!Object.prototype.hasOwnProperty.call(cliModeAliases, key)) {
+        throw new Error("Invalid CLI mode: " + mode + ". Valid modes are " + joinNames(["user", "enable", "global"]) + " or an empty string to stay in the current mode");
+    }
+    return cliModeAliases[key];
+}
+
 function parseCommandResult(result) {
     if (Array.isArray(result)) {
-        return { status: commandStatusNames[result[0]] || String(result[0]), output: String(isDefined(result[1]) ? result[1] : "") };
+        return { status: statusNameOf(statusCodeOf(result[0])), output: String(isDefined(result[1]) ? result[1] : "") };
     }
     if (result && isDefined(result.first)) {
-        return { status: commandStatusNames[result.first] || String(result.first), output: String(isDefined(result.second) ? result.second : "") };
+        return { status: statusNameOf(statusCodeOf(result.first)), output: String(isDefined(result.second) ? result.second : "") };
+    }
+    if (result && isDefined(result.status)) {
+        return { status: String(result.status), output: String(isDefined(result.output) ? result.output : "") };
+    }
+    if (typeof result === "number") {
+        return { status: statusNameOf(result), output: "" };
     }
     return { status: "ok", output: isDefined(result) ? String(result) : "" };
 }
@@ -1339,41 +1670,44 @@ function parseCommandResult(result) {
 function iosDevice(deviceName) {
     var device = findDevice(deviceName);
     if (typeof device.enterCommand !== "function") {
-        throw new Error("Not a Cisco IOS device: " + deviceName);
+        throw new Error(deviceName + " is a " + String(device.getModel()) + " and has no Cisco IOS command line");
     }
     skipBootIfIos(device);
     return device;
 }
 
+function sendLine(device, line, mode, failures) {
+    var result = parseCommandResult(device.enterCommand(line, mode));
+    if (result.status !== "ok") {
+        failures.push({ command: line, status: result.status, output: result.output });
+    }
+    return result;
+}
+
 function configureIosDevice(deviceName, commands, save) {
     var device = iosDevice(deviceName);
-    var failed = [];
+    var failures = [];
 
     device.enterCommand("!", "global");
     toLines(commands).forEach(function (line) {
-        var command = line.replace(/\s+$/, "");
-        if (!command.trim() || command.trim() === "!") {
+        var command = oneLine(line);
+        if (!command || command === "!") {
             return;
         }
-        var result = parseCommandResult(device.enterCommand(command, ""));
-        if (result.status !== "ok") {
-            failed.push({ command: command.trim(), status: result.status });
-        }
+        sendLine(device, command, "", failures);
     });
     device.enterCommand("end", "");
 
     if (save !== false) {
-        device.enterCommand("write memory", "enable");
+        sendLine(device, "write memory", "enable", failures);
     }
-    return failed;
+    return failures;
 }
 
 function applyConfig(deviceName, commands, save) {
-    var failed = configureIosDevice(deviceName, commands, save);
-    if (failed.length) {
-        throw new Error(deviceName + " rejected: " + failed.map(function (item) {
-            return item.command + " (" + item.status + ")";
-        }).join(", "));
+    var failures = configureIosDevice(deviceName, commands, save);
+    if (failures.length) {
+        throw new Error(failureText(deviceName, failures));
     }
     return true;
 }
@@ -1388,7 +1722,24 @@ function applyToDevices(deviceNames, commands, save) {
 
 function runCommand(deviceName, command, mode) {
     var device = iosDevice(deviceName);
-    return parseCommandResult(device.enterCommand(String(command), isDefined(mode) ? mode : "enable"));
+    return parseCommandResult(device.enterCommand(oneLine(command), normalizeCliMode(isDefined(mode) ? mode : "enable")));
+}
+
+function runCommands(deviceName, commands, mode) {
+    var device = iosDevice(deviceName);
+    var chosen = normalizeCliMode(isDefined(mode) ? mode : "enable");
+    var failures = [];
+    var results = toLines(commands).map(function (line) {
+        var command = oneLine(line);
+        if (!command) {
+            return null;
+        }
+        var result = sendLine(device, command, chosen, failures);
+        return { command: command, status: result.status, output: result.output };
+    }).filter(function (item) {
+        return item !== null;
+    });
+    return { device: String(device.getName()), ok: failures.length === 0, commands: results, failed: failures };
 }
 
 function saveConfig(deviceName) {
@@ -1458,7 +1809,7 @@ function buildBasicSetup(options) {
 }
 
 function basicSetup(deviceName, options) {
-    var opts = Object.assign({ hostname: deviceName }, options || {});
+    var opts = mergeInto({ hostname: deviceName }, options);
     return configureIosDevice(deviceName, buildBasicSetup(opts));
 }
 
@@ -1900,7 +2251,7 @@ function buildTrunkPorts(interfaces, allowedVlans, nativeVlan, options) {
 }
 
 function setTrunkPort(deviceName, interfaces, allowedVlans, nativeVlan, options) {
-    var opts = Object.assign({}, options || {});
+    var opts = mergeInto({}, options);
     if (!opts.encapsulation && findDevice(deviceName).getType() === deviceTypes.multilayerswitch) {
         opts.encapsulation = "dot1q";
     }
@@ -1917,63 +2268,115 @@ function setDtpMode(deviceName, interfaces, mode) {
 
 var etherChannelModes = ["active", "passive", "desirable", "auto", "on"];
 
-function buildEtherChannel(group, interfaces, mode, options) {
-    var opts = options || {};
-    var channelMode = mode || "active";
-    if (etherChannelModes.indexOf(channelMode) === -1) {
-        throw new Error("Invalid EtherChannel mode: " + channelMode);
+var etherChannelModeHelp = {
+    active: "LACP, the other side must be active or passive",
+    passive: "LACP, the other side must be active",
+    desirable: "PAgP, the other side must be desirable or auto",
+    auto: "PAgP, the other side must be desirable",
+    on: "no negotiation, both sides must be on"
+};
+
+function channelGroupNumber(group) {
+    var value = typeof group === "string" ? Number(group) : group;
+    if (!isWholeNumber(value) || value < 1 || value > 48) {
+        throw new Error("EtherChannel group must be a whole number from 1 to 48, got " + group);
     }
+    return value;
+}
 
-    var commands = [];
-    toList(interfaces).forEach(function (name) {
-        var body = [];
-        if (opts.trunk) {
-            if (opts.encapsulation) {
-                body.push("switchport trunk encapsulation " + opts.encapsulation);
-            }
-            body.push("switchport mode trunk");
-        } else if (opts.accessVlan) {
-            body.push("switchport mode access");
-            body.push("switchport access vlan " + opts.accessVlan);
-        } else if (opts.address) {
-            body.push("no switchport");
-        }
-        body.push("channel-group " + group + " mode " + channelMode);
-        body.push("no shutdown");
-        commands = commands.concat(interfaceBlock(name, body));
-    });
+function resolveChannelMode(mode) {
+    var name = isDefined(mode) && mode !== "" ? String(mode).toLowerCase() : "active";
+    if (etherChannelModes.indexOf(name) === -1) {
+        throw new Error("Invalid EtherChannel mode: " + mode + ". Valid modes are " + joinNames(etherChannelModes) + ". " + joinNames(etherChannelModes.map(function (item) {
+            return item + " (" + etherChannelModeHelp[item] + ")";
+        })));
+    }
+    return name;
+}
 
-    var portChannel = [];
+function channelPortBody(opts, group, channelMode) {
+    var body = [];
     if (opts.trunk) {
         if (opts.encapsulation) {
-            portChannel.push("switchport trunk encapsulation " + opts.encapsulation);
+            body.push("switchport trunk encapsulation " + opts.encapsulation);
         }
-        portChannel.push("switchport mode trunk");
+        body.push("switchport mode trunk");
+    } else if (opts.accessVlan) {
+        body.push("switchport mode access");
+        body.push("switchport access vlan " + opts.accessVlan);
+    } else if (opts.address) {
+        body.push("no switchport");
+    }
+    body.push("channel-group " + group + " mode " + channelMode);
+    body.push("no shutdown");
+    return body;
+}
+
+function channelPortChannelBody(opts, group) {
+    var body = [];
+    if (opts.trunk) {
+        if (opts.encapsulation) {
+            body.push("switchport trunk encapsulation " + opts.encapsulation);
+        }
+        body.push("switchport mode trunk");
         if (opts.allowedVlans) {
-            portChannel.push("switchport trunk allowed vlan " + joinVlans(opts.allowedVlans));
+            body.push("switchport trunk allowed vlan " + joinVlans(opts.allowedVlans));
         }
         if (opts.nativeVlan) {
-            portChannel.push("switchport trunk native vlan " + opts.nativeVlan);
+            body.push("switchport trunk native vlan " + opts.nativeVlan);
         }
     } else if (opts.address) {
         var parsed = ipAndMask(opts.address, opts.mask);
-        portChannel.push("no switchport");
-        portChannel.push("ip address " + parsed.ip + " " + parsed.mask);
+        body.push("no switchport");
+        body.push("ip address " + parsed.ip + " " + parsed.mask);
+    } else if (opts.accessVlan) {
+        body.push("switchport mode access");
+        body.push("switchport access vlan " + opts.accessVlan);
     }
-    portChannel.push("no shutdown");
-    return commands.concat(interfaceBlock("Port-channel" + group, portChannel));
+    body.push("no shutdown");
+    return body;
+}
+
+function buildEtherChannel(group, interfaces, mode, options) {
+    var opts = mergeInto({}, options || {});
+    var number = channelGroupNumber(group);
+    var channelMode = resolveChannelMode(mode);
+    var members = toList(interfaces);
+    if (!members.length) {
+        throw new Error("buildEtherChannel needs at least one interface, for example [\"FastEthernet0/23\", \"FastEthernet0/24\"]");
+    }
+
+    var body = channelPortBody(opts, number, channelMode);
+    var commands = [];
+    members.forEach(function (name) {
+        commands = commands.concat(interfaceBlock(name, body));
+    });
+    return commands.concat(interfaceBlock("Port-channel" + number, channelPortChannelBody(opts, number)));
 }
 
 function createEtherChannel(deviceName, group, interfaces, mode, options) {
-    var opts = Object.assign({}, options || {});
-    if (opts.trunk && !opts.encapsulation && findDevice(deviceName).getType() === deviceTypes.multilayerswitch) {
+    var device = findDevice(deviceName);
+    var opts = mergeInto({}, options || {});
+    if (opts.trunk && !opts.encapsulation && device.getType() === deviceTypes.multilayerswitch) {
         opts.encapsulation = "dot1q";
     }
     return configureIosDevice(deviceName, buildEtherChannel(group, interfaces, mode, opts));
 }
 
+var loadBalanceMethods = ["src-mac", "dst-mac", "src-dst-mac", "src-ip", "dst-ip", "src-dst-ip", "src-port", "dst-port", "src-dst-port"];
+
 function setEtherChannelLoadBalance(deviceName, method) {
-    return configureIosDevice(deviceName, ["port-channel load-balance " + method]);
+    var name = oneLine(method).toLowerCase();
+    if (loadBalanceMethods.indexOf(name) === -1) {
+        throw new Error("Invalid load-balance method: " + method + ". Valid methods are " + joinNames(loadBalanceMethods));
+    }
+    return configureIosDevice(deviceName, ["port-channel load-balance " + name]);
+}
+
+function getEtherChannelLoadBalance(deviceName) {
+    var result = runCommand(deviceName, "show etherchannel load-balance", "enable");
+    var match = /(src-mac|dst-mac|src-dst-mac|src-ip|dst-ip|src-dst-ip|src-port|dst-port|src-dst-port)/i.exec(result.output);
+    return match ? match[1].toLowerCase() : "";
 }
 
 function setStpMode(deviceName, mode) {
@@ -2049,26 +2452,62 @@ function configureVtp(deviceName, options) {
     return configureIosDevice(deviceName, buildVtp(options));
 }
 
+var portSecurityViolations = ["shutdown", "restrict", "protect"];
+
+function portSecurityMax(value) {
+    var max = isDefined(value) ? value : 1;
+    if (!isWholeNumber(max) || max < 1 || max > 1024) {
+        throw new Error("Port security maximum must be a whole number from 1 to 1024, got " + value);
+    }
+    return max;
+}
+
+function checkMacList(macs) {
+    var list = toList(macs);
+    list.forEach(function (mac) {
+        if (!/^([0-9a-f]{4}\.[0-9a-f]{4}\.[0-9a-f]{4}|[0-9a-f]{2}([-:]?[0-9a-f]{2}){5})$/i.test(String(mac))) {
+            throw new Error("Port security needs MAC addresses as aaaa.bbbb.cccc or aa:bb:cc:dd:ee:ff, got " + mac);
+        }
+    });
+    return list;
+}
+
 function buildPortSecurity(interfaces, options) {
     var opts = options || {};
-    var violation = opts.violation || "shutdown";
-    if (["shutdown", "restrict", "protect"].indexOf(violation) === -1) {
-        throw new Error("Invalid violation mode: " + violation);
+    var violation = isDefined(opts.violation) ? String(opts.violation).toLowerCase() : "shutdown";
+    if (portSecurityViolations.indexOf(violation) === -1) {
+        throw new Error("Invalid violation mode: " + opts.violation + ". Valid modes are " + joinNames(portSecurityViolations));
+    }
+    var maximum = portSecurityMax(opts.maximum);
+    var macs = checkMacList(opts.macs);
+    var members = toList(interfaces);
+    if (!members.length) {
+        throw new Error("buildPortSecurity needs at least one interface");
     }
 
     var commands = [];
-    toList(interfaces).forEach(function (name) {
-        var body = ["switchport mode access", "switchport port-security"];
-        body.push("switchport port-security maximum " + (opts.maximum || 1));
-        body.push("switchport port-security violation " + violation);
+    members.forEach(function (name) {
+        var body = [
+            "switchport mode access",
+            "no switchport port-security",
+            "switchport port-security",
+            "switchport port-security maximum " + maximum,
+            "switchport port-security violation " + violation
+        ];
         if (opts.sticky !== false) {
             body.push("switchport port-security mac-address sticky");
         }
-        toList(opts.macs).forEach(function (mac) {
+        macs.forEach(function (mac) {
             body.push("switchport port-security mac-address " + mac);
         });
         if (opts.agingTime) {
-            body.push("switchport port-security aging time " + opts.agingTime);
+            body.push("switchport port-security aging time " + requireWholeNumber(opts.agingTime, "Port security aging time", 1, 1440));
+        }
+        if (opts.agingType) {
+            if (["absolute", "inactivity"].indexOf(opts.agingType) === -1) {
+                throw new Error("Port security aging type must be absolute or inactivity, got " + opts.agingType);
+            }
+            body.push("switchport port-security aging type " + opts.agingType);
         }
         commands = commands.concat(interfaceBlock(name, body));
     });
@@ -2084,6 +2523,9 @@ function recoverErrDisabled(deviceName, interfaces) {
     toList(interfaces).forEach(function (name) {
         commands = commands.concat(interfaceBlock(name, ["shutdown", "no shutdown"]));
     });
+    if (!commands.length) {
+        throw new Error("recoverErrDisabled needs at least one interface");
+    }
     return configureIosDevice(deviceName, commands);
 }
 
@@ -2509,14 +2951,62 @@ function deleteAcl(deviceName, id, extended) {
     return configureIosDevice(deviceName, ["no ip access-list " + (extended ? "extended " : "standard ") + id]);
 }
 
-function createIpv6Acl(deviceName, name, entries, interfaceName, direction) {
-    var commands = ["ipv6 access-list " + name].concat(toList(entries).map(function (line) {
+function aclIpv6Name(name) {
+    var text = oneLine(name);
+    if (!/^[A-Za-z][A-Za-z0-9_-]{0,63}$/.test(text)) {
+        throw new Error("IPv6 ACL names start with a letter and use letters, digits, _ or -: got " + name);
+    }
+    return text;
+}
+
+function aclIpv6Entry(line) {
+    var text = oneLine(line);
+    if (!/^(permit|deny|remark)\s+\S/i.test(text)) {
+        throw new Error("IPv6 ACL entries start with permit, deny or remark, got " + line);
+    }
+    return text;
+}
+
+function buildIpv6Acl(name, entries) {
+    var list = toList(entries).map(aclIpv6Entry);
+    if (!list.length) {
+        throw new Error("buildIpv6Acl needs at least one entry, for example \"permit ipv6 any any\"");
+    }
+    return ["ipv6 access-list " + aclIpv6Name(name)].concat(list.map(function (line) {
         return " " + line;
     })).concat(["exit"]);
-    if (interfaceName) {
-        commands = commands.concat(interfaceBlock(interfaceName, ["ipv6 traffic-filter " + name + " " + (direction || "in")]));
+}
+
+function createIpv6Acl(deviceName, name, entries, interfaceName, direction) {
+    var acl = aclIpv6Name(name);
+    var commands = buildIpv6Acl(acl, entries);
+    var dir = isDefined(direction) ? String(direction).toLowerCase() : "in";
+
+    if (isDefined(interfaceName) && interfaceName !== "") {
+        if (dir !== "in" && dir !== "out") {
+            throw new Error("IPv6 ACL direction must be in or out, got " + direction);
+        }
+        findPort(deviceName, interfaceName);
+        commands = commands.concat(interfaceBlock(interfaceName, ["ipv6 traffic-filter " + acl + " " + dir]));
     }
     return configureIosDevice(deviceName, commands);
+}
+
+function deleteIpv6Acl(deviceName, name) {
+    return configureIosDevice(deviceName, ["no ipv6 access-list " + aclIpv6Name(name)]);
+}
+
+function applyIpv6Acl(deviceName, interfaceName, name, direction) {
+    var dir = isDefined(direction) ? String(direction).toLowerCase() : "in";
+    if (dir !== "in" && dir !== "out") {
+        throw new Error("IPv6 ACL direction must be in or out, got " + direction);
+    }
+    return configureIosDevice(deviceName, interfaceBlock(interfaceName, ["ipv6 traffic-filter " + aclIpv6Name(name) + " " + dir]));
+}
+
+function removeIpv6AclFromInterface(deviceName, interfaceName, name, direction) {
+    var dir = isDefined(direction) ? String(direction).toLowerCase() : "in";
+    return configureIosDevice(deviceName, interfaceBlock(interfaceName, ["no ipv6 traffic-filter " + aclIpv6Name(name) + " " + dir]));
 }
 
 function buildNatInterfaces(inside, outside) {
@@ -2607,7 +3097,7 @@ function buildSsh(options) {
 }
 
 function configureSsh(deviceName, options) {
-    var opts = Object.assign({}, options || {});
+    var opts = mergeInto({}, options);
     if (!opts.hostname) {
         var current = String(callIfExists(findDevice(deviceName), "getHostName", ""));
         if (!current || current === "Router" || current === "Switch") {
@@ -2625,27 +3115,52 @@ function setMinPasswordLength(deviceName, length) {
     return configureIosDevice(deviceName, ["security passwords min-length " + length]);
 }
 
+function aaaServerOptions(server, label) {
+    if (!isDefined(server)) {
+        return null;
+    }
+    var host = oneLine(server.host);
+    var key = oneLine(server.key);
+    if (!host) {
+        throw new Error("AAA needs a " + label + " host, for example { radius: { host: \"192.168.10.50\", key: \"shared\" } }");
+    }
+    if (!key) {
+        throw new Error("AAA needs a " + label + " key, for example { radius: { host: \"192.168.10.50\", key: \"shared\" } }");
+    }
+    return { host: host, key: key };
+}
+
 function buildAaa(options) {
     var opts = options || {};
+    var radius = aaaServerOptions(opts.radius, "radius");
+    var tacacs = aaaServerOptions(opts.tacacs, "tacacs");
+    if (!radius && !tacacs && !toList(opts.users).length && opts.localFallback === false) {
+        throw new Error("AAA needs a server or a local user: pass radius, tacacs or users");
+    }
+
     var commands = ["aaa new-model"];
     var methods = [];
 
-    if (opts.radius) {
-        commands.push("radius-server host " + requireValue(opts.radius.host, "radius host") + " key " + requireValue(opts.radius.key, "radius key"));
+    if (radius) {
+        var port = isDefined(opts.radius.port) ? " auth-port " + requireWholeNumber(opts.radius.port, "RADIUS port", 1, 65535) : "";
+        commands.push("radius-server host " + radius.host + port + " key " + radius.key);
         methods.push("group radius");
     }
-    if (opts.tacacs) {
-        commands.push("tacacs-server host " + requireValue(opts.tacacs.host, "tacacs host"));
-        commands.push("tacacs-server key " + requireValue(opts.tacacs.key, "tacacs key"));
+    if (tacacs) {
+        commands.push("tacacs-server host " + tacacs.host);
+        commands.push("tacacs-server key " + tacacs.key);
         methods.push("group tacacs+");
     }
     if (opts.localFallback !== false || methods.length === 0) {
         methods.push("local");
     }
     toList(opts.users).forEach(function (user) {
-        commands.push("username " + user.name + " secret " + user.password);
+        commands.push("username " + requireValue(oneLine(user.name), "user name") + " secret " + requireValue(oneLine(user.password), "user password"));
     });
     commands.push("aaa authentication login default " + methods.join(" "));
+    if (opts.authorization === true) {
+        commands.push("aaa authorization exec default " + methods.join(" "));
+    }
     return commands;
 }
 
@@ -2653,22 +3168,48 @@ function configureAaa(deviceName, options) {
     return configureIosDevice(deviceName, buildAaa(options));
 }
 
+function hsrpGroupNumber(value) {
+    var group = isDefined(value) ? value : 1;
+    if (!isWholeNumber(group) || group < 0 || group > 255) {
+        throw new Error("HSRP group must be a whole number from 0 to 255, got " + value);
+    }
+    return group;
+}
+
+function hsrpVirtualIp(opts) {
+    var address = pickFirst(opts.virtualIp, opts.virtualIP, opts.vip, opts.ip);
+    if (!isDefined(address)) {
+        throw new Error("HSRP needs the shared address as virtualIp, for example { virtualIp: \"192.168.10.1\" }");
+    }
+    return String(address);
+}
+
+function hsrpPriority(value, fallback) {
+    var priority = isDefined(value) ? value : fallback;
+    return requireWholeNumber(priority, "HSRP priority", 0, 255);
+}
+
 function buildHsrp(interfaceName, options) {
     var opts = options || {};
-    var group = isDefined(opts.group) ? opts.group : 1;
+    var group = hsrpGroupNumber(opts.group);
     var body = [];
+
     if (opts.version) {
-        body.push("standby version " + opts.version);
+        body.push("standby version " + requireWholeNumber(opts.version, "HSRP version", 1, 2));
     }
-    body.push("standby " + group + " ip " + requireValue(opts.virtualIp, "virtualIp"));
+    body.push("standby " + group + " ip " + hsrpVirtualIp(opts));
     if (isDefined(opts.priority)) {
-        body.push("standby " + group + " priority " + opts.priority);
+        body.push("standby " + group + " priority " + hsrpPriority(opts.priority, 100));
     }
     if (opts.preempt !== false) {
         body.push("standby " + group + " preempt");
+        if (opts.delay) {
+            body.push("standby " + group + " preempt delay minimum " + requireWholeNumber(opts.delay, "HSRP preempt delay", 0, 3600));
+        }
     }
-    if (opts.track) {
-        body.push("standby " + group + " track " + opts.track + (opts.decrement ? " " + opts.decrement : ""));
+    if (isDefined(opts.track)) {
+        var decrement = isDefined(opts.decrement) ? " " + requireWholeNumber(opts.decrement, "HSRP track decrement", 1, 255) : "";
+        body.push("standby " + group + " track " + opts.track + decrement);
     }
     return interfaceBlock(interfaceName, body);
 }
@@ -2677,10 +3218,56 @@ function configureHsrp(deviceName, interfaceName, options) {
     return configureIosDevice(deviceName, buildHsrp(interfaceName, options));
 }
 
+function hsrpPairOptions(value, group) {
+    var opts = {};
+    if (typeof value === "string") {
+        opts.virtualIp = value;
+    } else if (isDefined(value)) {
+        opts = mergeInto({}, value);
+    }
+    if (isDefined(group)) {
+        opts.group = group;
+    }
+    return opts;
+}
+
 function configureHsrpPair(activeDevice, standbyDevice, interfaceName, virtualIp, group) {
+    var opts = hsrpPairOptions(virtualIp, group);
+    hsrpVirtualIp(opts);
+    var address = hsrpVirtualIp(opts);
+    var groupNumber = hsrpGroupNumber(opts.group);
+    var activePriority = isDefined(opts.activePriority) ? opts.activePriority : 150;
+    var standbyPriority = isDefined(opts.standbyPriority) ? opts.standbyPriority : 100;
+
+    var report = { active: true, standby: true, group: groupNumber, virtualIp: address };
+    report.active = configureHsrp(activeDevice, interfaceName, {
+        group: groupNumber,
+        virtualIp: address,
+        version: opts.version,
+        priority: activePriority,
+        preempt: true,
+        track: opts.track,
+        decrement: opts.decrement
+    });
+    report.standby = configureHsrp(standbyDevice, interfaceName, {
+        group: groupNumber,
+        virtualIp: address,
+        version: opts.version,
+        priority: standbyPriority,
+        preempt: true
+    });
+    return report;
+}
+
+function getHsrpState(deviceName, interfaceName) {
+    var result = runCommand(deviceName, "show standby " + interfaceName + " brief", "enable");
+    var state = /(Active|Standby|Listen|Init|Speak)/i.exec(result.output);
+    var group = /Group\s+(\d+)/i.exec(result.output);
     return {
-        active: configureHsrp(activeDevice, interfaceName, { group: group, virtualIp: virtualIp, priority: 150 }),
-        standby: configureHsrp(standbyDevice, interfaceName, { group: group, virtualIp: virtualIp, priority: 100 })
+        interface: String(interfaceName),
+        state: state ? state[1] : "",
+        group: group ? group[1] : "",
+        output: result.output
     };
 }
 
