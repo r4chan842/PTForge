@@ -5,7 +5,7 @@ const path = require("path");
 
 const root = path.join(__dirname, "..");
 const source = process.argv[2] || path.join(root, "node_modules", "@vscode", "codicons", "src", "icons");
-const target = path.join(root, "src", "ui", "interface.js");
+const target = path.join(root, "src", "ui", "app-shell.js");
 const map = JSON.parse(fs.readFileSync(path.join(__dirname, "icons.json"), "utf8"));
 
 function inner(svg) {

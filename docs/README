@@ -99,15 +99,15 @@ Project Files
 These files are in the top-level directory.
 
 * Introduction: https://github.com/r4chan842/PTForge/blob/main/README
-* Changes: https://github.com/r4chan842/PTForge/blob/main/CHANGELOG
-* Roadmap: https://github.com/r4chan842/PTForge/blob/main/ROADMAP
-* Contributing: https://github.com/r4chan842/PTForge/blob/main/CONTRIBUTING
-* Code of Conduct: https://github.com/r4chan842/PTForge/blob/main/CODE_OF_CONDUCT
-* Security Policy: https://github.com/r4chan842/PTForge/blob/main/SECURITY
-* Support: https://github.com/r4chan842/PTForge/blob/main/SUPPORT
-* Third-Party Notices: https://github.com/r4chan842/PTForge/blob/main/THIRD_PARTY_NOTICES
+* Changes: https://github.com/r4chan842/PTForge/blob/main/project/CHANGELOG
+* Roadmap: https://github.com/r4chan842/PTForge/blob/main/project/ROADMAP
+* Contributing: https://github.com/r4chan842/PTForge/blob/main/project/CONTRIBUTING
+* Code of Conduct: https://github.com/r4chan842/PTForge/blob/main/project/CODE_OF_CONDUCT
+* Security Policy: https://github.com/r4chan842/PTForge/blob/main/project/SECURITY
+* Support: https://github.com/r4chan842/PTForge/blob/main/project/SUPPORT
+* Third-Party Notices: https://github.com/r4chan842/PTForge/blob/main/project/THIRD_PARTY_NOTICES
 * License: https://github.com/r4chan842/PTForge/blob/main/LICENSE
-* Citation: https://github.com/r4chan842/PTForge/blob/main/CITATION.cff
+* Citation: https://github.com/r4chan842/PTForge/blob/main/project/CITATION.cff
 * Examples: https://github.com/r4chan842/PTForge/blob/main/examples/README
 * Templates: https://github.com/r4chan842/PTForge/blob/main/templates/README
 * Sample Plugins: https://github.com/r4chan842/PTForge/tree/main/plugins

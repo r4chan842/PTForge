@@ -7,7 +7,7 @@ A Packet Tracer extension that turns JavaScript into complete networks: devices,
 
 Do old scripts keep working between versions?
 
-Public function names and arguments only change in major versions, and every change is listed in https://github.com/r4chan842/PTForge/blob/main/CHANGELOG. configureIosDevice returns rejected commands and saves by default. Pass false as the third argument to skip saving.
+Public function names and arguments only change in major versions, and every change is listed in https://github.com/r4chan842/PTForge/blob/main/project/CHANGELOG. configureIosDevice returns rejected commands and saves by default. Pass false as the third argument to skip saving.
 
 Which Packet Tracer version do I need?
 

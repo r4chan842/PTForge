@@ -17,7 +17,7 @@ const byFile = {
     "workspace/files.js": "files",
     "workspace/project.js": "files",
     "workspace/command-log.js": "cli",
-    "workspace/view.js": "topology",
+    "workspace/workspace-view.js": "topology",
     "workspace/remote.js": "topology",
     "snapshot/snapshot.js": "cli"
 };

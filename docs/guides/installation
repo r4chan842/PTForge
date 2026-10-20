@@ -63,17 +63,17 @@ Add the fourteen files in https://github.com/r4chan842/PTForge/tree/main/src/ui 
 * netcalc.js: IPv4 and IPv6 network calculator
 * editor.js: The code editor component, breakpoints and execution line
 * acorn.js: JavaScript parser used by the debugger (MIT)
-* instrument.js: Prepares a script for step recording
+* code-instrumenter.js: Prepares a script for step recording
 * terminal.js: The JavaScript terminal
 * debugview.js: Run and Debug view, Debug Console, breakpoints
-* views.js: Calculator, reachability and snapshot diff tabs
-* interface.js: Workbench, files, commands, Packet Tracer bridge
+* side-views.js: Calculator, reachability and snapshot diff tabs
+* app-shell.js: Workbench, files, commands, Packet Tracer bridge
 
 They load nothing from the network. The list order matches the script tags in index.html.
 
 Updating from 1.1
 
-Replace the script file and every interface file, and add the five new ones: acorn.js, instrument.js, terminal.js, debugview.js and views.js. Your workspace, open tabs and settings are kept.
+Replace the script file and every interface file, and add the five new ones: acorn.js, code-instrumenter.js, terminal.js, debugview.js and side-views.js. Your workspace, open tabs and settings are kept.
 
 Updating from 1.0
 
@@ -91,7 +91,7 @@ If your version offers an option to load the module at startup, enable it so the
 Updating
 --------
 
-Pull the new version, open the module in Edit, replace the changed files and save. https://github.com/r4chan842/PTForge/blob/main/CHANGELOG lists which files changed in each release.
+Pull the new version, open the module in Edit, replace the changed files and save. https://github.com/r4chan842/PTForge/blob/main/project/CHANGELOG lists which files changed in each release.
 
 Uninstalling
 ------------

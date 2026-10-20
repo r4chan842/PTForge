@@ -10,7 +10,7 @@ const { loadExtension, root } = require("../helpers/load");
 function uiContext() {
     const context = {};
     vm.createContext(context);
-    ["acorn.js", "instrument.js"].forEach((file) => {
+    ["acorn.js", "code-instrumenter.js"].forEach((file) => {
         vm.runInContext(fs.readFileSync(path.join(root, "src", "ui", file), "utf8"), context, { filename: file });
     });
     return context;
