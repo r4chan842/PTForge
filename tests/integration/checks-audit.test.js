@@ -165,7 +165,7 @@ test("runOnDevices and runOnAll", () => {
     const mixed = json(ext.run, 'runOnDevices(["R1", "PC1", "R7"], "bogus")');
     assert.equal(mixed[0].status, "invalid");
     assert.equal(mixed[1].status, "error");
-    assert.match(mixed[1].output, /Not a Cisco IOS device/);
+    assert.match(mixed[1].output, /has no Cisco IOS command line/);
     assert.equal(mixed[2].status, "error");
 });
 

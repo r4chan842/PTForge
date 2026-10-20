@@ -9,7 +9,7 @@ function json(run, code) {
 }
 
 const configs = {
-    R1: "Building configuration...\n\nCurrent configuration : 812 bytes\n!\nhostname R1\n!\ninterface GigabitEthernet0/0\n ip address 10.0.0.1 255.255.255.0\n!\nend\n"
+    R1: "Building configuration...\n\nCurrent configuration : 812 bytes\n!\nhostname R1\n!\ninterface GigabitEthernet0/0\nip address 10.0.0.1 255.255.255.0\n!\nend\n"
 };
 
 function lab() {
@@ -40,7 +40,7 @@ test("config lines drop the header noise", () => {
     const ext = lab();
     const state = json(ext.run, "captureState()");
     const r1 = state.devices.find((d) => d.name === "R1");
-    assert.deepEqual(r1.config, ["hostname R1", "interface GigabitEthernet0/0", " ip address 10.0.0.1 255.255.255.0", "end"]);
+    assert.deepEqual(r1.config, ["hostname R1", "interface GigabitEthernet0/0", "ip address 10.0.0.1 255.255.255.0", "end"]);
     assert.equal(r1.ports.find((p) => p.name === "GigabitEthernet0/0").ip, "10.0.0.1/24");
     assert.deepEqual(state.links, ["PC1 FastEthernet0 <-> S1 FastEthernet0/1", "R1 GigabitEthernet0/0 <-> S1 GigabitEthernet0/1"]);
     assert.equal(state.devices.find((d) => d.name === "PC1").config.length, 0);
@@ -68,8 +68,8 @@ test("snapshots find address, config, device and link changes", () => {
     assert.deepEqual(diff.devicesAdded, ["PC2"]);
     assert.deepEqual(diff.linksAdded, ["PC2 FastEthernet0 <-> S1 FastEthernet0/2"]);
     assert.deepEqual(diff.addressChanges, [{ device: "R1", port: "GigabitEthernet0/0", before: "10.0.0.1/24", after: "10.0.0.2/24" }]);
-    assert.deepEqual(diff.configChanges[0].removed, [" ip address 10.0.0.1 255.255.255.0"]);
-    assert.deepEqual(diff.configChanges[0].added, [" ip address 10.0.0.2 255.255.255.0", "router ospf 1"]);
+    assert.deepEqual(diff.configChanges[0].removed, ["ip address 10.0.0.1 255.255.255.0"]);
+    assert.deepEqual(diff.configChanges[0].added, ["ip address 10.0.0.2 255.255.255.0", "router ospf 1"]);
     assert.deepEqual(diff.portChanges, [{ device: "S1", port: "FastEthernet0/2", before: "down", after: "up" }]);
     assert.equal(diff.changes, 5);
     ext.run('removeDevice("PC2")');

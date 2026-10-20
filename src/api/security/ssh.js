@@ -27,7 +27,7 @@ function buildSsh(options) {
 }
 
 function configureSsh(deviceName, options) {
-    var opts = Object.assign({}, options || {});
+    var opts = mergeInto({}, options);
     if (!opts.hostname) {
         var current = String(callIfExists(findDevice(deviceName), "getHostName", ""));
         if (!current || current === "Router" || current === "Switch") {

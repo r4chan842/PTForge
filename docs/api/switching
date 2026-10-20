@@ -60,9 +60,24 @@ createEtherChannel(name, group, interfaces, mode, options)
     Bundle ports into Port-channelN
 
 setEtherChannelLoadBalance(name, method)
-    port-channel load-balance
+    port-channel load-balance, method is checked against the IOS list
 
-Modes: active, passive (LACP), desirable, auto (PAgP), on.
+getEtherChannelLoadBalance(name)
+    Reads the method back from show etherchannel load-balance
+
+Load balance methods: src-mac, dst-mac, src-dst-mac, src-ip, dst-ip, src-dst-ip,
+src-port, dst-port, src-dst-port.
+
+Modes: active, passive (LACP), desirable, auto (PAgP), on. An unknown mode throws
+and lists all five, because Packet Tracer would answer with a bare invalid status
+for the channel-group line:
+
+    Invalid EtherChannel mode: lacp. Valid modes are active, passive, desirable,
+    auto, on. active (LACP, the other side must be active or passive), ...
+
+The group number must be a whole number from 1 to 48. When the members are access
+ports the Port-channel gets the same access VLAN, so the bundle behaves like the
+ports it replaced.
 
 Options: trunk, allowedVlans, nativeVlan, encapsulation, accessVlan, address and mask for a layer 3 channel.
 
@@ -111,7 +126,16 @@ enableDhcpSnooping(name, vlans, trusted, options)
 enableArpInspection(name, vlans, trusted)
     Dynamic ARP inspection
 
-Port security options: maximum (1), violation (shutdown, restrict, protect), sticky (true), macs, agingTime.
+Port security options: maximum (1), violation (shutdown, restrict, protect), sticky
+(true), macs, agingTime, agingType (absolute, inactivity).
+
+maximum must be a whole number from 1 to 1024 and macs must look like
+aaaa.bbbb.cccc or aa:bb:cc:dd:ee:ff, otherwise the builder throws before anything
+is sent. The builder also writes no switchport port-security first: Packet Tracer
+keeps the maximum and violation values of an earlier run on the port, and without
+the reset a second call with a smaller maximum silently keeps the old limit.
+
+    configurePortSecurity("S1", "FastEthernet0/1", { maximum: 2, violation: "restrict" });
 
 DHCP snooping options: untrusted ports, rateLimit (15), option82.
 

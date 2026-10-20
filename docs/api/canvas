@@ -10,6 +10,11 @@ Every drawing goes on the current layer. Pass layer to override it.
 Notes
 -----
 
+Labels are notes placed next to a device. The function is labelDevice; there is no
+addLabel, because a label in Packet Tracer is an ordinary note and one name for it
+is enough. labelDevice, labelDevices, labelAllDevices, labelWithIp and labelLink are
+in the topology section below.
+
 addNote(x, y, text, layer) -> id
     Text note. \n makes a new line
 

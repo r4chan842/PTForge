@@ -69,6 +69,7 @@ test("port security", () => {
     assert.deepEqual(j('buildPortSecurity("Fa0/5", { maximum: 2, violation: "restrict" })'), [
         "interface Fa0/5",
         " switchport mode access",
+        " no switchport port-security",
         " switchport port-security",
         " switchport port-security maximum 2",
         " switchport port-security violation restrict",

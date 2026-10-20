@@ -94,7 +94,7 @@ test("ping and traceroute report through onDone", () => {
     const { run, world, ctx } = loadExtension();
     run('addDevice("R1", "2911", 0, 0)');
     world.respond = (device, cmd, mode) => mode !== "line" ? undefined : /^traceroute/.test(cmd)
-        ? "Tracing the route to 10.0.0.9\n  1   10.0.0.2   1 msec 0 msec 1 msec\n  2   *    *    *\n  3   10.0.0.9   2 msec 3 msec 2 msec"
+        ? "Tracing the route to 10.0.0.9\n 1   10.0.0.2   1 msec 0 msec 1 msec\n 2   *    *    *\n 3   10.0.0.9   2 msec 3 msec 2 msec"
         : "!!!!!\nSuccess rate is 100 percent (5/5), round-trip min/avg/max = 1/2/3 ms";
     const got = [];
     ctx.__done = (r) => got.push(JSON.parse(r));

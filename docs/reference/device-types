@@ -1,7 +1,8 @@
 Device types
 ============
 
-Names and numbers accepted by getDevices(filter).
+Names and numbers accepted by getDevices(filter). The numbers are the
+DeviceType enum of the Cisco Packet Tracer Extensions API 8.1.0.
 
     Name                         Number
     ---------------------------  ------
@@ -22,29 +23,30 @@ Names and numbers accepted by getDevices(filter).
     cablemodem                   14
     remotenetwork                15
     multilayerswitch             16
-    switch3650                   17
-    laptop                       18
-    tabletpc                     19
-    pda                          20
-    wirelessenddevice            21
-    wiredenddevice               22
-    tv                           23
-    homevoip                     24
-    analogphone                  25
-    multiuser                    26
-    asa                          27
-    ioe                          28
-    homegateway                  29
-    wirelessrouternewgeneration  30
-    celltower                    31
-    centralofficeserver          32
-    ciscoaccesspoint             33
-    embeddedciscoaccesspoint     34
-    sniffer                      35
-    mcu                          36
-    sbc                          37
-    thing                        38
-    mcucomponent                 39
-    embeddedserver               40
-    wlc                          41
-    lightweightaccesspoint       44
+    laptop                       17
+    tabletpc                     18
+    pda                          19
+    wirelessenddevice            20
+    wiredenddevice               21
+    tv                           22
+    homevoip                     23
+    analogphone                  24
+    multiuser                    25
+    asa                          26
+    ioe                          27
+    homegateway                  28
+    celltower                    29
+    centralofficeserver          30
+    ciscoaccesspoint             31
+    embeddedciscoaccesspoint     32
+    sniffer                      33
+    mcu                          34
+    sbc                          35
+    thing                        36
+    mcucomponent                 37
+    embeddedserver               38
+    wirelesslancontroller        39
+    cluster                      40
+    switch3650                   16
+    wirelessrouternewgeneration  11
+    wlc                          39

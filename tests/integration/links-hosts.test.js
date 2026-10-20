@@ -9,13 +9,13 @@ const j = (run, code) => JSON.parse(JSON.stringify(run(code)));
 test("links", () => {
     const { run, world } = loadExtension();
     run('addDevice("R1", "2911", 0, 0); addDevice("R2", "2911", 0, 0); addDevice("S1", "2960-24TT", 0, 0)');
-    assert.equal(run('addLink("R1", "Serial0/1/0", "R2", "Serial0/1/0", "serial")'), false);
+    assert.throws(() => run('addLink("R1", "Serial0/1/0", "R2", "Serial0/1/0", "serial")'), /has no port named/);
     run('addModule("R1", "0/1", "HWIC-2T"); addModule("R2", "0/1", "HWIC-2T")');
     assert.equal(run('addLink("R1", "GigabitEthernet0/0", "R2", "GigabitEthernet0/0", "cross")'), true);
-    assert.equal(run('addLink("R1", "GigabitEthernet0/0", "S1", "FastEthernet0/1")'), false);
+    assert.throws(() => run('addLink("R1", "GigabitEthernet0/0", "S1", "FastEthernet0/1")'), /already cabled/);
     assert.throws(() => run('addLink("R1", "GigabitEthernet0/1", "S1", "FastEthernet0/1", "laser")'), /Unknown link type/);
     assert.throws(() => run('addLink("R1", "GigabitEthernet0/1", "NOPE", "FastEthernet0/1")'), /not found/);
-    assert.deepEqual(j(run, 'addLinks([["R1", "GigabitEthernet0/1", "S1", "GigabitEthernet0/1", "straight"], ["R2", "Serial0/1/0", "R1", "Serial0/1/0", "serial"]])'), [true, true]);
+    assert.equal(run('addLinks([["R1", "GigabitEthernet0/1", "S1", "GigabitEthernet0/1", "straight"], ["R2", "Serial0/1/0", "R1", "Serial0/1/0", "serial"]])'), true);
 
     const links = j(run, "getLinks()");
     assert.equal(links.length, 3);

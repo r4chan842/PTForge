@@ -27,6 +27,26 @@ deleteAcl(name, id, extended)
 createIpv6Acl(name, aclName, entries, interface, direction)
     IPv6 list, optionally applied with ipv6 traffic-filter
 
+buildIpv6Acl(aclName, entries) -> string[]
+    The list on its own
+
+applyIpv6Acl(name, interface, aclName, direction)
+    ipv6 traffic-filter on an interface
+
+removeIpv6AclFromInterface(name, interface, aclName, direction)
+    no ipv6 traffic-filter
+
+deleteIpv6Acl(name, aclName)
+    Remove the whole list
+
+An IPv6 list throws when the name does not start with a letter, when an entry does
+not start with permit, deny or remark, or when the list is empty. Packet Tracer
+accepts ipv6 access-list and ipv6 traffic-filter on routers and multilayer
+switches, but the IPv6 packet path inside the simulator is incomplete: filters
+apply to traffic that Packet Tracer simulates over IPv6, and some PDU types skip
+them. The official API also exposes Aclv6Process with the same addAcl calls as
+AclProcess, so the list itself is real API data and not a text trick.
+
 Entries can be plain strings or objects:
 
     Field        Example           Notes
@@ -106,7 +126,14 @@ AAA
 configureAaa(name, options)
     aaa new-model with RADIUS, TACACS+ and local fallback
 
-Options: radius: { host, key }, tacacs: { host, key }, users: [{ name, password }], localFallback (true).
+Options: radius: { host, key, port }, tacacs: { host, key }, users: [{ name, password }],
+localFallback (true), authorization (false, adds aaa authorization exec default).
+
+configureAaa with no radius and no tacacs only writes aaa new-model, the local user
+lines and aaa authentication login default local. That is correct IOS and correct
+for Packet Tracer: without a server there is nothing else to write. A server entry
+without a host or without a key throws, because radius-server host with no key is
+rejected by the parser and the script would only see an invalid status.
 
 HSRP
 ----
@@ -114,10 +141,24 @@ HSRP
 configureHsrp(name, interface, options)
     HSRP on one router
 
-configureHsrpPair(active, standby, interface, virtualIp, group)
+configureHsrpPair(active, standby, interface, options)
     Two routers, priority 150 and 100 with preempt
 
-Options: group (1), virtualIp (required), priority, preempt (true), version, track, decrement.
+getHsrpState(name, interface) -> object
+    { interface, state, group, output } from show standby
+
+The fourth argument of configureHsrpPair takes the shared address as a string or an
+options object, so all of these are the same call:
+
+    configureHsrpPair("R1", "R2", "GigabitEthernet0/0", "192.168.1.254", 5);
+    configureHsrpPair("R1", "R2", "GigabitEthernet0/0", { virtualIp: "192.168.1.254", group: 5 });
+    configureHsrpPair("R1", "R2", "GigabitEthernet0/0", { vip: "192.168.1.254" }, 5);
+
+Options: group (1), virtualIp (required), vip and virtualIP as aliases, priority,
+preempt (true), version, track, decrement, delay, activePriority (150),
+standbyPriority (100). Group must be 0-255 and priority 0-255, otherwise the call
+throws before any command is sent. The pair returns the rejected command list of
+both routers together with the group and address it used.
 
 Command builders
 ----------------

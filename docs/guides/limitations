@@ -18,6 +18,48 @@ The test suite (npm test) runs the whole extension against a mock of the Packet 
 
 API method names and arguments come from the official Cisco Packet Tracer IPC documentation.
 
+Checked against the official API
+------------------------------
+
+Every IPC method named in this project exists in the Cisco Packet Tracer
+Extensions API 8.1.0 reference (https://tutorials.ptnetacad.net/help/default/IpcAPI/annotated.html).
+The device type numbers, the cable constants and the five command statuses are the
+values printed in that reference, not guesses.
+
+Seven methods that Packet Tracer really has are not in the 8.1.0 class reference:
+registerEvent, unregisterEvent, ipc.network, ipc.commandLog, ipc.systemFileManager
+makeDirectory, simulationPanel play and the editor bridge receiveOutput. They are
+called behind typeof checks (callIfExists), so a build without them degrades to a
+clear error instead of crashing. If a future release documents them, the calls move
+out of this list.
+
+Enter Command
+-------------
+
+enterCommand returns a pair of status and output. The status values are counted, not
+guessed: 0 ok, 1 ambiguous, 2 invalid, 3 incomplete, 4 not implemented. PTForge
+reads pairs, arrays, plain numbers and plain strings, because different versions
+hand the value back in different shapes.
+
+Lines are trimmed before they are sent. A builder that indents its output (interface
+blocks start with a space) would otherwise send " login local" to the parser, which
+some versions answer with incomplete or invalid.
+
+IPv6 access lists
+-----------------
+
+The API has Aclv6Process next to AclProcess, so IPv6 lists exist as data. Packet
+Tracer still simulates IPv6 with gaps: filters are evaluated for PDUs it simulates
+over IPv6, and a few PDU types skip the filter. A filter that does nothing in a lab
+is usually this, not a wrong command.
+
+Device type numbers
+-------------------
+
+DeviceType numbers change between Packet Tracer releases. A model that lands on the
+wrong kind of device is the first sign that the build you run no longer matches the
+8.1.0 numbers. getDeviceType(name) after addDevice shows what Packet Tracer stored.
+
 Assumptions to confirm in Packet Tracer
 ---------------------------------------
 

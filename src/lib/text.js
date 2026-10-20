@@ -47,3 +47,45 @@ function toArray(list) {
     }
     return result;
 }
+
+function mergeInto(target, source) {
+    var out = target || {};
+    var extra = source || {};
+    for (var key in extra) {
+        if (Object.prototype.hasOwnProperty.call(extra, key)) {
+            out[key] = extra[key];
+        }
+    }
+    return out;
+}
+
+function oneLine(text) {
+    return String(text === undefined || text === null ? "" : text).replace(/^\s+|\s+$/g, "");
+}
+
+function joinNames(list) {
+    return toList(list).map(String).join(", ");
+}
+
+function pickFirst() {
+    for (var i = 0; i < arguments.length; i++) {
+        if (isDefined(arguments[i]) && arguments[i] !== "") {
+            return arguments[i];
+        }
+    }
+    return undefined;
+}
+
+function isWholeNumber(value) {
+    return typeof value === "number" && isFinite(value) && value % 1 === 0;
+}
+
+function requireWholeNumber(value, label, low, high) {
+    if (!isWholeNumber(value)) {
+        throw new Error(label + " must be a whole number, got " + value);
+    }
+    if (value < low || value > high) {
+        throw new Error(label + " must be between " + low + " and " + high + ", got " + value);
+    }
+    return value;
+}

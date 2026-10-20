@@ -14,7 +14,12 @@ Every configuration function ends up in configureIosDevice, which:
 4. Returns to privileged mode with end
 5. Runs write memory unless save is false
 
-It returns an array of rejected commands, [] when everything was accepted:
+Lines are trimmed before they are sent, so a builder can indent its output and the
+device still receives plain IOS syntax. The same call sends "!" in global mode
+first, then every line in the current mode, then "end", then "write memory".
+
+It returns an array of rejected commands, [] when everything was accepted. Each
+entry has the form { command, status, output }:
 
     var failed = configureIosDevice("R1", "router ospf 1\n network 10.0.0.0 0.255.255.255 area 0");
     if (failed.length) {
@@ -38,6 +43,9 @@ applyToDevices(names, commands, save) -> object
 runCommand(name, command, mode) -> object
     One command in user, enable, global or current mode "". Returns { status, output }
 
+runCommands(name, commands, mode) -> object
+    Several commands, returns { device, ok, commands, failed }
+
 saveConfig(name) -> bool
     write memory
 
@@ -50,7 +58,24 @@ getPrompt(name) -> string
 getCliMode(name) -> string
     Current CLI mode
 
-status is one of ok, ambiguous, invalid, incomplete, notImplemented.
+status is one of ok, ambiguous, invalid, incomplete, notImplemented, which are
+the five values of the CommandStatus enum in the Packet Tracer API
+(eStatusOk = 0, eErrorAmbiguous = 1, eErrorInvalid = 2, eErrorIncomplete = 3,
+eErrorNotImplemented = 4).
+
+mode accepts user, enable, global or "" for the mode the CLI is in. Anything else
+throws before a command is sent, because Packet Tracer rejects unknown mode names
+and the caller would only see a line of invalid commands. runCommands keeps the
+order of the lines and reports every rejected one:
+
+    var report = runCommands("R1", ["show ip interface brief", "show version"], "enable");
+    if (!report.ok) {
+        showResult(report.failed);
+    }
+
+Rejected lines carry the status Packet Tracer returned plus the raw output, so a
+script can tell an unknown command (invalid) from one that needs more words
+(incomplete). applyConfig turns the same list into one error message.
 
 Batch commands
 --------------
