@@ -52,9 +52,28 @@ main.js must be the last script because it opens the menu entry after every func
 Step 4: add the interface
 -------------------------
 
-Add the fourteen files in https://github.com/r4chan842/PTForge/tree/main/src/ui as the module's interface files, keeping the names:
+Interface files are case sensitive and Packet Tracer loads them in the order of
+the script tags in index.html. If one is missing or renamed, the window opens
+blank with no error, so most "blank window" reports are a file that did not
+arrive.
 
-* index.html: Page layout
+Option A: one file (recommended)
+
+Add one interface file named index.html and paste
+https://github.com/r4chan842/PTForge/blob/main/release/index.html into it. That
+build has the stylesheet and all thirteen scripts inlined, so nothing else can go
+missing. Delete the other interface files and save the module.
+
+Rebuild it after editing anything in src/ui with:
+
+    node tools/build-ui.js
+
+Option B: separate files
+
+Add these fourteen files from https://github.com/r4chan842/PTForge/tree/main/src/ui
+and keep the names exactly:
+
+* index.html: Page layout, loads everything below in this order
 * style.css: VS Code Dark Modern theme
 * catalog.js: Function list, generated from https://github.com/r4chan842/PTForge/tree/main/docs/api
 * snippets.js: Snippet library
@@ -69,15 +88,13 @@ Add the fourteen files in https://github.com/r4chan842/PTForge/tree/main/src/ui 
 * side-views.js: Calculator, reachability and snapshot diff tabs
 * app-shell.js: Workbench, files, commands, Packet Tracer bridge
 
-They load nothing from the network. The list order matches the script tags in index.html.
+They load nothing from the network. The list order matches the script tags in
+index.html, and the build check in the test suite fails if a file in src/ui is not
+loaded there.
 
-Updating from 1.1
-
-Replace the script file and every interface file, and add the five new ones: acorn.js, code-instrumenter.js, terminal.js, debugview.js and side-views.js. Your workspace, open tabs and settings are kept.
-
-Updating from 1.0
-
-Replace the script file and every interface file, and add the five new ones. Scripts stored in the three old slots are moved into the new workspace as script-1.js, script-2.js and script-3.js the first time the editor opens.
+Files that changed names in 1.4: interface.js is now app-shell.js, views.js is
+side-views.js, instrument.js is code-instrumenter.js. Replace the old ones, do not
+add both.
 
 Step 5: save and start
 ----------------------

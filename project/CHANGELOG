@@ -6,6 +6,23 @@ All notable changes to PTForge are listed here. The format follows Keep a Change
 * Keep a Changelog: https://keepachangelog.com
 * Semantic Versioning: https://semver.org
 
+[1.4.1] - 2026-10-21
+--------------------
+
+Fixed
+
+- A blank PTForge window when one interface file was missing, renamed or pasted in the wrong slot. The page now checks for its stylesheet and its scripts and prints which file did not load, instead of showing a black logo on white
+- The module version in About still said 1.3.0
+
+Added
+
+- release/index.html, a single interface file with the stylesheet and all thirteen scripts inlined. One paste into the module and the window cannot lose a file
+- node tools/build-ui.js, part of npm run check, plus two tests: the single file has no external references, and every script in src/ui is loaded by the layout
+
+Changed
+
+- docs/guides/installation explains the single file option first and lists the renamed interface files
+
 [1.4.0] - 2026-10-20
 --------------------
 

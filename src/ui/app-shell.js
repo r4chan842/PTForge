@@ -1,5 +1,5 @@
 var inPacketTracer = typeof $se === "function";
-var appVersion = "1.3.0";
+var appVersion = "1.4.0";
 var storageKey = "ptforge.workspace";
 
 var app = {
