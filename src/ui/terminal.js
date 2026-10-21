@@ -78,6 +78,101 @@ function globalizeDeclarations(code) {
     return out;
 }
 
+function nextSignificant(tokens, index) {
+    for (var i = index + 1; i < tokens.length; i++) {
+        if (tokens[i].type !== "space" && tokens[i].type !== "comment") {
+            return tokens[i];
+        }
+    }
+    return null;
+}
+
+function previousSignificant(tokens, index) {
+    for (var i = index - 1; i >= 0; i--) {
+        if (tokens[i].type !== "space" && tokens[i].type !== "comment") {
+            return tokens[i];
+        }
+    }
+    return null;
+}
+
+function stripAsyncSyntax(code) {
+    var tokens = tokenize(code, {});
+    var out = "";
+    var dropped = 0;
+    for (var i = 0; i < tokens.length; i++) {
+        var token = tokens[i];
+        if (token.type !== "space" && token.type !== "comment" && token.type !== "string") {
+            var before = previousSignificant(tokens, i);
+            var after = nextSignificant(tokens, i);
+            var member = before && (before.text === "." || before.text === "?");
+            if (token.text === "await" && !member) {
+                dropped++;
+                continue;
+            }
+            if (token.text === "async" && !member && after && (after.text === "function" || after.text === "(" || after.type === "identifier" || after.type === "api")) {
+                dropped++;
+                continue;
+            }
+        }
+        out += token.text;
+    }
+    return { code: out, dropped: dropped };
+}
+
+var cliCommandWords = toSet("enable disable configure interface no show ping traceroute tracert copy write reload exit end hostname banner line router vlan switchport channel-group spanning-tree etherchannel port-security aaa username crypto clock debug undebug clear description shutdown permit deny access-list access-group snmp-server logging ntp service ip ipv6 tunnel map-list route-map class-map policy-map");
+
+var cliValueWords = toSet("terminal address mask secondary default-gateway name group mode active passive desirable auto on trunk access mode allowed native vlan ssh telnet local secret password level 15 2 version modulus domain-name new-model radius-server tacacs-server authentication login exec authorization accounting running-config startup-config memory flash 0 standard extended remark ospf eigrp rip bgp network area passive-interface redistribute");
+
+var cliPortPattern = /^(?:GigabitEthernet|FastEthernet|Ethernet|Serial|Loopback|Vlan|Port-channel|Tunnel|Dialer|Management|Fa|Gi|Se|Eth)[\d/.]+/i;
+
+function cliTokenClass(word, isFirst) {
+    if (cliPortPattern.test(word)) {
+        return "tk-port";
+    }
+    if (/^\d{1,3}(?:\.\d{1,3}){3}(?:\/\d{1,2})?$/.test(word)) {
+        return "tk-ip";
+    }
+    if (/^[0-9a-f]{4}\.[0-9a-f]{4}\.[0-9a-f]{4}$/i.test(word)) {
+        return "tk-ip";
+    }
+    if (/^\d+$/.test(word)) {
+        return "tk-number";
+    }
+    if (isFirst && cliCommandWords[word.toLowerCase()]) {
+        return "tk-cmd";
+    }
+    if (cliCommandWords[word.toLowerCase()]) {
+        return "tk-cmd";
+    }
+    if (cliValueWords[word.toLowerCase()]) {
+        return "tk-keyword";
+    }
+    return "";
+}
+
+function highlightCli(text) {
+    var pattern = /[A-Za-z][\w./:-]*|\d{1,3}(?:\.\d{1,3}){3}(?:\/\d{1,2})?|\d+|[^\w\s]+|\s+/g;
+    var html = "";
+    var first = true;
+    var match;
+    while ((match = pattern.exec(text))) {
+        var piece = match[0];
+        if (/^\s+$/.test(piece)) {
+            html += piece;
+            continue;
+        }
+        if (piece === "!" && first) {
+            html += "<span class=\"tk-comment\">" + termEscape(text.substring(match.index)) + "</span>";
+            return html;
+        }
+        var css = cliTokenClass(piece, first);
+        html += css ? "<span class=\"" + css + "\">" + termEscape(piece) + "</span>" : termEscape(piece);
+        first = false;
+    }
+    return html;
+}
+
 function splitArgs(text) {
     var parts = [];
     var re = /"([^"]*)"|'([^']*)'|(\S+)/g;
@@ -108,18 +203,27 @@ Terminal.prototype.build = function () {
     this.root = document.createElement("div");
     this.root.className = "term";
     this.root.setAttribute("data-term", this.id);
-    this.root.innerHTML = "<div class=\"term-scroll\"><div class=\"term-out\"></div><div class=\"term-line\"><span class=\"term-prompt\"></span><textarea class=\"term-input\" rows=\"1\" spellcheck=\"false\" autocomplete=\"off\" autocapitalize=\"off\"></textarea></div><div class=\"term-busy hidden\"><span class=\"spin\"></span>running</div></div>";
+    this.root.innerHTML = "<div class=\"term-scroll\"><div class=\"term-out\"></div><div class=\"term-line\"><span class=\"term-prompt\"></span><div class=\"term-box\"><div class=\"term-hl\" aria-hidden=\"true\"></div><textarea class=\"term-input\" rows=\"1\" spellcheck=\"false\" autocomplete=\"off\" autocapitalize=\"off\"></textarea></div></div><div class=\"term-busy hidden\"><span class=\"spin\"></span><span class=\"term-busy-text\">running</span></div></div>";
     this.scroll = this.root.querySelector(".term-scroll");
     this.out = this.root.querySelector(".term-out");
     this.line = this.root.querySelector(".term-line");
     this.promptEl = this.root.querySelector(".term-prompt");
     this.input = this.root.querySelector(".term-input");
+    this.hl = this.root.querySelector(".term-hl");
     this.busyEl = this.root.querySelector(".term-busy");
+    this.busyText = this.root.querySelector(".term-busy-text");
+    this.queue = [];
+    this.running = false;
+    this.awaitNote = false;
     this.input.addEventListener("keydown", function (event) {
         self.onKey(event);
     });
     this.input.addEventListener("input", function () {
         self.autosize();
+        self.paint();
+    });
+    this.input.addEventListener("scroll", function () {
+        self.hl.scrollTop = self.input.scrollTop;
     });
     this.root.addEventListener("mouseup", function () {
         var selected = window.getSelection ? String(window.getSelection()) : "";
@@ -133,7 +237,31 @@ Terminal.prototype.build = function () {
 Terminal.prototype.autosize = function () {
     this.input.style.height = "auto";
     this.input.style.height = this.input.scrollHeight + "px";
+    this.paint();
 };
+
+Terminal.prototype.paint = function () {
+    if (!this.hl) {
+        return;
+    }
+    var text = this.input.value;
+    if (!text) {
+        this.hl.innerHTML = "";
+        return;
+    }
+    if (this.kind === "cli") {
+        this.hl.innerHTML = highlightCli(text);
+        return;
+    }
+    this.hl.innerHTML = highlightHtml(text, terminalApiNames()) + "\n";
+};
+
+function terminalApiNames() {
+    if (!terminalState.apiNames) {
+        terminalState.apiNames = namesToSet(typeof functionCatalog !== "undefined" ? functionCatalog : []);
+    }
+    return terminalState.apiNames;
+}
 
 Terminal.prototype.setPrompt = function () {
     if (this.kind === "cli") {
@@ -183,12 +311,17 @@ Terminal.prototype.setBusy = function (busy) {
     this.busy = busy;
     this.line.classList.toggle("hidden", busy);
     clearTimeout(this.busyTimer);
+    clearInterval(this.busyClock);
     this.busyEl.classList.add("hidden");
     if (busy) {
-        this.busyTimer = setTimeout(function () {
-            self.busyEl.classList.remove("hidden");
-            self.scrollDown();
-        }, 400);
+        this.busyStarted = new Date().getTime();
+        this.busyText.textContent = "running";
+        this.busyEl.classList.remove("hidden");
+        this.busyClock = setInterval(function () {
+            var seconds = Math.round((new Date().getTime() - self.busyStarted) / 1000);
+            self.busyText.textContent = seconds >= 1 ? "running " + seconds + "s" : "running";
+        }, 500);
+        this.scrollDown();
     } else {
         this.setPrompt();
         if (terminalState.active === this.id && terminalFocusAllowed()) {
@@ -197,6 +330,31 @@ Terminal.prototype.setBusy = function (busy) {
         this.scrollDown();
     }
     renderTerminalTabs();
+};
+
+Terminal.prototype.enqueue = function (kind, payload) {
+    this.queue.push({ kind: kind, payload: payload });
+    this.pump();
+};
+
+Terminal.prototype.pump = function () {
+    if (this.running || !this.queue.length) {
+        return;
+    }
+    var item = this.queue.shift();
+    this.running = true;
+    this.setBusy(true);
+    if (item.kind === "cli") {
+        terminalHost().engine("shellCli", this.id, this.device, item.payload);
+        return;
+    }
+    terminalHost().engine("shellEval", this.id, item.payload);
+};
+
+Terminal.prototype.done = function () {
+    this.running = false;
+    this.setBusy(false);
+    this.pump();
 };
 
 Terminal.prototype.welcome = function () {
@@ -383,7 +541,12 @@ Terminal.prototype.submit = function () {
         return;
     }
     if (this.kind === "cli") {
-        this.sendCli(trimmed);
+        var lines = trimmed.split(/\r?\n/).filter(function (line) {
+            return line.trim() !== "";
+        });
+        for (var i = 0; i < lines.length; i++) {
+            this.sendCli(lines[i].trim());
+        }
         return;
     }
     var word = trimmed.split(/\s+/)[0];
@@ -410,6 +573,18 @@ Terminal.prototype.submit = function () {
     this.evaluate(globalizeDeclarations(code));
 };
 
+Terminal.prototype.explainSyntax = function (text) {
+    var message = String(text || "");
+    if (!/SyntaxError|is not defined|Unexpected/i.test(message)) {
+        return;
+    }
+    if (/async|await/i.test(message)) {
+        this.write("Packet Tracer runs ES5. async and await are removed before the line is sent, so write plain calls and use the onDone callback of ping, traceroute or reachability instead of .then()", "t-dim");
+        return;
+    }
+    this.write("The line runs in the JavaScript engine of Packet Tracer, which is ES5: no arrow functions, no template strings and no class syntax", "t-dim");
+};
+
 Terminal.prototype.showReach = function (report) {
     var lines = report.rows.map(function (x) {
         var tag = x.state === "ok" ? "  OK   " : x.state === "partial" ? "  PART " : x.state === "failed" ? "  FAIL " : "  ?    ";
@@ -433,8 +608,12 @@ Terminal.prototype.evaluate = function (code) {
         this.write("The JavaScript shell runs inside Packet Tracer. Open this window from Extensions > PTForge Editor.", "t-yellow");
         return;
     }
-    this.setBusy(true);
-    terminalHost().engine("shellEval", this.id, code);
+    var prepared = stripAsyncSyntax(code);
+    if (prepared.dropped) {
+        this.awaitNote = true;
+        this.write("async and await are not part of the JavaScript engine inside Packet Tracer, so both keywords were dropped and every line ran in order", "t-dim");
+    }
+    this.enqueue("eval", prepared.code);
 };
 
 Terminal.prototype.sendCli = function (command) {
@@ -450,8 +629,7 @@ Terminal.prototype.sendCli = function (command) {
         this.leaveCli();
         return;
     }
-    this.setBusy(true);
-    terminalHost().engine("shellCli", this.id, this.device, command);
+    this.enqueue("cli", command);
 };
 
 Terminal.prototype.attach = function (device) {
@@ -467,6 +645,7 @@ Terminal.prototype.attach = function (device) {
         this.setPrompt();
         return;
     }
+    this.running = true;
     this.setBusy(true);
     terminalHost().engine("shellAttach", this.id, device);
 };
@@ -499,11 +678,15 @@ Terminal.prototype.receive = function (kind, data) {
             }
         } else {
             this.write("Uncaught " + data.text.replace(/^Uncaught /, ""), "t-red");
+            this.explainSyntax(data.text);
         }
-        this.setBusy(false);
+        this.done();
         return;
     }
     if (kind === "shell-cli") {
+        if (data.attached && !data.error) {
+            this.running = false;
+        }
         if (data.error) {
             this.write(data.error, "t-red");
             if (data.attached === false) {
@@ -528,8 +711,11 @@ Terminal.prototype.receive = function (kind, data) {
                 this.write("Sent to " + data.device + ". The reply appears in its Command Prompt.", "t-dim");
             }
             this.prompt = data.prompt || this.prompt;
+            if (data.mode) {
+                this.deviceMode = data.mode;
+            }
         }
-        this.setBusy(false);
+        this.done();
     }
 };
 

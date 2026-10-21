@@ -223,7 +223,7 @@ function shellAttach(encodedId, encodedDevice) {
         if (kind === "ios") {
             skipBootIfIos(device);
         }
-        editorSend("shell-cli", { id: id, device: String(device.getName()), kind: kind, attached: true, output: "", status: "ok", prompt: kind === "ios" ? getPrompt(name) : "C:\\>" });
+        editorSend("shell-cli", { id: id, device: String(device.getName()), kind: kind, attached: true, output: "", status: "ok", prompt: kind === "ios" ? getPrompt(name) : "C:\\>", mode: kind === "ios" ? getCliMode(name) : "" });
         return true;
     } catch (error) {
         editorSend("shell-cli", { id: id, device: name, attached: false, output: "", status: "error", error: shellErrorText(error) });
@@ -243,7 +243,7 @@ function shellCli(encodedId, encodedDevice, encodedCommand) {
             return true;
         }
         var result = runCommand(name, command, "");
-        editorSend("shell-cli", { id: id, device: name, kind: "ios", output: result.output, status: result.status, prompt: getPrompt(name) });
+        editorSend("shell-cli", { id: id, device: name, kind: "ios", output: result.output, status: result.status, prompt: getPrompt(name), mode: getCliMode(name) });
         return true;
     } catch (error) {
         editorSend("shell-cli", { id: id, device: name, output: "", status: "error", error: shellErrorText(error) });

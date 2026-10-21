@@ -105,3 +105,34 @@ test("vlsm planner and wildcard", () => {
     assert.deepEqual(ui("wildcardFor('0.0.0.63')"), { prefix: 26, mask: "255.255.255.192", wildcard: "0.0.0.63" });
     assert.equal(ui("wildcardFor('/20').wildcard"), "0.0.15.255");
 });
+
+function loadTerminalHelpers() {
+    const context = {};
+    vm.createContext(context);
+    ["highlight.js", "terminal.js"].forEach((file) => {
+        vm.runInContext(fs.readFileSync(path.join(root, "src", "ui", file), "utf8"), context, { filename: file });
+    });
+    return (code) => JSON.parse(vm.runInContext("JSON.stringify(" + code + ")", context));
+}
+
+const terminalUi = loadTerminalHelpers();
+
+test("async and await are dropped before the line reaches the es5 engine", () => {
+    assert.deepEqual(terminalUi("stripAsyncSyntax('var r = await pingTest(\"R1\", \"10.0.0.1\")')"),
+        { code: "var r =  pingTest(\"R1\", \"10.0.0.1\")", dropped: 1 });
+    assert.deepEqual(terminalUi("stripAsyncSyntax('async function go() { return 1; }')"),
+        { code: " function go() { return 1; }", dropped: 1 });
+    assert.deepEqual(terminalUi("stripAsyncSyntax('var awaiting = 1; asyncLoad();')"),
+        { code: "var awaiting = 1; asyncLoad();", dropped: 0 });
+});
+
+test("cli lines are shaded by word", () => {
+    const html = terminalUi("highlightCli('interface GigabitEthernet0/1')");
+    assert.match(html, /<span class="tk-cmd">interface<\/span>/);
+    assert.match(html, /<span class="tk-port">GigabitEthernet0\/1<\/span>/);
+    const address = terminalUi("highlightCli(' ip address 192.168.1.1 255.255.255.0')");
+    assert.match(address, /tk-keyword">address</);
+    assert.match(address, /tk-ip">192.168.1.1</);
+    assert.match(terminalUi("highlightCli('channel-group 1 mode active')"), /tk-number">1</);
+    assert.match(terminalUi("highlightCli('! note')"), /tk-comment">! note</);
+});

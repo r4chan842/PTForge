@@ -19,7 +19,8 @@ function iosDevice(deviceName) {
     if (typeof device.enterCommand !== "function") {
         throw new Error(deviceName + " is a " + String(device.getModel()) + " and has no Cisco IOS command line");
     }
-    skipBootIfIos(device);
+    prepareIosDevice(device, String(deviceName));
+    assertIosUsable(device, String(deviceName));
     return device;
 }
 
@@ -67,21 +68,65 @@ function applyToDevices(deviceNames, commands, save) {
     return report;
 }
 
+var execCommandWords = "show ping traceroute tracert telnet ssh dir more copy write clock clear reload debug undebug help logout disable enable configure test send disconnect resume suspend verify license who where".split(" ");
+
+var configSubModeWords = "interface router line vlan ip dhcp pool class-map policy-map crypto track route-map key access-list aaa username hostname banner".split(" ");
+
+function firstCommandWord(command) {
+    return (String(command).split(/\s+/)[0] || "").toLowerCase();
+}
+
+function isExecCommand(command) {
+    var word = firstCommandWord(command);
+    if (execCommandWords.indexOf(word) === -1) {
+        return false;
+    }
+    if (word === "ip" || word === "no") {
+        return false;
+    }
+    return true;
+}
+
+function isConfigSubMode(mode) {
+    var value = String(mode || "").toLowerCase();
+    return value !== "" && value !== "user" && value !== "enable" && value !== "global" && value !== "config";
+}
+
+function autoCliMode(device, command) {
+    var mode = cliModeOf(device);
+    if (isConfigSubMode(mode)) {
+        if (/^(exit|end|do)\b/i.test(String(command))) {
+            return "";
+        }
+        return isExecCommand(command) ? "enable" : "";
+    }
+    return isExecCommand(command) ? "enable" : "global";
+}
+
+function resolveRunMode(device, command, mode) {
+    if (!isDefined(mode) || String(mode).toLowerCase() === "auto") {
+        return autoCliMode(device, command);
+    }
+    return normalizeCliMode(mode);
+}
+
 function runCommand(deviceName, command, mode) {
     var device = iosDevice(deviceName);
-    return parseCommandResult(device.enterCommand(oneLine(command), normalizeCliMode(isDefined(mode) ? mode : "enable")));
+    var line = oneLine(command);
+    return parseCommandResult(device.enterCommand(line, resolveRunMode(device, line, isDefined(mode) ? mode : "auto")));
 }
 
 function runCommands(deviceName, commands, mode) {
     var device = iosDevice(deviceName);
-    var chosen = normalizeCliMode(isDefined(mode) ? mode : "enable");
+    var automatic = !isDefined(mode) || String(mode).toLowerCase() === "auto";
+    var fixed = automatic ? "" : normalizeCliMode(mode);
     var failures = [];
     var results = toLines(commands).map(function (line) {
         var command = oneLine(line);
         if (!command) {
             return null;
         }
-        var result = sendLine(device, command, chosen, failures);
+        var result = sendLine(device, command, automatic ? autoCliMode(device, command) : fixed, failures);
         return { command: command, status: result.status, output: result.output };
     }).filter(function (item) {
         return item !== null;

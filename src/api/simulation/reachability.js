@@ -50,6 +50,9 @@ function resolveTarget(target) {
 }
 
 function pingTest(source, target, count) {
+    if (typeof isSimulationMode === "function" && isSimulationMode()) {
+        throw new Error("pingTest waits for the reply inside the same call, and in Simulation mode Packet Tracer only moves time after the script returns. Run setSimulationMode(false) first, or use ping(source, target, count) which listens to the device output instead");
+    }
     var resolved = resolveTarget(target);
     var device = findDevice(source);
     var row = { source: String(source), target: resolved.label, ip: resolved.ip, state: "unknown", percent: null, sent: 0, received: 0, rtt: null, output: "" };
@@ -79,6 +82,19 @@ function reachabilityReport(rows) {
         }
     });
     return report;
+}
+
+var pingStallSeconds = 25;
+
+function assertPingAllowed() {
+    if (typeof isSimulationMode === "function" && isSimulationMode()) {
+        throw new Error("Packet Tracer is in Simulation mode. A ping there only moves when the event list is stepped, so the reply never arrives and the report stays pending forever. Run setSimulationMode(false) first, ping, then turn Simulation mode back on");
+    }
+    return true;
+}
+
+function pingStallMessage(seconds) {
+    return "No reply within " + seconds + " seconds. The device answered nothing, so the ping was dropped. Check that both ends have an address and a cable, and that no firewall blocks ICMP";
 }
 
 function pingLine(device) {
@@ -152,7 +168,38 @@ function PingRunner(source, device, line, rows, onFinished) {
     this.index = -1;
     this.buffer = "";
     this.onFinished = onFinished;
+    this.startedAt = new Date().getTime();
+    this.lastActivity = this.startedAt;
+    this.closed = false;
 }
+
+PingRunner.prototype.touch = function () {
+    this.lastActivity = new Date().getTime();
+};
+
+PingRunner.prototype.stalled = function (now, limitMs) {
+    return !this.closed && now - this.lastActivity >= limitMs;
+};
+
+PingRunner.prototype.abandon = function (message) {
+    if (this.closed) {
+        return false;
+    }
+    this.closed = true;
+    this.stop();
+    this.rows.forEach(function (row) {
+        if (row.state === "pending") {
+            row.state = "failed";
+            row.percent = 0;
+            row.output = message;
+        }
+    });
+    activePingRunners = activePingRunners.filter(function (item) {
+        return item !== this;
+    }, this);
+    this.onFinished();
+    return true;
+};
 
 PingRunner.prototype.start = function () {
     this.line.registerEvent("outputWritten", this, this.onOutput);
@@ -165,6 +212,7 @@ PingRunner.prototype.start = function () {
 
 PingRunner.prototype.next = function () {
     this.index++;
+    this.touch();
     if (this.index >= this.rows.length) {
         this.stop();
         this.onFinished();
@@ -184,10 +232,12 @@ PingRunner.prototype.stop = function () {
 };
 
 PingRunner.prototype.onOutput = function (src, args) {
+    this.touch();
     this.buffer += eventText(args, "newOutput");
 };
 
 PingRunner.prototype.onEnded = function (src, args) {
+    this.touch();
     var row = this.rows[this.index];
     if (!row) {
         return;
@@ -206,6 +256,19 @@ PingRunner.prototype.onEnded = function (src, args) {
 
 var activePingRunners = [];
 
+function pingWatchdog(seconds) {
+    var limit = isDefined(seconds) ? Number(seconds) : pingStallSeconds;
+    var now = new Date().getTime();
+    var closed = 0;
+    activePingRunners.slice().forEach(function (runner) {
+        if (runner.stalled(now, limit * 1000)) {
+            runner.abandon(pingStallMessage(limit));
+            closed++;
+        }
+    });
+    return closed;
+}
+
 function stopPings() {
     var count = activePingRunners.length;
     activePingRunners.forEach(function (runner) {
@@ -216,6 +279,7 @@ function stopPings() {
 }
 
 function pingMatrix(sources, targets, count, onDone) {
+    assertPingAllowed();
     var report = { rows: [], total: 0, ok: 0, partial: 0, failed: 0, unknown: 0, pending: 0, done: false };
     var inventory = getIpInventory();
     var runners = [];
@@ -325,6 +389,7 @@ function reachability(options) {
 }
 
 function runLineCommand(deviceName, command, onDone, finish) {
+    assertPingAllowed();
     var device = findDevice(deviceName);
     var line = pingLine(device);
     var row = { source: String(deviceName), command: String(command), state: "pending", output: "" };

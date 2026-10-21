@@ -77,7 +77,7 @@ function linkTypeName(code) {
         });
         return name || connectTypeNames[code];
     }
-    return String(code);
+    throw new Error("Unknown link type code: " + code + ". Valid codes are " + Object.keys(connectTypeNames).join(", ") + " (ETHERNET_STRAIGHT is 8100, ETHERNET_CROSS is 8101 and so on)");
 }
 
 function portOwnerName(port) {

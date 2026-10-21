@@ -2359,9 +2359,22 @@ function initEditor() {
     });
 }
 
+function watchPings() {
+    setTimeout(function () {
+        if (inPacketTracer) {
+            $se("pingWatchdog");
+        }
+        watchPings();
+    }, 2500);
+}
+
 function finishInit(active) {
     setFontSize(app.fontSize);
     layout();
+    if (!watchPings.started) {
+        watchPings.started = true;
+        watchPings();
+    }
     renderExplorer();
     activate(active);
     renderDebugView();

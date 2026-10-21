@@ -832,9 +832,119 @@ function isIosDevice(device) {
     return iosDeviceTypes.indexOf(device.getType()) !== -1;
 }
 
-function skipBootIfIos(device) {
-    if (isIosDevice(device) && typeof device.skipBoot === "function") {
+var setupPromptAnswers = [
+    { pattern: /initial configuration dialog/i, answer: "no" },
+    { pattern: /terminate autoinstall/i, answer: "yes" },
+    { pattern: /press return to get started/i, answer: "" }
+];
+
+function cliLineOf(device) {
+    if (!device) {
+        return null;
+    }
+    if (typeof device.getCommandLine === "function") {
+        return device.getCommandLine();
+    }
+    return null;
+}
+
+function cliPromptOf(device) {
+    var line = cliLineOf(device);
+    var prompt = line ? callIfExists(line, "getPrompt", "") : "";
+    return String(prompt === null || prompt === undefined ? "" : prompt);
+}
+
+function cliModeOf(device) {
+    var line = cliLineOf(device);
+    var mode = line ? callIfExists(line, "getMode", "") : "";
+    return String(mode === null || mode === undefined ? "" : mode);
+}
+
+function isSetupPrompt(text) {
+    var value = String(text || "");
+    for (var i = 0; i < setupPromptAnswers.length; i++) {
+        if (setupPromptAnswers[i].pattern.test(value)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function answerSetupPrompt(device) {
+    if (typeof device.enterCommand !== "function") {
+        return false;
+    }
+    var answered = false;
+    for (var round = 0; round < 4; round++) {
+        var prompt = cliPromptOf(device);
+        var hit = null;
+        for (var i = 0; i < setupPromptAnswers.length; i++) {
+            if (setupPromptAnswers[i].pattern.test(prompt)) {
+                hit = setupPromptAnswers[i];
+                break;
+            }
+        }
+        if (!hit) {
+            break;
+        }
+        device.enterCommand(hit.answer, "");
+        answered = true;
+    }
+    return answered;
+}
+
+function finishBoot(device) {
+    var attempts = 0;
+    while (attempts < 4) {
+        var booting = false;
+        try {
+            booting = typeof device.isBooting === "function" && device.isBooting() === true;
+        } catch (error) {
+            booting = false;
+        }
+        if (!booting) {
+            break;
+        }
         device.skipBoot();
+        attempts++;
+    }
+    return attempts;
+}
+
+function prepareIosDevice(device, label) {
+    var name = label || String(callIfExists(device, "getName", "device"));
+    if (isIosDevice(device)) {
+        finishBoot(device);
+    }
+    answerSetupPrompt(device);
+    return device;
+}
+
+function assertIosUsable(device, name) {
+    var prompt = cliPromptOf(device);
+    if (isSetupPrompt(prompt)) {
+        throw new Error(name + " is still at its first boot dialog (" + prompt.replace(/\s+$/, "") + "). The device did not reach the command line, so nothing was sent. Answer it with enterCommand(\"" + name + "\", \"no\") or call ensureIosReady(\"" + name + "\") and run the script again");
+    }
+    return true;
+}
+
+function ensureIosReady(deviceName) {
+    var device = findDevice(deviceName);
+    if (typeof device.enterCommand !== "function") {
+        throw new Error(deviceName + " is a " + String(device.getModel()) + " and has no Cisco IOS command line");
+    }
+    prepareIosDevice(device, String(deviceName));
+    return {
+        device: String(device.getName()),
+        prompt: cliPromptOf(device),
+        mode: cliModeOf(device),
+        booting: typeof device.isBooting === "function" ? device.isBooting() === true : false
+    };
+}
+
+function skipBootIfIos(device) {
+    if (isIosDevice(device)) {
+        prepareIosDevice(device, String(callIfExists(device, "getName", "")));
     }
 }
 
@@ -1438,7 +1548,7 @@ function linkTypeName(code) {
         });
         return name || connectTypeNames[code];
     }
-    return String(code);
+    throw new Error("Unknown link type code: " + code + ". Valid codes are " + Object.keys(connectTypeNames).join(", ") + " (ETHERNET_STRAIGHT is 8100, ETHERNET_CROSS is 8101 and so on)");
 }
 
 function portOwnerName(port) {
@@ -1672,7 +1782,8 @@ function iosDevice(deviceName) {
     if (typeof device.enterCommand !== "function") {
         throw new Error(deviceName + " is a " + String(device.getModel()) + " and has no Cisco IOS command line");
     }
-    skipBootIfIos(device);
+    prepareIosDevice(device, String(deviceName));
+    assertIosUsable(device, String(deviceName));
     return device;
 }
 
@@ -1720,21 +1831,65 @@ function applyToDevices(deviceNames, commands, save) {
     return report;
 }
 
+var execCommandWords = "show ping traceroute tracert telnet ssh dir more copy write clock clear reload debug undebug help logout disable enable configure test send disconnect resume suspend verify license who where".split(" ");
+
+var configSubModeWords = "interface router line vlan ip dhcp pool class-map policy-map crypto track route-map key access-list aaa username hostname banner".split(" ");
+
+function firstCommandWord(command) {
+    return (String(command).split(/\s+/)[0] || "").toLowerCase();
+}
+
+function isExecCommand(command) {
+    var word = firstCommandWord(command);
+    if (execCommandWords.indexOf(word) === -1) {
+        return false;
+    }
+    if (word === "ip" || word === "no") {
+        return false;
+    }
+    return true;
+}
+
+function isConfigSubMode(mode) {
+    var value = String(mode || "").toLowerCase();
+    return value !== "" && value !== "user" && value !== "enable" && value !== "global" && value !== "config";
+}
+
+function autoCliMode(device, command) {
+    var mode = cliModeOf(device);
+    if (isConfigSubMode(mode)) {
+        if (/^(exit|end|do)\b/i.test(String(command))) {
+            return "";
+        }
+        return isExecCommand(command) ? "enable" : "";
+    }
+    return isExecCommand(command) ? "enable" : "global";
+}
+
+function resolveRunMode(device, command, mode) {
+    if (!isDefined(mode) || String(mode).toLowerCase() === "auto") {
+        return autoCliMode(device, command);
+    }
+    return normalizeCliMode(mode);
+}
+
 function runCommand(deviceName, command, mode) {
     var device = iosDevice(deviceName);
-    return parseCommandResult(device.enterCommand(oneLine(command), normalizeCliMode(isDefined(mode) ? mode : "enable")));
+    var line = oneLine(command);
+    return parseCommandResult(device.enterCommand(line, resolveRunMode(device, line, isDefined(mode) ? mode : "auto")));
 }
 
 function runCommands(deviceName, commands, mode) {
     var device = iosDevice(deviceName);
-    var chosen = normalizeCliMode(isDefined(mode) ? mode : "enable");
+    var automatic = !isDefined(mode) || String(mode).toLowerCase() === "auto";
+    var fixed = automatic ? "" : normalizeCliMode(mode);
     var failures = [];
     var results = toLines(commands).map(function (line) {
         var command = oneLine(line);
         if (!command) {
             return null;
         }
-        var result = sendLine(device, command, chosen, failures);
+        var result = sendLine(device, command, automatic ? autoCliMode(device, command) : fixed, failures);
         return { command: command, status: result.status, output: result.output };
     }).filter(function (item) {
         return item !== null;
@@ -3104,7 +3259,15 @@ function configureSsh(deviceName, options) {
             opts.hostname = deviceName;
         }
     }
-    return configureIosDevice(deviceName, buildSsh(opts));
+    var commands = buildSsh(opts);
+    var failed = configureIosDevice(deviceName, commands);
+    return {
+        device: String(deviceName),
+        ok: failed.length === 0,
+        lines: commands.length,
+        failed: failed,
+        message: failed.length ? failureText(deviceName, failed) : deviceName + " now accepts SSH with " + (opts.username ? "the local user " + opts.username : "the users already configured")
+    };
 }
 
 function setLoginBlock(deviceName, seconds, attempts, within) {
@@ -3743,6 +3906,10 @@ function labelDevice(deviceName, text, offsetY) {
     var position = getDevicePosition(deviceName);
     var dy = isDefined(offsetY) ? offsetY : -30;
     return addNote(position.x, position.y + dy, isDefined(text) ? text : deviceName);
+}
+
+function addLabel(deviceName, text, offsetY) {
+    return labelDevice(deviceName, text, offsetY);
 }
 
 function labelDevices(map, offsetY) {
@@ -4884,6 +5051,9 @@ function resolveTarget(target) {
 }
 
 function pingTest(source, target, count) {
+    if (typeof isSimulationMode === "function" && isSimulationMode()) {
+        throw new Error("pingTest waits for the reply inside the same call, and in Simulation mode Packet Tracer only moves time after the script returns. Run setSimulationMode(false) first, or use ping(source, target, count) which listens to the device output instead");
+    }
     var resolved = resolveTarget(target);
     var device = findDevice(source);
     var row = { source: String(source), target: resolved.label, ip: resolved.ip, state: "unknown", percent: null, sent: 0, received: 0, rtt: null, output: "" };
@@ -4913,6 +5083,19 @@ function reachabilityReport(rows) {
         }
     });
     return report;
+}
+
+var pingStallSeconds = 25;
+
+function assertPingAllowed() {
+    if (typeof isSimulationMode === "function" && isSimulationMode()) {
+        throw new Error("Packet Tracer is in Simulation mode. A ping there only moves when the event list is stepped, so the reply never arrives and the report stays pending forever. Run setSimulationMode(false) first, ping, then turn Simulation mode back on");
+    }
+    return true;
+}
+
+function pingStallMessage(seconds) {
+    return "No reply within " + seconds + " seconds. The device answered nothing, so the ping was dropped. Check that both ends have an address and a cable, and that no firewall blocks ICMP";
 }
 
 function pingLine(device) {
@@ -4986,7 +5169,38 @@ function PingRunner(source, device, line, rows, onFinished) {
     this.index = -1;
     this.buffer = "";
     this.onFinished = onFinished;
+    this.startedAt = new Date().getTime();
+    this.lastActivity = this.startedAt;
+    this.closed = false;
 }
+
+PingRunner.prototype.touch = function () {
+    this.lastActivity = new Date().getTime();
+};
+
+PingRunner.prototype.stalled = function (now, limitMs) {
+    return !this.closed && now - this.lastActivity >= limitMs;
+};
+
+PingRunner.prototype.abandon = function (message) {
+    if (this.closed) {
+        return false;
+    }
+    this.closed = true;
+    this.stop();
+    this.rows.forEach(function (row) {
+        if (row.state === "pending") {
+            row.state = "failed";
+            row.percent = 0;
+            row.output = message;
+        }
+    });
+    activePingRunners = activePingRunners.filter(function (item) {
+        return item !== this;
+    }, this);
+    this.onFinished();
+    return true;
+};
 
 PingRunner.prototype.start = function () {
     this.line.registerEvent("outputWritten", this, this.onOutput);
@@ -4999,6 +5213,7 @@ PingRunner.prototype.start = function () {
 
 PingRunner.prototype.next = function () {
     this.index++;
+    this.touch();
     if (this.index >= this.rows.length) {
         this.stop();
         this.onFinished();
@@ -5018,10 +5233,12 @@ PingRunner.prototype.stop = function () {
 };
 
 PingRunner.prototype.onOutput = function (src, args) {
+    this.touch();
     this.buffer += eventText(args, "newOutput");
 };
 
 PingRunner.prototype.onEnded = function (src, args) {
+    this.touch();
     var row = this.rows[this.index];
     if (!row) {
         return;
@@ -5040,6 +5257,19 @@ PingRunner.prototype.onEnded = function (src, args) {
 
 var activePingRunners = [];
 
+function pingWatchdog(seconds) {
+    var limit = isDefined(seconds) ? Number(seconds) : pingStallSeconds;
+    var now = new Date().getTime();
+    var closed = 0;
+    activePingRunners.slice().forEach(function (runner) {
+        if (runner.stalled(now, limit * 1000)) {
+            runner.abandon(pingStallMessage(limit));
+            closed++;
+        }
+    });
+    return closed;
+}
+
 function stopPings() {
     var count = activePingRunners.length;
     activePingRunners.forEach(function (runner) {
@@ -5050,6 +5280,7 @@ function stopPings() {
 }
 
 function pingMatrix(sources, targets, count, onDone) {
+    assertPingAllowed();
     var report = { rows: [], total: 0, ok: 0, partial: 0, failed: 0, unknown: 0, pending: 0, done: false };
     var inventory = getIpInventory();
     var runners = [];
@@ -5159,6 +5390,7 @@ function reachability(options) {
 }
 
 function runLineCommand(deviceName, command, onDone, finish) {
+    assertPingAllowed();
     var device = findDevice(deviceName);
     var line = pingLine(device);
     var row = { source: String(deviceName), command: String(command), state: "pending", output: "" };
@@ -6038,7 +6270,7 @@ function shellAttach(encodedId, encodedDevice) {
         if (kind === "ios") {
             skipBootIfIos(device);
         }
-        editorSend("shell-cli", { id: id, device: String(device.getName()), kind: kind, attached: true, output: "", status: "ok", prompt: kind === "ios" ? getPrompt(name) : "C:\\>" });
+        editorSend("shell-cli", { id: id, device: String(device.getName()), kind: kind, attached: true, output: "", status: "ok", prompt: kind === "ios" ? getPrompt(name) : "C:\\>", mode: kind === "ios" ? getCliMode(name) : "" });
         return true;
     } catch (error) {
         editorSend("shell-cli", { id: id, device: name, attached: false, output: "", status: "error", error: shellErrorText(error) });
@@ -6058,7 +6290,7 @@ function shellCli(encodedId, encodedDevice, encodedCommand) {
             return true;
         }
         var result = runCommand(name, command, "");
-        editorSend("shell-cli", { id: id, device: name, kind: "ios", output: result.output, status: result.status, prompt: getPrompt(name) });
+        editorSend("shell-cli", { id: id, device: name, kind: "ios", output: result.output, status: result.status, prompt: getPrompt(name), mode: getCliMode(name) });
         return true;
     } catch (error) {
         editorSend("shell-cli", { id: id, device: name, output: "", status: "error", error: shellErrorText(error) });

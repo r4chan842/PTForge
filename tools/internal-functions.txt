@@ -157,3 +157,11 @@ portSecurityMax
 checkMacList
 loadBalanceMethods
 etherChannelModeHelp
+firstCommandWord
+isExecCommand
+isConfigSubMode
+autoCliMode
+resolveRunMode
+assertPingAllowed
+pingStallMessage
+addLabel

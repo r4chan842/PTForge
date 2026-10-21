@@ -11,6 +11,16 @@ Not possible through the API
 * Building a .pts package: Packages are encrypted by Packet Tracer
 * Selecting or dragging with the mouse: Mouse only features are out of scope
 
+What the engine cannot do
+-------------------------
+
+These are limits of Packet Tracer itself, not of PTForge, and they are the reason a few bugs cannot be fixed the way they look.
+
+* No real async: The script engine in the extension is ES5 and it runs to the end before Packet Tracer moves time forward. There is no Promise, no await and no way to stop in the middle of a call. A ping therefore cannot be read inside the same call; PTForge sends the command and listens to the outputWritten and commandEnded events of the TerminalLine instead
+* A blocked IPC call cannot be cancelled: enterCommand returns after the device has answered. While a ping is unanswered, Packet Tracer is inside that call and the extension has no method to interrupt it. PTForge closes the row from the editor side with pingWatchdog and refuses to start a test in Simulation mode, but the call itself belongs to Packet Tracer
+* Simulation mode never answers a ping: In Simulation mode, time only moves when the event list is stepped, so a command that waits for a reply waits forever. ping, traceroute and reachability throw a clear error and ask for setSimulationMode(false)
+* IOS features that Packet Tracer does not simulate: a command it does not implement comes back as notImplemented (status 4) no matter how it is sent
+
 Tested how
 ----------
 
@@ -32,6 +42,13 @@ makeDirectory, simulationPanel play and the editor bridge receiveOutput. They ar
 called behind typeof checks (callIfExists), so a build without them degrades to a
 clear error instead of crashing. If a future release documents them, the calls move
 out of this list.
+
+Setup mode
+----------
+
+A device that has just been added is still booting, and a device with no startup config stops at the first boot dialog. Both states make every configuration line fail without an error in some Packet Tracer builds.
+
+Every function that sends IOS goes through iosDevice, which finishes the boot with skipBoot while isBooting is true, reads the prompt of the command line and answers the first boot dialog with no, and terminate autoinstall with yes. If the prompt is still a dialog after that, the call throws and names the device instead of returning status ok for commands that were never run. ensureIosReady does the same thing on demand and returns the prompt and mode it found.
 
 Enter Command
 -------------

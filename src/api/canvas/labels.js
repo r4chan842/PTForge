@@ -4,6 +4,10 @@ function labelDevice(deviceName, text, offsetY) {
     return addNote(position.x, position.y + dy, isDefined(text) ? text : deviceName);
 }
 
+function addLabel(deviceName, text, offsetY) {
+    return labelDevice(deviceName, text, offsetY);
+}
+
 function labelDevices(map, offsetY) {
     var ids = {};
     Object.keys(map).forEach(function (name) {

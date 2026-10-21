@@ -109,8 +109,10 @@ addStaticNat options: inside, outside, and protocol, localPort, globalPort for p
 SSH and login hardening
 -----------------------
 
-configureSsh(name, options)
-    Domain, user, RSA keys, SSH v2, VTY with login local
+configureSsh(name, options) -> object
+    Domain, user, RSA keys, SSH v2, VTY with login local. Returns
+    { device, ok, lines, failed, message }, so an empty list is no longer the
+    only answer and a failed line comes back with its status
 
 setLoginBlock(name, seconds, attempts, within)
     login block-for

@@ -41,10 +41,15 @@ applyToDevices(names, commands, save) -> object
     Send the same config to many devices, returns rejected lines per device
 
 runCommand(name, command, mode) -> object
-    One command in user, enable, global or current mode "". Returns { status, output }
+    One command. Returns { status, output }. mode is user, enable, global, "" for
+    the mode the CLI is already in, or auto (the default): a show, ping or other
+    exec command goes to enable, a configuration line goes to global, and a line
+    typed inside interface, router or line mode stays there until exit or end
 
 runCommands(name, commands, mode) -> object
-    Several commands, returns { device, ok, commands, failed }
+    Several commands, returns { device, ok, commands, failed }. Every line picks
+    its mode on its own when mode is auto or missing, so a block can mix an exec
+    command, a global command and an interface command
 
 saveConfig(name) -> bool
     write memory
@@ -57,6 +62,12 @@ getPrompt(name) -> string
 
 getCliMode(name) -> string
     Current CLI mode
+
+ensureIosReady(name) -> object
+    Wait for the boot to finish and answer the first boot dialog with no, the
+    same way every configuration function does before it sends a line. Returns
+    { device, prompt, mode, booting }. Call it when a device was just added by
+    hand and the first configuration line was ignored
 
 status is one of ok, ambiguous, invalid, incomplete, notImplemented, which are
 the five values of the CommandStatus enum in the Packet Tracer API

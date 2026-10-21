@@ -35,6 +35,12 @@ so this is the only way to tell a wrong port name from a wrong cable.
 deleteLink throws when the port has no cable, and autoConnect refuses to connect
 a device to itself.
 
+Every cable type has a short name and the name Packet Tracer uses, and both are
+accepted: straight or ethernet-straight, cross, crossover or ethernet-cross, roll,
+fiber, phone, cable, serial, auto, console, wireless, coaxial, octal, cellular, usb
+and custom_io or custom-io. The word crossover and the word cross reach the same
+constant 8101.
+
     addLink("R1", "GigabitEthernet0/0", "S1", "GigabitEthernet0/1", "straight");
     addLink("R1", "GigabitEthernet0/0", "S1", "GigabitEthernet0/1", "cross");
     Error: R1 GigabitEthernet0/0 is already cabled. Call deleteLink first
@@ -76,5 +82,6 @@ CONSOLE = 8108, WIRELESS = 8109, COAXIAL = 8110, OCTAL = 8111, CELLULAR = 8112,
 USB = 8113, CUSTOM_IO = 8114.
 
 linkTypeName(code) -> string
-    The name for a constant from getLinks. It is a helper for reading link data,
-    not a validator; resolveLinkType is the one that rejects bad input
+    The name for a constant from getLinks, for example 8101 becomes cross. An
+    unknown number throws with the list of the constants instead of repeating the
+    number back, so a reading mistake shows up where it happens

@@ -23,11 +23,15 @@ Type an expression or a statement and press Enter.
     4
     ptforge:js> setInterfaceIp("R1", "GigabitEthernet0/1", "10.0.12.1/30")
 
+- The line you type is shaded while you type it: API names in blue, strings, numbers and keywords in the editor colours
 - Variables, functions and var, let or const declarations stay available for later lines
 - Results are shown as readable trees: strings in quotes, numbers in green, objects and arrays expanded
 - Errors are printed in red with their type, for example Uncaught ReferenceError: x is not defined
 - log() and showResult() print into the terminal
 - Shift+Enter adds a new line, so you can type a block before running it
+- One line runs at a time. Anything you send while a line is still running waits in a queue and starts when the one before it finishes, so a pasted block can no longer overlap itself
+- A line that takes a while shows "running" with the seconds it has been going, next to a spinner. There is no guessing whether the shell is alive
+- async and await are removed before the line is sent, and a note says so. The engine inside Packet Tracer is ES5 and a script runs to the end before time moves, so a real await cannot work. Use the onDone callback of ping, traceroute and reachability instead
 
 Keys
 ----
@@ -39,6 +43,15 @@ Keys
 * Ctrl+L: Clear the screen
 * Ctrl+C: Copy the selection, or clear the input when nothing is selected
 * Ctrl+D: Close the terminal when the input is empty
+
+Commands inside a device CLI terminal
+-------------------------------------
+
+A terminal opened with Terminal > New Device CLI Terminal, or with .cli R1, talks to the device itself. Every line goes to the current CLI mode of that device, so enable, configure terminal, interface and exit work as they do at the console, and the prompt in the terminal follows the device.
+
+- The line is shaded as IOS: the command word, interface names, addresses and numbers each get a colour
+- A pasted block is sent one line at a time, in order, and the terminal waits for the device to answer before it sends the next line
+- .exit or exit at the user prompt leaves the device and returns to JavaScript
 
 Dot commands
 ------------

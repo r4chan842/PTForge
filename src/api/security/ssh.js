@@ -34,7 +34,15 @@ function configureSsh(deviceName, options) {
             opts.hostname = deviceName;
         }
     }
-    return configureIosDevice(deviceName, buildSsh(opts));
+    var commands = buildSsh(opts);
+    var failed = configureIosDevice(deviceName, commands);
+    return {
+        device: String(deviceName),
+        ok: failed.length === 0,
+        lines: commands.length,
+        failed: failed,
+        message: failed.length ? failureText(deviceName, failed) : deviceName + " now accepts SSH with " + (opts.username ? "the local user " + opts.username : "the users already configured")
+    };
 }
 
 function setLoginBlock(deviceName, seconds, attempts, within) {

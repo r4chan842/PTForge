@@ -2896,21 +2896,65 @@ table.keys td:last-child {
     flex: none;
 }
 
-.term-input {
+.term-box {
+    position: relative;
     flex: 1;
+    min-width: 0;
+}
+
+.term-hl {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    color: #cccccc;
+    font: inherit;
+    line-height: inherit;
+    white-space: pre-wrap;
+    word-break: break-word;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.term-input {
+    position: relative;
+    display: block;
+    width: 100%;
     background: transparent;
     border: 0;
     outline: none;
     resize: none;
     padding: 0;
     margin: 0;
-    color: #cccccc;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
     font: inherit;
     line-height: inherit;
     overflow: hidden;
     min-height: 1.35em;
-    caret-color: #cccccc;
+    caret-color: #d4d4d4;
     white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.term-input::selection {
+    background: rgba(38, 79, 120, .99);
+}
+
+.tk-cmd {
+    color: #569cd6;
+}
+
+.tk-port {
+    color: #4ec9b0;
+}
+
+.tk-ip {
+    color: #b5cea8;
+}
+
+.term-busy-text {
+    font-size: 12px;
 }
 
 .term-busy {

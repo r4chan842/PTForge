@@ -225,7 +225,9 @@ test("object options do not leak between calls", () => {
     const shared = j(run, 'basicSetup("R1", { secret: "class" })');
     assert.deepEqual(shared, []);
     assert.deepEqual(j(run, 'createEtherChannel("S1", 3, ["FastEthernet0/1"], "active", {})'), []);
-    assert.deepEqual(j(run, 'configureSsh("R2", { domain: "lab.local", username: "admin", password: "pw" })'), []);
+    const ssh = j(run, 'configureSsh("R2", { domain: "lab.local", username: "admin", password: "pw" })');
+    assert.equal(ssh.ok, true);
+    assert.deepEqual(ssh.failed, []);
 });
 
 test("no es6 object helpers are used in the packet tracer sources", () => {
@@ -237,4 +239,84 @@ test("no es6 object helpers are used in the packet tracer sources", () => {
             assert.equal(text.indexOf(bad), -1, bad + " in " + file);
         });
     });
+});
+
+test("a device still at its first boot dialog answers the dialog instead of failing quietly", () => {
+    const { run, world } = lab();
+    const setup = "Would you like to enter the initial configuration dialog? [yes/no]: ";
+    world.devices.R1.getCommandLine().setPrompt(setup);
+    const ready = j(run, 'ensureIosReady("R1")');
+    assert.equal(ready.booting, false);
+    assert.equal(world.devices.R1.commands[world.devices.R1.commands.length - 1].cmd, "no");
+    run('setHostname("R1", "Core")');
+    assert.ok(world.devices.R1.commands.map((c) => c.cmd).indexOf("hostname Core") >= 0);
+});
+
+test("a device that stays in setup mode reports it instead of a quiet ok", () => {
+    const { run, world } = lab();
+    const line = world.devices.R1.getCommandLine();
+    line.setPrompt("Would you like to enter the initial configuration dialog? [yes/no]: ");
+    world.devices.R1.enterCommand = (cmd) => {
+        world.devices.R1.commands.push({ cmd, mode: "" });
+        return [0, ""];
+    };
+    assert.throws(() => run('runCommand("R1", "show version")'), /first boot dialog/);
+    line.setPrompt("R1#");
+});
+
+test("runCommand picks the mode for a show line, a config line and a sub mode", () => {
+    const { run, world } = lab();
+    run('runCommand("R1", "show version")');
+    run('runCommand("R1", "hostname Core")');
+    assert.deepEqual(world.devices.R1.commands.slice(-2).map((c) => [c.cmd, c.mode]), [["show version", "enable"], ["hostname Core", "global"]]);
+    run('runCommands("R1", ["interface GigabitEthernet0/0", "ip address 10.0.0.1 255.255.255.0", "no shutdown", "show ip interface brief"])');
+    const tail = world.devices.R1.commands.slice(-4).map((c) => [c.cmd, c.mode]);
+    assert.deepEqual(tail, [["interface GigabitEthernet0/0", "global"], ["ip address 10.0.0.1 255.255.255.0", ""], ["no shutdown", ""], ["show ip interface brief", "enable"]]);
+});
+
+test("ping refuses to run while packet tracer is in simulation mode", () => {
+    const { run, world } = lab();
+    world.simulation.mode = true;
+    assert.throws(() => run('pingTest("R1", "10.0.0.1")'), /Simulation mode/);
+    assert.throws(() => run('ping("R1", "10.0.0.1")'), /Simulation mode/);
+    assert.throws(() => run('traceroute("R1", "10.0.0.1")'), /Simulation mode/);
+    assert.throws(() => run('reachability()'), /Simulation mode/);
+    world.simulation.mode = false;
+});
+
+test("a ping that answers nothing is closed by the watchdog", () => {
+    const { run, world } = lab();
+    world.lineQueue = [];
+    run('hung = ping("R2", "10.9.9.9")');
+    assert.equal(run("hung.state"), "pending");
+    assert.equal(run("activePingRunners.length"), 1);
+    assert.equal(run("pingWatchdog(0)"), 1);
+    assert.equal(run("hung.state"), "failed");
+    assert.match(run("hung.output"), /No reply/);
+    assert.equal(run("activePingRunners.length"), 0);
+    world.lineQueue = null;
+});
+
+test("linkTypeName names a known constant and rejects an unknown one", () => {
+    const { run } = lab();
+    assert.equal(run("linkTypeName(8101)"), "cross");
+    assert.equal(run("linkTypeName(8109)"), "wireless");
+    assert.throws(() => run("linkTypeName(9999)"), /Unknown link type code: 9999/);
+});
+
+test("addLabel is labelDevice under its short name", () => {
+    const { run } = lab();
+    const note = j(run, 'addLabel("R1", "Core")');
+    assert.ok(note);
+    assert.equal(run('typeof addLabel'), "function");
+});
+
+test("configureSsh reports what it sent instead of an empty list", () => {
+    const { run } = lab();
+    const report = j(run, 'configureSsh("R1", { domain: "lab.local", username: "admin", password: "pw" })');
+    assert.equal(report.ok, true);
+    assert.equal(report.device, "R1");
+    assert.ok(report.lines > 4);
+    assert.deepEqual(report.failed, []);
+    assert.match(report.message, /SSH/);
 });

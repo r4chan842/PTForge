@@ -72,11 +72,22 @@ pingMatrix(sources, targets, count, onDone)
 stopPings()
     Cancel a running reachability test. Returns the number of devices that were still pinging
 
+pingWatchdog(seconds)
+    Close every ping that produced no output for this many seconds, 25 by default,
+    and mark its rows failed with a message instead of leaving them pending. The
+    editor calls it once every few seconds while a test runs, so a device that
+    answers nothing can no longer keep the report open forever
+
 pingTest(source, target, count)
     One immediate ping with a parsed result: { source, target, ip, state, percent, sent, received, rtt, output }
 
 parsePingOutput(text)
     Read IOS or host ping output: { sent, received, percent, rtt }
+
+Both ping and reachability refuse to start while Packet Tracer is in Simulation
+mode, because the reply only moves when the event list is stepped and the script
+would wait for an answer that never comes. Run setSimulationMode(false), ping, and
+turn Simulation mode back on afterwards.
 
 A ping takes simulated time. Packet Tracer only moves time forward after the script returns, so a ping read inside the same call always looks like 0 percent. reachability and pingMatrix send each ping through the device's command line and listen for the outputWritten and commandEnded events of TerminalLine. The returned report starts with every row pending ({ rows, total, pending, done: false, ok, partial, failed, unknown, sources, targets }) and the same object is filled in as replies arrive. The final report is sent to the Reachability view, to the terminal that started it, and to onDone.
 

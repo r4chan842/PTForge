@@ -277,10 +277,15 @@ function createDevice(world, name, model, type, x, y) {
     }
 
     if ([0, 1, 16, 17].includes(type)) {
+        device.isBooting = () => device.booted !== true;
         device.skipBoot = () => { device.booted = true; };
         device.getHostName = () => device.hostname || (type === 0 ? "Router" : "Switch");
+        device.lineCommands = [];
+        const line = mockLine(world, device, "R#", (c) => device.lineCommands.push(c));
+        device.getCommandLine = () => line;
         device.enterCommand = (cmd, mode) => {
             device.commands.push({ cmd, mode });
+            line.follow(cmd, mode);
             if (world.rejectCommands.some((re) => re.test(cmd))) return [2, ""];
             if (world.respond) {
                 const out = world.respond(device.getName(), cmd, mode);
@@ -288,9 +293,6 @@ function createDevice(world, name, model, type, x, y) {
             }
             return [0, ""];
         };
-        device.lineCommands = [];
-        const line = mockLine(world, device, "R#", (c) => device.lineCommands.push(c));
-        device.getCommandLine = () => line;
     }
     if ([8, 9, 17].includes(type)) {
         device.setDhcpFlag = (v) => { device.dhcp = v; };
@@ -303,11 +305,38 @@ function createDevice(world, name, model, type, x, y) {
 
 function mockLine(world, device, promptText, record) {
     const listeners = [];
+    const state = { prompt: promptText, mode: "enable" };
     const emit = (name, args) => listeners.filter((l) => l.name === name).forEach((l) => l.fn.call(l.ctx, { className: "TerminalLine", eventName: name }, args));
+    const follow = (cmd, mode) => {
+        const text = String(cmd === undefined || cmd === null ? "" : cmd).trim();
+        if (/initial configuration dialog/i.test(state.prompt) && /^(no|n)$/i.test(text)) {
+            state.prompt = "Router>";
+            return;
+        }
+        if (/initial configuration dialog/i.test(state.prompt) && /^(yes|y)$/i.test(text)) {
+            state.prompt = "Would you like to enter basic management setup? [yes/no]: ";
+            return;
+        }
+        if (/terminate autoinstall/i.test(state.prompt)) {
+            state.prompt = "Router>";
+            return;
+        }
+        if (mode) state.mode = String(mode);
+        if (/^interface /i.test(text)) state.mode = "interface";
+        else if (/^router /i.test(text)) state.mode = "router";
+        else if (/^line /i.test(text)) state.mode = "line";
+        else if (/^vlan /i.test(text)) state.mode = "vlan";
+        else if (/^(end|exit)$/i.test(text)) state.mode = mode ? String(mode) : "enable";
+        else if (/^configure terminal$/i.test(text)) state.mode = "config";
+        else if (state.mode === "config" && /^[a-z]/i.test(text) && !/^show /i.test(text)) state.mode = "global";
+    };
     return {
         listeners,
-        getPrompt: () => promptText,
-        getMode: () => "enable",
+        follow,
+        getPrompt: () => state.prompt,
+        getMode: () => state.mode,
+        setPrompt: (value) => { state.prompt = value; },
+        setMode: (value) => { state.mode = value; },
         registerEvent: (name, ctx, fn) => { listeners.push({ name, ctx, fn }); },
         unregisterEvent: (name, ctx, fn) => {
             const i = listeners.findIndex((l) => l.name === name && l.fn === fn);
@@ -315,6 +344,7 @@ function mockLine(world, device, promptText, record) {
         },
         enterCommand: (c) => {
             record(c);
+            follow(c, "");
             if (!world.lineQueue) return;
             world.lineQueue.push(() => {
                 const out = world.respond ? world.respond(device.getName(), c, "line") : undefined;

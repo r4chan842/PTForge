@@ -25,11 +25,20 @@ Fixed
 - Object.assign replaced with a local helper, since the Packet Tracer engine is ES5 and has no Object.assign
 - A blank window when an interface file was missing or pasted under an old name. The page now checks that its stylesheet and its scripts arrived and prints which file did not load, instead of showing a bare logo on white
 - The editor font size was overridden by a later stylesheet rule, so the zoom buttons did move the status bar text but not the code
+- A router that was still at its first boot dialog reported status ok for every configuration line and changed nothing. Every call now finishes the boot, answers the dialog with no and terminate autoinstall with yes, and throws with the device name when the prompt is still a dialog
+- runCommand sent a show command in global mode and a configuration line in enable mode unless the caller passed the mode. The mode is now chosen per line: exec commands to enable, configuration to global, and lines inside interface, router or line mode stay there
+- ping, traceroute, reachability and pingTest left the report pending forever when the device answered nothing, and in Simulation mode they could never finish. They now refuse to start in Simulation mode, and pingWatchdog closes a ping with no output for 25 seconds and marks its rows failed
+- linkTypeName repeated an unknown number back instead of failing, which made a reading mistake look like a valid link type
+- configureSsh returned an empty list whether the device took the commands or not. It returns { device, ok, lines, failed, message }
+- The terminal printed SyntaxError for await and ran a pasted block of commands at once. async and await are removed with a note, and every line runs after the one before it has finished
 - Menu rows printed the label and the shortcut on top of each other inside the Packet Tracer window, and icons came out a few pixels wide. Menu rows now keep their own height and never wrap, tall menus scroll inside the window, and every icon carries its own width and height
 
 Added
 
 - resolveDeviceModel, getDeviceModels and getDeviceModelType, so a short name like 4321 becomes ISR4321 and a typo produces a suggestion
+- addLabel, the short name for labelDevice
+- ensureIosReady, the boot and first dialog step on its own
+- pingWatchdog, the timeout that closes a ping nobody answered
 - runCommands for several commands on one device, with { device, ok, commands, failed }
 - getEtherChannelLoadBalance, getHsrpState, buildIpv6Acl, applyIpv6Acl, removeIpv6AclFromInterface, deleteIpv6Acl
 - Port security agingType, AAA authorization exec and the RADIUS auth port
@@ -40,6 +49,8 @@ Changed
 - Status codes are read from the documented enum by both name and number, and a rejected line carries the raw output of the device next to its status
 - applyConfig reports every rejected line in a readable block instead of one long comma list
 - The editor picks up the VS Code details: rounded menus, tab close behaviour, focus rings, a status bar that turns blue while debugging, thinner scrollbars and ligatures that no longer move the caret
+- The terminal shades the line while it is typed, in JavaScript and in a device CLI, with IOS words, interface names and addresses in their own colours
+- The terminal shows a spinner with the elapsed seconds as soon as a line starts, and keeps a queue so a pasted block runs in order
 - README rewritten, and the docs for IOS, devices, links, switching, security and canvas now say what each check rejects and why
 - limitations explains which API methods are confirmed in the 8.1.0 reference and which are called behind a guard
 
